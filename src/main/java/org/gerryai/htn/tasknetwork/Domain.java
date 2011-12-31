@@ -20,16 +20,32 @@ package org.gerryai.htn.tasknetwork;
 import java.util.Set;
 
 /**
- * @author david
- *
+ * Interface that a domain must implement.
+ * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Domain {
 
-	public Set<Operator> getOperators();
+	/**
+	 * Get the set of available operators for this domain.
+	 * @return the operators
+	 */
+	Set<Operator> getOperators();
 	
-	public void setOperators();
+	/**
+	 * Set the available operators for this domain.
+	 * @param operators the set of operators
+	 */
+	void setOperators(Set<Operator> operators);
 	
-	public Set<Method> setMethods();
+	/**
+	 * Get the set of methods available for this domain.
+	 * @return the mthods
+	 */
+	Set<Method> getMethods();
 	
-	public void setMethods(Set<Method> methods);
+	/**
+	 * Set the available methods for this domain.
+	 * @param methods the set of methods
+	 */
+	void setMethods(Set<Method> methods);
 }

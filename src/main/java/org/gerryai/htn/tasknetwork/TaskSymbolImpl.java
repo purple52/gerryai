@@ -18,18 +18,28 @@
 package org.gerryai.htn.tasknetwork;
 
 /**
- * @author david
+ * Implementation of a task symbol.
+ * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public class TaskSymbolImpl implements TaskSymbol {
 
+	/**
+	 * The name of the symbol.
+	 */
 	private String name;
 	
-	public String getName() {
+	/**
+	 * {@inheritDoc}
+	 */
+	public final String getName() {
 		return name;
 	}
-	
-	public void setName(String name) {
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setName(String name) {
 		this.name = name;
 	}
 }

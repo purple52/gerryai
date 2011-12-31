@@ -20,21 +20,45 @@ package org.gerryai.htn.tasknetwork;
 import java.util.Set;
 
 /**
- * @author david
- *
+ * Interface that an operator must implement.
+ * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Operator {
 	
-	public String getName();
+	/**
+	 * Get the name of this operator.
+	 * @return the name
+	 */
+	String getName();
 	
-	public void setName(String name);
+	/**
+	 * Set the anme of this operator.
+	 * @param name name to set
+	 */
+	void setName(String name);
 	
-	public Set<Constraint> getPreconditions();
+	/**
+	 * Get the preconditions for this operator.
+	 * @return the preconditions
+	 */
+	Set<Constraint> getPreconditions();
 	
-	public void setPreconditions(Set<Constraint> preconditions);
+	/**
+	 * Set the preconditions for this operator.
+	 * @param preconditions preconditions to set
+	 */
+	void setPreconditions(Set<Constraint> preconditions);
 	
-	public Set<Effect> getEffects();
+	/**
+	 * Get the effects of this operator.
+	 * @return the effects
+	 */
+	Set<Effect> getEffects();
 	
-	public void setEffects(Set<Effect> effects);
+	/**
+	 * Set the effects of this operator.
+	 * @param effects effects to set
+	 */
+	void setEffects(Set<Effect> effects);
 
 }

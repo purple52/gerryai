@@ -19,28 +19,53 @@ package org.gerryai.htn.tasknetwork;
 
 import java.util.List;
 
+/**
+ * Basic implementation of the Task interface.
+ */
 public class TaskImpl implements Task {
 	
+	/**
+	 * Symbol for this task.
+	 */
 	private TaskSymbol symbol;
-	private List<TaskArgument> arguments;
 	
-	public TaskSymbol getSymbol() {
+	/**
+	 * Arguments for this task.
+	 */
+	private List<TaskArgument> arguments;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final TaskSymbol getSymbol() {
 		return symbol;
 	}
 	
-	public void setSymbol(TaskSymbol symbol) {
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setSymbol(TaskSymbol symbol) {
 		this.symbol = symbol;
 	}
-	
-	public List<TaskArgument> getArguments() {
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final List<TaskArgument> getArguments() {
 		return arguments;
 	}
 	
-	public void setArguments(List<TaskArgument> arguments) {
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setArguments(List<TaskArgument> arguments) {
 		this.arguments = arguments;
 	}
 	
-	public boolean isPrimitive() {
+	/**
+	 * {@inheritDoc}
+	 */
+	public final boolean isPrimitive() {
 		//TODO: To be implemented
 		return true;
 	}

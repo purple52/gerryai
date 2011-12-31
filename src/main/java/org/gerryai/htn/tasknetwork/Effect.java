@@ -18,8 +18,8 @@
 package org.gerryai.htn.tasknetwork;
 
 /**
- * @author david
- *
+ * Interface that an effect must implement.
+ * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Effect {
 

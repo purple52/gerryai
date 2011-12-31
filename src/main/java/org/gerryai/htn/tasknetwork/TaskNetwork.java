@@ -20,16 +20,33 @@ package org.gerryai.htn.tasknetwork;
 import java.util.Set;
 
 /**
- * @author david
+ * Interface that a task network must implement.
+ * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface TaskNetwork {
 
-	public Set<Task> getTasks();
+	/**
+	 * Get the tasks that make up this network.
+	 * @return the tasks
+	 */
+	Set<Task> getTasks();
 	
-	public void setTasks(Set<Task> tasks);
+	/**
+	 * Set the tasks that make up this network.
+	 * @param tasks tasks to set
+	 */
+	void setTasks(Set<Task> tasks);
 	
-	public Set<Constraint> getConstraints();
+	/**
+	 * Get the constraints for this network.
+	 * @return the constraints
+	 */
+	Set<Constraint> getConstraints();
 	
-	public void setConstraints(Set<Constraint> constraints);
+	/**
+	 * Set the constraints for this network.
+	 * @param constraints constraints to set
+	 */
+	void setConstraints(Set<Constraint> constraints);
 }

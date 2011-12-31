@@ -18,21 +18,46 @@
 package org.gerryai.htn.tasknetwork;
 
 /**
- * @author david
+ * Interface that a problem must implement.
+ * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface Problem {
 	
-	public State getState();
+	/**
+	 * Get the state of the problem.
+	 * @return the state
+	 */
+	State getState();
 	
-	public void setState(State state);
+	/**
+	 * Set the state of the problem.
+	 * @param state state to set
+	 */
+	void setState(State state);
 	
-	public TaskNetwork getTaskNetwork();
+	/**
+	 * Get the task network for this problem.
+	 * @return the task network
+	 */
+	TaskNetwork getTaskNetwork();
 	
-	public void setTaskNetwork(TaskNetwork taskNetwork);
+	/**
+	 * Set the task network for this problem.
+	 * @param taskNetwork task network to set
+	 */
+	void setTaskNetwork(TaskNetwork taskNetwork);
 	
-	public Domain getDomain();
+	/**
+	 * Get the domain for this problem.
+	 * @return the domain
+	 */
+	Domain getDomain();
 	
-	public void setDomain(Domain domain);
+	/**
+	 * Set the domain for this problem.
+	 * @param domain domain to set
+	 */
+	void setDomain(Domain domain);
 
 }

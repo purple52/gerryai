@@ -20,18 +20,38 @@ package org.gerryai.htn.tasknetwork;
 import java.util.List;
 
 /**
- * @author david
- *
+ * Interface that a task must implement.
+ * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Task {
 
-	public TaskSymbol getSymbol();
+	/**
+	 * Get this task's symbol.
+	 * @return the symbol
+	 */
+	TaskSymbol getSymbol();
+
+	/**
+	 * Set this task's symbol.
+	 * @param newSymbol the symbol to set
+	 */
+	void setSymbol(TaskSymbol newSymbol);
 	
-	public void setSymbol(TaskSymbol symbol);
+	/**
+	 * Get this task's arguments.
+	 * @return the arguments
+	 */
+	List<TaskArgument> getArguments();
 	
-	public List<TaskArgument> getArguments();
+	/**
+	 * Set this task's arguments.
+	 * @param newArguments the arguments to set
+	 */
+	void setArguments(List<TaskArgument> newArguments);
 	
-	public void setArguments(List<TaskArgument> arguments);
-	
-	public boolean isPrimitive();
+	/**
+	 * Determine whether this task is a primitive.
+	 * @return true if task is a primitive
+	 */
+	boolean isPrimitive();
 }

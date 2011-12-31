@@ -17,9 +17,22 @@
  */
 package org.gerryai.htn.tasknetwork;
 
+/**
+ * Interface that a task symbol must implement.
+ * @author David Edwards <david@more.fool.me.uk>
+ *
+ */
 public interface TaskSymbol {
 
-	public String getName();
+	/**
+	 * Get the name of this symbol.
+	 * @return the name
+	 */
+	String getName();
 	
-	public void setName(String name);
+	/**
+	 * Set the name of this symbol.
+	 * @param name name to set
+	 */
+	void setName(String name);
 }

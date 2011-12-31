@@ -20,13 +20,21 @@ package org.gerryai.htn.tasknetwork;
 import java.util.List;
 
 /**
- * @author david
- *
+ * Interface that a plan must implement.
+ * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Plan {
 	
-	public List<Operator> getOperators();
+	/**
+	 * Get the operators that make up this plan.
+	 * @return the operators
+	 */
+	List<Operator> getOperators();
 	
-	public void setOperators(List<Operator> operators);
+	/**
+	 * Set the operators that make up this plan.
+	 * @param operators operators to set
+	 */
+	void setOperators(List<Operator> operators);
 
 }
