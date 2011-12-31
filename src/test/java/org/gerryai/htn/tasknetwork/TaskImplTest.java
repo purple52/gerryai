@@ -7,8 +7,9 @@ import org.junit.Test;
 public class TaskImplTest {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testIsPrimitive() {
+		TaskImpl task = new TaskImpl();
+		assertTrue(task.isPrimitive());
 	}
 
 }
