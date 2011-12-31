@@ -48,7 +48,9 @@ public class PlannerImplTest {
 		
 		List<Plan> plans = planner.solve(mockProblem);
 		
-		assertEquals(0,plans.size());
+		assertEquals(1,plans.size());
+		Plan plan = plans.get(0);
+		assertEquals(0, plan.getOperators().size());
 	}
 
 }

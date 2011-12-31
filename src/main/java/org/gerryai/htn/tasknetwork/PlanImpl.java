@@ -17,6 +17,7 @@
  */
 package org.gerryai.htn.tasknetwork;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +30,14 @@ public class PlanImpl implements Plan {
 	 * List of operators that implement this plan.
 	 */
 	private List<Operator> operators;
+	
+	/**
+	 * Default constructor,
+	 * Initialises the operators list to an empty list.
+	 */
+	public PlanImpl() {
+		operators = new ArrayList<Operator>();
+	}
 	
 	/**
 	 * {@inheritDoc}
