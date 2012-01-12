@@ -17,8 +17,6 @@
  */
 package org.gerryai.htn.tasknetwork;
 
-import java.util.List;
-
 /**
  * Interface that a task must implement.
  * @author David Edwards <david@more.fool.me.uk>
@@ -36,18 +34,6 @@ public interface Task {
 	 * @param newSymbol the symbol to set
 	 */
 	void setSymbol(TaskSymbol newSymbol);
-	
-	/**
-	 * Get this task's arguments.
-	 * @return the arguments
-	 */
-	List<TaskArgument> getArguments();
-	
-	/**
-	 * Set this task's arguments.
-	 * @param newArguments the arguments to set
-	 */
-	void setArguments(List<TaskArgument> newArguments);
 	
 	/**
 	 * Determine whether this task is a primitive.

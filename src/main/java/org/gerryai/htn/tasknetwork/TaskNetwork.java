@@ -19,6 +19,8 @@ package org.gerryai.htn.tasknetwork;
 
 import java.util.Set;
 
+import org.gerryai.logic.Constraint;
+
 /**
  * Interface that a task network must implement.
  * @author David Edwards <david@more.fool.me.uk>

@@ -17,8 +17,6 @@
  */
 package org.gerryai.htn.tasknetwork;
 
-import java.util.List;
-
 /**
  * Interface that a method must implement.
  * @author David Edwards <david@more.fool.me.uk>
@@ -29,13 +27,13 @@ public interface Method {
 	 * Get the name of this method.
 	 * @return the name
 	 */
-	String getName();
+	MethodName getName();
 	
 	/**
 	 * Set the name of this method.
 	 * @param name name to set
 	 */
-	void setName(String name);
+	void setName(MethodName name);
 	
 	/**
 	 * Get the task for this method.
@@ -50,26 +48,15 @@ public interface Method {
 	void setTask(Task task);
 	
 	/**
-	 * Get the subtasks for this method.
-	 * @return the sub tasks
+	 * Get the task network for this method.
+	 * @return the task network
 	 */
-	List<Task> getSubTasks();
+	TaskNetwork getTaskNetwork();
 	
 	/**
-	 * Set the sub tasks for this method.
-	 * @param subTasks sub tasks to set
+	 * Set the task network for this method.
+	 * @param taskNetwork task network to set
 	 */
-	void setSubTasks(List<Task> subTasks);
+	void setTaskNetwork(TaskNetwork taskNetwork);
 	
-	/**
-	 * Get the constraint for this method.
-	 * @return the constraint
-	 */
-	Constraint getConstraint();
-	
-	/**
-	 * Set the constraint for this method.
-	 * @param constraint constraint to set
-	 */
-	void setConstraint(Constraint constraint);
 }

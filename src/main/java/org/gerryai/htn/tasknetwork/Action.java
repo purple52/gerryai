@@ -17,40 +17,22 @@
  */
 package org.gerryai.htn.tasknetwork;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+
+import org.gerryai.logic.Constant;
+import org.gerryai.logic.Variable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class PlanImpl implements Plan {
+public interface Action {
 
-	/**
-	 * List of actions that implement this plan.
-	 */
-	private List<Action> actions;
+	Operator getOperator();
 	
-	/**
-	 * Default constructor,
-	 * Initialises the operators list to an empty list.
-	 */
-	public PlanImpl() {
-		actions = new ArrayList<Action>();
-	}
+	void setOperator(Operator operator);
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final List<Action> getActions() {
-		return actions;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setActions(List<Action> actions) {
-		this.actions = actions;
-	}
-
+	Map<Variable, Constant> getBindings();
+	
+	void setBindings(Map<Variable, Constant> bindings);
 }

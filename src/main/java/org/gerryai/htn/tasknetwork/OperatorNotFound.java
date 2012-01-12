@@ -17,40 +17,15 @@
  */
 package org.gerryai.htn.tasknetwork;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class PlanImpl implements Plan {
+public class OperatorNotFound extends Exception {
 
 	/**
-	 * List of actions that implement this plan.
+	 * 
 	 */
-	private List<Action> actions;
-	
-	/**
-	 * Default constructor,
-	 * Initialises the operators list to an empty list.
-	 */
-	public PlanImpl() {
-		actions = new ArrayList<Action>();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final List<Action> getActions() {
-		return actions;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setActions(List<Action> actions) {
-		this.actions = actions;
-	}
+	private static final long serialVersionUID = -3828241503028387596L;
 
 }

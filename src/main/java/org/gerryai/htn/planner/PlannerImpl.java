@@ -23,9 +23,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.gerryai.htn.tasknetwork.Domain;
 import org.gerryai.htn.tasknetwork.Plan;
 import org.gerryai.htn.tasknetwork.PlanImpl;
 import org.gerryai.htn.tasknetwork.Problem;
+import org.gerryai.htn.tasknetwork.State;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.htn.tasknetwork.TaskNetworkImpl;
@@ -35,14 +37,28 @@ import org.gerryai.htn.tasknetwork.TaskNetworkImpl;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class PlannerImpl implements Planner {
+	
+	private PlannerHelper plannerHelper;
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<Plan> solve(Problem problem) {
+	public final Plan solve(Problem problem) throws PlanNotFound {	
+		return findPlan(problem.getState(), problem.getTaskNetwork(), problem.getDomain());
+	}
+	
+	private Plan findPlan(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound {
 		
-		Plan plan = new PlanImpl();
-		return findPlans(problem, problem.getTaskNetwork(), plan);
+		if (plannerHelper.isUnsolvable(taskNetwork)) {
+			// 1. No solution
+			throw new PlanNotFound();
+		} else if (plannerHelper.isPrimitive(taskNetwork)) {
+			// 2. U is primitive
+			return plannerHelper.findPlanForPrimitive(state, taskNetwork, domain);
+		} else {
+			// 3. U is non-primitive
+			return plannerHelper.findPlanForNonPrimitive(state, taskNetwork, domain);
+		}
 	}
 	
 	/**

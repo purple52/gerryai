@@ -15,42 +15,32 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.logic;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
+ * Interface that a task symbol must implement.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class PlanImpl implements Plan {
+public class VariableImpl implements Variable {
 
 	/**
-	 * List of actions that implement this plan.
+	 * Name of this variable
 	 */
-	private List<Action> actions;
+	private String name;
 	
 	/**
-	 * Default constructor,
-	 * Initialises the operators list to an empty list.
+	 * {@inheritDoc}
 	 */
-	public PlanImpl() {
-		actions = new ArrayList<Action>();
+	public String getName() {
+		return name;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<Action> getActions() {
-		return actions;
+	public void setName(String name) {
+		this.name = name;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setActions(List<Action> actions) {
-		this.actions = actions;
-	}
-
 }

@@ -30,9 +30,9 @@ import org.gerryai.htn.tasknetwork.Problem;
 public interface Planner {
 
 	/**
-	 * Find a list of plans that solve the given problem.
+	 * Find a plan that solve the given problem.
 	 * @param problem the problem to be solved
-	 * @return list of solutions
+	 * @return a solution
 	 */
-	List<Plan> solve(Problem problem);
+	Plan solve(Problem problem) throws PlanNotFound;
 }

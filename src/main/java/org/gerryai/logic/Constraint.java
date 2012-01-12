@@ -15,42 +15,12 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.gerryai.logic;
 
 /**
+ * Interface that constraints must implement.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class PlanImpl implements Plan {
-
-	/**
-	 * List of actions that implement this plan.
-	 */
-	private List<Action> actions;
-	
-	/**
-	 * Default constructor,
-	 * Initialises the operators list to an empty list.
-	 */
-	public PlanImpl() {
-		actions = new ArrayList<Action>();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final List<Action> getActions() {
-		return actions;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setActions(List<Action> actions) {
-		this.actions = actions;
-	}
+public interface Constraint {
 
 }

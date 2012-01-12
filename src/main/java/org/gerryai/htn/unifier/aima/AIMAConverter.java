@@ -15,42 +15,32 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.unifier.aima;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.unifier.Substitution;
+import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
+
+import aima.core.logic.fol.parsing.ast.Predicate;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class PlanImpl implements Plan {
+public interface AIMAConverter {
 
-	/**
-	 * List of actions that implement this plan.
-	 */
-	private List<Action> actions;
+	Predicate convert(Task task);
 	
-	/**
-	 * Default constructor,
-	 * Initialises the operators list to an empty list.
-	 */
-	public PlanImpl() {
-		actions = new ArrayList<Action>();
-	}
+	aima.core.logic.fol.parsing.ast.Term convert(Term term);
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final List<Action> getActions() {
-		return actions;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setActions(List<Action> actions) {
-		this.actions = actions;
-	}
-
+	Term convert(aima.core.logic.fol.parsing.ast.Term term);
+	
+	aima.core.logic.fol.parsing.ast.Variable convert(Variable variable);
+	
+	Variable convert(aima.core.logic.fol.parsing.ast.Variable variable);
+	
+	Substitution convert(Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map);
 }

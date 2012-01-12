@@ -37,7 +37,7 @@ import org.junit.Test;
 public class PlannerImplTest {
 
 	@Test
-	public void testFind() {
+	public void testSolveEmptyTaskNetwork() throws Exception {
 		
 		TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
 		when(mockTaskNetwork.getTasks()).thenReturn(new HashSet<Task>());
@@ -46,11 +46,7 @@ public class PlannerImplTest {
 		
 		PlannerImpl planner = new PlannerImpl();
 		
-		List<Plan> plans = planner.solve(mockProblem);
-		
-		assertEquals(1,plans.size());
-		Plan plan = plans.get(0);
-		assertEquals(0, plan.getOperators().size());
+		Plan plan = planner.solve(mockProblem);
 	}
 
 }

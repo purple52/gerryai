@@ -15,42 +15,20 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.unifier;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+
+import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class PlanImpl implements Plan {
+public interface Substitution {
 
-	/**
-	 * List of actions that implement this plan.
-	 */
-	private List<Action> actions;
+	Map<Variable, Term> getMap();
 	
-	/**
-	 * Default constructor,
-	 * Initialises the operators list to an empty list.
-	 */
-	public PlanImpl() {
-		actions = new ArrayList<Action>();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final List<Action> getActions() {
-		return actions;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setActions(List<Action> actions) {
-		this.actions = actions;
-	}
-
+	void setMap(Map<Variable, Term> map);
 }

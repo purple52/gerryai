@@ -17,6 +17,10 @@
  */
 package org.gerryai.htn.tasknetwork;
 
+import java.util.List;
+
+import org.gerryai.logic.Term;
+
 /**
  * Interface that a task symbol must implement.
  * @author David Edwards <david@more.fool.me.uk>
@@ -35,4 +39,8 @@ public interface TaskSymbol {
 	 * @param name name to set
 	 */
 	void setName(String name);
+	
+	List<Term> getTerms();
+	
+	void setTerms(List<Term> terms);
 }

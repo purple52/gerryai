@@ -15,42 +15,21 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.decomposer;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.gerryai.htn.tasknetwork.Method;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.htn.unifier.Substitution;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class PlanImpl implements Plan {
-
-	/**
-	 * List of actions that implement this plan.
-	 */
-	private List<Action> actions;
+public interface Decomposer {
 	
-	/**
-	 * Default constructor,
-	 * Initialises the operators list to an empty list.
-	 */
-	public PlanImpl() {
-		actions = new ArrayList<Action>();
-	}
+	TaskNetwork decompose(TaskNetwork taskNetwork, Task task, Method method);
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final List<Action> getActions() {
-		return actions;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setActions(List<Action> actions) {
-		this.actions = actions;
-	}
+	TaskNetwork decompose(TaskNetwork taskNetwork, Task task, Method method, Substitution substitution);
 
 }

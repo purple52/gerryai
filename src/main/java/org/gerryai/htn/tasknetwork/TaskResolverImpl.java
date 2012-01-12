@@ -17,40 +17,32 @@
  */
 package org.gerryai.htn.tasknetwork;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class PlanImpl implements Plan {
-
-	/**
-	 * List of actions that implement this plan.
-	 */
-	private List<Action> actions;
+public class TaskResolverImpl implements TaskResolver {
 	
 	/**
-	 * Default constructor,
-	 * Initialises the operators list to an empty list.
+	 * The domain this task resolver is working in
 	 */
-	public PlanImpl() {
-		actions = new ArrayList<Action>();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final List<Action> getActions() {
-		return actions;
-	}
+	private Domain domain;
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setActions(List<Action> actions) {
-		this.actions = actions;
+	public Action resolve(Task task) {
+		
+		try {
+			Operator operator = domain.getOperatorBySymbol(task.getSymbol());
+		} catch (OperatorNotFound e) {
+			// TODO Handle exception properly
+			e.printStackTrace();
+		}
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

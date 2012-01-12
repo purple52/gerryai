@@ -17,40 +17,22 @@
  */
 package org.gerryai.htn.tasknetwork;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
+ * Interface that an operator symbol must implement.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class PlanImpl implements Plan {
+public interface OperatorSymbol {
 
 	/**
-	 * List of actions that implement this plan.
+	 * Get the name of this symbol.
+	 * @return the name
 	 */
-	private List<Action> actions;
+	String getName();
 	
 	/**
-	 * Default constructor,
-	 * Initialises the operators list to an empty list.
+	 * Set the name of this symbol.
+	 * @param name name to set
 	 */
-	public PlanImpl() {
-		actions = new ArrayList<Action>();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final List<Action> getActions() {
-		return actions;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setActions(List<Action> actions) {
-		this.actions = actions;
-	}
-
+	void setName(String name);
 }

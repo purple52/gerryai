@@ -15,12 +15,16 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.unifier;
+
+import org.gerryai.htn.tasknetwork.Method;
+import org.gerryai.htn.tasknetwork.Task;
 
 /**
- * Interface that constraints must implement.
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public interface Constraint {
-
+public interface Unifier {
+	
+	Substitution unify(Task task, Method method);
 }

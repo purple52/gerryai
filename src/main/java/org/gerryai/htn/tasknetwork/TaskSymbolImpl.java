@@ -17,6 +17,10 @@
  */
 package org.gerryai.htn.tasknetwork;
 
+import java.util.List;
+
+import org.gerryai.logic.Term;
+
 /**
  * Implementation of a task symbol.
  * @author David Edwards <david@more.fool.me.uk>
@@ -30,6 +34,11 @@ public class TaskSymbolImpl implements TaskSymbol {
 	private String name;
 	
 	/**
+	 * A list of the symbol's terms.
+	 */
+	private List<Term> terms;
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	public final String getName() {
@@ -41,5 +50,19 @@ public class TaskSymbolImpl implements TaskSymbol {
 	 */
 	public final void setName(String name) {
 		this.name = name;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final List<Term> getTerms() {
+		return terms;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setTerms(List<Term> terms) {
+		this.terms = terms;
 	}
 }

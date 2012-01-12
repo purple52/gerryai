@@ -26,15 +26,15 @@ import java.util.List;
 public interface Plan {
 	
 	/**
-	 * Get the operators that make up this plan.
-	 * @return the operators
+	 * Get the actions that make up this plan.
+	 * @return the actions
 	 */
-	List<Operator> getOperators();
+	List<Action> getActions();
 	
 	/**
-	 * Set the operators that make up this plan.
-	 * @param operators operators to set
+	 * Set the actions that make up this plan.
+	 * @param actions actions to set
 	 */
-	void setOperators(List<Operator> operators);
+	void setActions(List<Action> actions);
 
 }

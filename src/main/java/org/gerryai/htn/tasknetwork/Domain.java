@@ -26,7 +26,7 @@ import java.util.Set;
 public interface Domain {
 
 	/**
-	 * Get the set of available operators for this domain.
+	 * Get the full set of available operators for this domain.
 	 * @return the operators
 	 */
 	Set<Operator> getOperators();
@@ -48,4 +48,10 @@ public interface Domain {
 	 * @param methods the set of methods
 	 */
 	void setMethods(Set<Method> methods);
+	
+	/**
+	 * Get a subset of operators by symbol.
+	 * @param symbol the symbol to 
+	 */
+	Operator getOperatorBySymbol(TaskSymbol symbol) throws OperatorNotFound;
 }
