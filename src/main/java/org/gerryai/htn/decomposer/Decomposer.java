@@ -17,10 +17,10 @@
  */
 package org.gerryai.htn.decomposer;
 
-import org.gerryai.htn.tasknetwork.Method;
+import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.htn.unifier.Substitution;
+import org.gerryai.logic.unifier.Substitution;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>

@@ -15,12 +15,29 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.plan;
 
 /**
- * @author david
+ * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class TaskArgumentImpl implements TaskArgument {
+public class TaskNotActionable extends Exception {
+
+    public TaskNotActionable() {
+        super();
+    }
+    
+    public TaskNotActionable(String message) {
+        super(message);
+    }
+
+    public TaskNotActionable(String message, Throwable throwable) {
+        super(message, throwable);
+    }
+    
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6555288647989537876L;
 
 }

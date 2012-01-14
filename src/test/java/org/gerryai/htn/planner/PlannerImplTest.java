@@ -24,8 +24,8 @@ import static org.mockito.Mockito.when;
 import java.util.HashSet;
 import java.util.List;
 
-import org.gerryai.htn.tasknetwork.Plan;
-import org.gerryai.htn.tasknetwork.Problem;
+import org.gerryai.htn.plan.Plan;
+import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.junit.Test;
@@ -44,8 +44,9 @@ public class PlannerImplTest {
 		Problem mockProblem = mock(Problem.class);
 		when(mockProblem.getTaskNetwork()).thenReturn(mockTaskNetwork);
 		
+		PlannerHelper mockPlannerHelper = mock(PlannerHelper.class);
 		PlannerImpl planner = new PlannerImpl();
-		
+		// TODO: java.lang.reflect.Field.
 		Plan plan = planner.solve(mockProblem);
 	}
 

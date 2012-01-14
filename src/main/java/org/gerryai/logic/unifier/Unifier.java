@@ -15,12 +15,16 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.logic.unifier;
+
+import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface Binding {
-
+public interface Unifier {
+	
+	TermSubstitution unify(Task task, Method method);
 }

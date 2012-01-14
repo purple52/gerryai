@@ -15,48 +15,33 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.logic.unifier;
+
+import java.util.Map;
+
+import org.gerryai.logic.Constant;
+import org.gerryai.logic.Variable;
 
 /**
- * Interface that a method must implement.
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public interface Method {
+public class ConstantSubstitution implements Substitution<Constant> {
+	
+	private Map<Variable, Constant> map;
 
 	/**
-	 * Get the name of this method.
-	 * @return the name
+	 * {@inheritDoc}
 	 */
-	MethodName getName();
-	
+	public Map<Variable, Constant> getMap() {
+		return map;
+	}
+
 	/**
-	 * Set the name of this method.
-	 * @param name name to set
+	 * {@inheritDoc}
 	 */
-	void setName(MethodName name);
-	
-	/**
-	 * Get the task for this method.
-	 * @return the task
-	 */
-	Task getTask();
-	
-	/**
-	 * Set the task for this method.
-	 * @param task task to set
-	 */
-	void setTask(Task task);
-	
-	/**
-	 * Get the task network for this method.
-	 * @return the task network
-	 */
-	TaskNetwork getTaskNetwork();
-	
-	/**
-	 * Set the task network for this method.
-	 * @param taskNetwork task network to set
-	 */
-	void setTaskNetwork(TaskNetwork taskNetwork);
-	
+	public void setMap(Map<Variable, Constant> map) {
+		this.map = map;
+	}
+
 }

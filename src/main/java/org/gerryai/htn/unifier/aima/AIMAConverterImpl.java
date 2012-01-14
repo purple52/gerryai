@@ -24,11 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.unifier.Substitution;
-import org.gerryai.htn.unifier.SubstitutionImpl;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 import org.gerryai.logic.VariableImpl;
+import org.gerryai.logic.unifier.TermSubstitution;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
 
@@ -43,8 +42,8 @@ public class AIMAConverterImpl implements AIMAConverter {
 	 */
 	public Predicate convert(Task task) {
 		
-		String name = task.getSymbol().getName();
-		List<Term> taskTerms = task.getSymbol().getTerms();
+		String name = task.getName();
+		List<Term> taskTerms = task.getArguments();
 		
 		List<aima.core.logic.fol.parsing.ast.Term> terms = new ArrayList<aima.core.logic.fol.parsing.ast.Term>();
 		Iterator<Term> taskTermIterator = taskTerms.iterator();
@@ -68,7 +67,7 @@ public class AIMAConverterImpl implements AIMAConverter {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Substitution convert(Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map) {
+	public TermSubstitution convert(Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map) {
 		Map<Variable, Term> substitutionMap = new HashMap<Variable, Term>();
 		
 		Iterator<aima.core.logic.fol.parsing.ast.Variable> variableIterator = map.keySet().iterator();
@@ -80,7 +79,7 @@ public class AIMAConverterImpl implements AIMAConverter {
 			substitutionMap.put(key, value);
 		}
 		
-		Substitution substitution = new SubstitutionImpl();
+		TermSubstitution substitution = new TermSubstitution();
 		substitution.setMap(substitutionMap);
 		return substitution;
 	}

@@ -15,24 +15,27 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.plan;
 
-import java.util.Map;
+import java.util.List;
 
-import org.gerryai.logic.Constant;
-import org.gerryai.logic.Variable;
 
 /**
+ * Interface that a plan must implement.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface Action {
+public interface Plan {
+	
+	/**
+	 * Get the actions that make up this plan.
+	 * @return the actions
+	 */
+	List<Action> getActions();
+	
+	/**
+	 * Set the actions that make up this plan.
+	 * @param actions actions to set
+	 */
+	void setActions(List<Action> actions);
 
-	Operator getOperator();
-	
-	void setOperator(Operator operator);
-	
-	Map<Variable, Constant> getBindings();
-	
-	void setBindings(Map<Variable, Constant> bindings);
 }

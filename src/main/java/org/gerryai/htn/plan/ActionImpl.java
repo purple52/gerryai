@@ -15,49 +15,46 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.plan;
+
+import org.gerryai.htn.domain.Operator;
+import org.gerryai.logic.unifier.ConstantSubstitution;
 
 /**
- * Interface that a problem must implement.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface Problem {
+public class ActionImpl implements Action {
+
+	private Operator operator;
+	private ConstantSubstitution bindings;
 	
 	/**
-	 * Get the state of the problem.
-	 * @return the state
+	 * {@inheritDoc}
 	 */
-	State getState();
-	
+	public Operator getOperator() {
+		return operator;
+	}
+
 	/**
-	 * Set the state of the problem.
-	 * @param state state to set
+	 * {@inheritDoc}
 	 */
-	void setState(State state);
-	
+	public void setOperator(Operator operator) {
+		this.operator = operator;
+	}
+
 	/**
-	 * Get the task network for this problem.
-	 * @return the task network
+	 * {@inheritDoc}
 	 */
-	TaskNetwork getTaskNetwork();
-	
+	public ConstantSubstitution getBindings() {
+		return bindings;
+	}
+
 	/**
-	 * Set the task network for this problem.
-	 * @param taskNetwork task network to set
+	 * {@inheritDoc}
 	 */
-	void setTaskNetwork(TaskNetwork taskNetwork);
-	
-	/**
-	 * Get the domain for this problem.
-	 * @return the domain
-	 */
-	Domain getDomain();
-	
-	/**
-	 * Set the domain for this problem.
-	 * @param domain domain to set
-	 */
-	void setDomain(Domain domain);
+	public void setBindings(ConstantSubstitution bindings) {
+		this.bindings = bindings;
+	}
 
 }

@@ -17,6 +17,8 @@
  */
 package org.gerryai.htn.tasknetwork;
 
+import org.gerryai.htn.plan.Action;
+
 /**
  * Interface that a task resolver must implement.
  * @author David Edwards <david@more.fool.me.uk>

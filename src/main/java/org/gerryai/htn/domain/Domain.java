@@ -15,16 +15,43 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.unifier;
+package org.gerryai.htn.domain;
 
-import org.gerryai.htn.tasknetwork.Method;
-import org.gerryai.htn.tasknetwork.Task;
+import java.util.Set;
 
 /**
+ * Interface that a domain must implement.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface Unifier {
+public interface Domain {
+
+	/**
+	 * Get the full set of available operators for this domain.
+	 * @return the operators
+	 */
+	Set<Operator> getOperators();
 	
-	Substitution unify(Task task, Method method);
+	/**
+	 * Set the available operators for this domain.
+	 * @param operators the set of operators
+	 */
+	void setOperators(Set<Operator> operators);
+	
+	/**
+	 * Get the set of methods available for this domain.
+	 * @return the methods
+	 */
+	Set<Method> getMethods();
+	
+	/**
+	 * Set the available methods for this domain.
+	 * @param methods the set of methods
+	 */
+	void setMethods(Set<Method> methods);
+	
+	/**
+	 * Get an operator by name.
+	 * @param name the name of the operator to get
+	 */
+	Operator getOperatorByName(String name) throws OperatorNotFound;
 }

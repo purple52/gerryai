@@ -15,43 +15,20 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.plan;
 
-import java.util.Set;
+import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.unifier.ConstantSubstitution;
 
 /**
- * Interface that a domain must implement.
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public interface Domain {
+public interface ActionFactoryHelper {
+	
+	Operator getOperator(Task task) throws TaskNotActionable;
+	
+	ConstantSubstitution getBindings(Task task) throws TaskNotActionable;
 
-	/**
-	 * Get the full set of available operators for this domain.
-	 * @return the operators
-	 */
-	Set<Operator> getOperators();
-	
-	/**
-	 * Set the available operators for this domain.
-	 * @param operators the set of operators
-	 */
-	void setOperators(Set<Operator> operators);
-	
-	/**
-	 * Get the set of methods available for this domain.
-	 * @return the mthods
-	 */
-	Set<Method> getMethods();
-	
-	/**
-	 * Set the available methods for this domain.
-	 * @param methods the set of methods
-	 */
-	void setMethods(Set<Method> methods);
-	
-	/**
-	 * Get a subset of operators by symbol.
-	 * @param symbol the symbol to 
-	 */
-	Operator getOperatorBySymbol(TaskSymbol symbol) throws OperatorNotFound;
 }

@@ -14,13 +14,54 @@
  *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ */ 	
 package org.gerryai.htn.tasknetwork;
 
+import java.util.List;
+
+import org.gerryai.logic.Term;
+
 /**
- * Interface that an effect must implement.
- * @author David Edwards <david@more.fool.me.uk>
+ * Basic implementation of the Task interface.
  */
-public interface Effect {
+public abstract class AbstractTask implements Task {
+	
+	/**
+	 * Name for this task.
+	 */
+	private String name;
+	
+	/**
+	 * Arguments for this task.
+	 */
+	private List<Term> arguments;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final String getName() {
+		return name;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final List<Term> getArguments() {
+		return arguments;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setArguments(List<Term> arguments) {
+		this.arguments = arguments;
+	}
 
 }

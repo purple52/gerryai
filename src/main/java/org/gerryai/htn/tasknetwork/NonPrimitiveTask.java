@@ -18,9 +18,16 @@
 package org.gerryai.htn.tasknetwork;
 
 /**
- * @author david
+ * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface TaskArgument {
+public class NonPrimitiveTask extends AbstractTask {
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isPrimitive() {
+		return true;
+	}
 
 }

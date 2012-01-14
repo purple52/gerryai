@@ -15,24 +15,33 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.logic.unifier;
+
+import java.util.Map;
+
+import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 
 /**
- * Interface that an operator symbol must implement.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface OperatorSymbol {
+public class TermSubstitution implements Substitution<Term> {
+	
+	private Map<Variable, Term> map;
 
 	/**
-	 * Get the name of this symbol.
-	 * @return the name
+	 * {@inheritDoc}
 	 */
-	String getName();
-	
+	public Map<Variable, Term> getMap() {
+		return map;
+	}
+
 	/**
-	 * Set the name of this symbol.
-	 * @param name name to set
+	 * {@inheritDoc}
 	 */
-	void setName(String name);
+	public void setMap(Map<Variable, Term> map) {
+		this.map = map;
+	}
+
 }

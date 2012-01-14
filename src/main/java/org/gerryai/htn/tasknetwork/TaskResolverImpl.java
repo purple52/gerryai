@@ -17,7 +17,10 @@
  */
 package org.gerryai.htn.tasknetwork;
 
-import java.util.Set;
+import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.domain.OperatorNotFound;
+import org.gerryai.htn.plan.Action;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -36,7 +39,7 @@ public class TaskResolverImpl implements TaskResolver {
 	public Action resolve(Task task) {
 		
 		try {
-			Operator operator = domain.getOperatorBySymbol(task.getSymbol());
+			Operator operator = domain.getOperatorByName(task.getName());
 		} catch (OperatorNotFound e) {
 			// TODO Handle exception properly
 			e.printStackTrace();

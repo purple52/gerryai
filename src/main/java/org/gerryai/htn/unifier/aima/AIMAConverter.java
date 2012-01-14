@@ -20,9 +20,9 @@ package org.gerryai.htn.unifier.aima;
 import java.util.Map;
 
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.unifier.Substitution;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
+import org.gerryai.logic.unifier.TermSubstitution;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
 
@@ -42,5 +42,5 @@ public interface AIMAConverter {
 	
 	Variable convert(aima.core.logic.fol.parsing.ast.Variable variable);
 	
-	Substitution convert(Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map);
+	TermSubstitution convert(Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map);
 }

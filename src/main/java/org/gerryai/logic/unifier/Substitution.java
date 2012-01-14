@@ -15,20 +15,19 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.unifier;
+package org.gerryai.logic.unifier;
 
 import java.util.Map;
 
-import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface Substitution {
+public interface Substitution<T> {
 
-	Map<Variable, Term> getMap();
+	Map<Variable, T> getMap();
 	
-	void setMap(Map<Variable, Term> map);
+	void setMap(Map<Variable, T> map);
 }

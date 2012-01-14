@@ -15,12 +15,24 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.domain;
 
 /**
+ * Interface that a method symbol must implement.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface BoundOperator {
+public interface MethodSymbol {
 
+	/**
+	 * Get the name of this symbol.
+	 * @return the name
+	 */
+	String getName();
+	
+	/**
+	 * Set the name of this symbol.
+	 * @param name name to set
+	 */
+	void setName(String name);
 }

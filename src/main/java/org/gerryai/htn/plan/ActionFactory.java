@@ -15,24 +15,15 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.plan;
 
-import java.util.List;
-
-import org.gerryai.logic.Variable;
+import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface MethodName {
-	
-	MethodSymbol getSymbol();
-	
-	void setSymbol(MethodSymbol symbol);
-	
-	List<Variable> getVariables();
-	
-	void setVariables(List<Variable> variables);
+public interface ActionFactory {
 
+	Action create(Task task) throws TaskNotActionable;
 }

@@ -17,9 +17,9 @@
  */
 package org.gerryai.htn.planner;
 
-import org.gerryai.htn.tasknetwork.Domain;
-import org.gerryai.htn.tasknetwork.Plan;
-import org.gerryai.htn.tasknetwork.State;
+import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.plan.Plan;
+import org.gerryai.htn.problem.State;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
@@ -29,8 +29,6 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
 public interface PlannerHelper {
 
 	boolean isUnsolvable(TaskNetwork taskNetwork);
-	
-	boolean isPrimitive(TaskNetwork taskNetwork);
 	
 	Plan findPlanForPrimitive(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound;
 	

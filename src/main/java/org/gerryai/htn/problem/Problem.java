@@ -15,49 +15,52 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.problem;
 
-import java.util.List;
-import java.util.Map;
-
-import org.gerryai.logic.Constant;
-import org.gerryai.logic.Variable;
+import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
+ * Interface that a problem must implement.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class ActionImpl implements Action {
-
-	private Operator operator;
-	private Map<Variable, Constant> bindings;
+public interface Problem {
 	
 	/**
-	 * {@inheritDoc}
+	 * Get the state of the problem.
+	 * @return the state
 	 */
-	public Operator getOperator() {
-		return operator;
-	}
-
+	State getState();
+	
 	/**
-	 * {@inheritDoc}
+	 * Set the state of the problem.
+	 * @param state state to set
 	 */
-	public void setOperator(Operator operator) {
-		this.operator = operator;
-	}
-
+	void setState(State state);
+	
 	/**
-	 * {@inheritDoc}
+	 * Get the task network for this problem.
+	 * @return the task network
 	 */
-	public Map<Variable, Constant> getBindings() {
-		return bindings;
-	}
-
+	TaskNetwork getTaskNetwork();
+	
 	/**
-	 * {@inheritDoc}
+	 * Set the task network for this problem.
+	 * @param taskNetwork task network to set
 	 */
-	public void setBindings(Map<Variable, Constant> bindings) {
-		this.bindings = bindings;
-	}
+	void setTaskNetwork(TaskNetwork taskNetwork);
+	
+	/**
+	 * Get the domain for this problem.
+	 * @return the domain
+	 */
+	Domain getDomain();
+	
+	/**
+	 * Set the domain for this problem.
+	 * @param domain domain to set
+	 */
+	void setDomain(Domain domain);
 
 }

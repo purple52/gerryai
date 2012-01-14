@@ -17,6 +17,7 @@
  */
 package org.gerryai.htn.tasknetwork;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import org.gerryai.logic.Constraint;
@@ -63,6 +64,25 @@ public class TaskNetworkImpl implements TaskNetwork {
 	 */
 	public final void setConstraints(Set<Constraint> constraints) {
 		this.constraints = constraints;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isPrimitive() {
+		
+		Set<Task> tasks = getTasks();
+		
+		Iterator<Task> taskIterator = tasks.iterator();
+		while (taskIterator.hasNext()) {
+			if (!taskIterator.next().isPrimitive()) {
+				// If any of our tasks are non-primitive, the whole network is non-primitive
+				return false;
+			}
+		}
+		
+		// None of our tasks were non-primitive, so the whole network is primitive
+		return true;
 	}
 
 }

@@ -4,11 +4,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class TaskImplTest {
+public class PrimitiveTaskTest {
 
 	@Test
 	public void testIsPrimitive() {
-		TaskImpl task = new TaskImpl();
+		PrimitiveTask task = new PrimitiveTask();
 		assertTrue(task.isPrimitive());
 	}
 

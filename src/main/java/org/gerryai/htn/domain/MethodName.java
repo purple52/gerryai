@@ -14,59 +14,25 @@
  *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */ 	
-package org.gerryai.htn.tasknetwork;
+ */
+package org.gerryai.htn.domain;
 
 import java.util.List;
 
+import org.gerryai.logic.Variable;
+
 /**
- * Basic implementation of the Task interface.
+ * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public class TaskImpl implements Task {
+public interface MethodName {
 	
-	/**
-	 * Symbol for this task.
-	 */
-	private TaskSymbol symbol;
+	MethodSymbol getSymbol();
 	
-	/**
-	 * Arguments for this task.
-	 */
-	private List<TaskArgument> arguments;
+	void setSymbol(MethodSymbol symbol);
+	
+	List<Variable> getVariables();
+	
+	void setVariables(List<Variable> variables);
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final TaskSymbol getSymbol() {
-		return symbol;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setSymbol(TaskSymbol symbol) {
-		this.symbol = symbol;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final List<TaskArgument> getArguments() {
-		return arguments;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setArguments(List<TaskArgument> arguments) {
-		this.arguments = arguments;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final boolean isPrimitive() {
-		//TODO: To be implemented
-		return true;
-	}
 }

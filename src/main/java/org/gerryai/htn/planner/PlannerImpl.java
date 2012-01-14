@@ -23,11 +23,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.tasknetwork.Domain;
-import org.gerryai.htn.tasknetwork.Plan;
-import org.gerryai.htn.tasknetwork.PlanImpl;
-import org.gerryai.htn.tasknetwork.Problem;
-import org.gerryai.htn.tasknetwork.State;
+import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.plan.Plan;
+import org.gerryai.htn.plan.PlanImpl;
+import org.gerryai.htn.problem.Problem;
+import org.gerryai.htn.problem.State;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.htn.tasknetwork.TaskNetworkImpl;
@@ -52,7 +52,7 @@ public class PlannerImpl implements Planner {
 		if (plannerHelper.isUnsolvable(taskNetwork)) {
 			// 1. No solution
 			throw new PlanNotFound();
-		} else if (plannerHelper.isPrimitive(taskNetwork)) {
+		} else if (taskNetwork.isPrimitive()) {
 			// 2. U is primitive
 			return plannerHelper.findPlanForPrimitive(state, taskNetwork, domain);
 		} else {

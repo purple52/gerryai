@@ -22,13 +22,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.tasknetwork.Action;
-import org.gerryai.htn.tasknetwork.ActionImpl;
-import org.gerryai.htn.tasknetwork.Domain;
-import org.gerryai.htn.tasknetwork.OperatorNotFound;
-import org.gerryai.htn.tasknetwork.Plan;
-import org.gerryai.htn.tasknetwork.PlanImpl;
-import org.gerryai.htn.tasknetwork.State;
+import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.plan.Action;
+import org.gerryai.htn.plan.ActionFactory;
+import org.gerryai.htn.plan.Plan;
+import org.gerryai.htn.plan.PlanImpl;
+import org.gerryai.htn.plan.TaskNotActionable;
+import org.gerryai.htn.problem.State;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
@@ -38,31 +38,14 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  */
 public class PlannerHelperImpl implements PlannerHelper {
 
+	private ActionFactory actionFactory;
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	public boolean isUnsolvable(TaskNetwork taskNetwork) {
 		//TODO: Implement
 		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean isPrimitive(TaskNetwork taskNetwork) {
-		
-		// TODO: Confirm implementation is correct
-		
-		Set<Task> tasks = taskNetwork.getTasks();
-		
-		Iterator<Task> taskIterator = tasks.iterator();
-		while (taskIterator.hasNext()) {
-			if (!taskIterator.next().isPrimitive()) {
-				return false;
-			}
-		}
-		
-		return true;
 	}
 
 	/**
@@ -80,14 +63,15 @@ public class PlannerHelperImpl implements PlannerHelper {
 		Iterator<Task> taskIterator = tasks.iterator();
 		while (taskIterator.hasNext()) {
 			Task task = taskIterator.next();
-			Action action = new ActionImpl();
+			Action action;
 			try {
-			action.setOperator(domain.getOperatorBySymbol(task.getSymbol()));
-			//TODO: Set bindings
-			actions.add(action);
-			} catch (OperatorNotFound e) {
+				action = actionFactory.create(task);
+			} catch (TaskNotActionable e) {
+				// If we couldn't find an operator for this task, something must
+				// have gone a bit wrong - but definitely no plan exists!
 				throw new PlanNotFound();
 			}
+			actions.add(action);
 		}
 		
 		return plan;

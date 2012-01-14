@@ -15,12 +15,17 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.domain;
 
 /**
- * @author david
+ * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface State {
+public class OperatorNotFound extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3828241503028387596L;
 
 }

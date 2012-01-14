@@ -15,32 +15,12 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
-
-import java.util.List;
-
-import org.gerryai.logic.Term;
+package org.gerryai.htn.problem;
 
 /**
- * Interface that a task symbol must implement.
- * @author David Edwards <david@more.fool.me.uk>
+ * @author david
  *
  */
-public interface TaskSymbol {
+public interface State {
 
-	/**
-	 * Get the name of this symbol.
-	 * @return the name
-	 */
-	String getName();
-	
-	/**
-	 * Set the name of this symbol.
-	 * @param name name to set
-	 */
-	void setName(String name);
-	
-	List<Term> getTerms();
-	
-	void setTerms(List<Term> terms);
 }

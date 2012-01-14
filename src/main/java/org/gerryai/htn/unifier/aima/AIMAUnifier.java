@@ -19,10 +19,10 @@ package org.gerryai.htn.unifier.aima;
 
 import java.util.Map;
 
-import org.gerryai.htn.tasknetwork.Method;
+import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.unifier.Substitution;
-import org.gerryai.htn.unifier.Unifier;
+import org.gerryai.logic.unifier.TermSubstitution;
+import org.gerryai.logic.unifier.Unifier;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
 
@@ -45,7 +45,7 @@ public class AIMAUnifier implements Unifier {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Substitution unify(Task task, Method method) {
+	public TermSubstitution unify(Task task, Method method) {
 		
 		Predicate taskPredicate = converter.convert(task);
 		Predicate methodTaskPredicate = converter.convert(method.getTask());

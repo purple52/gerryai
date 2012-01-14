@@ -15,26 +15,12 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
-
-import java.util.List;
+package org.gerryai.htn.domain;
 
 /**
- * Interface that a plan must implement.
+ * Interface that an effect must implement.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Plan {
-	
-	/**
-	 * Get the actions that make up this plan.
-	 * @return the actions
-	 */
-	List<Action> getActions();
-	
-	/**
-	 * Set the actions that make up this plan.
-	 * @param actions actions to set
-	 */
-	void setActions(List<Action> actions);
+public interface Effect {
 
 }

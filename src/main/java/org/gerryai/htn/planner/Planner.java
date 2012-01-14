@@ -19,8 +19,8 @@ package org.gerryai.htn.planner;
 
 import java.util.List;
 
-import org.gerryai.htn.tasknetwork.Plan;
-import org.gerryai.htn.tasknetwork.Problem;
+import org.gerryai.htn.plan.Plan;
+import org.gerryai.htn.problem.Problem;
 
 /**
  * Interface that a planner must implement.

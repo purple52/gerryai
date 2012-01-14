@@ -15,54 +15,51 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.domain;
 
-import java.util.List;
-
-import org.gerryai.logic.Term;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
- * Implementation of a task symbol.
+ * Interface that a method must implement.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class TaskSymbolImpl implements TaskSymbol {
+public interface Method {
 
 	/**
-	 * The name of the symbol.
+	 * Get the name of this method.
+	 * @return the name
 	 */
-	private String name;
+	MethodName getName();
 	
 	/**
-	 * A list of the symbol's terms.
+	 * Set the name of this method.
+	 * @param name name to set
 	 */
-	private List<Term> terms;
+	void setName(MethodName name);
 	
 	/**
-	 * {@inheritDoc}
+	 * Get the task for this method.
+	 * @return the task
 	 */
-	public final String getName() {
-		return name;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setName(String name) {
-		this.name = name;
-	}
+	Task getTask();
 	
 	/**
-	 * {@inheritDoc}
+	 * Set the task for this method.
+	 * @param task task to set
 	 */
-	public final List<Term> getTerms() {
-		return terms;
-	}
-
+	void setTask(Task task);
+	
 	/**
-	 * {@inheritDoc}
+	 * Get the task network for this method.
+	 * @return the task network
 	 */
-	public final void setTerms(List<Term> terms) {
-		this.terms = terms;
-	}
+	TaskNetwork getTaskNetwork();
+	
+	/**
+	 * Set the task network for this method.
+	 * @param taskNetwork task network to set
+	 */
+	void setTaskNetwork(TaskNetwork taskNetwork);
+	
 }

@@ -51,4 +51,10 @@ public interface TaskNetwork {
 	 * @param constraints constraints to set
 	 */
 	void setConstraints(Set<Constraint> constraints);
+	
+	/**
+	 * Check if the task network is primitive by examining its tasks
+	 * @return whether the task network is primitive
+	 */
+	boolean isPrimitive();
 }

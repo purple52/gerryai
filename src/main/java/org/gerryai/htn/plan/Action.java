@@ -15,24 +15,22 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.plan;
 
-import java.util.List;
-
-import org.gerryai.logic.Variable;
+import org.gerryai.htn.domain.Operator;
+import org.gerryai.logic.unifier.ConstantSubstitution;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface OperatorName {
-	
-	OperatorSymbol getSymbol();
-	
-	void setSymbol(OperatorSymbol symbol);
-	
-	List<Variable> getVariables();
-	
-	void setVariables(List<Variable> variables);
+public interface Action {
 
+	Operator getOperator();
+	
+	void setOperator(Operator operator);
+	
+	ConstantSubstitution getBindings();
+	
+	void setBindings(ConstantSubstitution bindings);
 }
