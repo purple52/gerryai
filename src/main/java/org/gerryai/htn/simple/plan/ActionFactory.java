@@ -15,19 +15,17 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.simple.plan;
+
+import org.gerryai.htn.plan.Action;
+import org.gerryai.htn.plan.TaskNotActionable;
+import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class NonPrimitiveTask extends AbstractTask {
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean isPrimitive() {
-		return true;
-	}
+public interface ActionFactory {
 
+	Action create(Task task) throws TaskNotActionable;
 }

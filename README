@@ -1,0 +1,7 @@
+Install the AIMA Core Jar in your local Maven repository:
+
+1. Get a copy of the jar file by building the code from:
+http://code.google.com/p/aima-java/
+
+2. Install using:
+mvn install:install-file -Dfile=aima-core.jar -DgroupId=aima -DartifactId=aima-core -Dversion=1.6.0 -Dpackaging=jar -DgeneratePom=true

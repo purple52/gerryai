@@ -15,24 +15,21 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.domain;
+package org.gerryai.htn.simple.plan;
+
+import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.plan.TaskNotActionable;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.unifier.ConstantSubstitution;
 
 /**
- * Interface that a method symbol must implement.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface MethodSymbol {
-
-	/**
-	 * Get the name of this symbol.
-	 * @return the name
-	 */
-	String getName();
+public interface ActionFactoryHelper {
 	
-	/**
-	 * Set the name of this symbol.
-	 * @param name name to set
-	 */
-	void setName(String name);
+	Operator getOperator(Task task) throws TaskNotActionable;
+	
+	ConstantSubstitution getBindings(Task task, Operator operator) throws TaskNotActionable;
+
 }

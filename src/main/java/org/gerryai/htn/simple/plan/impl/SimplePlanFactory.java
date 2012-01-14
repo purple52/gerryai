@@ -15,23 +15,29 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.planner;
+package org.gerryai.htn.simple.plan.impl;
 
-import org.gerryai.htn.domain.Domain;
-import org.gerryai.htn.plan.Plan;
-import org.gerryai.htn.problem.State;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.gerryai.htn.plan.Action;
+import org.gerryai.htn.simple.plan.PlanFactory;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface PlannerHelper {
+public class SimplePlanFactory implements PlanFactory {
 
-	boolean isUnsolvable(TaskNetwork taskNetwork);
-	
-	Plan findPlanForPrimitive(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound;
-	
-	Plan findPlanForNonPrimitive(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound;
-			
+	/**
+	 * {@inheritDoc}
+	 */
+	public SimplePlan create() {
+		SimplePlan plan = new SimplePlan();
+		List<Action> actions = new ArrayList<Action>();
+		plan.setActions(actions);
+		
+		return plan;
+	}
+
 }

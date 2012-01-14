@@ -15,7 +15,8 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.simple.tasknetwork.impl;
+
 
 /**
  * @author David Edwards <david@more.fool.me.uk>

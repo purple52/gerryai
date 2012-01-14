@@ -15,15 +15,37 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.plan;
+package org.gerryai.htn.simple.plan.impl;
 
-import org.gerryai.htn.tasknetwork.Task;
+import java.util.List;
+
+import org.gerryai.htn.plan.Action;
+import org.gerryai.htn.plan.Plan;
+
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ActionFactory {
+public class SimplePlan implements Plan {
 
-	Action create(Task task) throws TaskNotActionable;
+	/**
+	 * List of actions that implement this plan.
+	 */
+	private List<Action> actions;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final List<Action> getActions() {
+		return actions;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setActions(List<Action> actions) {
+		this.actions = actions;
+	}
+
 }

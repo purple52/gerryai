@@ -15,16 +15,17 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.plan;
+package org.gerryai.htn.simple.plan.impl;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.domain.OperatorNotFound;
+import org.gerryai.htn.plan.TaskNotActionable;
+import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
@@ -35,7 +36,7 @@ import org.gerryai.logic.unifier.ConstantSubstitution;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class ActionFactoryHelperImpl implements ActionFactoryHelper {
+public class SimpleActionFactoryHelper implements ActionFactoryHelper {
 
 	private Domain domain;
 	
@@ -52,16 +53,29 @@ public class ActionFactoryHelperImpl implements ActionFactoryHelper {
 		return operator;
 	}
 	
-	public ConstantSubstitution getBindings(Task task) throws TaskNotActionable {
+	public ConstantSubstitution getBindings(Task task, Operator operator) throws TaskNotActionable {
 
 		ConstantSubstitution bindings = new ConstantSubstitution();
 		Map<Variable, Constant> bindingsMap = new HashMap<Variable, Constant>();
 		bindings.setMap(bindingsMap);
-		List<Term> arguments = task.getArguments();
-		Iterator<Term> argumentIterator = arguments.iterator();
-		while (argumentIterator.hasNext()) {
-			Term argument = argumentIterator.next();
-			//TODO: Try and create the bindings
+		
+		List<Term> taskArguments = task.getArguments();
+		List<Variable> operatorArguments = operator.getArguments();
+		
+		if (taskArguments.size() != operatorArguments.size()) {
+			throw new TaskNotActionable("Task and operator arguments size does not match");
+		}
+		
+		for (int i = 0; i < taskArguments.size(); i++) {
+			Variable variable = operatorArguments.get(i);
+			Term taskArgument = taskArguments.get(i);
+			Constant constant;
+			try {
+				constant = (Constant)taskArgument;
+			} catch (ClassCastException e) {
+				throw new TaskNotActionable("Task argument is not a constant", e);
+			}
+			bindingsMap.put(variable, constant);
 		}
 		
 		return bindings;

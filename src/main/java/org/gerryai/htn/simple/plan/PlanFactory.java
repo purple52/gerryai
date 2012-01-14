@@ -15,16 +15,15 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.simple.plan;
 
-import org.gerryai.htn.plan.Action;
+import org.gerryai.htn.plan.Plan;
 
 /**
- * Interface that a task resolver must implement.
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public interface TaskResolver {
-	
-	Action resolve(Task task);
+public interface PlanFactory {
 
+	Plan create();
 }

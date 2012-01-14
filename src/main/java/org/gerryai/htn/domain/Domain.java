@@ -19,6 +19,8 @@ package org.gerryai.htn.domain;
 
 import java.util.Set;
 
+import org.gerryai.htn.tasknetwork.Task;
+
 /**
  * Interface that a domain must implement.
  * @author David Edwards <david@more.fool.me.uk>
@@ -54,4 +56,6 @@ public interface Domain {
 	 * @param name the name of the operator to get
 	 */
 	Operator getOperatorByName(String name) throws OperatorNotFound;
+	
+	Set<Method> getMethodsByTask(Task task);
 }

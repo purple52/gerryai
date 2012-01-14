@@ -15,20 +15,21 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.planner;
+package org.gerryai.htn.simple.planner.impl;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
+import org.gerryai.htn.decomposer.Decomposer;
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.plan.Action;
-import org.gerryai.htn.plan.ActionFactory;
 import org.gerryai.htn.plan.Plan;
-import org.gerryai.htn.plan.PlanImpl;
 import org.gerryai.htn.plan.TaskNotActionable;
+import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.State;
+import org.gerryai.htn.simple.plan.ActionFactory;
+import org.gerryai.htn.simple.plan.PlanFactory;
+import org.gerryai.htn.simple.planner.PlannerHelper;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
@@ -36,9 +37,13 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class PlannerHelperImpl implements PlannerHelper {
+public class SimplePlannerHelper implements PlannerHelper {
 
 	private ActionFactory actionFactory;
+	
+	private PlanFactory planFactory;
+	
+	private Decomposer decomposer;
 	
 	/**
 	 * {@inheritDoc}
@@ -55,9 +60,7 @@ public class PlannerHelperImpl implements PlannerHelper {
 		// TODO: Confirm implementation
 		// TODO: Enforce constraints
 		
-		Plan plan = new PlanImpl();
-		List<Action> actions = new ArrayList<Action>();
-		plan.setActions(actions);
+		Plan plan = planFactory.create();
 		
 		Set<Task> tasks = taskNetwork.getTasks();
 		Iterator<Task> taskIterator = tasks.iterator();
@@ -67,22 +70,12 @@ public class PlannerHelperImpl implements PlannerHelper {
 			try {
 				action = actionFactory.create(task);
 			} catch (TaskNotActionable e) {
-				// If we couldn't find an operator for this task, something must
-				// have gone a bit wrong - but definitely no plan exists!
-				throw new PlanNotFound();
+				throw new PlanNotFound("Could not turn task into action", e);
 			}
-			actions.add(action);
+			plan.getActions().add(action);
 		}
 		
 		return plan;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public Plan findPlanForNonPrimitive(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound {
-		// TODO: Implement
-		throw new PlanNotFound();
 	}
 
 }

@@ -17,9 +17,11 @@
  */
 package org.gerryai.htn.domain;
 
+import java.util.List;
 import java.util.Set;
 
 import org.gerryai.logic.Constraint;
+import org.gerryai.logic.Variable;
 
 /**
  * Interface that an operator must implement.
@@ -34,10 +36,22 @@ public interface Operator {
 	String getName();
 	
 	/**
-	 * Set the anme of this operator.
+	 * Set the name of this operator.
 	 * @param name name to set
 	 */
 	void setName(String name);
+	
+	/**
+	 * Get the list of arguments for this operator.
+	 * @return the list of arguments
+	 */
+	List<Variable> getArguments();
+	
+	/**
+	 * Set the list of arguments for this operator.
+	 * @param arguments list of arguments to set
+	 */
+	void setArguments(List<Variable> arguments);
 	
 	/**
 	 * Get the preconditions for this operator.

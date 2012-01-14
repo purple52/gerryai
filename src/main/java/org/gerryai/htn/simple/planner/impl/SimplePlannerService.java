@@ -15,24 +15,32 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.domain;
+package org.gerryai.htn.simple.planner.impl;
 
-import java.util.List;
-
-import org.gerryai.logic.Variable;
+import org.gerryai.htn.plan.Plan;
+import org.gerryai.htn.planner.PlanNotFound;
+import org.gerryai.htn.planner.Planner;
+import org.gerryai.htn.planner.PlannerService;
+import org.gerryai.htn.problem.Problem;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface MethodName {
+public class SimplePlannerService implements PlannerService {
+
+	private Planner planner;
 	
-	MethodSymbol getSymbol();
+	public void setPlanner(Planner planner) {
+		this.planner = planner;
+	}
 	
-	void setSymbol(MethodSymbol symbol);
-	
-	List<Variable> getVariables();
-	
-	void setVariables(List<Variable> variables);
+	/**
+	 * {@inheritDoc}
+	 */
+	public Plan solve(Problem problem) throws PlanNotFound {
+		return planner.findPlan(problem.getState(), problem.getTaskNetwork(), problem.getDomain());
+
+	}
 
 }

@@ -23,11 +23,19 @@ import org.gerryai.logic.Variable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
- *
+ * @param <T> type of term being substituted
  */
 public interface Substitution<T> {
 
+	/**
+	 * Get the substitution map.
+	 * @return the map
+	 */
 	Map<Variable, T> getMap();
 	
+	/**
+	 * Set the substitution map.
+	 * @param map the map to set
+	 */
 	void setMap(Map<Variable, T> map);
 }

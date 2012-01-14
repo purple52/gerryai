@@ -30,13 +30,13 @@ public interface Method {
 	 * Get the name of this method.
 	 * @return the name
 	 */
-	MethodName getName();
+	String getName();
 	
 	/**
 	 * Set the name of this method.
 	 * @param name name to set
 	 */
-	void setName(MethodName name);
+	void setName(String name);
 	
 	/**
 	 * Get the task for this method.

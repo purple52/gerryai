@@ -17,10 +17,10 @@
  */
 package org.gerryai.htn.planner;
 
-import java.util.List;
-
+import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.plan.Plan;
-import org.gerryai.htn.problem.Problem;
+import org.gerryai.htn.problem.State;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Interface that a planner must implement.
@@ -30,9 +30,12 @@ import org.gerryai.htn.problem.Problem;
 public interface Planner {
 
 	/**
-	 * Find a plan that solve the given problem.
-	 * @param problem the problem to be solved
-	 * @return a solution
+	 * @param state
+	 * @param taskNetwork
+	 * @param domain
+	 * @return
+	 * @throws PlanNotFound 
 	 */
-	Plan solve(Problem problem) throws PlanNotFound;
+	Plan findPlan(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound;
+		
 }

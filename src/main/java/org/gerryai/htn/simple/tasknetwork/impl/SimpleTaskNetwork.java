@@ -15,18 +15,20 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.simple.tasknetwork.impl;
 
 import java.util.Iterator;
 import java.util.Set;
 
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Constraint;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class TaskNetworkImpl implements TaskNetwork {
+public class SimpleTaskNetwork implements TaskNetwork {
 
 	/**
 	 * Set of tasks to be solved in this network.
@@ -71,11 +73,8 @@ public class TaskNetworkImpl implements TaskNetwork {
 	 */
 	public boolean isPrimitive() {
 		
-		Set<Task> tasks = getTasks();
-		
-		Iterator<Task> taskIterator = tasks.iterator();
-		while (taskIterator.hasNext()) {
-			if (!taskIterator.next().isPrimitive()) {
+		for (Task task : getTasks()) {
+			if (!task.isPrimitive()) {
 				// If any of our tasks are non-primitive, the whole network is non-primitive
 				return false;
 			}

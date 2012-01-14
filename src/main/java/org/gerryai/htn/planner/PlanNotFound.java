@@ -22,7 +22,19 @@ package org.gerryai.htn.planner;
  *
  */
 public class PlanNotFound extends Exception {
+	
+    public PlanNotFound() {
+        super();
+    }
+    
+    public PlanNotFound(String message) {
+        super(message);
+    }
 
+    public PlanNotFound(String message, Throwable throwable) {
+        super(message, throwable);
+    }
+    
 	/**
 	 * Generated serialVersionUID
 	 */

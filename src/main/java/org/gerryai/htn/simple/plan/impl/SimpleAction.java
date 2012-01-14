@@ -15,20 +15,47 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.plan;
+package org.gerryai.htn.simple.plan.impl;
 
 import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.plan.Action;
 import org.gerryai.logic.unifier.ConstantSubstitution;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ActionFactoryHelper {
+public class SimpleAction implements Action {
+
+	private Operator operator;
+	private ConstantSubstitution bindings;
 	
-	Operator getOperator(Task task) throws TaskNotActionable;
-	
-	ConstantSubstitution getBindings(Task task) throws TaskNotActionable;
+	/**
+	 * {@inheritDoc}
+	 */
+	public Operator getOperator() {
+		return operator;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setOperator(Operator operator) {
+		this.operator = operator;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public ConstantSubstitution getBindings() {
+		return bindings;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setBindings(ConstantSubstitution bindings) {
+		this.bindings = bindings;
+	}
 
 }

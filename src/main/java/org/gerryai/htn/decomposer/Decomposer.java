@@ -20,7 +20,7 @@ package org.gerryai.htn.decomposer;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.unifier.Substitution;
+import org.gerryai.logic.unifier.TermSubstitution;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -30,6 +30,6 @@ public interface Decomposer {
 	
 	TaskNetwork decompose(TaskNetwork taskNetwork, Task task, Method method);
 	
-	TaskNetwork decompose(TaskNetwork taskNetwork, Task task, Method method, Substitution substitution);
+	TaskNetwork apply(TermSubstitution substitution, TaskNetwork taskNetwork, Task task, Method method );
 
 }

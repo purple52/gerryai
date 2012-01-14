@@ -15,39 +15,22 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.planner;
+package org.gerryai.htn.simple.planner;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.HashSet;
-import java.util.List;
-
+import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.plan.Plan;
-import org.gerryai.htn.problem.Problem;
-import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.planner.PlanNotFound;
+import org.gerryai.htn.problem.State;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.junit.Test;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class PlannerImplTest {
-
-	@Test
-	public void testSolveEmptyTaskNetwork() throws Exception {
+public interface PlannerHelper {
+	
+	boolean isUnsolvable(TaskNetwork taskNetwork);
+	
+	Plan findPlanForPrimitive(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound;
 		
-		TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
-		when(mockTaskNetwork.getTasks()).thenReturn(new HashSet<Task>());
-		Problem mockProblem = mock(Problem.class);
-		when(mockProblem.getTaskNetwork()).thenReturn(mockTaskNetwork);
-		
-		PlannerHelper mockPlannerHelper = mock(PlannerHelper.class);
-		PlannerImpl planner = new PlannerImpl();
-		// TODO: java.lang.reflect.Field.
-		Plan plan = planner.solve(mockProblem);
-	}
-
 }

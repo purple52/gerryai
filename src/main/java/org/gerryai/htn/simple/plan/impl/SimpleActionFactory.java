@@ -15,9 +15,13 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.plan;
+package org.gerryai.htn.simple.plan.impl;
 
 import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.plan.Action;
+import org.gerryai.htn.plan.TaskNotActionable;
+import org.gerryai.htn.simple.plan.ActionFactory;
+import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.unifier.ConstantSubstitution;
 
@@ -25,7 +29,7 @@ import org.gerryai.logic.unifier.ConstantSubstitution;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class ActionFactoryImpl implements ActionFactory {
+public class SimpleActionFactory implements ActionFactory {
 
 	private ActionFactoryHelper actionFactoryHelper;
 	
@@ -38,10 +42,10 @@ public class ActionFactoryImpl implements ActionFactory {
 		Operator operator = actionFactoryHelper.getOperator(task);
 		
 		// Try and get the bindings
-		ConstantSubstitution bindings = actionFactoryHelper.getBindings(task);
+		ConstantSubstitution bindings = actionFactoryHelper.getBindings(task, operator);
 		
 		// Finally, create and add this action
-		Action action = new ActionImpl();
+		Action action = new SimpleAction();
 		action.setOperator(operator);
 		action.setBindings(bindings);
 		return action;

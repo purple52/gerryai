@@ -15,43 +15,22 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.plan;
+package org.gerryai.htn.planner;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.gerryai.htn.plan.Plan;
+import org.gerryai.htn.problem.Problem;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class PlanImpl implements Plan {
-
-	/**
-	 * List of actions that implement this plan.
-	 */
-	private List<Action> actions;
+public interface PlannerService {
 	
 	/**
-	 * Default constructor,
-	 * Initialises the operators list to an empty list.
+	 * Find a plan that solve the given problem.
+	 * @param problem the problem to be solved
+	 * @return a solution
 	 */
-	public PlanImpl() {
-		actions = new ArrayList<Action>();
-	}
+	Plan solve(Problem problem) throws PlanNotFound;
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final List<Action> getActions() {
-		return actions;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setActions(List<Action> actions) {
-		this.actions = actions;
-	}
-
 }
