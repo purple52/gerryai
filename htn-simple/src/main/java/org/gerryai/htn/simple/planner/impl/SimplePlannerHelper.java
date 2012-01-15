@@ -44,18 +44,30 @@ import org.gerryai.logic.unification.Unifier;
  */
 public class SimplePlannerHelper implements PlannerHelper {
 
+	/**
+	 * Factory for creating actions.
+	 */
 	private ActionFactory actionFactory;
 	
+	/**
+	 * Factory for creating plans.
+	 */
 	private PlanFactory planFactory;
 	
+	/**
+	 * Service for decomposing tasks.
+	 */
 	private DecompositionService decompositionService;
 	
+	/**
+	 * Service for finding unifiers.
+	 */
 	private UnificationService unificationService;
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean isUnsolvable(TaskNetwork taskNetwork) {
+	public final boolean isUnsolvable(TaskNetwork taskNetwork) {
 		//TODO: Implement
 		return false;
 	}
@@ -63,7 +75,7 @@ public class SimplePlannerHelper implements PlannerHelper {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Plan findPlanForPrimitive(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound {
+	public final Plan findPlanForPrimitive(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound {
 		// TODO: Confirm implementation
 		// TODO: Enforce constraints
 		

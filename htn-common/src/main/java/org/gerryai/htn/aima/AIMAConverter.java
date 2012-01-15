@@ -27,8 +27,8 @@ import org.gerryai.logic.unification.Unifier;
 import aima.core.logic.fol.parsing.ast.Predicate;
 
 /**
+ * Interface for a converter between AIMA first order logic classes and our classes.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public interface AIMAConverter {
 
@@ -39,13 +39,38 @@ public interface AIMAConverter {
 	 */
 	Predicate convert(Task task);
 	
+	/**
+	 * Convert a Gerry AI Term into an AIMA Term.
+	 * @param term term to convert
+	 * @return AIMA term
+	 */
 	aima.core.logic.fol.parsing.ast.Term convert(Term term);
 	
+	/**
+	 * Convert an AIMA Term into a Gerry AI Term.
+	 * @param term term to convert
+	 * @return converted term
+	 */
 	Term convert(aima.core.logic.fol.parsing.ast.Term term);
 	
+	/**
+	 * Convert a Gerry AI Variable into an AIMA Variable.
+	 * @param variable variable to convert
+	 * @return converted variable
+	 */
 	aima.core.logic.fol.parsing.ast.Variable convert(Variable variable);
 	
+	/**
+	 * Convert an AIMA Variable into Gerry AI Variable.
+	 * @param variable variable to convert
+	 * @return converted variable
+	 */
 	Variable convert(aima.core.logic.fol.parsing.ast.Variable variable);
 	
+	/**
+	 * Convert an AIMA Map<Variable, Term> into a Gerry AI Unifier.
+	 * @param map map to convert
+	 * @return the unifier
+	 */
 	Unifier convert(Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map);
 }

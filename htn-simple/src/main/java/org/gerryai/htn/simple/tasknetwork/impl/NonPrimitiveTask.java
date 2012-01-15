@@ -27,7 +27,7 @@ public class NonPrimitiveTask extends AbstractTask {
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean isPrimitive() {
+	public final boolean isPrimitive() {
 		return true;
 	}
 

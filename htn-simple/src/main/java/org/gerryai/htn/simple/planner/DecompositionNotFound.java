@@ -19,18 +19,29 @@ package org.gerryai.htn.simple.planner;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public class DecompositionNotFound extends Exception {
 
+	/**
+	 * Default constructor.
+	 */
     public DecompositionNotFound() {
         super();
     }
     
+    /**
+     * Constructor with message.
+     * @param message the message
+     */
     public DecompositionNotFound(String message) {
         super(message);
     }
 
+    /**
+     * Constructor with message and wrapped exception.
+     * @param message the message
+     * @param throwable the exception to wrap
+     */
     public DecompositionNotFound(String message, Throwable throwable) {
         super(message, throwable);
     }

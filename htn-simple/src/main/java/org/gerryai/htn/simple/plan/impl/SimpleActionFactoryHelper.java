@@ -38,9 +38,15 @@ import org.gerryai.logic.unification.Bindings;
  */
 public class SimpleActionFactoryHelper implements ActionFactoryHelper {
 
+	/**
+	 * Domain that we are working in.
+	 */
 	private Domain domain;
 	
-	public Operator getOperator(Task task) throws TaskNotActionable {
+	/**
+	 * {@inheritDoc}
+	 */
+	public final Operator getOperator(Task task) throws TaskNotActionable {
 		
 		Operator operator;
 		
@@ -53,7 +59,10 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper {
 		return operator;
 	}
 	
-	public Bindings getBindings(Task task, Operator operator) throws TaskNotActionable {
+	/**
+	 * {@inheritDoc}
+	 */
+	public final Bindings getBindings(Task task, Operator operator) throws TaskNotActionable {
 
 		Bindings bindings = new Bindings();
 		Map<Variable, Constant> bindingsMap = new HashMap<Variable, Constant>();
@@ -71,7 +80,7 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper {
 			Term taskArgument = taskArguments.get(i);
 			Constant constant;
 			try {
-				constant = (Constant)taskArgument;
+				constant = (Constant) taskArgument;
 			} catch (ClassCastException e) {
 				throw new TaskNotActionable("Task argument is not a constant", e);
 			}

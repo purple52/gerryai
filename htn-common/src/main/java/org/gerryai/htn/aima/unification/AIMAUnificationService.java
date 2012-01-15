@@ -17,12 +17,19 @@
  */
 package org.gerryai.htn.aima.unification;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.decomposition.UnificationService;
 import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.simple.tasknetwork.TaskNetworkFactory;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Term;
 import org.gerryai.logic.unification.Unifier;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
@@ -42,6 +49,11 @@ public class AIMAUnificationService implements UnificationService {
 	 * Converter to convert between our classes and the AIMA FOL classes.
 	 */
 	private AIMAConverter converter;
+	
+	/**
+	 * Factory to create new task networks.
+	 */
+	private TaskNetworkFactory taskNetworkFactory;
 
 	/**
 	 * {@inheritDoc}
@@ -54,6 +66,42 @@ public class AIMAUnificationService implements UnificationService {
 		Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map
 				= unifier.unify(taskPredicate, methodTaskPredicate);
 		return converter.convert(map);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final TaskNetwork apply(Unifier unifier, TaskNetwork taskNetwork) {
+		
+		// TODO Add support constraints
+		Set<Task> updatedTasks = new HashSet<Task>();
+		for (Task task : taskNetwork.getTasks()) {
+			Task updatedTask = apply(unifier, task);
+			updatedTasks.add(updatedTask);
+		}
+		TaskNetwork updatedTaskNetwork = taskNetworkFactory.create();
+		updatedTaskNetwork.setTasks(updatedTasks);
+		
+		return updatedTaskNetwork;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final Task apply(Unifier unifier, Task task) {
+		
+		List<Term> updatedTerms = new ArrayList<Term>();		
+		for (Term term : task.getArguments()) {
+			if (unifier.getMap().containsKey(term)) {
+				updatedTerms.add(unifier.getMap().get(term));
+			} else {
+				updatedTerms.add(term);
+			}
+		}
+		Task updatedTask = taskNetworkFactory.create(task.getName());
+		updatedTask.setArguments(updatedTerms);
+		
+		return updatedTask;
 	}
 
 }

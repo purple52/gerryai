@@ -18,20 +18,6 @@
 	<dependencies>
 	</dependencies>
 	
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.8</version>
-				<configuration>
-					<enableRulesSummary>false</enableRulesSummary>
-					<configLocation>checkstyle.xml</configLocation>
-				</configuration>
-			</plugin>
-		</plugins>
-	</reporting>
-
 	<packaging>pom</packaging>
 	<modules>
 		<module>htn-common</module>

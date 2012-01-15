@@ -27,34 +27,41 @@ import org.gerryai.logic.unification.Bindings;
  */
 public class SimpleAction implements Action {
 
+	/**
+	 * Operator that this action is a grounded instance of.
+	 */
 	private Operator operator;
+	
+	/**
+	 * Bindings that ground the operator.
+	 */
 	private Bindings bindings;
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public Operator getOperator() {
+	public final Operator getOperator() {
 		return operator;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setOperator(Operator operator) {
+	public final void setOperator(Operator operator) {
 		this.operator = operator;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public Bindings getBindings() {
+	public final Bindings getBindings() {
 		return bindings;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setBindings(Bindings bindings) {
+	public final void setBindings(Bindings bindings) {
 		this.bindings = bindings;
 	}
 

@@ -19,6 +19,7 @@ package org.gerryai.htn.decomposition;
 
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.unification.Unifier;
 
 /**
@@ -35,4 +36,20 @@ public interface UnificationService {
 	 * @throws UnifierNotFound if no unifier could be found for this task and method
 	 */
 	Unifier findUnifier(Task task, Method method) throws UnifierNotFound;
+	
+	/**
+	 * Create a new task network cloning the given task network and applying the given unifier.
+	 * @param unifier the unifier to apply
+	 * @param taskNetwork the task network to apply the unifier to
+	 * @return the revised task network
+	 */
+	TaskNetwork apply(Unifier unifier, TaskNetwork taskNetwork);
+	
+	/**
+	 * Create a new task by cloning the given task and applying the given unifier.
+	 * @param unifier the unifier to apply
+	 * @param task the task to apply the unifier to
+	 * @return the revised task
+	 */
+	Task apply(Unifier unifier, Task task);
 }

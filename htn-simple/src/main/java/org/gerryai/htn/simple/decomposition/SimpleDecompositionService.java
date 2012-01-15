@@ -18,24 +18,39 @@
 package org.gerryai.htn.simple.decomposition;
 
 import org.gerryai.htn.decomposition.DecompositionService;
+import org.gerryai.htn.decomposition.UnificationService;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.unification.Unifier;
 
 /**
+ * Simple implementation of a decomposition service, for decomposing a task
+ * within a network using a specified method and unifier.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public class SimpleDecompositionService implements DecompositionService {
 
 	/**
+	 * Service for performing unification actions.
+	 */
+	private UnificationService unificationService;
+	
+	/**
 	 * {@inheritDoc}
 	 */
-	public TaskNetwork decompose(Unifier substitution, TaskNetwork taskNetwork,
-			Task task, Method method) {
-		// TODO Auto-generated method stub
-		return null;
+	public final TaskNetwork decompose(Unifier unifier, TaskNetwork taskNetwork, Task task, Method method) {
+		
+		TaskNetwork unifiedMethodSubTasks = unificationService.apply(unifier, method.getTaskNetwork());
+
+		TaskNetwork updatedTaskNetwork = unificationService.apply(unifier, taskNetwork);
+		updatedTaskNetwork.getTasks().remove(task);
+		updatedTaskNetwork.getTasks().addAll(unifiedMethodSubTasks.getTasks());
+		
+		// TODO Complete implementation, including constraints
+		
+		return updatedTaskNetwork;
 	}
 	
 

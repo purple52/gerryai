@@ -17,7 +17,6 @@
  */
 package org.gerryai.htn.simple.tasknetwork.impl;
 
-import java.util.Iterator;
 import java.util.Set;
 
 import org.gerryai.htn.tasknetwork.Task;
@@ -71,7 +70,7 @@ public class SimpleTaskNetwork implements TaskNetwork {
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean isPrimitive() {
+	public final boolean isPrimitive() {
 		
 		for (Task task : getTasks()) {
 			if (!task.isPrimitive()) {

@@ -17,7 +17,6 @@
  */
 package org.gerryai.htn.simple.planner;
 
-import org.gerryai.htn.decomposition.UnifierNotFound;
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Plan;
@@ -26,7 +25,6 @@ import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.planner.impl.PrimitiveTaskNotFound;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.unification.Unifier;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -34,11 +32,39 @@ import org.gerryai.logic.unification.Unifier;
  */
 public interface PlannerHelper {
 	
+	/**
+	 * Check for obvious reasons why the given task network is unsolvable.
+	 * @param taskNetwork task network to check
+	 * @return whether the task network is unsolvable
+	 */
 	boolean isUnsolvable(TaskNetwork taskNetwork);
 	
+	/**
+	 * Try to find a plan for a primitive task network by converting the tasks into 
+	 * grounded operators represented as actions.
+	 * @param state the state to work from
+	 * @param taskNetwork the task network to convert
+	 * @param domain the domain we are working in
+	 * @return the plan
+	 * @throws PlanNotFound if no plan exists
+	 */
 	Plan findPlanForPrimitive(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound;
 	
+	/**
+	 * Try to get a non-primitive task from a given network.
+	 * @param taskNetwork the task network
+	 * @return a non-primitive task
+	 * @throws PrimitiveTaskNotFound if no non-primitive tasks are present in the task network
+	 */
 	Task getNonPrimitiveTask(TaskNetwork taskNetwork) throws PrimitiveTaskNotFound;
 	
-	TaskNetwork decompose(TaskNetwork taskNetwork, Task task, Method method ) throws DecompositionNotFound;
+	/**
+	 * Try to decompose the given task within a task network using the given method.
+	 * @param taskNetwork the task network
+	 * @param task the task to decompose
+	 * @param method the method to use to decompose the task
+	 * @return the decomposed task network
+	 * @throws DecompositionNotFound if the method could not be used to decompose the given task
+	 */
+	TaskNetwork decompose(TaskNetwork taskNetwork, Task task, Method method) throws DecompositionNotFound;
 }

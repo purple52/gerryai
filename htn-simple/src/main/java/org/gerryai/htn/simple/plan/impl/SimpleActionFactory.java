@@ -31,12 +31,15 @@ import org.gerryai.logic.unification.Bindings;
  */
 public class SimpleActionFactory implements ActionFactory {
 
+	/**
+	 * Helper object for doing the difficult bits.
+	 */
 	private ActionFactoryHelper actionFactoryHelper;
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public Action create(Task task) throws TaskNotActionable {
+	public final Action create(Task task) throws TaskNotActionable {
 
 		// Try and get the operator
 		Operator operator = actionFactoryHelper.getOperator(task);

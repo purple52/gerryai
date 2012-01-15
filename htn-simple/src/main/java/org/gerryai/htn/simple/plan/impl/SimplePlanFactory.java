@@ -24,15 +24,15 @@ import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.simple.plan.PlanFactory;
 
 /**
+ * Factory for creating simple plans.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public class SimplePlanFactory implements PlanFactory {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public SimplePlan create() {
+	public final SimplePlan create() {
 		SimplePlan plan = new SimplePlan();
 		List<Action> actions = new ArrayList<Action>();
 		plan.setActions(actions);
