@@ -15,27 +15,29 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.logic.unifier;
-
-import java.util.Map;
-
-import org.gerryai.logic.Variable;
+package org.gerryai.htn.simple.planner;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
- * @param <T> type of term being substituted
+ *
  */
-public interface Substitution<T> {
+public class DecompositionNotFound extends Exception {
+
+    public DecompositionNotFound() {
+        super();
+    }
+    
+    public DecompositionNotFound(String message) {
+        super(message);
+    }
+
+    public DecompositionNotFound(String message, Throwable throwable) {
+        super(message, throwable);
+    }
 
 	/**
-	 * Get the substitution map.
-	 * @return the map
+	 * 
 	 */
-	Map<Variable, T> getMap();
-	
-	/**
-	 * Set the substitution map.
-	 * @param map the map to set
-	 */
-	void setMap(Map<Variable, T> map);
+	private static final long serialVersionUID = -8939732740760761949L;
+
 }

@@ -15,30 +15,45 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.planner;
+package org.gerryai.htn.aima.unification;
 
-import org.gerryai.htn.decomposition.UnifierNotFound;
-import org.gerryai.htn.domain.Domain;
+import java.util.Map;
+
+import org.gerryai.htn.aima.AIMAConverter;
+import org.gerryai.htn.decomposition.UnificationService;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.plan.Plan;
-import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.problem.State;
-import org.gerryai.htn.simple.planner.impl.PrimitiveTaskNotFound;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.unification.Unifier;
+
+import aima.core.logic.fol.parsing.ast.Predicate;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
- *
+ * 
  */
-public interface PlannerHelper {
-	
-	boolean isUnsolvable(TaskNetwork taskNetwork);
-	
-	Plan findPlanForPrimitive(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound;
-	
-	Task getNonPrimitiveTask(TaskNetwork taskNetwork) throws PrimitiveTaskNotFound;
-	
-	TaskNetwork decompose(TaskNetwork taskNetwork, Task task, Method method ) throws DecompositionNotFound;
+public class AIMAUnificationService implements UnificationService {
+
+	/**
+	 * AIMA Unifier object to do the underlying expression unification.
+	 */
+	private aima.core.logic.fol.Unifier unifier;
+
+	/**
+	 * Converter to convert between our classes and the AIMA FOL classes.
+	 */
+	private AIMAConverter converter;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final Unifier findUnifier(Task task, Method method) {
+
+		Predicate taskPredicate = converter.convert(task);
+		Predicate methodTaskPredicate = converter.convert(method.getTask());
+
+		Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map
+				= unifier.unify(taskPredicate, methodTaskPredicate);
+		return converter.convert(map);
+	}
+
 }

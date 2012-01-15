@@ -40,18 +40,18 @@ import org.junit.Test;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePlannerServiceTest {
+public class SimplePlanningServiceTest {
 
 	@Mock
 	private Planner mockPlanner;
  
 	@InjectMocks
-	private SimplePlannerService plannerService;
+	private SimplePlanningService plannerService;
 	
     @Before
     public void initMocks() {
     	mockPlanner = mock(Planner.class);
-    	plannerService = new SimplePlannerService();
+    	plannerService = new SimplePlanningService();
     	MockitoAnnotations.initMocks(this);
     }
     

@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.unifier.aima;
+package org.gerryai.htn.aima;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,24 +27,24 @@ import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 import org.gerryai.logic.VariableImpl;
-import org.gerryai.logic.unifier.TermSubstitution;
+import org.gerryai.logic.unification.Unifier;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
- *
+ * 
  */
 public class AIMAConverterImpl implements AIMAConverter {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public Predicate convert(Task task) {
-		
+	public final Predicate convert(Task task) {
+
 		String name = task.getName();
 		List<Term> taskTerms = task.getArguments();
-		
+
 		List<aima.core.logic.fol.parsing.ast.Term> terms = new ArrayList<aima.core.logic.fol.parsing.ast.Term>();
 		Iterator<Term> taskTermIterator = taskTerms.iterator();
 		while (taskTermIterator.hasNext()) {
@@ -58,28 +58,33 @@ public class AIMAConverterImpl implements AIMAConverter {
 	/**
 	 * {@inheritDoc}
 	 */
-	public aima.core.logic.fol.parsing.ast.Term convert(Term term) {
-		aima.core.logic.fol.parsing.ast.Constant constant = new aima.core.logic.fol.parsing.ast.Constant(term.getName());
-		//TODO Implement
+	public final aima.core.logic.fol.parsing.ast.Term convert(Term term) {
+		aima.core.logic.fol.parsing.ast.Constant constant = new aima.core.logic.fol.parsing.ast.Constant(
+				term.getName());
+		// TODO Implement
 		return constant;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public TermSubstitution convert(Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map) {
+	public final Unifier convert(
+			Map<aima.core.logic.fol.parsing.ast.Variable,
+			aima.core.logic.fol.parsing.ast.Term> map) {
 		Map<Variable, Term> substitutionMap = new HashMap<Variable, Term>();
-		
-		Iterator<aima.core.logic.fol.parsing.ast.Variable> variableIterator = map.keySet().iterator();
+
+		Iterator<aima.core.logic.fol.parsing.ast.Variable> variableIterator = map
+				.keySet().iterator();
 		while (variableIterator.hasNext()) {
-			aima.core.logic.fol.parsing.ast.Variable variable = variableIterator.next();
-			//TODO: Avoid cast
+			aima.core.logic.fol.parsing.ast.Variable variable = variableIterator
+					.next();
+			// TODO: Avoid cast
 			Variable key = convert(variable);
 			Term value = convert(map.get(variable));
 			substitutionMap.put(key, value);
 		}
-		
-		TermSubstitution substitution = new TermSubstitution();
+
+		Unifier substitution = new Unifier();
 		substitution.setMap(substitutionMap);
 		return substitution;
 	}
@@ -87,14 +92,16 @@ public class AIMAConverterImpl implements AIMAConverter {
 	/**
 	 * {@inheritDoc}
 	 */
-	public aima.core.logic.fol.parsing.ast.Variable convert(Variable variable) {
+	public final aima.core.logic.fol.parsing.ast.Variable convert(
+			Variable variable) {
 		return new aima.core.logic.fol.parsing.ast.Variable(variable.getName());
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public Variable convert(aima.core.logic.fol.parsing.ast.Variable aimaVariable) {
+	public final Variable convert(
+			aima.core.logic.fol.parsing.ast.Variable aimaVariable) {
 		VariableImpl variable = new VariableImpl();
 		variable.setName(aimaVariable.getSymbolicName());
 		return variable;
@@ -103,7 +110,7 @@ public class AIMAConverterImpl implements AIMAConverter {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Term convert(aima.core.logic.fol.parsing.ast.Term term) {
+	public final Term convert(aima.core.logic.fol.parsing.ast.Term term) {
 		// TODO Auto-generated method stub
 		return null;
 	}

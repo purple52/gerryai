@@ -15,21 +15,19 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.decomposer;
+package org.gerryai.htn.decomposition;
 
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.unifier.TermSubstitution;
+import org.gerryai.logic.unification.Unifier;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface Decomposer {
-	
-	TaskNetwork decompose(TaskNetwork taskNetwork, Task task, Method method);
-	
-	TaskNetwork apply(TermSubstitution substitution, TaskNetwork taskNetwork, Task task, Method method );
+public interface DecompositionService {
 
+	TaskNetwork decompose(Unifier substitution, TaskNetwork taskNetwork, Task task, Method method);
+	
 }

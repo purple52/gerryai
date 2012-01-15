@@ -15,16 +15,29 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.logic.unifier;
-
-import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.tasknetwork.Task;
+package org.gerryai.htn.simple.planner.impl;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface Unifier {
-	
-	TermSubstitution unify(Task task, Method method);
+public class PrimitiveTaskNotFound extends Exception {
+
+    public PrimitiveTaskNotFound() {
+        super();
+    }
+    
+    public PrimitiveTaskNotFound(String message) {
+        super(message);
+    }
+
+    public PrimitiveTaskNotFound(String message, Throwable throwable) {
+        super(message, throwable);
+    }
+    
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2422260466297054304L;
+
 }

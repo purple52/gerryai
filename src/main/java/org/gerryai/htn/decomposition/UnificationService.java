@@ -15,32 +15,23 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.unifier.aima;
+package org.gerryai.htn.decomposition;
 
-import java.util.Map;
-
+import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
-import org.gerryai.logic.Variable;
-import org.gerryai.logic.unifier.TermSubstitution;
-
-import aima.core.logic.fol.parsing.ast.Predicate;
+import org.gerryai.logic.unification.Unifier;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface AIMAConverter {
-
-	Predicate convert(Task task);
+public interface UnificationService {
 	
-	aima.core.logic.fol.parsing.ast.Term convert(Term term);
-	
-	Term convert(aima.core.logic.fol.parsing.ast.Term term);
-	
-	aima.core.logic.fol.parsing.ast.Variable convert(Variable variable);
-	
-	Variable convert(aima.core.logic.fol.parsing.ast.Variable variable);
-	
-	TermSubstitution convert(Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map);
+	/**
+	 * Given a task and a method, try and find the most general unifier (MGU).
+	 * @param task the task to unify
+	 * @param method the method to unify with
+	 * @return the most general unifier
+	 */
+	Unifier findUnifier(Task task, Method method) throws UnifierNotFound;
 }

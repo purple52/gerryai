@@ -18,7 +18,7 @@
 package org.gerryai.htn.plan;
 
 import org.gerryai.htn.domain.Operator;
-import org.gerryai.logic.unifier.ConstantSubstitution;
+import org.gerryai.logic.unification.Bindings;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -30,7 +30,7 @@ public interface Action {
 	
 	void setOperator(Operator operator);
 	
-	ConstantSubstitution getBindings();
+	Bindings getBindings();
 	
-	void setBindings(ConstantSubstitution bindings);
+	void setBindings(Bindings bindings);
 }

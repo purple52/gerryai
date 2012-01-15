@@ -15,32 +15,22 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.planner.impl;
+package org.gerryai.htn.planner;
 
 import org.gerryai.htn.plan.Plan;
-import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.planner.Planner;
-import org.gerryai.htn.planner.PlannerService;
 import org.gerryai.htn.problem.Problem;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePlannerService implements PlannerService {
-
-	private Planner planner;
-	
-	public void setPlanner(Planner planner) {
-		this.planner = planner;
-	}
+public interface PlanningService {
 	
 	/**
-	 * {@inheritDoc}
+	 * Find a plan that solve the given problem.
+	 * @param problem the problem to be solved
+	 * @return a solution
 	 */
-	public Plan solve(Problem problem) throws PlanNotFound {
-		return planner.findPlan(problem.getState(), problem.getTaskNetwork(), problem.getDomain());
-
-	}
-
+	Plan solve(Problem problem) throws PlanNotFound;
+	
 }

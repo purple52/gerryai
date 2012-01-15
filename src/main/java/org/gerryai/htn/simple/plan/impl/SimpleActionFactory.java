@@ -23,7 +23,7 @@ import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.unifier.ConstantSubstitution;
+import org.gerryai.logic.unification.Bindings;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -42,7 +42,7 @@ public class SimpleActionFactory implements ActionFactory {
 		Operator operator = actionFactoryHelper.getOperator(task);
 		
 		// Try and get the bindings
-		ConstantSubstitution bindings = actionFactoryHelper.getBindings(task, operator);
+		Bindings bindings = actionFactoryHelper.getBindings(task, operator);
 		
 		// Finally, create and add this action
 		Action action = new SimpleAction();

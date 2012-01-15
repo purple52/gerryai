@@ -15,43 +15,36 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.unifier.aima;
+package org.gerryai.logic.unification;
 
 import java.util.Map;
 
-import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.unifier.TermSubstitution;
-import org.gerryai.logic.unifier.Unifier;
-
-import aima.core.logic.fol.parsing.ast.Predicate;
+import org.gerryai.logic.Constant;
+import org.gerryai.logic.Variable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class AIMAUnifier implements Unifier {
+public class Bindings implements Substitution<Constant> {
 	
 	/**
-	 * AIMA Unifier object to do the underlying expression unification
+	 * Map of variables to constants, which represents these bindings.
 	 */
-	aima.core.logic.fol.Unifier unifier;
-	
-	/**
-	 * Converter to convert between our classes and the AIMA FOL classes
-	 */
-	AIMAConverter converter;
+	private Map<Variable, Constant> map;
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public TermSubstitution unify(Task task, Method method) {
-		
-		Predicate taskPredicate = converter.convert(task);
-		Predicate methodTaskPredicate = converter.convert(method.getTask());
+	public final Map<Variable, Constant> getMap() {
+		return map;
+	}
 
-		Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map = unifier.unify(taskPredicate, methodTaskPredicate);
-		return converter.convert(map);
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setMap(Map<Variable, Constant> map) {
+		this.map = map;
 	}
 
 }

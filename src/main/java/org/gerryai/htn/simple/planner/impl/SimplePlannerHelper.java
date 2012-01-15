@@ -20,8 +20,11 @@ package org.gerryai.htn.simple.planner.impl;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.gerryai.htn.decomposer.Decomposer;
+import org.gerryai.htn.decomposition.DecompositionService;
+import org.gerryai.htn.decomposition.UnificationService;
+import org.gerryai.htn.decomposition.UnifierNotFound;
 import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.plan.TaskNotActionable;
@@ -29,9 +32,11 @@ import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.PlanFactory;
+import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.unification.Unifier;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -43,7 +48,9 @@ public class SimplePlannerHelper implements PlannerHelper {
 	
 	private PlanFactory planFactory;
 	
-	private Decomposer decomposer;
+	private DecompositionService decompositionService;
+	
+	private UnificationService unificationService;
 	
 	/**
 	 * {@inheritDoc}
@@ -76,6 +83,40 @@ public class SimplePlannerHelper implements PlannerHelper {
 		}
 		
 		return plan;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final TaskNetwork applySubstitution(Unifier substitution,
+			TaskNetwork taskNetwork, Task task, Method method) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final Task getNonPrimitiveTask(TaskNetwork taskNetwork) throws PrimitiveTaskNotFound {
+		for (Task task : taskNetwork.getTasks()) {
+			if (!task.isPrimitive()) {
+				return task;
+			}
+		}
+		throw new PrimitiveTaskNotFound("Could not find a non-primitive task");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final TaskNetwork decompose(TaskNetwork taskNetwork, Task task, Method method) throws DecompositionNotFound {
+		Unifier unifier;
+		try {
+			unifier = unificationService.findUnifier(task, method);
+		} catch (UnifierNotFound e) {
+			throw new DecompositionNotFound("Could not find unifier", e);
+		}
+		return decompositionService.decompose(unifier, taskNetwork, task, method);
 	}
 
 }

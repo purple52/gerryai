@@ -30,7 +30,7 @@ import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
-import org.gerryai.logic.unifier.ConstantSubstitution;
+import org.gerryai.logic.unification.Bindings;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -53,9 +53,9 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper {
 		return operator;
 	}
 	
-	public ConstantSubstitution getBindings(Task task, Operator operator) throws TaskNotActionable {
+	public Bindings getBindings(Task task, Operator operator) throws TaskNotActionable {
 
-		ConstantSubstitution bindings = new ConstantSubstitution();
+		Bindings bindings = new Bindings();
 		Map<Variable, Constant> bindingsMap = new HashMap<Variable, Constant>();
 		bindings.setMap(bindingsMap);
 		

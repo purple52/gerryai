@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.logic.unifier;
+package org.gerryai.logic.unification;
 
 import java.util.Map;
 
@@ -23,24 +23,28 @@ import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
+ * Class representing a unifier of two expressions as a set of substitutions.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class TermSubstitution implements Substitution<Term> {
+public class Unifier implements Substitution<Term> {
 	
+	/**
+	 * The map of variables to terms.
+	 */
 	private Map<Variable, Term> map;
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public Map<Variable, Term> getMap() {
+	public final Map<Variable, Term> getMap() {
 		return map;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setMap(Map<Variable, Term> map) {
+	public final void setMap(Map<Variable, Term> map) {
 		this.map = map;
 	}
 

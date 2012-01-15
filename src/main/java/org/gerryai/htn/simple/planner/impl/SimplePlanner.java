@@ -17,18 +17,14 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
-import java.util.Iterator;
-import java.util.Set;
-
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.problem.State;
-import org.gerryai.htn.simple.plan.PlanFactory;
+import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
@@ -38,39 +34,51 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  */
 public class SimplePlanner implements Planner {
 	
+	/**
+	 * Helper for off-loading some of the logic.
+	 */
 	private PlannerHelper plannerHelper;
-
-	private PlanFactory planFactory;
 	
-	public Plan findPlan(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound {
+	/**
+	 * {@inheritDoc}
+	 */
+	public final Plan findPlan(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound {
 		
 		if (plannerHelper.isUnsolvable(taskNetwork)) {
 			// 1. No solution
+			// TODO: Handle empty case
 			throw new PlanNotFound();
-		} else if (taskNetwork.isPrimitive()) {
-			// 2. Task network is primitive
-			return plannerHelper.findPlanForPrimitive(state, taskNetwork, domain);
 		} else {
+
+			
+			Task task;
+			
+			try {
+				// Try and find a non-primitive task to deal with
+				task = plannerHelper.getNonPrimitiveTask(taskNetwork);
+			} catch (PrimitiveTaskNotFound e) {
+				// 2. Task network is primitive
+				return plannerHelper.findPlanForPrimitive(state, taskNetwork, domain);
+			}
+			
 			// 3. Task network is non-primitive
 			// TODO: Implement
-			
-			Plan plan = planFactory.create();
-			
-			for (Task task : taskNetwork.getTasks()) {
-				if (!task.isPrimitive() ) {
-
-					Set<Method> methods = domain.getMethodsByTask(task);
-					Iterator<Method> methodIterator = methods.iterator();
-					while (methodIterator.hasNext()) {
-						Method method = methodIterator.next();
-						TaskNetwork decomposedNetwork = new SimpleTaskNetwork();
-						return findPlan(state, decomposedNetwork, domain);
-
-					}
+			// TODO: Handle state changes (and correct backtracking?)			
+			for (Method method : domain.getMethodsByTask(task)) {
+				try {
+					TaskNetwork decomposedNetwork = plannerHelper.decompose(taskNetwork, task, method);
+					// Try recursing to further process the decomposed network
+					return findPlan(state, decomposedNetwork, domain);
+				} catch (DecompositionNotFound e) {
+					// This method was no good, so continue and try the next one
+					continue;
+				} catch (PlanNotFound e) {
+					// This method was no good, so continue and try the next one
+					continue;
 				}
 			}
 			
-			return plan;
+			throw new PlanNotFound();
 		}
 	}
 

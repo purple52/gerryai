@@ -20,7 +20,7 @@ package org.gerryai.htn.simple.plan;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.unifier.ConstantSubstitution;
+import org.gerryai.logic.unification.Bindings;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -30,6 +30,6 @@ public interface ActionFactoryHelper {
 	
 	Operator getOperator(Task task) throws TaskNotActionable;
 	
-	ConstantSubstitution getBindings(Task task, Operator operator) throws TaskNotActionable;
+	Bindings getBindings(Task task, Operator operator) throws TaskNotActionable;
 
 }

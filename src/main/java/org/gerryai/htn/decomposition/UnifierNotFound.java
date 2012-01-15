@@ -15,47 +15,17 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.plan.impl;
-
-import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.plan.Action;
-import org.gerryai.logic.unification.Bindings;
+package org.gerryai.htn.decomposition;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleAction implements Action {
-
-	private Operator operator;
-	private Bindings bindings;
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Operator getOperator() {
-		return operator;
-	}
+public class UnifierNotFound extends Exception {
 
 	/**
-	 * {@inheritDoc}
+	 * 
 	 */
-	public void setOperator(Operator operator) {
-		this.operator = operator;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public Bindings getBindings() {
-		return bindings;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setBindings(Bindings bindings) {
-		this.bindings = bindings;
-	}
+	private static final long serialVersionUID = -8939732740760761949L;
 
 }

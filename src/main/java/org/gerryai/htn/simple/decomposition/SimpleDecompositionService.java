@@ -15,22 +15,28 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.planner;
+package org.gerryai.htn.simple.decomposition;
 
-import org.gerryai.htn.plan.Plan;
-import org.gerryai.htn.problem.Problem;
+import org.gerryai.htn.decomposition.DecompositionService;
+import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.unification.Unifier;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface PlannerService {
-	
+public class SimpleDecompositionService implements DecompositionService {
+
 	/**
-	 * Find a plan that solve the given problem.
-	 * @param problem the problem to be solved
-	 * @return a solution
+	 * {@inheritDoc}
 	 */
-	Plan solve(Problem problem) throws PlanNotFound;
+	public TaskNetwork decompose(Unifier substitution, TaskNetwork taskNetwork,
+			Task task, Method method) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
+
 }

@@ -15,33 +15,37 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.logic.unifier;
+package org.gerryai.htn.aima;
 
 import java.util.Map;
 
-import org.gerryai.logic.Constant;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
+import org.gerryai.logic.unification.Unifier;
+
+import aima.core.logic.fol.parsing.ast.Predicate;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class ConstantSubstitution implements Substitution<Constant> {
+public interface AIMAConverter {
+
+	/**
+	 * Convert a Gerry AI Task into an AIMA Predicate.
+	 * @param task task to convert
+	 * @return predicate
+	 */
+	Predicate convert(Task task);
 	
-	private Map<Variable, Constant> map;
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public Map<Variable, Constant> getMap() {
-		return map;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setMap(Map<Variable, Constant> map) {
-		this.map = map;
-	}
-
+	aima.core.logic.fol.parsing.ast.Term convert(Term term);
+	
+	Term convert(aima.core.logic.fol.parsing.ast.Term term);
+	
+	aima.core.logic.fol.parsing.ast.Variable convert(Variable variable);
+	
+	Variable convert(aima.core.logic.fol.parsing.ast.Variable variable);
+	
+	Unifier convert(Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map);
 }

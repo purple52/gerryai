@@ -15,47 +15,39 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.plan.impl;
+package org.gerryai.htn.simple.planner.impl;
 
-import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.plan.Action;
-import org.gerryai.logic.unification.Bindings;
+import org.gerryai.htn.plan.Plan;
+import org.gerryai.htn.planner.PlanNotFound;
+import org.gerryai.htn.planner.Planner;
+import org.gerryai.htn.planner.PlanningService;
+import org.gerryai.htn.problem.Problem;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleAction implements Action {
+public class SimplePlanningService implements PlanningService {
 
-	private Operator operator;
-	private Bindings bindings;
+	/**
+	 * A planner to use for solving problems.
+	 */
+	private Planner planner;
+	
+	/**
+	 * Set our planner.
+	 * @param planner planner to use
+	 */
+	public final void setPlanner(Planner planner) {
+		this.planner = planner;
+	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public Operator getOperator() {
-		return operator;
-	}
+	public final Plan solve(Problem problem) throws PlanNotFound {
+		return planner.findPlan(problem.getState(), problem.getTaskNetwork(), problem.getDomain());
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setOperator(Operator operator) {
-		this.operator = operator;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public Bindings getBindings() {
-		return bindings;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setBindings(Bindings bindings) {
-		this.bindings = bindings;
 	}
 
 }
