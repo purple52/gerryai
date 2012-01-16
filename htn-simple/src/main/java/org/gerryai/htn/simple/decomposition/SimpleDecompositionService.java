@@ -38,6 +38,14 @@ public class SimpleDecompositionService implements DecompositionService {
 	private UnificationService unificationService;
 	
 	/**
+	 * Set the unification service.
+	 * @param unificationService the unification service to use
+	 */
+	public final void setUnificationService(UnificationService unificationService) {
+		this.unificationService = unificationService;
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	public final TaskNetwork decompose(Unifier unifier, TaskNetwork taskNetwork, Task task, Method method) {
