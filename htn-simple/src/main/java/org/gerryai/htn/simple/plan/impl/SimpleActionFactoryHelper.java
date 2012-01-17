@@ -21,10 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.plan.TaskNotActionable;
+import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Constant;
@@ -39,9 +39,9 @@ import org.gerryai.logic.unification.Bindings;
 public class SimpleActionFactoryHelper implements ActionFactoryHelper {
 
 	/**
-	 * Domain that we are working in.
+	 * Service for the domain that we are working in.
 	 */
-	private Domain domain;
+	private DomainHelper domainService;
 	
 	/**
 	 * {@inheritDoc}
@@ -51,7 +51,7 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper {
 		Operator operator;
 		
 		try {
-			operator = domain.getOperatorByName(task.getName());
+			operator = domainService.getOperatorByName(task.getName());
 		} catch (OperatorNotFound e) {
 			throw new TaskNotActionable("Could not create action for task", e);
 		}

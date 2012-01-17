@@ -15,25 +15,21 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.planner;
+package org.gerryai.htn.simple.domain.impl;
 
-import org.gerryai.htn.plan.Plan;
-import org.gerryai.htn.problem.State;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 /**
- * Interface that a planner must implement.
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public interface Planner {
+public class SimpleDomainTest {
 
-	/**
-	 * Finds a plan that achieves the given task network.
-	 * @param state the initial state
-	 * @param taskNetwork the task network to achieve
-	 * @return the plan found
-	 * @throws PlanNotFound if no plan could be found
-	 */
-	Plan findPlan(State state, TaskNetwork taskNetwork) throws PlanNotFound;
-		
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
 }

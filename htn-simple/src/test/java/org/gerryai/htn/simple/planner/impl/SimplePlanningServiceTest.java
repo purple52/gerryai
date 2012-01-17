@@ -21,10 +21,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
-
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import static org.mockito.Matchers.any;
 
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.plan.Plan;
@@ -32,8 +29,8 @@ import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.problem.State;
+import org.gerryai.htn.simple.planner.PlannerFactory;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -41,44 +38,56 @@ import org.junit.Test;
  *
  */
 public class SimplePlanningServiceTest {
-
-	@Mock
-	private Planner mockPlanner;
  
-	@InjectMocks
-	private SimplePlanningService plannerService;
-	
-    @Before
-    public void initMocks() {
-    	mockPlanner = mock(Planner.class);
-    	plannerService = new SimplePlanningService();
-    	MockitoAnnotations.initMocks(this);
-    }
-    
+	/**
+	 * Test that the service returns whatever plan the planner finds.
+	 * @throws PlanNotFound only if the test fails
+	 */
 	@Test
 	public void testSolvePlanFound() throws PlanNotFound {
 		
 		Plan mockPlan = mock(Plan.class);
 		Problem mockProblem = createMockProblem();
-		when(mockPlanner.findPlan(mockProblem.getState(), mockProblem.getTaskNetwork(), mockProblem.getDomain())).thenReturn(mockPlan);
+		Planner mockPlanner = mock(Planner.class);
+		when(mockPlanner.findPlan(mockProblem.getState(), mockProblem.getTaskNetwork())).thenReturn(mockPlan);
 
+		PlannerFactory mockPlannerFactory = mock(PlannerFactory.class);
+		when(mockPlannerFactory.create(any(Domain.class))).thenReturn(mockPlanner);
+		
+		// Create the service to be tested
+		SimplePlanningService plannerService = new SimplePlanningService(mockPlannerFactory);
+		
+		// Try and solve the problem
 		Plan plan = plannerService.solve(mockProblem);
-		verify(mockPlanner).findPlan(mockProblem.getState(), mockProblem.getTaskNetwork(), mockProblem.getDomain());
+		
+		// Verify that the correct plan was returned
+		verify(mockPlanner).findPlan(mockProblem.getState(), mockProblem.getTaskNetwork());
 		assertEquals(mockPlan, plan);
 	}
 
-	
+	/**
+	 * Test that the service throws a PlanNotFound exception if no plan is found.
+	 * @throws PlanNotFound if the test passes
+	 */
 	@Test(expected=PlanNotFound.class)
 	public void testSolvePlanNotFound() throws PlanNotFound {
 		
 		Problem mockProblem = createMockProblem();
-		when(mockPlanner.findPlan(mockProblem.getState(), mockProblem.getTaskNetwork(), mockProblem.getDomain())).thenThrow(new PlanNotFound());
-
+		Planner mockPlanner = mock(Planner.class);
+		when(mockPlanner.findPlan(mockProblem.getState(), mockProblem.getTaskNetwork())).thenThrow(new PlanNotFound());
+		
+		PlannerFactory mockPlannerFactory = mock(PlannerFactory.class);
+		when(mockPlannerFactory.create(any(Domain.class))).thenReturn(mockPlanner);
+		
+		// Create the service to be tested
+		SimplePlanningService plannerService = new SimplePlanningService(mockPlannerFactory);
+		
+		// Try and solve the problem, which should throw an exception
 		plannerService.solve(mockProblem);
 	}
 	
 	/**
-	 * Create a simple mocked Problem
+	 * Create a simple mocked Problem.
 	 * @return a mock problem
 	 */
 	private Problem createMockProblem() {

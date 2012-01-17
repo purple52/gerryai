@@ -17,12 +17,12 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
-import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.problem.State;
+import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
 import org.gerryai.htn.tasknetwork.Task;
@@ -35,14 +35,29 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
 public class SimplePlanner implements Planner {
 	
 	/**
+	 * Manager the domain being worked in.
+	 */
+	private DomainHelper domainHelper;
+	
+	/**
 	 * Helper for off-loading some of the logic.
 	 */
 	private PlannerHelper plannerHelper;
 	
 	/**
+	 * Constructor taking the domain manager and planner helper to use.
+	 * @param domainHelper the domain manager
+	 * @param plannerHelper the planner helper
+	 */
+	public SimplePlanner(DomainHelper domainHelper, PlannerHelper plannerHelper) {
+		this.domainHelper = domainHelper;
+		this.plannerHelper = plannerHelper;
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
-	public final Plan findPlan(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound {
+	public final Plan findPlan(State state, TaskNetwork taskNetwork) throws PlanNotFound {
 		
 		if (plannerHelper.isUnsolvable(taskNetwork)) {
 			// 1. No solution
@@ -57,11 +72,11 @@ public class SimplePlanner implements Planner {
 				// 3. Task network is non-primitive
 				// TODO: Confirm implementation
 				// TODO: Handle state changes (and correct backtracking?)			
-				for (Method method : domain.getMethodsByTask(task)) {
+				for (Method method : domainHelper.getMethodsByTask(task)) {
 					try {
 						TaskNetwork decomposedNetwork = plannerHelper.decompose(taskNetwork, task, method);
 						// Try recursing to further process the decomposed network
-						return findPlan(state, decomposedNetwork, domain);
+						return findPlan(state, decomposedNetwork);
 					} catch (DecompositionNotFound e) {
 						// This method was no good, so continue and try the next one
 						continue;
@@ -72,7 +87,7 @@ public class SimplePlanner implements Planner {
 				}
 			} catch (PrimitiveTaskNotFound e) {
 				// 2. Task network is primitive
-				return plannerHelper.findPlanForPrimitive(state, taskNetwork, domain);
+				return plannerHelper.findPlanForPrimitive(state, taskNetwork);
 			}
 			
 			throw new PlanNotFound("No methods found to decompose this task");

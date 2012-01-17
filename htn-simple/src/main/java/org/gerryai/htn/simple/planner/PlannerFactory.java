@@ -15,25 +15,23 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.planner;
+package org.gerryai.htn.simple.planner;
 
-import org.gerryai.htn.plan.Plan;
-import org.gerryai.htn.problem.State;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.planner.Planner;
 
 /**
- * Interface that a planner must implement.
+ * Interface for factories that create planners.
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public interface Planner {
+public interface PlannerFactory {
 
 	/**
-	 * Finds a plan that achieves the given task network.
-	 * @param state the initial state
-	 * @param taskNetwork the task network to achieve
-	 * @return the plan found
-	 * @throws PlanNotFound if no plan could be found
+	 * Create a planner instance using the domain provided.
+	 * @param domain the domain the planner will work in
+	 * @return the planner
 	 */
-	Plan findPlan(State state, TaskNetwork taskNetwork) throws PlanNotFound;
-		
+	Planner create(Domain domain);
+	
 }

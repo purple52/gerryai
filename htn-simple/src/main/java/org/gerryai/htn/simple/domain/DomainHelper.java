@@ -15,38 +15,40 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.domain;
+package org.gerryai.htn.simple.domain;
 
 import java.util.Set;
 
+import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.domain.OperatorNotFound;
+import org.gerryai.htn.tasknetwork.Task;
+
 /**
- * Interface that a domain must implement.
+ * Interface for a service that manages a domain.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Domain {
-
-	/**
-	 * Get the full set of available operators for this domain.
-	 * @return the operators
-	 */
-	Set<Operator> getOperators();
+public interface DomainHelper {
 	
 	/**
-	 * Set the available operators for this domain.
-	 * @param operators the set of operators
+	 * Get the domain that this service is managing.
+	 * @return the domain
 	 */
-	void setOperators(Set<Operator> operators);
+	Domain getDomain();
 	
 	/**
-	 * Get the set of methods available for this domain.
-	 * @return the methods
+	 * Get an operator by name.
+	 * @param name the name of the operator to get
+	 * @return the operator
+	 * @throws OperatorNotFound if no such operator exists
 	 */
-	Set<Method> getMethods();
+	Operator getOperatorByName(String name) throws OperatorNotFound;
 	
 	/**
-	 * Set the available methods for this domain.
-	 * @param methods the set of methods
+	 * Get a set of methods that match the given task.
+	 * @param task the task being matched
+	 * @return a set of matching methods
 	 */
-	void setMethods(Set<Method> methods);
-	
+	Set<Method> getMethodsByTask(Task task);
 }

@@ -23,7 +23,6 @@ import java.util.Set;
 import org.gerryai.htn.decomposition.DecompositionService;
 import org.gerryai.htn.decomposition.UnificationService;
 import org.gerryai.htn.decomposition.UnifierNotFound;
-import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
@@ -75,7 +74,7 @@ public class SimplePlannerHelper implements PlannerHelper {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Plan findPlanForPrimitive(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound {
+	public final Plan findPlanForPrimitive(State state, TaskNetwork taskNetwork) throws PlanNotFound {
 		// TODO: Confirm implementation
 		// TODO: Enforce constraints
 		

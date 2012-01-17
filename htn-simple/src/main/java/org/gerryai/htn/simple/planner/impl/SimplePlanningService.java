@@ -22,32 +22,37 @@ import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.planner.PlanningService;
 import org.gerryai.htn.problem.Problem;
+import org.gerryai.htn.simple.planner.PlannerFactory;
 
 /**
+ * A simple domain non-specific planning service that uses the simple planner.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public class SimplePlanningService implements PlanningService {
 
 	/**
-	 * A planner to use for solving problems.
+	 * A factory for creating planners.
 	 */
-	private Planner planner;
+	private PlannerFactory plannerFactory;
 	
 	/**
-	 * Set our planner.
-	 * @param planner planner to use
+	 * Constructor taking a factory for creating planners.
+	 * @param plannerFactory the factory
 	 */
-	public final void setPlanner(Planner planner) {
-		this.planner = planner;
+	public SimplePlanningService(PlannerFactory plannerFactory) {
+		this.plannerFactory = plannerFactory;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	public final Plan solve(Problem problem) throws PlanNotFound {
-		return planner.findPlan(problem.getState(), problem.getTaskNetwork(), problem.getDomain());
-
+		
+		// Create a planner that will work in the domain of the given problem
+		Planner planner = plannerFactory.create(problem.getDomain());
+				
+		// Find a plan of the given problem
+		return planner.findPlan(problem.getState(), problem.getTaskNetwork());
 	}
 
 }

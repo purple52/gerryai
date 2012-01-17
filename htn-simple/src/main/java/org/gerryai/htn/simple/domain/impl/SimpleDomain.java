@@ -15,38 +15,57 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.domain;
+package org.gerryai.htn.simple.domain.impl;
 
 import java.util.Set;
 
+import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.domain.Operator;
+
 /**
- * Interface that a domain must implement.
+ * Simple representation of a domain.
+ * Wraps a set of operators and a set of methods to define the domain.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Domain {
+public class SimpleDomain implements Domain {
 
 	/**
-	 * Get the full set of available operators for this domain.
-	 * @return the operators
+	 * Operators available in this domain.
 	 */
-	Set<Operator> getOperators();
+	private Set<Operator> operators;
 	
 	/**
-	 * Set the available operators for this domain.
-	 * @param operators the set of operators
+	 * Methods available in this domain.
 	 */
-	void setOperators(Set<Operator> operators);
+	private Set<Method> methods;
 	
 	/**
-	 * Get the set of methods available for this domain.
-	 * @return the methods
+	 * {@inheritDoc}
 	 */
-	Set<Method> getMethods();
-	
+	public final Set<Operator> getOperators() {
+		return operators;
+	}
+
 	/**
-	 * Set the available methods for this domain.
-	 * @param methods the set of methods
+	 * {@inheritDoc}
 	 */
-	void setMethods(Set<Method> methods);
-	
+	public final void setOperators(Set<Operator> operators) {
+		this.operators = operators;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final Set<Method> getMethods() {
+		return methods;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setMethods(Set<Method> methods) {
+		this.methods = methods;
+	}
+
 }

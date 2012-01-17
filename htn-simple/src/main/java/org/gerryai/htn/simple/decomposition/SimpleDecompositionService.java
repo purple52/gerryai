@@ -50,9 +50,11 @@ public class SimpleDecompositionService implements DecompositionService {
 	 */
 	public final TaskNetwork decompose(Unifier unifier, TaskNetwork taskNetwork, Task task, Method method) {
 		
+		// Apply unifier where relevant
 		TaskNetwork unifiedMethodSubTasks = unificationService.apply(unifier, method.getTaskNetwork());
-
 		TaskNetwork updatedTaskNetwork = unificationService.apply(unifier, taskNetwork);
+		
+		// Replace the original task with the sub tasks provided by the method
 		updatedTaskNetwork.getTasks().remove(task);
 		updatedTaskNetwork.getTasks().addAll(unifiedMethodSubTasks.getTasks());
 		

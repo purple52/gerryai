@@ -17,7 +17,6 @@
  */
 package org.gerryai.htn.simple.planner;
 
-import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
@@ -44,11 +43,10 @@ public interface PlannerHelper {
 	 * grounded operators represented as actions.
 	 * @param state the state to work from
 	 * @param taskNetwork the task network to convert
-	 * @param domain the domain we are working in
 	 * @return the plan
 	 * @throws PlanNotFound if no plan exists
 	 */
-	Plan findPlanForPrimitive(State state, TaskNetwork taskNetwork, Domain domain) throws PlanNotFound;
+	Plan findPlanForPrimitive(State state, TaskNetwork taskNetwork) throws PlanNotFound;
 	
 	/**
 	 * Try to get a non-primitive task from a given network.
