@@ -17,10 +17,50 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.gerryai.htn.plan.Action;
+import org.gerryai.htn.plan.Plan;
+import org.gerryai.htn.planner.PlanNotFound;
+import org.gerryai.htn.problem.State;
+import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.planner.PlannerHelper;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.junit.Test;
+
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public class SimplePlannerTest {
 
+	@Test
+	public void testEmptyProblem() throws PlanNotFound, PrimitiveTaskNotFound {
+		
+		State mockState = mock(State.class);
+		TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
+		Plan mockPlan = mock(Plan.class);
+		List<Action> actions = new ArrayList<Action>();
+		when(mockPlan.getActions()).thenReturn(actions);
+		
+		// Create a mock planner helper that will throw an exception if no primitive tasks were found
+		// And no plan if an empty network is searched
+		PlannerHelper mockPlannerHelper = mock(PlannerHelper.class);
+		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenThrow(new PrimitiveTaskNotFound());
+		when(mockPlannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork)).thenReturn(mockPlan);
+		DomainHelper mockDomainHelper = mock(DomainHelper.class);
+		
+		// Create the planner to be tested
+		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
+		
+		// Try and find a plan
+		Plan plan = planner.findPlan(mockState, mockTaskNetwork);
+		
+		assertTrue(plan.getActions().isEmpty());
+	}
 }
