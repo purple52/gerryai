@@ -18,39 +18,40 @@
 package org.gerryai.htn.simple.domain.impl;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.junit.Test;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleDomainTest {
-
+public class SimpleMethodTest {
+	
 	@Test
-	public void testOperators() {
-		Set<Operator> operators = new HashSet<Operator>();
-		
-		SimpleDomain domain = new SimpleDomain();
-		
-		domain.setOperators(operators);
-		
-		assertEquals(operators, domain.getOperators());
+	public void testName() {
+		String name = "testname";
+		SimpleMethod method = new SimpleMethod();
+		method.setName(name);
+		assertEquals(name, method.getName());
 	}
 
 	@Test
-	public void testMethods() {
-		Set<Method> methods = new HashSet<Method>();
-		
-		SimpleDomain domain = new SimpleDomain();
-		
-		domain.setMethods(methods);
-		
-		assertEquals(methods, domain.getMethods());
+	public void testTask() {
+		Task task = mock(Task.class);
+		SimpleMethod method = new SimpleMethod();
+		method.setTask(task);
+		assertEquals(task, method.getTask());
 	}
+
+	@Test
+	public void testTaskNetwork() {
+		TaskNetwork taskNetwork = mock(TaskNetwork.class);
+		SimpleMethod method = new SimpleMethod();
+		method.setTaskNetwork(taskNetwork);
+		assertEquals(taskNetwork, method.getTaskNetwork());
+	}
+
 }

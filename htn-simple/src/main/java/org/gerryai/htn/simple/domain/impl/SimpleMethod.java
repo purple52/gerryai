@@ -17,40 +17,71 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import static org.junit.Assert.*;
-
-import java.util.HashSet;
-import java.util.Set;
-
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.domain.Operator;
-import org.junit.Test;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleDomainTest {
+public class SimpleMethod implements Method {
 
-	@Test
-	public void testOperators() {
-		Set<Operator> operators = new HashSet<Operator>();
-		
-		SimpleDomain domain = new SimpleDomain();
-		
-		domain.setOperators(operators);
-		
-		assertEquals(operators, domain.getOperators());
+	/**
+	 * Name of this method.
+	 */
+	private String name;
+	
+	/**
+	 * Task that this method decomposes.
+	 */
+	private Task task;
+	
+	/**
+	 * Sub tasks that this method decomposes its task into.
+	 */
+	private TaskNetwork taskNetwork;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final String getName() {
+		return name;
 	}
 
-	@Test
-	public void testMethods() {
-		Set<Method> methods = new HashSet<Method>();
-		
-		SimpleDomain domain = new SimpleDomain();
-		
-		domain.setMethods(methods);
-		
-		assertEquals(methods, domain.getMethods());
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setName(String name) {
+		this.name = name;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final Task getTask() {
+		return task;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setTask(Task task) {
+		this.task = task;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final TaskNetwork getTaskNetwork() {
+		return taskNetwork;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setTaskNetwork(TaskNetwork taskNetwork) {
+		this.taskNetwork = taskNetwork;
+	}
+
 }
