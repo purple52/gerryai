@@ -64,6 +64,21 @@ public class SimplePlannerHelper implements PlannerHelper {
 	private UnificationService unificationService;
 	
 	/**
+	 * Constructor providing all the dependencies required to function.
+	 * @param actionFactory the action factory
+	 * @param planFactory the plan factory
+	 * @param decompositionservice the decomposition service
+	 * @param unificationService the unification service
+	 */
+	public SimplePlannerHelper(ActionFactory actionFactory, PlanFactory planFactory,
+			DecompositionService decompositionservice, UnificationService unificationService) {
+		this.actionFactory = actionFactory;
+		this.planFactory = planFactory;
+		this.decompositionService = decompositionservice;
+		this.unificationService = unificationService;
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	public final boolean isUnsolvable(TaskNetwork taskNetwork) {

@@ -37,6 +37,14 @@ public class SimpleActionFactory implements ActionFactory {
 	private ActionFactoryHelper actionFactoryHelper;
 	
 	/**
+	 * Constructor taking all required dependencies.
+	 * @param actionFactoryHelper the action factory
+	 */
+	public SimpleActionFactory(ActionFactoryHelper actionFactoryHelper) {
+		this.actionFactoryHelper = actionFactoryHelper;
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	public final Action create(Task task) throws TaskNotActionable {
