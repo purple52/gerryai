@@ -28,6 +28,8 @@ import java.util.Set;
 
 import org.gerryai.htn.decomposition.DecompositionService;
 import org.gerryai.htn.decomposition.UnificationService;
+import org.gerryai.htn.decomposition.UnifierNotFound;
+import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.plan.TaskNotActionable;
@@ -35,8 +37,10 @@ import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.PlanFactory;
+import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.unification.Unifier;
 import org.junit.Test;
 
 /**
@@ -45,8 +49,8 @@ import org.junit.Test;
  */
 public class SimplePlannerHelperTest {
 
-	@Test(expected=PrimitiveTaskNotFound.class)
-	public void testGetNonPrimitiveTask() throws PrimitiveTaskNotFound {
+	@Test(expected=NonPrimitiveTaskNotFound.class)
+	public void testGetNonPrimitiveTask() throws NonPrimitiveTaskNotFound {
 		
 		ActionFactory mockActionFactory = mock(ActionFactory.class);
 		PlanFactory mockPlanFactory = mock(PlanFactory.class);
@@ -190,5 +194,56 @@ public class SimplePlannerHelperTest {
 		
 		// Try to find a plan which should throw an exception because the task account be converted
 		plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);		
+	}
+	
+	/**
+	 * Test that a task and method that cannot be unified cannot be decomposed
+	 * @throws DecompositionNotFound
+	 * @throws UnifierNotFound
+	 */
+	@Test(expected=DecompositionNotFound.class)
+	public void testDecomposeNoUnifier() throws DecompositionNotFound, UnifierNotFound {
+		
+		TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
+		Task mockTask = mock(Task.class);
+		Method mockMethod = mock(Method.class);
+		
+		PlanFactory mockPlanFactory = mock(PlanFactory.class);
+		ActionFactory mockActionFactory = mock(ActionFactory.class);
+		DecompositionService mockDecompositionService = mock(DecompositionService.class);
+		UnificationService mockUnificationService = mock(UnificationService.class);
+		when(mockUnificationService.findUnifier(mockTask, mockMethod)).thenThrow(new UnifierNotFound());
+		
+		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(mockActionFactory,
+				mockPlanFactory, mockDecompositionService, mockUnificationService);
+		
+		plannerHelper.decompose(mockTaskNetwork, mockTask, mockMethod);
+	}
+	
+	/**
+	 * Test that a unifiable task and method can be decomposed.
+	 * @throws DecompositionNotFound
+	 * @throws UnifierNotFound
+	 */
+	@Test
+	public void testDecompose() throws DecompositionNotFound, UnifierNotFound {
+		
+		TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
+		TaskNetwork mockDecomposedTaskNetwork = mock(TaskNetwork.class);
+		Task mockTask = mock(Task.class);
+		Method mockMethod = mock(Method.class);
+		Unifier mockUnifier = mock(Unifier.class);
+		
+		PlanFactory mockPlanFactory = mock(PlanFactory.class);
+		ActionFactory mockActionFactory = mock(ActionFactory.class);
+		DecompositionService mockDecompositionService = mock(DecompositionService.class);
+		UnificationService mockUnificationService = mock(UnificationService.class);
+		when(mockUnificationService.findUnifier(mockTask, mockMethod)).thenReturn(mockUnifier);
+		when(mockDecompositionService.decompose(mockUnifier, mockTaskNetwork, mockTask, mockMethod)).thenReturn(mockDecomposedTaskNetwork);
+		
+		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(mockActionFactory,
+				mockPlanFactory, mockDecompositionService, mockUnificationService);
+		
+		assertEquals(mockDecomposedTaskNetwork,plannerHelper.decompose(mockTaskNetwork, mockTask, mockMethod));
 	}
 }

@@ -21,7 +21,7 @@ import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.State;
-import org.gerryai.htn.simple.planner.impl.PrimitiveTaskNotFound;
+import org.gerryai.htn.simple.planner.impl.NonPrimitiveTaskNotFound;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
@@ -52,9 +52,9 @@ public interface PlannerHelper {
 	 * Try to get a non-primitive task from a given network.
 	 * @param taskNetwork the task network
 	 * @return a non-primitive task
-	 * @throws PrimitiveTaskNotFound if no non-primitive tasks are present in the task network
+	 * @throws NonPrimitiveTaskNotFound if no non-primitive tasks are present in the task network
 	 */
-	Task getNonPrimitiveTask(TaskNetwork taskNetwork) throws PrimitiveTaskNotFound;
+	Task getNonPrimitiveTask(TaskNetwork taskNetwork) throws NonPrimitiveTaskNotFound;
 	
 	/**
 	 * Try to decompose the given task within a task network using the given method.

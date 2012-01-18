@@ -123,13 +123,13 @@ public class SimplePlannerHelper implements PlannerHelper {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Task getNonPrimitiveTask(TaskNetwork taskNetwork) throws PrimitiveTaskNotFound {
+	public final Task getNonPrimitiveTask(TaskNetwork taskNetwork) throws NonPrimitiveTaskNotFound {
 		for (Task task : taskNetwork.getTasks()) {
 			if (!task.isPrimitive()) {
 				return task;
 			}
 		}
-		throw new PrimitiveTaskNotFound("Could not find a non-primitive task");
+		throw new NonPrimitiveTaskNotFound("Could not find a non-primitive task");
 	}
 
 	/**

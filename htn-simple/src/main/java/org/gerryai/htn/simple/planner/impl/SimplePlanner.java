@@ -85,7 +85,7 @@ public class SimplePlanner implements Planner {
 						continue;
 					}
 				}
-			} catch (PrimitiveTaskNotFound e) {
+			} catch (NonPrimitiveTaskNotFound e) {
 				// 2. Task network is primitive
 				return plannerHelper.findPlanForPrimitive(state, taskNetwork);
 			}

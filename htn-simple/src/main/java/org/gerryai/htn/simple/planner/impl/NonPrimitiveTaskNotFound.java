@@ -21,12 +21,12 @@ package org.gerryai.htn.simple.planner.impl;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class PrimitiveTaskNotFound extends Exception {
+public class NonPrimitiveTaskNotFound extends Exception {
 
 	/**
 	 * Default constructor.
 	 */
-    public PrimitiveTaskNotFound() {
+    public NonPrimitiveTaskNotFound() {
         super();
     }
     
@@ -34,7 +34,7 @@ public class PrimitiveTaskNotFound extends Exception {
      * Constructor with message.
      * @param message the message
      */
-    public PrimitiveTaskNotFound(String message) {
+    public NonPrimitiveTaskNotFound(String message) {
         super(message);
     }
 
@@ -43,7 +43,7 @@ public class PrimitiveTaskNotFound extends Exception {
      * @param message the message
      * @param throwable the exception to wrap
      */
-    public PrimitiveTaskNotFound(String message, Throwable throwable) {
+    public NonPrimitiveTaskNotFound(String message, Throwable throwable) {
         super(message, throwable);
     }
     
