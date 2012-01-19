@@ -43,8 +43,8 @@ public class SimplePlannerFactory implements PlannerFactory {
 		SimpleActionFactoryHelper actionFactoryHelper = new SimpleActionFactoryHelper();
 		SimpleActionFactory actionFactory = new SimpleActionFactory(actionFactoryHelper);
 		SimplePlanFactory planFactory = new SimplePlanFactory();
-		SimpleDecompositionService decompositionService = new SimpleDecompositionService();
 		AIMAUnificationService unificationService = new AIMAUnificationService();
+		SimpleDecompositionService decompositionService = new SimpleDecompositionService(unificationService);
 		
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(actionFactory, planFactory,
 				decompositionService, unificationService);

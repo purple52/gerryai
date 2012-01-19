@@ -31,11 +31,7 @@ import org.gerryai.htn.simple.decomposition.SimpleDecompositionService;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.unification.Unifier;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -43,21 +39,12 @@ import org.mockito.MockitoAnnotations;
  */
 public class SimpleDecompositionServiceTest {
 	
-	@Mock
-	private UnificationService mockUnificationService;
- 
-	@InjectMocks
-	private SimpleDecompositionService decompositionService;
-	
-    @Before
-    public void initMocks() {
-    	mockUnificationService = mock(UnificationService.class);
-    	decompositionService = new SimpleDecompositionService();
-    	MockitoAnnotations.initMocks(this);
-    }
-    
+  
     @Test
     public void testDecompose() {
+    	
+    	UnificationService mockUnificationService = mock(UnificationService.class);
+    	SimpleDecompositionService decompositionService = new SimpleDecompositionService(mockUnificationService);
     	
     	// TaskA will be decomposed into TaskB and TaskC
     	Task mockTaskA = mock(Task.class);

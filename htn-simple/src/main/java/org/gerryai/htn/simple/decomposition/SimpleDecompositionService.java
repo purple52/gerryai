@@ -41,7 +41,7 @@ public class SimpleDecompositionService implements DecompositionService {
 	 * Set the unification service.
 	 * @param unificationService the unification service to use
 	 */
-	public final void setUnificationService(UnificationService unificationService) {
+	public SimpleDecompositionService(UnificationService unificationService) {
 		this.unificationService = unificationService;
 	}
 	
