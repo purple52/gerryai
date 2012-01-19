@@ -22,8 +22,15 @@ package org.gerryai.htn.simple.tasknetwork.impl;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class NonPrimitiveTask extends AbstractTask {
+public class SimplePrimitiveTask extends SimpleAbstractTask {
 	
+	/**
+	 * @param builder the builder to use to build this task
+	 */
+	protected SimplePrimitiveTask(SimpleTaskBuilder builder) {
+		super(builder);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

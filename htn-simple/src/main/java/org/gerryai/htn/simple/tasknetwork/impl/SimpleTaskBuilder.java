@@ -89,18 +89,28 @@ public class SimpleTaskBuilder implements TaskBuilder {
 		
 		try {
 			domainHelper.getOperatorByName(name);
-			task = new PrimitiveTask();
-			task.setName(name);
+			task = new SimplePrimitiveTask(this);
 		} catch (OperatorNotFound e) {
-			task = new NonPrimitiveTask();
-			task.setName(name);
+			task = new SimpleNonPrimitiveTask(this);
 		}
-		
-		task.setName(name);
-		task.setArguments(arguments);
-		
+
 		return task;
 	}
 
+	/**
+	 * Get the name of the task to be built.
+	 * @return the name
+	 */
+	protected final String getName() {
+		return name;
+	}
+	
+	/**
+	 * Get the arguments for the tack to be built.
+	 * @return the arguments
+	 */
+	protected final List<Term> getArguments() {
+		return arguments;
+	}
 
 }

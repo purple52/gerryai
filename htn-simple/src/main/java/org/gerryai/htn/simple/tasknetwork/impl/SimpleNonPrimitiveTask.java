@@ -14,55 +14,28 @@
  *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */ 	
+ */
 package org.gerryai.htn.simple.tasknetwork.impl;
 
-import java.util.List;
-
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 /**
- * Basic implementation of the Task interface.
+ * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public abstract class AbstractTask implements Task {
+public class SimpleNonPrimitiveTask extends SimpleAbstractTask {
 	
 	/**
-	 * Name for this task.
+	 * @param builder the builder to use to build this task
 	 */
-	private String name;
-	
-	/**
-	 * Arguments for this task.
-	 */
-	private List<Term> arguments;
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final String getName() {
-		return name;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setName(String name) {
-		this.name = name;
+	protected SimpleNonPrimitiveTask(SimpleTaskBuilder builder) {
+		super(builder);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<Term> getArguments() {
-		return arguments;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setArguments(List<Term> arguments) {
-		this.arguments = arguments;
+	public final boolean isPrimitive() {
+		return true;
 	}
 
 }

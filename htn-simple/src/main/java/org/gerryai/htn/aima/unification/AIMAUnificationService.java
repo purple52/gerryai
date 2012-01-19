@@ -104,9 +104,9 @@ public class AIMAUnificationService implements UnificationService {
 		}
 
 		Task updatedTask = new SimpleTaskBuilder(domainHelper)
-			.setName(task.getName())
-			.addArguments(updatedTerms)
-			.build();
+				.setName(task.getName())
+				.addArguments(updatedTerms)
+				.build();
 		
 		return updatedTask;
 	}
