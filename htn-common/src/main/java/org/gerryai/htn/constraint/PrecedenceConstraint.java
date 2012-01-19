@@ -15,46 +15,25 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.constraint;
 
-import java.util.Set;
-
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.tasknetwork.Task;
 
 /**
- * Interface that a task network must implement.
+ * Interface for a constraint that dictates what order two tasks must be completed in.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface TaskNetwork {
+public interface PrecedenceConstraint extends Constraint {
 
 	/**
-	 * Get the tasks that make up this network.
-	 * @return the tasks
+	 * Get the task that must come first.
+	 * @return the task
 	 */
-	Set<Task> getTasks();
+	Task getPrecedingTask();
 	
 	/**
-	 * Set the tasks that make up this network.
-	 * @param tasks tasks to set
+	 * Get the task that must come last.
+	 * @return the task
 	 */
-	void setTasks(Set<Task> tasks);
-	
-	/**
-	 * Get the constraints for this network.
-	 * @return the constraints
-	 */
-	Set<Constraint> getConstraints();
-	
-	/**
-	 * Set the constraints for this network.
-	 * @param constraints constraints to set
-	 */
-	void setConstraints(Set<Constraint> constraints);
-	
-	/**
-	 * Check if the task network is primitive by examining its tasks.
-	 * @return whether the task network is primitive
-	 */
-	boolean isPrimitive();
+	Task getProcedingTask();
 }

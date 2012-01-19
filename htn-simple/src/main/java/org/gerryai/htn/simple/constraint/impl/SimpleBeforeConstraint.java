@@ -15,72 +15,60 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.tasknetwork.impl;
+package org.gerryai.htn.simple.constraint.impl;
 
 import java.util.Set;
 
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.constraint.BeforeConstraint;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Term;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleTaskNetwork implements TaskNetwork {
+public class SimpleBeforeConstraint implements BeforeConstraint {
 
 	/**
-	 * Set of tasks to be solved in this network.
+	 * The set of tasks that this constraint must hold for.
 	 */
 	private Set<Task> tasks;
 	
 	/**
-	 * Set of constraints to be met.
+	 * The literal that must be true directly before the first of these tasks.
 	 */
-	private Set<Constraint> constraints;
+	private Term literal;
 	
 	/**
-	 * {@inheritDoc}
+	 * Set the set of tasks that this constraint must hold for.
+	 * @param tasks the tasks
+	 */
+	public final void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
+	}
+	
+	/**
+	 * Set the literal that must be true directly before the first of these tasks.
+	 * @param literal the literal
+	 */
+	public final void setLiteral(Term literal) {
+		this.literal = literal;
+	}
+	
+	/**
+	 * Get the set of tasks that this constraint must hold for.
+	 * @return the tasks
 	 */
 	public final Set<Task> getTasks() {
 		return tasks;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Get the literal that must be true directly before the first of these tasks.
+	 * @return the literal
 	 */
-	public final void setTasks(Set<Task> tasks) {
-		this.tasks = tasks;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final Set<Constraint> getConstraints() {
-		return constraints;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setConstraints(Set<Constraint> constraints) {
-		this.constraints = constraints;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final boolean isPrimitive() {
-		
-		for (Task task : getTasks()) {
-			if (!task.isPrimitive()) {
-				// If any of our tasks are non-primitive, the whole network is non-primitive
-				return false;
-			}
-		}
-		
-		// None of our tasks were non-primitive, so the whole network is primitive
-		return true;
+	public final Term getLiteral() {
+		return literal;
 	}
 
 }

@@ -20,9 +20,9 @@ package org.gerryai.htn.simple.domain.impl;
 import java.util.List;
 import java.util.Set;
 
+import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Operator;
-import org.gerryai.logic.Constraint;
 import org.gerryai.logic.Variable;
 
 /**

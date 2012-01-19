@@ -15,46 +15,56 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.simple.constraint.impl;
 
-import java.util.Set;
-
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.constraint.PrecedenceConstraint;
+import org.gerryai.htn.tasknetwork.Task;
 
 /**
- * Interface that a task network must implement.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface TaskNetwork {
+public class SimplePrecedenceConstraint implements PrecedenceConstraint {
 
 	/**
-	 * Get the tasks that make up this network.
-	 * @return the tasks
+	 * The task that must come first.
 	 */
-	Set<Task> getTasks();
+	private Task precedingTask;
 	
 	/**
-	 * Set the tasks that make up this network.
-	 * @param tasks tasks to set
+	 * The task that must come last.
 	 */
-	void setTasks(Set<Task> tasks);
+	private Task procedingTask;
 	
 	/**
-	 * Get the constraints for this network.
-	 * @return the constraints
+	 * Set the task to come first.
+	 * @param precedingTask the task
 	 */
-	Set<Constraint> getConstraints();
+	public final void setPrecedingTask(Task precedingTask) {
+		this.precedingTask = precedingTask;
+	}
 	
 	/**
-	 * Set the constraints for this network.
-	 * @param constraints constraints to set
+	 * Set the task to come last.
+	 * @param procedingTask the task
 	 */
-	void setConstraints(Set<Constraint> constraints);
+	public final void setProcedingTask(Task procedingTask) {
+		this.procedingTask = procedingTask;
+	}
+	
 	
 	/**
-	 * Check if the task network is primitive by examining its tasks.
-	 * @return whether the task network is primitive
+	 * {@inheritDoc}
 	 */
-	boolean isPrimitive();
+	public final Task getPrecedingTask() {
+		return precedingTask;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final Task getProcedingTask() {
+		return procedingTask;
+	}
+
 }

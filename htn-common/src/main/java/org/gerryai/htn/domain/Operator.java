@@ -20,7 +20,7 @@ package org.gerryai.htn.domain;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.logic.Constraint;
+import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.logic.Variable;
 
 /**

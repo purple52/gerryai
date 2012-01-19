@@ -15,46 +15,28 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.tasknetwork;
+package org.gerryai.htn.constraint;
 
 import java.util.Set;
 
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Term;
 
 /**
- * Interface that a task network must implement.
+ * Interface for a constraint that dictates the state immediately after this task.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface TaskNetwork {
+public interface AfterConstraint extends Constraint {
 
 	/**
-	 * Get the tasks that make up this network.
-	 * @return the tasks
+	 * The set of tasks for which this constraint must hold.
+	 * @return the set of tasks
 	 */
 	Set<Task> getTasks();
 	
 	/**
-	 * Set the tasks that make up this network.
-	 * @param tasks tasks to set
+	 * The literal that must be true just after the last of the tasks is achieved.
+	 * @return the literal
 	 */
-	void setTasks(Set<Task> tasks);
-	
-	/**
-	 * Get the constraints for this network.
-	 * @return the constraints
-	 */
-	Set<Constraint> getConstraints();
-	
-	/**
-	 * Set the constraints for this network.
-	 * @param constraints constraints to set
-	 */
-	void setConstraints(Set<Constraint> constraints);
-	
-	/**
-	 * Check if the task network is primitive by examining its tasks.
-	 * @return whether the task network is primitive
-	 */
-	boolean isPrimitive();
+	Term getLiteral();
 }
