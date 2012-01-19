@@ -38,6 +38,10 @@
   		<artifactId>htn-common</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
+  	<dependency>
+  		<groupId>aima</groupId>
+  		<artifactId>aima-core</artifactId>
+  	</dependency>
   </dependencies>
 
 </project>

@@ -23,9 +23,5 @@
 		</plugins>
 	</reporting>
 	<dependencies>
-  	<dependency>
-  		<groupId>aima</groupId>
-  		<artifactId>aima-core</artifactId>
-  	</dependency>
-  </dependencies>
+	</dependencies>
 </project>
