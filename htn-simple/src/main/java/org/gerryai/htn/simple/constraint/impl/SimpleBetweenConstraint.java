@@ -40,7 +40,7 @@ public class SimpleBetweenConstraint implements BetweenConstraint {
 	private Set<Task> procedingTasks;
 	
 	/**
-	 * The literal that must be true directly after the last of these tasks.
+	 * The literal that must be true directly between the two sets of tasks.
 	 */
 	private Term literal;
 	
