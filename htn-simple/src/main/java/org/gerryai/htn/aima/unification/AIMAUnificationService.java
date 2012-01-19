@@ -26,7 +26,9 @@ import java.util.Set;
 import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.decomposition.UnificationService;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.tasknetwork.TaskNetworkFactory;
+import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskBuilder;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilder;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
@@ -51,10 +53,10 @@ public class AIMAUnificationService implements UnificationService {
 	private AIMAConverter converter;
 	
 	/**
-	 * Factory to create new task networks.
+	 * Helper for checking whether tasks are primitive or not.
 	 */
-	private TaskNetworkFactory taskNetworkFactory;
-
+	private DomainHelper domainHelper;
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -79,8 +81,10 @@ public class AIMAUnificationService implements UnificationService {
 			Task updatedTask = apply(unifier, task);
 			updatedTasks.add(updatedTask);
 		}
-		TaskNetwork updatedTaskNetwork = taskNetworkFactory.create();
-		updatedTaskNetwork.setTasks(updatedTasks);
+
+		TaskNetwork updatedTaskNetwork = new SimpleTaskNetworkBuilder()
+				.addTasks(updatedTasks)
+				.build();
 		
 		return updatedTaskNetwork;
 	}
@@ -98,8 +102,11 @@ public class AIMAUnificationService implements UnificationService {
 				updatedTerms.add(term);
 			}
 		}
-		Task updatedTask = taskNetworkFactory.create(task.getName());
-		updatedTask.setArguments(updatedTerms);
+
+		Task updatedTask = new SimpleTaskBuilder(domainHelper)
+			.setName(task.getName())
+			.addArguments(updatedTerms)
+			.build();
 		
 		return updatedTask;
 	}
