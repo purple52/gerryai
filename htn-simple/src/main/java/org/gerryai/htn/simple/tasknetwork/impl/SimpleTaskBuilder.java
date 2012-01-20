@@ -23,7 +23,6 @@ import java.util.List;
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.tasknetwork.TaskBuilder;
-import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
 /**
@@ -69,7 +68,7 @@ public class SimpleTaskBuilder implements TaskBuilder {
 	 */
 	public final SimpleTaskBuilder addArgument(Term term) {
 		arguments.add(term);
-		return null;
+		return this;
 	}
 
 	/**
@@ -77,15 +76,15 @@ public class SimpleTaskBuilder implements TaskBuilder {
 	 */
 	public final SimpleTaskBuilder addArguments(List<Term> terms) {
 		arguments.addAll(terms);
-		return null;
+		return this;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Task build() {
+	public final SimpleAbstractTask build() {
 		
-		Task task;
+		SimpleAbstractTask task;
 		
 		try {
 			domainHelper.getOperatorByName(name);
