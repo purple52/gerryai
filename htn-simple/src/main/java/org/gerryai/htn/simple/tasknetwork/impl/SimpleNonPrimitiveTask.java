@@ -35,7 +35,7 @@ public class SimpleNonPrimitiveTask extends SimpleAbstractTask {
 	 * {@inheritDoc}
 	 */
 	public final boolean isPrimitive() {
-		return true;
+		return false;
 	}
 
 }
