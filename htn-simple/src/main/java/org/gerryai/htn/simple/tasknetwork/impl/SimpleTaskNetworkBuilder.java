@@ -23,7 +23,6 @@ import java.util.Set;
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Builder for simple task networks.
@@ -61,7 +60,7 @@ public class SimpleTaskNetworkBuilder implements TaskNetworkBuilder {
 	 * {@inheritDoc}
 	 */
 	public final SimpleTaskNetworkBuilder addTasks(Set<Task> tasks) {
-		tasks.addAll(tasks);
+		this.tasks.addAll(tasks);
 		return this;
 	}
 	
@@ -72,16 +71,36 @@ public class SimpleTaskNetworkBuilder implements TaskNetworkBuilder {
 		constraints.add(constraint);
 		return this;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final SimpleTaskNetworkBuilder addConstraints(Set<Constraint> constraints) {
+		this.constraints.addAll(constraints);
+		return this;
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final TaskNetwork build() {
-		SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork();
-		taskNetwork.setTasks(tasks);
-		taskNetwork.setConstraints(constraints);
-		
-		return taskNetwork;
+	public final SimpleTaskNetwork build() {
+		return new SimpleTaskNetwork(this);
+	}
+	
+	/**
+	 * Get the set of tasks for the task network to be built.
+	 * @return the tasks
+	 */
+	protected final Set<Task> getTasks() {
+		return tasks;
+	}
+	
+	/**
+	 * Get the set of constraints for the task network to be built.
+	 * @return the constraints
+	 */
+	protected final Set<Constraint> getConstraints() {
+		return constraints;
 	}
 
 }

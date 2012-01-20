@@ -51,6 +51,13 @@ public interface TaskNetworkBuilder {
 	TaskNetworkBuilder addConstraint(Constraint constraint);
 	
 	/**
+	 * Add a set of constraints.
+	 * @param constraints the constraints
+	 * @return the updated builder
+	 */
+	TaskNetworkBuilder addConstraints(Set<Constraint> constraints);
+	
+	/**
 	 * Build the task network.
 	 * @return the task network
 	 */

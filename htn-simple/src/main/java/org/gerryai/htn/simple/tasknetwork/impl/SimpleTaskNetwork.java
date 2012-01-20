@@ -40,6 +40,15 @@ public class SimpleTaskNetwork implements TaskNetwork {
 	private Set<Constraint> constraints;
 	
 	/**
+	 * Constructor for a simple task.
+	 * @param builder the builder to build the task
+	 */
+	protected SimpleTaskNetwork(SimpleTaskNetworkBuilder builder) {
+		this.setTasks(builder.getTasks());
+		this.setConstraints(builder.getConstraints());
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	public final Set<Task> getTasks() {

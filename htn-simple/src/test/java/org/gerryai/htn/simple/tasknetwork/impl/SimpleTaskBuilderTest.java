@@ -119,7 +119,7 @@ public class SimpleTaskBuilderTest {
 		assertEquals(mockTermB, builder.getArguments().get(1));
 		assertEquals(mockTermC, builder.getArguments().get(2));
 		assertEquals(mockTermD, builder.getArguments().get(3));
-		}
+	}
 
 	/**
 	 * Test building a primitive task.
