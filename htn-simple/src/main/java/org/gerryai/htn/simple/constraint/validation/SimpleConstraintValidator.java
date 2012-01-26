@@ -17,6 +17,9 @@
  */
 package org.gerryai.htn.simple.constraint.validation;
 
+import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
+import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
+import org.gerryai.htn.simple.constraint.ValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
@@ -28,11 +31,53 @@ import org.gerryai.htn.tasknetwork.Task;
 public interface SimpleConstraintValidator extends ConstraintValidator {
 
 	/**
+	 * Validation check for simple before constraints, but does not add the constraint.
+	 * @param constraint the constraint to validate
+	 * @return true if the constraint passes validation
+	 */
+	boolean validate(ValidatableBeforeConstraint<?> constraint);
+
+	/**
+	 * Validation check for simple after constraints, but does not add the constraint.
+	 * @param constraint the constraint to validate
+	 * @return true if the constraint passes validation
+	 */
+	boolean validate(ValidatableAfterConstraint<?> constraint);
+
+	/**
+	 * Validation check for simple between constraints, but does not add the constraint.
+	 * @param constraint the constraint to validate
+	 * @return true if the constraint passes validation
+	 */
+	boolean validate(ValidatableBetweenConstraint<?> constraint);
+
+	/**
 	 * Validation check for simple precedence constraints, but does not add the constraint.
 	 * @param constraint the constraint to validate
 	 * @return true if the constraint passes validation
 	 */
 	boolean validate(ValidatablePrecedenceConstraint<?> constraint);
+
+	/**
+	 * Validates and adds the given constraint to the validator.
+	 * @param constraint the constraint to add
+	 * @throws InvalidConstraint if the constraint cannot be added
+	 */
+	void add(ValidatableBeforeConstraint<?> constraint) throws InvalidConstraint;
+
+	/**
+	 * Validates and adds the given constraint to the validator.
+	 * @param constraint the constraint to add
+	 * @throws InvalidConstraint if the constraint cannot be added
+	 */
+	void add(ValidatableAfterConstraint<?> constraint) throws InvalidConstraint;
+
+	/**
+	 * Validates and adds the given constraint to the validator.
+	 * @param constraint the constraint to add
+	 * @throws InvalidConstraint if the constraint cannot be added
+	 */
+	void add(ValidatableBetweenConstraint<?> constraint) throws InvalidConstraint;
 
 	/**
 	 * Validates and adds the given constraint to the validator.

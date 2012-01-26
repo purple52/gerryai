@@ -20,6 +20,9 @@ package org.gerryai.htn.simple.constraint.validation.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
+import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
+import org.gerryai.htn.simple.constraint.ValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
@@ -46,6 +49,21 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 	private Set<ValidatablePrecedenceConstraint<?>> precedenceConstraints;
 	
 	/**
+	 * Set of before constraints that have been added so far.
+	 */
+	private Set<ValidatableBeforeConstraint<?>> beforeConstraints;
+
+	/**
+	 * Set of after constraints that have been added so far.
+	 */
+	private Set<ValidatableAfterConstraint<?>> afterConstraints;
+
+	/**
+	 * Set of between constraints that have been added so far.
+	 */
+	private Set<ValidatableBetweenConstraint<?>> betweenConstraints;
+	
+	/**
 	 * Map of precedence constraints, using their preceding task as the key.
 	 * Used to simplify looking for cycles.
 	 */
@@ -58,6 +76,9 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 		tasks = new HashSet<Task>();
 		precedenceConstraints = new HashSet<ValidatablePrecedenceConstraint<?>>();
 		precedingTasks = HashMultimap.create();
+		beforeConstraints = new HashSet<ValidatableBeforeConstraint<?>>();
+		afterConstraints = new HashSet<ValidatableAfterConstraint<?>>();
+		betweenConstraints = new HashSet<ValidatableBetweenConstraint<?>>();
 	}
 	
 	/**
@@ -84,10 +105,72 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 			return false;
 		}
 		
-		// TODO Cycles
 		return true;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final boolean validate(ValidatableBeforeConstraint<?> constraint) {
+		// Check tasks have already been added
+		for (Task task : constraint.getTasks()) {
+			if (!tasks.contains(task)) {
+				return false;
+			}
+		}
+		// Check if an existing identical constraint exists
+		for (ValidatableBeforeConstraint<?> existingConstraint : beforeConstraints) {	
+			if (existingConstraint.getTasks().equals(constraint.getTasks())) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final boolean validate(ValidatableAfterConstraint<?> constraint) {
+		// Check tasks have already been added
+		for (Task task : constraint.getTasks()) {
+			if (!tasks.contains(task)) {
+				return false;
+			}
+		}
+		// Check if an existing identical constraint exists
+		for (ValidatableAfterConstraint<?> existingConstraint : afterConstraints) {	
+			if (existingConstraint.getTasks().equals(constraint.getTasks())) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final boolean validate(ValidatableBetweenConstraint<?> constraint) {
+		// Check tasks have already been added
+		for (Task task : constraint.getPrecedingTasks()) {
+			if (!tasks.contains(task)) {
+				return false;
+			}
+		}
+		for (Task task : constraint.getProcedingTasks()) {
+			if (!tasks.contains(task)) {
+				return false;
+			}
+		}
+		// Check if an existing identical constraint exists
+		for (ValidatableBetweenConstraint<?> existingConstraint : betweenConstraints) {	
+			if (existingConstraint.getPrecedingTasks().equals(constraint.getPrecedingTasks())
+					&& existingConstraint.getProcedingTasks().equals(constraint.getProcedingTasks())) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -99,7 +182,43 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 			throw new InvalidConstraint();
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void add(ValidatableBeforeConstraint<?> constraint)
+			throws InvalidConstraint {
+		if (validate(constraint)) {
+			beforeConstraints.add(constraint);
+		} else {
+			throw new InvalidConstraint();
+		}
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void add(ValidatableAfterConstraint<?> constraint)
+			throws InvalidConstraint {
+		if (validate(constraint)) {
+			afterConstraints.add(constraint);
+		} else {
+			throw new InvalidConstraint();
+		}		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void add(ValidatableBetweenConstraint<?> constraint)
+			throws InvalidConstraint {
+		if (validate(constraint)) {
+			betweenConstraints.add(constraint);
+		} else {
+			throw new InvalidConstraint();
+		}		
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

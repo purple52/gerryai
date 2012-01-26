@@ -19,7 +19,9 @@ package org.gerryai.htn.simple.constraint.impl;
 
 import java.util.Set;
 
-import org.gerryai.htn.constraint.AfterConstraint;
+import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
+import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
+import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
@@ -27,7 +29,7 @@ import org.gerryai.logic.Term;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleAfterConstraint implements AfterConstraint {
+public class SimpleAfterConstraint implements ValidatableAfterConstraint<SimpleConstraintValidator> {
 
 	/**
 	 * The set of tasks that this constraint must hold for.
@@ -69,6 +71,21 @@ public class SimpleAfterConstraint implements AfterConstraint {
 	 */
 	public final Term getLiteral() {
 		return literal;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final boolean validate(SimpleConstraintValidator validator) {
+		return validator.validate(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void add(SimpleConstraintValidator validator)
+			throws InvalidConstraint {
+		validator.add(this);
 	}
 
 }

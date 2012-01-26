@@ -4,6 +4,12 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
+import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
+import org.gerryai.htn.simple.constraint.ValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
@@ -16,7 +22,7 @@ public class SimpleConstraintValidatorImplTest {
 	 * @throws InvalidConstraint only if test fails
 	 */
 	@Test
-	public void testValidateNoExistingConstraints() throws InvalidConstraint {
+	public void testValidatePrecedenceNoExistingConstraints() throws InvalidConstraint {
 	
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -29,14 +35,14 @@ public class SimpleConstraintValidatorImplTest {
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		
-		validator.add(mockConstraint);
+		assertTrue(validator.validate(mockConstraint));
 	}
 
 	/**
 	 * Test that the first constraint is invalid if a task is missing.
 	 */
 	@Test
-	public void testValidateNoExistingConstraintsMissingTaskA() {
+	public void testValidatePrecedenceNoExistingConstraintsMissingTaskA() {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -55,7 +61,7 @@ public class SimpleConstraintValidatorImplTest {
 	 * Test that the first constraint is invalid if a task is missing.
 	 */
 	@Test
-	public void testValidateNoExistingConstraintsMissingTaskB() {
+	public void testValidatePrecedenceNoExistingConstraintsMissingTaskB() {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -75,7 +81,7 @@ public class SimpleConstraintValidatorImplTest {
 	 * @throws InvalidConstraint 
 	 */
 	@Test
-	public void testValidateOneExistingConstraint() throws InvalidConstraint {
+	public void testValidatePrecedenceOneExistingConstraint() throws InvalidConstraint {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -91,9 +97,11 @@ public class SimpleConstraintValidatorImplTest {
 		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
+		assertTrue(validator.validate(mockConstraintA));
 		validator.add(mockConstraintA);
 		
 		validator.add(mockTaskC);
+		assertTrue(validator.validate(mockConstraintB));
 		validator.add(mockConstraintB);
 	}
 	
@@ -102,7 +110,7 @@ public class SimpleConstraintValidatorImplTest {
 	 * @throws InvalidConstraint if test succeeds
 	 */
 	@Test(expected=InvalidConstraint.class)
-	public void testValidateOneExistingIdenticalConstraint() throws InvalidConstraint {
+	public void testValidatePrecedenceOneExistingIdenticalConstraint() throws InvalidConstraint {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -118,7 +126,9 @@ public class SimpleConstraintValidatorImplTest {
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		
+		assertTrue(validator.validate(mockConstraintA));
 		validator.add(mockConstraintA);
+		assertFalse(validator.validate(mockConstraintB));
 		validator.add(mockConstraintB);
 	}
 
@@ -127,7 +137,7 @@ public class SimpleConstraintValidatorImplTest {
 	 * @throws InvalidConstraint if test succeeds
 	 */
 	@Test(expected=InvalidConstraint.class)
-	public void testValidateSingleCycle() throws InvalidConstraint {
+	public void testValidatePrecedenceSingleCycle() throws InvalidConstraint {
 		
 		Task mockTaskA = mock(Task.class);
 		
@@ -138,6 +148,7 @@ public class SimpleConstraintValidatorImplTest {
 		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
 		validator.add(mockTaskA);
 		
+		assertFalse(validator.validate(mockConstraintA));
 		validator.add(mockConstraintA);
 	}
 	
@@ -146,7 +157,7 @@ public class SimpleConstraintValidatorImplTest {
 	 * @throws InvalidConstraint if test succeeds
 	 */
 	@Test(expected=InvalidConstraint.class)
-	public void testValidateDoubleCycle() throws InvalidConstraint {
+	public void testValidatePrecedenceDoubleCycle() throws InvalidConstraint {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -162,7 +173,9 @@ public class SimpleConstraintValidatorImplTest {
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		
+		assertTrue(validator.validate(mockConstraintA));
 		validator.add(mockConstraintA);
+		assertFalse(validator.validate(mockConstraintB));
 		validator.add(mockConstraintB);
 	}
 	
@@ -171,7 +184,7 @@ public class SimpleConstraintValidatorImplTest {
 	 * @throws InvalidConstraint if test succeeds
 	 */
 	@Test(expected=InvalidConstraint.class)
-	public void testValidateTripleCycle() throws InvalidConstraint {
+	public void testValidatePrecedenceTripleCycle() throws InvalidConstraint {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -192,8 +205,11 @@ public class SimpleConstraintValidatorImplTest {
 		validator.add(mockTaskB);
 		validator.add(mockTaskC);
 		
+		assertTrue(validator.validate(mockConstraintA));
 		validator.add(mockConstraintA);
+		assertTrue(validator.validate(mockConstraintB));
 		validator.add(mockConstraintB);
+		assertFalse(validator.validate(mockConstraintC));
 		validator.add(mockConstraintC);
 	}
 
@@ -202,7 +218,7 @@ public class SimpleConstraintValidatorImplTest {
 	 * @throws InvalidConstraint if test succeeds
 	 */
 	@Test(expected=InvalidConstraint.class)
-	public void testValidateTripleCyclePlusExtras() throws InvalidConstraint {
+	public void testValidatePrecedenceTripleCyclePlusExtras() throws InvalidConstraint {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -238,13 +254,423 @@ public class SimpleConstraintValidatorImplTest {
 		validator.add(mockTaskE);
 		validator.add(mockTaskF);
 
+		assertTrue(validator.validate(mockConstraintC));
 		validator.add(mockConstraintC);
+		assertTrue(validator.validate(mockConstraintA));
 		validator.add(mockConstraintA);
+		assertTrue(validator.validate(mockConstraintD));
 		validator.add(mockConstraintD);
+		assertTrue(validator.validate(mockConstraintE));
 		validator.add(mockConstraintE);
+		assertTrue(validator.validate(mockConstraintF));
 		validator.add(mockConstraintF);
+		assertFalse(validator.validate(mockConstraintB));
 		validator.add(mockConstraintB);
 
+	}
+
+	/**
+	 * Test that the first constraint is valid.
+	 * @throws InvalidConstraint only if test fails
+	 */
+	@Test
+	public void testValidateBeforeNoExistingConstraints() throws InvalidConstraint {
+	
+		Task mockTaskA = mock(Task.class);
+		Task mockTaskB = mock(Task.class);
+		Set<Task> mockTasks = new HashSet<Task>();
+		mockTasks.add(mockTaskA);
+		mockTasks.add(mockTaskB);
+
+		ValidatableBeforeConstraint<?> mockConstraint = mock(ValidatableBeforeConstraint.class);
+		when(mockConstraint.getTasks()).thenReturn(mockTasks);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskA);
+		validator.add(mockTaskB);
+		
+		assertTrue(validator.validate(mockConstraint));
+	}
+	
+	
+	/**
+	 * Test that the first constraint is invalid if a task is missing.
+	 */
+	@Test
+	public void testValidateBeforeNoExistingConstraintsMissingTaskA() {
+		
+		Task mockTaskA = mock(Task.class);
+		Task mockTaskB = mock(Task.class);
+		Set<Task> mockTasks = new HashSet<Task>();
+		mockTasks.add(mockTaskA);
+		mockTasks.add(mockTaskB);
+
+		ValidatableBeforeConstraint<?> mockConstraint = mock(ValidatableBeforeConstraint.class);
+		when(mockConstraint.getTasks()).thenReturn(mockTasks);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskB);
+		
+		assertFalse(validator.validate(mockConstraint));
+	}
+	
+	/**
+	 * Test that the first constraint is invalid if a task is missing.
+	 */
+	@Test
+	public void testValidateBeforeNoExistingConstraintsMissingTaskB() {
+		
+		Task mockTaskA = mock(Task.class);
+		Task mockTaskB = mock(Task.class);
+		Set<Task> mockTasks = new HashSet<Task>();
+		mockTasks.add(mockTaskA);
+		mockTasks.add(mockTaskB);
+
+		ValidatableBeforeConstraint<?> mockConstraint = mock(ValidatableBeforeConstraint.class);
+		when(mockConstraint.getTasks()).thenReturn(mockTasks);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskA);
+		
+		assertFalse(validator.validate(mockConstraint));
+	}
+	
+	/**
+	 * Test that a second valid constraint can be validated.
+	 * @throws InvalidConstraint 
+	 */
+	@Test
+	public void testValidateBeforeOneExistingConstraint() throws InvalidConstraint {
+		
+		Task mockTaskA = mock(Task.class);
+		Set<Task> mockTasksA = new HashSet<Task>();
+		mockTasksA.add(mockTaskA);
+		Task mockTaskB = mock(Task.class);
+		Set<Task> mockTasksB = new HashSet<Task>();
+		mockTasksB.add(mockTaskB);
+		
+		ValidatableBeforeConstraint<?> mockConstraintA = mock(ValidatableBeforeConstraint.class);
+		when(mockConstraintA.getTasks()).thenReturn(mockTasksA);
+		ValidatableBeforeConstraint<?> mockConstraintB = mock(ValidatableBeforeConstraint.class);
+		when(mockConstraintB.getTasks()).thenReturn(mockTasksB);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskA);
+		validator.add(mockTaskB);
+		assertTrue(validator.validate(mockConstraintA));
+		validator.add(mockConstraintA);
+		
+		assertTrue(validator.validate(mockConstraintB));
+		validator.add(mockConstraintB);
+	}
+	
+	/**
+	 * Test that adding the same constraint twice fails.
+	 * @throws InvalidConstraint if test succeeds
+	 */
+	@Test(expected=InvalidConstraint.class)
+	public void testValidateBeforeOneExistingIdenticalConstraint() throws InvalidConstraint {
+		
+		Task mockTaskA = mock(Task.class);
+		Set<Task> mockTasksA = new HashSet<Task>();
+		mockTasksA.add(mockTaskA);
+		
+		ValidatableBeforeConstraint<?> mockConstraintA = mock(ValidatableBeforeConstraint.class);
+		when(mockConstraintA.getTasks()).thenReturn(mockTasksA);
+		ValidatableBeforeConstraint<?> mockConstraintB = mock(ValidatableBeforeConstraint.class);
+		when(mockConstraintB.getTasks()).thenReturn(mockTasksA);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskA);
+		
+		assertTrue(validator.validate(mockConstraintA));
+		validator.add(mockConstraintA);
+		assertFalse(validator.validate(mockConstraintB));
+		validator.add(mockConstraintB);
+	}
+	
+	/**
+	 * Test that the first constraint is valid.
+	 * @throws InvalidConstraint only if test fails
+	 */
+	@Test
+	public void testValidateAfterNoExistingConstraints() throws InvalidConstraint {
+	
+		Task mockTaskA = mock(Task.class);
+		Task mockTaskB = mock(Task.class);
+		Set<Task> mockTasks = new HashSet<Task>();
+		mockTasks.add(mockTaskA);
+		mockTasks.add(mockTaskB);
+
+		ValidatableAfterConstraint<?> mockConstraint = mock(ValidatableAfterConstraint.class);
+		when(mockConstraint.getTasks()).thenReturn(mockTasks);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskA);
+		validator.add(mockTaskB);
+		
+		assertTrue(validator.validate(mockConstraint));
+	}
+	
+	
+	/**
+	 * Test that the first constraint is invalid if a task is missing.
+	 */
+	@Test
+	public void testValidateAfterNoExistingConstraintsMissingTaskA() {
+		
+		Task mockTaskA = mock(Task.class);
+		Task mockTaskB = mock(Task.class);
+		Set<Task> mockTasks = new HashSet<Task>();
+		mockTasks.add(mockTaskA);
+		mockTasks.add(mockTaskB);
+
+		ValidatableAfterConstraint<?> mockConstraint = mock(ValidatableAfterConstraint.class);
+		when(mockConstraint.getTasks()).thenReturn(mockTasks);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskB);
+		
+		assertFalse(validator.validate(mockConstraint));
+	}
+	
+	/**
+	 * Test that the first constraint is invalid if a task is missing.
+	 */
+	@Test
+	public void testValidateAfterNoExistingConstraintsMissingTaskB() {
+		
+		Task mockTaskA = mock(Task.class);
+		Task mockTaskB = mock(Task.class);
+		Set<Task> mockTasks = new HashSet<Task>();
+		mockTasks.add(mockTaskA);
+		mockTasks.add(mockTaskB);
+
+		ValidatableAfterConstraint<?> mockConstraint = mock(ValidatableAfterConstraint.class);
+		when(mockConstraint.getTasks()).thenReturn(mockTasks);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskA);
+		
+		assertFalse(validator.validate(mockConstraint));
+	}
+	
+	/**
+	 * Test that a second valid constraint can be validated.
+	 * @throws InvalidConstraint 
+	 */
+	@Test
+	public void testValidateAfterOneExistingConstraint() throws InvalidConstraint {
+		
+		Task mockTaskA = mock(Task.class);
+		Set<Task> mockTasksA = new HashSet<Task>();
+		mockTasksA.add(mockTaskA);
+		Task mockTaskB = mock(Task.class);
+		Set<Task> mockTasksB = new HashSet<Task>();
+		mockTasksB.add(mockTaskB);
+		
+		ValidatableAfterConstraint<?> mockConstraintA = mock(ValidatableAfterConstraint.class);
+		when(mockConstraintA.getTasks()).thenReturn(mockTasksA);
+		ValidatableAfterConstraint<?> mockConstraintB = mock(ValidatableAfterConstraint.class);
+		when(mockConstraintB.getTasks()).thenReturn(mockTasksB);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskA);
+		validator.add(mockTaskB);
+		assertTrue(validator.validate(mockConstraintA));
+		validator.add(mockConstraintA);
+		
+		assertTrue(validator.validate(mockConstraintB));
+		validator.add(mockConstraintB);
+	}
+
+	/**
+	 * Test that adding the same constraint twice fails.
+	 * @throws InvalidConstraint if test succeeds
+	 */
+	@Test(expected=InvalidConstraint.class)
+	public void testValidateAfterOneExistingIdenticalConstraint() throws InvalidConstraint {
+		
+		Task mockTaskA = mock(Task.class);
+		Set<Task> mockTasksA = new HashSet<Task>();
+		mockTasksA.add(mockTaskA);
+		
+		ValidatableAfterConstraint<?> mockConstraintA = mock(ValidatableAfterConstraint.class);
+		when(mockConstraintA.getTasks()).thenReturn(mockTasksA);
+		ValidatableAfterConstraint<?> mockConstraintB = mock(ValidatableAfterConstraint.class);
+		when(mockConstraintB.getTasks()).thenReturn(mockTasksA);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskA);
+		
+		assertTrue(validator.validate(mockConstraintA));
+		validator.add(mockConstraintA);
+		assertFalse(validator.validate(mockConstraintB));
+		validator.add(mockConstraintB);
+	}
+	
+	/**
+	 * Test that the first constraint is valid.
+	 * @throws InvalidConstraint only if test fails
+	 */
+	@Test
+	public void testValidateBetweenNoExistingConstraints() throws InvalidConstraint {
+	
+		Task mockTaskA = mock(Task.class);
+		Task mockTaskB = mock(Task.class);
+		Set<Task> mockTasksA = new HashSet<Task>();
+		mockTasksA.add(mockTaskA);
+		mockTasksA.add(mockTaskB);
+
+		Task mockTaskC = mock(Task.class);
+		Task mockTaskD = mock(Task.class);
+		Set<Task> mockTasksB = new HashSet<Task>();
+		mockTasksB.add(mockTaskC);
+		mockTasksB.add(mockTaskD);
+		
+		ValidatableBetweenConstraint<?> mockConstraint = mock(ValidatableBetweenConstraint.class);
+		when(mockConstraint.getPrecedingTasks()).thenReturn(mockTasksA);
+		when(mockConstraint.getProcedingTasks()).thenReturn(mockTasksB);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskA);
+		validator.add(mockTaskB);
+		validator.add(mockTaskC);
+		validator.add(mockTaskD);
+		
+		assertTrue(validator.validate(mockConstraint));
+	}
+	
+	
+	/**
+	 * Test that the first constraint is invalid if a task is missing.
+	 */
+	@Test
+	public void testValidateBetweenNoExistingConstraintsMissingTaskA() {
+		
+		Task mockTaskA = mock(Task.class);
+		Task mockTaskB = mock(Task.class);
+		Set<Task> mockTasksA = new HashSet<Task>();
+		mockTasksA.add(mockTaskA);
+		mockTasksA.add(mockTaskB);
+
+		Task mockTaskC = mock(Task.class);
+		Task mockTaskD = mock(Task.class);
+		Set<Task> mockTasksB = new HashSet<Task>();
+		mockTasksB.add(mockTaskC);
+		mockTasksB.add(mockTaskD);
+		
+		ValidatableBetweenConstraint<?> mockConstraint = mock(ValidatableBetweenConstraint.class);
+		when(mockConstraint.getPrecedingTasks()).thenReturn(mockTasksA);
+		when(mockConstraint.getProcedingTasks()).thenReturn(mockTasksB);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskB);
+		validator.add(mockTaskC);
+		validator.add(mockTaskD);
+		
+		assertFalse(validator.validate(mockConstraint));
+	}
+	
+	/**
+	 * Test that the first constraint is invalid if a task is missing.
+	 */
+	@Test
+	public void testValidateAfterNoExistingConstraintsMissingTaskD() {
+		
+		Task mockTaskA = mock(Task.class);
+		Task mockTaskB = mock(Task.class);
+		Set<Task> mockTasksA = new HashSet<Task>();
+		mockTasksA.add(mockTaskA);
+		mockTasksA.add(mockTaskB);
+
+		Task mockTaskC = mock(Task.class);
+		Task mockTaskD = mock(Task.class);
+		Set<Task> mockTasksB = new HashSet<Task>();
+		mockTasksB.add(mockTaskC);
+		mockTasksB.add(mockTaskD);
+		
+		ValidatableBetweenConstraint<?> mockConstraint = mock(ValidatableBetweenConstraint.class);
+		when(mockConstraint.getPrecedingTasks()).thenReturn(mockTasksA);
+		when(mockConstraint.getProcedingTasks()).thenReturn(mockTasksB);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskA);
+		validator.add(mockTaskB);
+		validator.add(mockTaskC);
+		
+		assertFalse(validator.validate(mockConstraint));
+	}
+	
+	/**
+	 * Test that a second valid constraint can be validated.
+	 * @throws InvalidConstraint 
+	 */
+	@Test
+	public void testValidateBetweenOneExistingConstraint() throws InvalidConstraint {
+		
+		Task mockTaskA = mock(Task.class);
+		Set<Task> mockTasksA = new HashSet<Task>();
+		mockTasksA.add(mockTaskA);
+		Task mockTaskB = mock(Task.class);
+		Set<Task> mockTasksB = new HashSet<Task>();
+		mockTasksB.add(mockTaskB);
+		Task mockTaskC = mock(Task.class);
+		Set<Task> mockTasksC = new HashSet<Task>();
+		mockTasksC.add(mockTaskC);
+		Task mockTaskD = mock(Task.class);
+		Set<Task> mockTasksD = new HashSet<Task>();
+		mockTasksD.add(mockTaskD);
+		
+		ValidatableBetweenConstraint<?> mockConstraintA = mock(ValidatableBetweenConstraint.class);
+		when(mockConstraintA.getPrecedingTasks()).thenReturn(mockTasksA);
+		when(mockConstraintA.getProcedingTasks()).thenReturn(mockTasksB);
+		ValidatableBetweenConstraint<?> mockConstraintB = mock(ValidatableBetweenConstraint.class);
+		when(mockConstraintB.getPrecedingTasks()).thenReturn(mockTasksC);
+		when(mockConstraintB.getProcedingTasks()).thenReturn(mockTasksD);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskA);
+		validator.add(mockTaskB);
+		validator.add(mockTaskC);
+		validator.add(mockTaskD);
+		
+		assertTrue(validator.validate(mockConstraintA));
+		validator.add(mockConstraintA);
+
+		assertTrue(validator.validate(mockConstraintB));
+		validator.add(mockConstraintB);
+	}
+	
+	/**
+	 * Test that adding the same constraint twice fails.
+	 * @throws InvalidConstraint if test succeeds
+	 */
+	@Test(expected=InvalidConstraint.class)
+	public void testValidateBetweenOneExistingIdenticalConstraint() throws InvalidConstraint {
+		
+		Task mockTaskA = mock(Task.class);
+		Set<Task> mockTasksA = new HashSet<Task>();
+		mockTasksA.add(mockTaskA);
+		Task mockTaskB = mock(Task.class);
+		Set<Task> mockTasksB = new HashSet<Task>();
+		mockTasksB.add(mockTaskB);
+		
+		ValidatableBetweenConstraint<?> mockConstraintA = mock(ValidatableBetweenConstraint.class);
+		when(mockConstraintA.getPrecedingTasks()).thenReturn(mockTasksA);
+		when(mockConstraintA.getProcedingTasks()).thenReturn(mockTasksB);
+		ValidatableBetweenConstraint<?> mockConstraintB = mock(ValidatableBetweenConstraint.class);
+		when(mockConstraintB.getPrecedingTasks()).thenReturn(mockTasksA);
+		when(mockConstraintB.getProcedingTasks()).thenReturn(mockTasksB);
+		
+		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
+		validator.add(mockTaskA);
+		validator.add(mockTaskB);
+		
+		assertTrue(validator.validate(mockConstraintA));
+		validator.add(mockConstraintA);
+		assertFalse(validator.validate(mockConstraintB));
+		validator.add(mockConstraintB);
 	}
 	
 }
