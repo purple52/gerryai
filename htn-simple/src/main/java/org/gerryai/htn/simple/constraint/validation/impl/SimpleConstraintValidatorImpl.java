@@ -17,9 +17,7 @@
  */
 package org.gerryai.htn.simple.constraint.validation.impl;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
@@ -27,6 +25,9 @@ import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 /**
  * Class for validating precedence constraints.
@@ -48,7 +49,7 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 	 * Map of precedence constraints, using their preceding task as the key.
 	 * Used to simplify looking for cycles.
 	 */
-	private Map<Task, Set<ValidatablePrecedenceConstraint<?>>> precedingTasks;
+	private Multimap<Task, ValidatablePrecedenceConstraint<?>> precedingTasks;
 	
 	/**
 	 * Default constructor.
@@ -56,7 +57,7 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 	public SimpleConstraintValidatorImpl() {
 		tasks = new HashSet<Task>();
 		precedenceConstraints = new HashSet<ValidatablePrecedenceConstraint<?>>();
-		precedingTasks = new HashMap<Task, Set<ValidatablePrecedenceConstraint<?>>>();
+		precedingTasks = HashMultimap.create();
 	}
 	
 	/**
@@ -104,7 +105,6 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 	 */
 	public final void add(Task task) {
 		tasks.add(task);
-		precedingTasks.put(task, new HashSet<ValidatablePrecedenceConstraint<?>>());
 	}
 
 	/**
