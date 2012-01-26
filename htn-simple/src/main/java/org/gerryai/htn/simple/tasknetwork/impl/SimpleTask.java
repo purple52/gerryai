@@ -22,6 +22,8 @@ import java.util.List;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
+import com.google.common.base.Objects;
+
 /**
  * Basic implementation of the Task interface.
  */
@@ -73,5 +75,23 @@ public abstract class SimpleTask implements Task {
 	public final void setArguments(List<Term> arguments) {
 		this.arguments = arguments;
 	}
+	
+	@Override
+	public final int hashCode() {
+		return Objects.hashCode(name, arguments);
+	}
+
+	@Override
+	public final boolean equals(Object obj) {
+		if (obj instanceof SimpleTask) {
+	        final SimpleTask other = (SimpleTask) obj;
+	        return Objects.equal(name, other.name)
+	            && Objects.equal(arguments, other.arguments);
+	    } else {
+	        return false;
+	    }
+	}
+	
+	
 
 }

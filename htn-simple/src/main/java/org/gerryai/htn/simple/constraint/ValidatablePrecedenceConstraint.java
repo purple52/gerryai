@@ -15,29 +15,18 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.constraint.impl;
+package org.gerryai.htn.simple.constraint;
 
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.constraint.PrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 
 /**
- * Extended constraint interface that supports being validated.
- * The constraint needs to identify what class of validator it needs to use.
- * @param <V> the class of validator that the constraint uses
+ * Extension of validatable and precedence constraint interfaces.
+ * @param <V> class of constraint validator required
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public interface ValidatableConstraint<V extends ConstraintValidator> extends Constraint {
+public interface ValidatablePrecedenceConstraint<V extends ConstraintValidator> extends
+		ValidatableConstraint<V>, PrecedenceConstraint {
 
-	/**
-	 * Validate this constraint using the validator provided.
-	 * @param validator the validator to use
-	 * @return true if the constraint passed validation
-	 */
-	boolean validate(V validator);
-	
-	/**
-	 * Add the constraint to the validator so it is considered when validating in future.
-	 * @param validator the validator to add to.
-	 */
-	void add(V validator);
 }

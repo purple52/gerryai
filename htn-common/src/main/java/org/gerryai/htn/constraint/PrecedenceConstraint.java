@@ -30,10 +30,22 @@ public interface PrecedenceConstraint extends Constraint {
 	 * @return the task
 	 */
 	Task getPrecedingTask();
+
+	/**
+	 * Set the task that must come first.
+	 * @param task the task
+	 */
+	void setPrecedingTask(Task task);
 	
 	/**
 	 * Get the task that must come last.
 	 * @return the task
 	 */
 	Task getProcedingTask();
+	
+	/**
+	 * Set the task that must come last.
+	 * @param task the task
+	 */
+	void setProcedingTask(Task task);
 }

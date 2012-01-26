@@ -15,35 +15,31 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.constraint.validation;
+package org.gerryai.htn.simple.constraint;
 
-import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
+import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.tasknetwork.Task;
 
 /**
- * Implementation of a validator for simple constraints.
+ * Extended constraint interface that supports being validated.
+ * The constraint needs to identify what class of validator it needs to use.
+ * @param <V> the class of validator that the constraint uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface SimpleConstraintValidator extends ConstraintValidator {
+public interface ValidatableConstraint<V extends ConstraintValidator> extends Constraint {
 
 	/**
-	 * Validation check for simple precedence constraints, but does not add the constraint.
-	 * @param constraint the constraint to validate
-	 * @return true if the constraint passes validation
+	 * Validate this constraint using the validator provided.
+	 * @param validator the validator to use
+	 * @return true if the constraint passed validation
 	 */
-	boolean validate(ValidatablePrecedenceConstraint<?> constraint);
-
+	boolean validate(V validator);
+	
 	/**
-	 * Validates and adds the given constraint to the validator.
-	 * @param constraint the constraint to add
-	 * @throws InvalidConstraint if the constraint cannot be added
+	 * Add the constraint to the validator so it is considered when validating in future.
+	 * @param validator the validator to add to.
+	 * @throws InvalidConstraint if constraint cannot be added
 	 */
-	void add(ValidatablePrecedenceConstraint<?> constraint) throws InvalidConstraint;
-
-	/**
-	 * Add the given task to the validator.
-	 * @param task the task to add
-	 */
-	void add(Task task);
+	void add(V validator) throws InvalidConstraint;
 }
