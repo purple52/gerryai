@@ -15,27 +15,28 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.tasknetwork.impl;
+package org.gerryai.htn.simple.constraint.validation;
 
+import org.gerryai.htn.simple.constraint.impl.SimplePrecedenceConstraint;
 
 /**
+ * Implementation of a validator for simple constraints.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class SimplePrimitiveTask extends SimpleTask {
-	
-	/**
-	 * @param builder the builder to use to build this task
-	 */
-	protected SimplePrimitiveTask(SimpleTaskBuilder builder) {
-		super(builder);
-	}
+public interface SimpleConstraintValidator extends ConstraintValidator {
 
 	/**
-	 * {@inheritDoc}
+	 * Validation method for simple precedence constraints.
+	 * @param constraint the constraint to validate
+	 * @return true if the constraint passes validation
 	 */
-	public final boolean isPrimitive() {
-		return true;
-	}
+	boolean validate(SimplePrecedenceConstraint constraint);
+
+	/**
+	 * Add the given constraint to the validator.
+	 * This is necessary for the constraint to be included in further validation checks.
+	 * @param constraint the constraint to add
+	 */
+	void add(SimplePrecedenceConstraint constraint);
 
 }

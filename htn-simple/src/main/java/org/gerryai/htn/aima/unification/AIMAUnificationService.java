@@ -26,8 +26,11 @@ import java.util.Set;
 import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.decomposition.UnificationService;
 import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.simple.constraint.validation.impl.SimpleConstraintValidatorImpl;
 import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskBuilder;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilder;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
@@ -73,16 +76,17 @@ public class AIMAUnificationService implements UnificationService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final TaskNetwork apply(Unifier unifier, TaskNetwork taskNetwork) {
+	public final SimpleTaskNetwork apply(Unifier unifier, TaskNetwork taskNetwork) {
 		
 		// TODO Add support constraints
 		Set<Task> updatedTasks = new HashSet<Task>();
 		for (Task task : taskNetwork.getTasks()) {
-			Task updatedTask = apply(unifier, task);
+			SimpleTask updatedTask = apply(unifier, task);
 			updatedTasks.add(updatedTask);
 		}
 
-		TaskNetwork updatedTaskNetwork = new SimpleTaskNetworkBuilder()
+		SimpleTaskNetwork updatedTaskNetwork =
+			new SimpleTaskNetworkBuilder<SimpleConstraintValidatorImpl>(new SimpleConstraintValidatorImpl())
 				.addTasks(updatedTasks)
 				.build();
 		
@@ -92,7 +96,7 @@ public class AIMAUnificationService implements UnificationService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Task apply(Unifier unifier, Task task) {
+	public final SimpleTask apply(Unifier unifier, Task task) {
 		
 		List<Term> updatedTerms = new ArrayList<Term>();		
 		for (Term term : task.getArguments()) {
@@ -103,7 +107,7 @@ public class AIMAUnificationService implements UnificationService {
 			}
 		}
 
-		Task updatedTask = new SimpleTaskBuilder(domainHelper)
+		SimpleTask updatedTask = new SimpleTaskBuilder(domainHelper)
 				.setName(task.getName())
 				.addArguments(updatedTerms)
 				.build();

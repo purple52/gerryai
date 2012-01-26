@@ -43,7 +43,7 @@ public class SimpleTaskNetwork implements TaskNetwork {
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
-	protected SimpleTaskNetwork(SimpleTaskNetworkBuilder builder) {
+	protected SimpleTaskNetwork(SimpleTaskNetworkBuilder<?> builder) {
 		this.setTasks(builder.getTasks());
 		this.setConstraints(builder.getConstraints());
 	}

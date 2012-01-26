@@ -62,6 +62,5 @@ public class SimpleDecompositionService implements DecompositionService {
 		
 		return updatedTaskNetwork;
 	}
-	
 
 }

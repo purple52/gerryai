@@ -29,6 +29,7 @@ import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.State;
+import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.PlanFactory;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
@@ -115,7 +116,7 @@ public class SimplePlannerHelper implements PlannerHelper {
 	 * {@inheritDoc}
 	 */
 	public final TaskNetwork applySubstitution(Unifier substitution,
-			TaskNetwork taskNetwork, Task task, Method method) {
+			TaskNetwork taskNetwork, Task task, SimpleMethod method) {
 		// TODO Auto-generated method stub
 		return null;
 	}

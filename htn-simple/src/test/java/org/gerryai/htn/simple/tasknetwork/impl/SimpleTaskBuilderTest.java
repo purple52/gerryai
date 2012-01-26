@@ -133,7 +133,7 @@ public class SimpleTaskBuilderTest {
 		Term mockTerm = mock(Term.class);
 		
 		// Create the builder under test
-		SimpleAbstractTask primitiveTask = new SimpleTaskBuilder(mockDomainHelper)
+		SimpleTask primitiveTask = new SimpleTaskBuilder(mockDomainHelper)
 				.setName("testname")
 				.addArgument(mockTerm)
 				.build();
@@ -154,7 +154,7 @@ public class SimpleTaskBuilderTest {
 		Term mockTerm = mock(Term.class);
 		
 		// Create the builder under test
-		SimpleAbstractTask primitiveTask = new SimpleTaskBuilder(mockDomainHelper)
+		SimpleTask primitiveTask = new SimpleTaskBuilder(mockDomainHelper)
 				.setName("testname")
 				.addArgument(mockTerm)
 				.build();

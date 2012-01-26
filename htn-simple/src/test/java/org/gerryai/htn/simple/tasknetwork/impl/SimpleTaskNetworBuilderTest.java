@@ -19,11 +19,14 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.simple.constraint.impl.ValidatableConstraint;
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
+import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.junit.Test;
 
@@ -39,7 +42,8 @@ public class SimpleTaskNetworBuilderTest {
 	@Test
 	public void testSimpleTaskNetworkBuilder() {
 		// Create the builder under test
-		SimpleTaskNetworkBuilder builder = new SimpleTaskNetworkBuilder();
+		ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		SimpleTaskNetworkBuilder<ConstraintValidator> builder = new SimpleTaskNetworkBuilder<ConstraintValidator>(mockConstraintValidator);
 		
 		// Check that the argument and constraint lists have been initialised
 		assertTrue(builder.getTasks().isEmpty());
@@ -55,7 +59,8 @@ public class SimpleTaskNetworBuilderTest {
 		Task mockTaskB = mock(Task.class);
 		
 		// Create the builder under test
-		SimpleTaskNetworkBuilder builder = new SimpleTaskNetworkBuilder()
+		ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		SimpleTaskNetworkBuilder<ConstraintValidator> builder = new SimpleTaskNetworkBuilder<ConstraintValidator>(mockConstraintValidator)
 				.addTask(mockTaskA)
 				.addTask(mockTaskB);
 		
@@ -83,7 +88,8 @@ public class SimpleTaskNetworBuilderTest {
 		mockTasksTwo.add(mockTaskD);
 		
 		// Create the builder under test
-		SimpleTaskNetworkBuilder builder = new SimpleTaskNetworkBuilder()
+		ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		SimpleTaskNetworkBuilder<ConstraintValidator> builder = new SimpleTaskNetworkBuilder<ConstraintValidator>(mockConstraintValidator)
 				.addTasks(mockTasksOne)
 				.addTasks(mockTasksTwo);
 		
@@ -97,14 +103,21 @@ public class SimpleTaskNetworBuilderTest {
 
 	/**
 	 * Test adding single constraints.
+	 * @throws InvalidConstraint only if the test fails
 	 */
 	@Test
-	public void testAddConstraint() {
-		Constraint mockConstraintA = mock(Constraint.class);
-		Constraint mockConstraintB = mock(Constraint.class);
+	public void testAddConstraint() throws InvalidConstraint {
+		ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		
+		@SuppressWarnings("unchecked")
+		ValidatableConstraint<ConstraintValidator> mockConstraintA = (ValidatableConstraint<ConstraintValidator>) mock(ValidatableConstraint.class);
+		when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
+		@SuppressWarnings("unchecked")
+		ValidatableConstraint<ConstraintValidator> mockConstraintB = (ValidatableConstraint<ConstraintValidator>) mock(ValidatableConstraint.class);
+		when(mockConstraintB.validate(mockConstraintValidator)).thenReturn(true);
 		
 		// Create the builder under test
-		SimpleTaskNetworkBuilder builder = new SimpleTaskNetworkBuilder()
+		SimpleTaskNetworkBuilder<ConstraintValidator> builder = new SimpleTaskNetworkBuilder<ConstraintValidator>(mockConstraintValidator)
 				.addConstraint(mockConstraintA)
 				.addConstraint(mockConstraintB);
 		
@@ -116,23 +129,36 @@ public class SimpleTaskNetworBuilderTest {
 
 	/**
 	 * Test adding sets of constraints.
+	 * @throws InvalidConstraint only if test fails
 	 */
 	@Test
-	public void testAddConstraints() {
-		Constraint mockConstraintA = mock(Constraint.class);
-		Constraint mockConstraintB = mock(Constraint.class);
-		Set<Constraint> mockConstraintsOne = new HashSet<Constraint>();
+	public void testAddConstraints() throws InvalidConstraint {
+ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		
+		@SuppressWarnings("unchecked")
+		ValidatableConstraint<ConstraintValidator> mockConstraintA = (ValidatableConstraint<ConstraintValidator>) mock(ValidatableConstraint.class);
+		when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
+		@SuppressWarnings("unchecked")
+		ValidatableConstraint<ConstraintValidator> mockConstraintB = (ValidatableConstraint<ConstraintValidator>) mock(ValidatableConstraint.class);
+		when(mockConstraintB.validate(mockConstraintValidator)).thenReturn(true);
+		
+		Set<ValidatableConstraint<ConstraintValidator>> mockConstraintsOne = new HashSet<ValidatableConstraint<ConstraintValidator>>();
 		mockConstraintsOne.add(mockConstraintA);
 		mockConstraintsOne.add(mockConstraintB);
 
-		Constraint mockConstraintC = mock(Constraint.class);
-		Constraint mockConstraintD = mock(Constraint.class);
-		Set<Constraint> mockConstraintsTwo = new HashSet<Constraint>();
+		@SuppressWarnings("unchecked")
+		ValidatableConstraint<ConstraintValidator> mockConstraintC = (ValidatableConstraint<ConstraintValidator>) mock(ValidatableConstraint.class);
+		when(mockConstraintC.validate(mockConstraintValidator)).thenReturn(true);
+		@SuppressWarnings("unchecked")
+		ValidatableConstraint<ConstraintValidator> mockConstraintD = (ValidatableConstraint<ConstraintValidator>) mock(ValidatableConstraint.class);
+		when(mockConstraintD.validate(mockConstraintValidator)).thenReturn(true);
+	
+		Set<ValidatableConstraint<ConstraintValidator>> mockConstraintsTwo = new HashSet<ValidatableConstraint<ConstraintValidator>>();
 		mockConstraintsTwo.add(mockConstraintC);
 		mockConstraintsTwo.add(mockConstraintD);
 		
 		// Create the builder under test
-		SimpleTaskNetworkBuilder builder = new SimpleTaskNetworkBuilder()
+		SimpleTaskNetworkBuilder<ConstraintValidator> builder = new SimpleTaskNetworkBuilder<ConstraintValidator>(mockConstraintValidator)
 				.addConstraints(mockConstraintsOne)
 				.addConstraints(mockConstraintsTwo);
 		
@@ -146,11 +172,14 @@ public class SimpleTaskNetworBuilderTest {
 	
 	/**
 	 * Test build.
+	 * @throws InvalidConstraint only if the test fails
 	 */
-	public void testBuild() {
+	public void testBuild() throws InvalidConstraint {
 		Task mockTaskA = mock(Task.class);
-		Constraint mockConstraintA = mock(Constraint.class);
-		SimpleTaskNetwork taskNetwork = new SimpleTaskNetworkBuilder()
+		@SuppressWarnings("unchecked")
+		ValidatableConstraint<ConstraintValidator> mockConstraintA = (ValidatableConstraint<ConstraintValidator>) mock(ValidatableConstraint.class);
+		ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		SimpleTaskNetwork taskNetwork = new SimpleTaskNetworkBuilder<ConstraintValidator>(mockConstraintValidator)
 				.addTask(mockTaskA)
 				.addConstraint(mockConstraintA)
 				.build();

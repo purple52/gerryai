@@ -39,7 +39,7 @@ public class SimpleTaskNetworkTest {
 	 */
 	@Test
 	public void testIsPrimitiveNoTasks() {
-		SimpleTaskNetworkBuilder mockBuilder = mock(SimpleTaskNetworkBuilder.class);
+		SimpleTaskNetworkBuilder<?> mockBuilder = mock(SimpleTaskNetworkBuilder.class);
 		SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
 		Set<Task> tasks = new HashSet<Task>();
 		taskNetwork.setTasks(tasks);
@@ -52,7 +52,7 @@ public class SimpleTaskNetworkTest {
 	 */
 	@Test
 	public void testIsPrimitiveOnePrimitiveTask() {
-		SimpleTaskNetworkBuilder mockBuilder = mock(SimpleTaskNetworkBuilder.class);
+		SimpleTaskNetworkBuilder<?> mockBuilder = mock(SimpleTaskNetworkBuilder.class);
 		SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
 		Set<Task> tasks = new HashSet<Task>();
 		Task mockPrimitiveTask = mock(Task.class);
@@ -68,7 +68,7 @@ public class SimpleTaskNetworkTest {
 	 */
 	@Test
 	public void testIsPrimitiveOneNonPrimitiveTask() {
-		SimpleTaskNetworkBuilder mockBuilder = mock(SimpleTaskNetworkBuilder.class);
+		SimpleTaskNetworkBuilder<?> mockBuilder = mock(SimpleTaskNetworkBuilder.class);
 		SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
 		Set<Task> tasks = new HashSet<Task>();
 		Task mockNonPrimitiveTask = mock(Task.class);
@@ -84,7 +84,7 @@ public class SimpleTaskNetworkTest {
 	 */
 	@Test
 	public void testIsPrimitiveManyTasksAllPrimitive() {
-		SimpleTaskNetworkBuilder mockBuilder = mock(SimpleTaskNetworkBuilder.class);
+		SimpleTaskNetworkBuilder<?> mockBuilder = mock(SimpleTaskNetworkBuilder.class);
 		SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
 		Set<Task> tasks = new HashSet<Task>();
 		Task mockPrimitiveTaskOne = mock(Task.class);
@@ -106,7 +106,7 @@ public class SimpleTaskNetworkTest {
 	 */
 	@Test
 	public void testIsPrimitiveManyTasksOneNonPrimitive() {
-		SimpleTaskNetworkBuilder mockBuilder = mock(SimpleTaskNetworkBuilder.class);
+		SimpleTaskNetworkBuilder<?> mockBuilder = mock(SimpleTaskNetworkBuilder.class);
 		SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
 		Set<Task> tasks = new HashSet<Task>();
 		Task mockPrimitiveTaskOne = mock(Task.class);

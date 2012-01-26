@@ -1,3 +1,10 @@
+package org.gerryai.htn.simple.problem.impl;
+
+import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.problem.Problem;
+import org.gerryai.htn.problem.State;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
+
 /**
  *  Gerry AI - Open framework for automated planning algorithms
  *  Copyright (C) 2012  David Edwards
@@ -14,64 +21,69 @@
  *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */ 	
-package org.gerryai.htn.simple.tasknetwork.impl;
-
-import java.util.List;
-
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
+ */
 
 /**
- * Basic implementation of the Task interface.
+ * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public abstract class SimpleAbstractTask implements Task {
-	
-	/**
-	 * Name for this task.
-	 */
-	private String name;
-	
-	/**
-	 * Arguments for this task.
-	 */
-	private List<Term> arguments;
+public class SimpleProblem implements Problem {
 
 	/**
-	 * Constructor for a simple task.
-	 * @param builder the builder to build the task
+	 * The initial state for this problem.
 	 */
-	protected SimpleAbstractTask(SimpleTaskBuilder builder) {
-		this.setName(builder.getName());
-		this.setArguments(builder.getArguments());
-	}
+	private State state;
+	
+	/**
+	 * The task network to acheive.
+	 */
+	private TaskNetwork taskNetwork;
+	
+	/**
+	 * The domain to operate in.
+	 */
+	private Domain domain;
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final String getName() {
-		return name;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setName(String name) {
-		this.name = name;
+	public final State getState() {
+		return state;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<Term> getArguments() {
-		return arguments;
+	public final void setState(State state) {
+		this.state = state;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setArguments(List<Term> arguments) {
-		this.arguments = arguments;
+	public final TaskNetwork getTaskNetwork() {
+		return taskNetwork;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setTaskNetwork(TaskNetwork taskNetwork) {
+		this.taskNetwork = taskNetwork;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final Domain getDomain() {
+		return domain;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setDomain(Domain domain) {
+		this.domain = domain;
 	}
 
 }

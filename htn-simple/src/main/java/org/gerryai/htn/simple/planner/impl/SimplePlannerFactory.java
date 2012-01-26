@@ -19,7 +19,6 @@ package org.gerryai.htn.simple.planner.impl;
 
 import org.gerryai.htn.aima.unification.AIMAUnificationService;
 import org.gerryai.htn.domain.Domain;
-import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.simple.decomposition.SimpleDecompositionService;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactory;
@@ -36,7 +35,7 @@ public class SimplePlannerFactory implements PlannerFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Planner create(Domain domain) {
+	public final SimplePlanner create(Domain domain) {
 		
 		SimpleDomainHelper domainHelper = new SimpleDomainHelper(domain);
 		

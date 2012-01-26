@@ -82,9 +82,9 @@ public class SimpleTaskBuilder implements TaskBuilder {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleAbstractTask build() {
+	public final SimpleTask build() {
 		
-		SimpleAbstractTask task;
+		SimpleTask task;
 		
 		try {
 			domainHelper.getOperatorByName(name);

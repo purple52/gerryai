@@ -18,13 +18,15 @@
 package org.gerryai.htn.simple.constraint.impl;
 
 import org.gerryai.htn.constraint.PrecedenceConstraint;
+import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
 import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePrecedenceConstraint implements PrecedenceConstraint {
+public class SimplePrecedenceConstraint
+		implements ValidatableConstraint<SimpleConstraintValidator>, PrecedenceConstraint {
 
 	/**
 	 * The task that must come first.
@@ -67,4 +69,17 @@ public class SimplePrecedenceConstraint implements PrecedenceConstraint {
 		return procedingTask;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public final boolean validate(SimpleConstraintValidator validator) {
+		return validator.validate(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void add(SimpleConstraintValidator validator) {
+		validator.add(this);
+	}
 }

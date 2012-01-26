@@ -21,14 +21,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.simple.constraint.impl.ValidatableConstraint;
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
+import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
 import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * Builder for simple task networks.
+ * @param <V> the class of constraint validator to use
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleTaskNetworkBuilder implements TaskNetworkBuilder {
+public class SimpleTaskNetworkBuilder<V extends ConstraintValidator>
+		implements TaskNetworkBuilder<Task, ValidatableConstraint<V>> {
 
 	/**
 	 * Set of tasks we are building up.
@@ -41,17 +46,24 @@ public class SimpleTaskNetworkBuilder implements TaskNetworkBuilder {
 	private Set<Constraint> constraints;
 	
 	/**
-	 * Default constructor.
+	 * Constraint validator.
 	 */
-	public SimpleTaskNetworkBuilder() {
+	private V validator;
+	
+	/**
+	 * Default constructor.
+	 * @param validator the constraint validator to use
+	 */
+	public SimpleTaskNetworkBuilder(V validator) {
 		tasks = new HashSet<Task>();
 		constraints = new HashSet<Constraint>();
+		this.validator = validator;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTaskNetworkBuilder addTask(Task task) {
+	public final SimpleTaskNetworkBuilder<V> addTask(Task task) {
 		tasks.add(task);
 		return this;
 	}
@@ -59,7 +71,7 @@ public class SimpleTaskNetworkBuilder implements TaskNetworkBuilder {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTaskNetworkBuilder addTasks(Set<Task> tasks) {
+	public final SimpleTaskNetworkBuilder<V> addTasks(Set<Task> tasks) {
 		this.tasks.addAll(tasks);
 		return this;
 	}
@@ -67,16 +79,20 @@ public class SimpleTaskNetworkBuilder implements TaskNetworkBuilder {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTaskNetworkBuilder addConstraint(Constraint constraint) {
-		constraints.add(constraint);
+	public final SimpleTaskNetworkBuilder<V>
+			addConstraint(ValidatableConstraint<V> constraint) throws InvalidConstraint {
+		addConstraintInternal(constraint);
 		return this;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTaskNetworkBuilder addConstraints(Set<Constraint> constraints) {
-		this.constraints.addAll(constraints);
+	public final SimpleTaskNetworkBuilder<V> addConstraints(Set<ValidatableConstraint<V>> constraints)
+			throws InvalidConstraint {
+		for (ValidatableConstraint<V> constraint : constraints) {
+			addConstraintInternal(constraint);
+		}
 		return this;
 	}
 
@@ -101,6 +117,21 @@ public class SimpleTaskNetworkBuilder implements TaskNetworkBuilder {
 	 */
 	protected final Set<Constraint> getConstraints() {
 		return constraints;
+	}
+	
+	/**
+	 * Internal helper method to add a single constraint.
+	 * Checks the validity of the constraint and updates the validator
+	 * @param constraint the constraint
+	 * @throws InvalidConstraint if the constraint was invalid
+	 */
+	private void addConstraintInternal(ValidatableConstraint<V> constraint) throws InvalidConstraint {
+		if (constraint.validate(validator)) { 
+			constraints.add(constraint);
+			constraint.add(validator);
+		} else {
+			throw new InvalidConstraint();
+		}
 	}
 
 }

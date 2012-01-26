@@ -15,27 +15,40 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.tasknetwork.impl;
-
+package org.gerryai.htn.simple.tasknetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePrimitiveTask extends SimpleTask {
-	
+public class InvalidConstraint extends Exception {
+
 	/**
-	 * @param builder the builder to use to build this task
+	 * Default constructor.
 	 */
-	protected SimplePrimitiveTask(SimpleTaskBuilder builder) {
-		super(builder);
+	public InvalidConstraint() {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Constructor with a message.
+	 * @param message the message
 	 */
-	public final boolean isPrimitive() {
-		return true;
+	public InvalidConstraint(String message) {
+		super(message);
 	}
 
+	/**
+	 * Constructor with a message and wrapped exception.
+	 * @param message the message
+	 * @param cause the exception
+	 */
+	public InvalidConstraint(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5058425134552332094L;
 }

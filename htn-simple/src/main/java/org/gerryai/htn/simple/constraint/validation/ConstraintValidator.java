@@ -15,27 +15,15 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.tasknetwork.impl;
-
+package org.gerryai.htn.simple.constraint.validation;
 
 /**
+ * Base interface for constraint validators.
+ * Should be extended to declare the types of constraints that a validator can validate.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePrimitiveTask extends SimpleTask {
+public interface ConstraintValidator {
 	
-	/**
-	 * @param builder the builder to use to build this task
-	 */
-	protected SimplePrimitiveTask(SimpleTaskBuilder builder) {
-		super(builder);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final boolean isPrimitive() {
-		return true;
-	}
 
 }
