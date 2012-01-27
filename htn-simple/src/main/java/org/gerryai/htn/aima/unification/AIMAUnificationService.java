@@ -65,6 +65,18 @@ public class AIMAUnificationService implements UnificationService {
 	private TaskNetworkBuilderFactory<Task, Constraint>  taskNetworkBuilderFactory;
 	
 	/**
+	 * Constructor taking all required dependencies.
+	 * @param unifier AIMA unifier object
+	 * @param converter converted to translate between the two class schemes
+	 * @param domainHelper helper object to deal with the domain
+	 */
+	public AIMAUnificationService(aima.core.logic.fol.Unifier unifier,
+			AIMAConverter converter, DomainHelper domainHelper) {
+		this.unifier = unifier;
+		this.converter = converter;
+		this.domainHelper = domainHelper;
+	}
+	/**
 	 * {@inheritDoc}
 	 */
 	public final Unifier findUnifier(Task task, Method method) {

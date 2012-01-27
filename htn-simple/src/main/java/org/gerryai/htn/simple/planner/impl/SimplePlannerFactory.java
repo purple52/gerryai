@@ -17,14 +17,22 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
+import org.gerryai.htn.aima.AIMAConverter;
+import org.gerryai.htn.aima.impl.AIMAConverterImpl;
 import org.gerryai.htn.aima.unification.AIMAUnificationService;
 import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.impl.SimpleDecompositionService;
+import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
+import org.gerryai.htn.simple.plan.ActionFactory;
+import org.gerryai.htn.simple.plan.ActionFactoryHelper;
+import org.gerryai.htn.simple.plan.PlanFactory;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactory;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactoryHelper;
 import org.gerryai.htn.simple.plan.impl.SimplePlanFactory;
 import org.gerryai.htn.simple.planner.PlannerFactory;
+import org.gerryai.htn.simple.planner.PlannerHelper;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -37,16 +45,22 @@ public class SimplePlannerFactory implements PlannerFactory {
 	 */
 	public final SimplePlanner create(Domain domain) {
 		
-		SimpleDomainHelper domainHelper = new SimpleDomainHelper(domain);
+		DomainHelper domainHelper = new SimpleDomainHelper(domain);
 		
-		SimpleActionFactoryHelper actionFactoryHelper = new SimpleActionFactoryHelper();
-		SimpleActionFactory actionFactory = new SimpleActionFactory(actionFactoryHelper);
-		SimplePlanFactory planFactory = new SimplePlanFactory();
-		AIMAUnificationService unificationService = new AIMAUnificationService();
-		SimpleDecompositionService decompositionService = new SimpleDecompositionService(unificationService);
+		ActionFactoryHelper actionFactoryHelper = new SimpleActionFactoryHelper();
+		ActionFactory actionFactory = new SimpleActionFactory(actionFactoryHelper);
 		
-		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(actionFactory, planFactory,
+		PlanFactory planFactory = new SimplePlanFactory();
+		
+		aima.core.logic.fol.Unifier unifier = new aima.core.logic.fol.Unifier();
+		AIMAConverter converter = new AIMAConverterImpl();
+		AIMAUnificationService unificationService = new AIMAUnificationService(unifier, converter, domainHelper);
+		
+		DecompositionService decompositionService = new SimpleDecompositionService(unificationService);
+		
+		PlannerHelper plannerHelper = new SimplePlannerHelper(actionFactory, planFactory,
 				decompositionService, unificationService);
+		
 		SimplePlanner planner = new SimplePlanner(domainHelper, plannerHelper);
 		
 		return planner;	
