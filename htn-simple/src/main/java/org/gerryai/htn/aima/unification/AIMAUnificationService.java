@@ -24,14 +24,13 @@ import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.aima.AIMAConverter;
+import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.decomposition.UnificationService;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.constraint.validation.impl.SimpleConstraintValidatorImpl;
 import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskBuilder;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilder;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
@@ -61,6 +60,11 @@ public class AIMAUnificationService implements UnificationService {
 	private DomainHelper domainHelper;
 	
 	/**
+	 * Factory for creating task network builders.
+	 */
+	private TaskNetworkBuilderFactory<Task, Constraint>  taskNetworkBuilderFactory;
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	public final Unifier findUnifier(Task task, Method method) {
@@ -76,17 +80,17 @@ public class AIMAUnificationService implements UnificationService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTaskNetwork apply(Unifier unifier, TaskNetwork taskNetwork) {
+	public final TaskNetwork apply(Unifier unifier, TaskNetwork taskNetwork) {
 		
 		// TODO Add support constraints
 		Set<Task> updatedTasks = new HashSet<Task>();
 		for (Task task : taskNetwork.getTasks()) {
-			SimpleTask updatedTask = apply(unifier, task);
+			Task updatedTask = apply(unifier, task);
 			updatedTasks.add(updatedTask);
 		}
 
-		SimpleTaskNetwork updatedTaskNetwork =
-			new SimpleTaskNetworkBuilder<SimpleConstraintValidatorImpl>(new SimpleConstraintValidatorImpl())
+		TaskNetwork updatedTaskNetwork =
+				taskNetworkBuilderFactory.create()
 				.addTasks(updatedTasks)
 				.build();
 		

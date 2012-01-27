@@ -54,7 +54,7 @@ public class SimpleTaskNetworkBuilder<V extends ConstraintValidator>
 	 * Default constructor.
 	 * @param validator the constraint validator to use
 	 */
-	public SimpleTaskNetworkBuilder(V validator) {
+	protected SimpleTaskNetworkBuilder(V validator) {
 		tasks = new HashSet<Task>();
 		constraints = new HashSet<Constraint>();
 		this.validator = validator;
