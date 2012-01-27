@@ -25,6 +25,8 @@ import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
+import com.google.common.base.Objects;
+
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
@@ -107,5 +109,22 @@ public class SimpleBetweenConstraint implements ValidatableBetweenConstraint<Sim
 	public final void add(SimpleConstraintValidator validator)
 			throws InvalidConstraint {
 		validator.add(this);
+	}
+	
+	@Override
+	public final int hashCode() {
+		return Objects.hashCode(precedingTasks, procedingTasks, literal);
+	}
+
+	@Override
+	public final boolean equals(Object obj) {
+		if (obj instanceof SimpleBetweenConstraint) {
+	        final SimpleBetweenConstraint other = (SimpleBetweenConstraint) obj;
+	        return Objects.equal(precedingTasks, other.precedingTasks)
+	        	&& Objects.equal(procedingTasks, other.procedingTasks)
+	            && Objects.equal(literal, other.literal);
+	    } else {
+	        return false;
+	    }
 	}
 }

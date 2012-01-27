@@ -118,9 +118,6 @@ public class SimpleConstraintValidatorImplTest {
 		ValidatablePrecedenceConstraint<?> mockConstraintA = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintA.getPrecedingTask()).thenReturn(mockTaskA);
 		when(mockConstraintA.getProcedingTask()).thenReturn(mockTaskB);
-		ValidatablePrecedenceConstraint<?> mockConstraintB = mock(ValidatablePrecedenceConstraint.class);
-		when(mockConstraintB.getPrecedingTask()).thenReturn(mockTaskA);
-		when(mockConstraintB.getProcedingTask()).thenReturn(mockTaskB);
 		
 		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
 		validator.add(mockTaskA);
@@ -128,8 +125,10 @@ public class SimpleConstraintValidatorImplTest {
 		
 		assertTrue(validator.validate(mockConstraintA));
 		validator.add(mockConstraintA);
-		assertFalse(validator.validate(mockConstraintB));
-		validator.add(mockConstraintB);
+		assertFalse(validator.validate(mockConstraintA));
+		validator.add(mockConstraintA);
+		
+		// TODO - should check equals gets called, if possible
 	}
 
 	/**
@@ -377,16 +376,16 @@ public class SimpleConstraintValidatorImplTest {
 		
 		ValidatableBeforeConstraint<?> mockConstraintA = mock(ValidatableBeforeConstraint.class);
 		when(mockConstraintA.getTasks()).thenReturn(mockTasksA);
-		ValidatableBeforeConstraint<?> mockConstraintB = mock(ValidatableBeforeConstraint.class);
-		when(mockConstraintB.getTasks()).thenReturn(mockTasksA);
 		
 		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
 		validator.add(mockTaskA);
 		
 		assertTrue(validator.validate(mockConstraintA));
 		validator.add(mockConstraintA);
-		assertFalse(validator.validate(mockConstraintB));
-		validator.add(mockConstraintB);
+		assertFalse(validator.validate(mockConstraintA));
+		validator.add(mockConstraintA);
+		
+		// TODO - should check equals gets called, if possible
 	}
 	
 	/**
@@ -497,16 +496,16 @@ public class SimpleConstraintValidatorImplTest {
 		
 		ValidatableAfterConstraint<?> mockConstraintA = mock(ValidatableAfterConstraint.class);
 		when(mockConstraintA.getTasks()).thenReturn(mockTasksA);
-		ValidatableAfterConstraint<?> mockConstraintB = mock(ValidatableAfterConstraint.class);
-		when(mockConstraintB.getTasks()).thenReturn(mockTasksA);
 		
 		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
 		validator.add(mockTaskA);
 		
 		assertTrue(validator.validate(mockConstraintA));
 		validator.add(mockConstraintA);
-		assertFalse(validator.validate(mockConstraintB));
-		validator.add(mockConstraintB);
+		assertFalse(validator.validate(mockConstraintA));
+		validator.add(mockConstraintA);
+		
+		// TODO - should check equals gets called, if possible
 	}
 	
 	/**
@@ -659,9 +658,6 @@ public class SimpleConstraintValidatorImplTest {
 		ValidatableBetweenConstraint<?> mockConstraintA = mock(ValidatableBetweenConstraint.class);
 		when(mockConstraintA.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraintA.getProcedingTasks()).thenReturn(mockTasksB);
-		ValidatableBetweenConstraint<?> mockConstraintB = mock(ValidatableBetweenConstraint.class);
-		when(mockConstraintB.getPrecedingTasks()).thenReturn(mockTasksA);
-		when(mockConstraintB.getProcedingTasks()).thenReturn(mockTasksB);
 		
 		SimpleConstraintValidatorImpl validator = new SimpleConstraintValidatorImpl();
 		validator.add(mockTaskA);
@@ -669,8 +665,10 @@ public class SimpleConstraintValidatorImplTest {
 		
 		assertTrue(validator.validate(mockConstraintA));
 		validator.add(mockConstraintA);
-		assertFalse(validator.validate(mockConstraintB));
-		validator.add(mockConstraintB);
+		assertFalse(validator.validate(mockConstraintA));
+		validator.add(mockConstraintA);
+		
+		// TODO - should check equals gets called, if possible
 	}
 	
 }

@@ -22,6 +22,8 @@ import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 
+import com.google.common.base.Objects;
+
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
@@ -82,5 +84,21 @@ public class SimplePrecedenceConstraint
 	 */
 	public final void add(SimpleConstraintValidator validator) throws InvalidConstraint {
 		validator.add(this);
+	}
+	
+	@Override
+	public final int hashCode() {
+		return Objects.hashCode(precedingTask, procedingTask);
+	}
+
+	@Override
+	public final boolean equals(Object obj) {
+		if (obj instanceof SimplePrecedenceConstraint) {
+	        final SimplePrecedenceConstraint other = (SimplePrecedenceConstraint) obj;
+	        return Objects.equal(precedingTask, other.precedingTask)
+	            && Objects.equal(procedingTask, other.procedingTask);
+	    } else {
+	        return false;
+	    }
 	}
 }

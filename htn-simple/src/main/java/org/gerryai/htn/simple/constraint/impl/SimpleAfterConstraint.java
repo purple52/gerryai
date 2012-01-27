@@ -25,6 +25,8 @@ import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
+import com.google.common.base.Objects;
+
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
@@ -88,4 +90,19 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<SimpleC
 		validator.add(this);
 	}
 
+	@Override
+	public final int hashCode() {
+		return Objects.hashCode(tasks, literal);
+	}
+
+	@Override
+	public final boolean equals(Object obj) {
+		if (obj instanceof SimpleAfterConstraint) {
+	        final SimpleAfterConstraint other = (SimpleAfterConstraint) obj;
+	        return Objects.equal(tasks, other.tasks)
+	            && Objects.equal(literal, other.literal);
+	    } else {
+	        return false;
+	    }
+	}
 }

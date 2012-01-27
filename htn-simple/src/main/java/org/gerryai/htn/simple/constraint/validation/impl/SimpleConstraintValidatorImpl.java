@@ -93,8 +93,7 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 		
 		// Check if an existing identical constraint exists
 		for (ValidatablePrecedenceConstraint<?> existingConstraint : precedenceConstraints) {	
-			if (existingConstraint.getPrecedingTask().equals(constraint.getPrecedingTask())
-					&& existingConstraint.getProcedingTask().equals(constraint.getProcedingTask())) {
+			if (existingConstraint.equals(constraint)) {
 				return false;
 			}
 		}
@@ -120,7 +119,7 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 		}
 		// Check if an existing identical constraint exists
 		for (ValidatableBeforeConstraint<?> existingConstraint : beforeConstraints) {	
-			if (existingConstraint.getTasks().equals(constraint.getTasks())) {
+			if (existingConstraint.equals(constraint)) {
 				return false;
 			}
 		}
@@ -139,7 +138,7 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 		}
 		// Check if an existing identical constraint exists
 		for (ValidatableAfterConstraint<?> existingConstraint : afterConstraints) {	
-			if (existingConstraint.getTasks().equals(constraint.getTasks())) {
+			if (existingConstraint.equals(constraint)) {
 				return false;
 			}
 		}
@@ -163,8 +162,7 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 		}
 		// Check if an existing identical constraint exists
 		for (ValidatableBetweenConstraint<?> existingConstraint : betweenConstraints) {	
-			if (existingConstraint.getPrecedingTasks().equals(constraint.getPrecedingTasks())
-					&& existingConstraint.getProcedingTasks().equals(constraint.getProcedingTasks())) {
+			if (existingConstraint.equals(constraint)) {
 				return false;
 			}
 		}

@@ -42,4 +42,5 @@ public interface ValidatableConstraint<V extends ConstraintValidator> extends Co
 	 * @throws InvalidConstraint if constraint cannot be added
 	 */
 	void add(V validator) throws InvalidConstraint;
+	
 }

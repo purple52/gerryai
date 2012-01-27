@@ -91,7 +91,5 @@ public abstract class SimpleTask implements Task {
 	        return false;
 	    }
 	}
-	
-	
 
 }
