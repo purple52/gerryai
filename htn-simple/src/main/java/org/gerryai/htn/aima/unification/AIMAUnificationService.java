@@ -25,8 +25,8 @@ import java.util.Set;
 
 import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.constraint.Constraint;
-import org.gerryai.htn.decomposition.UnificationService;
 import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;

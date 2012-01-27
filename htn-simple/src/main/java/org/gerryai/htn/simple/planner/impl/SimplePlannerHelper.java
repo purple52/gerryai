@@ -20,15 +20,15 @@ package org.gerryai.htn.simple.planner.impl;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.gerryai.htn.decomposition.DecompositionService;
-import org.gerryai.htn.decomposition.UnificationService;
-import org.gerryai.htn.decomposition.UnifierNotFound;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.State;
+import org.gerryai.htn.simple.decomposition.DecompositionService;
+import org.gerryai.htn.simple.decomposition.UnificationService;
+import org.gerryai.htn.simple.decomposition.UnifierNotFound;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.PlanFactory;

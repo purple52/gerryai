@@ -25,9 +25,8 @@ import static org.mockito.Mockito.verify;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.decomposition.UnificationService;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.decomposition.SimpleDecompositionService;
+import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.unification.Unifier;

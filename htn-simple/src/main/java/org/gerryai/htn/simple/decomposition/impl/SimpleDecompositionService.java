@@ -15,11 +15,11 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.decomposition;
+package org.gerryai.htn.simple.decomposition.impl;
 
-import org.gerryai.htn.decomposition.DecompositionService;
-import org.gerryai.htn.decomposition.UnificationService;
 import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.simple.decomposition.DecompositionService;
+import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.unification.Unifier;

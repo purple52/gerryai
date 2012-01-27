@@ -19,7 +19,7 @@ package org.gerryai.htn.simple.planner.impl;
 
 import org.gerryai.htn.aima.unification.AIMAUnificationService;
 import org.gerryai.htn.domain.Domain;
-import org.gerryai.htn.simple.decomposition.SimpleDecompositionService;
+import org.gerryai.htn.simple.decomposition.impl.SimpleDecompositionService;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactory;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactoryHelper;
