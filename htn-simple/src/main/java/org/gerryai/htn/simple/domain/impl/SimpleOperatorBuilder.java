@@ -61,6 +61,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<Constraint, Effect
 		preconditions = new HashSet<Constraint>();
 		effects = new HashSet<Effect>();
 	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

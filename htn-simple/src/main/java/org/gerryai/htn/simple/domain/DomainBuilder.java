@@ -17,17 +17,34 @@
  */
 package org.gerryai.htn.simple.domain;
 
+import org.gerryai.htn.domain.Domain;
+
 /**
- * Interface for a factory that creates operator builders.
- * @param <C> the class of constraint the builder will handle
- * @param <E> the class of effect the builder will handle
+ * Interface for a domain builder.
+ * @param <O> the type of operator this domain will use
+ * @param <M> the type of method this domain will use
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public interface OperatorBuilderFactory<C, E> {
+public interface DomainBuilder<O, M> {
+	
+	/**
+	 * Add an operator to the domain.
+	 * @param operator the operator to add
+	 * @return the updated builder
+	 */
+	DomainBuilder<O, M> addOperator(O operator);
+	
+	/**
+	 * Add a method to the domain.
+	 * @param method the method to add
+	 * @return the updated builder
+	 */
+	DomainBuilder<O, M> addMethod(M method);
 
 	/**
-	 * Create an operator builder of the required type.
-	 * @return the operator builder
+	 * Build the domain.
+	 * @return the domain
 	 */
-	OperatorBuilder<C, E> create();
+	Domain build();
 }

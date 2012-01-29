@@ -19,20 +19,30 @@ package org.gerryai.htn.simple.domain.impl;
 
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Effect;
+import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.simple.domain.DomainBuilder;
 import org.gerryai.htn.simple.domain.OperatorBuilder;
-import org.gerryai.htn.simple.domain.OperatorBuilderFactory;
+import org.gerryai.htn.simple.domain.DomainBuilderFactory;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleOperatorBuilderFactory implements
-		OperatorBuilderFactory<Constraint, Effect> {
+public class SimpleDomainBuilderFactory implements
+		DomainBuilderFactory<Operator, Method, Constraint, Effect> {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final OperatorBuilder<Constraint, Effect> create() {
+	public final DomainBuilder<Operator, Method> createDomainBuilder() {
+		return new SimpleDomainBuilder();	
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final OperatorBuilder<Constraint, Effect> createOperatorBuilder() {
 		return new SimpleOperatorBuilder();	
 	}
 

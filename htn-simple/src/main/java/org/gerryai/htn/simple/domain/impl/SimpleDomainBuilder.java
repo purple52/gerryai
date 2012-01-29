@@ -17,64 +17,72 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.simple.domain.DomainBuilder;
 
 /**
- * Simple representation of a domain.
- * Wraps a set of operators and a set of methods to define the domain.
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public class SimpleDomain implements Domain {
+public class SimpleDomainBuilder implements DomainBuilder<Operator, Method> {
 
 	/**
-	 * Operators available in this domain.
+	 * Set of operators the domain uses.
 	 */
 	private Set<Operator> operators;
 	
 	/**
-	 * Methods available in this domain.
+	 * Set of methods that the domain uses.
 	 */
 	private Set<Method> methods;
 	
 	/**
-	 * Constructor for a simple domain.
-	 * @param builder the builder to build this domain from
+	 * Default constructor.
 	 */
-	protected SimpleDomain(SimpleDomainBuilder builder) {
-		operators = builder.getOperators();
-		methods = builder.getMethods();
+	protected SimpleDomainBuilder() {
+		operators = new HashSet<Operator>();
+		methods = new HashSet<Method>();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<Operator> getOperators() {
+	public final SimpleDomainBuilder addOperator(Operator operator) {
+		operators.add(operator);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final SimpleDomainBuilder addMethod(Method method) {
+		methods.add(method);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final SimpleDomain build() {
+		return new SimpleDomain(this);
+	}
+
+	/**
+	 * @return the operators
+	 */
+	protected final Set<Operator> getOperators() {
 		return operators;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @return the effects
 	 */
-	public final void setOperators(Set<Operator> operators) {
-		this.operators = operators;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final Set<Method> getMethods() {
+	protected final Set<Method> getMethods() {
 		return methods;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setMethods(Set<Method> methods) {
-		this.methods = methods;
 	}
 
 }

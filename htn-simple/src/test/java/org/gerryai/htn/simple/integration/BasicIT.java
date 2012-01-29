@@ -19,14 +19,9 @@ package org.gerryai.htn.simple.integration;
 
 import static org.junit.Assert.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.simple.domain.OperatorBuilderFactory;
-import org.gerryai.htn.simple.domain.impl.SimpleDomain;
-import org.gerryai.htn.simple.domain.impl.SimpleOperatorBuilderFactory;
+import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
 import org.gerryai.logic.Variable;
 import org.gerryai.logic.VariableImpl;
 import org.junit.Test;
@@ -40,20 +35,20 @@ public class BasicIT {
 	@Test
 	public void test() {
 		
-		SimpleOperatorBuilderFactory operatorBuilderFactory = new SimpleOperatorBuilderFactory();
-		
-		Domain domain = new SimpleDomain();
+		SimpleDomainBuilderFactory domainBuilderFactory = new SimpleDomainBuilderFactory();
 		
 		Variable variableA = new VariableImpl();
 		variableA.setName("a");
 		
-		Operator operatorA = operatorBuilderFactory.create()
+		Operator operatorA = domainBuilderFactory.createOperatorBuilder()
 				.setName("pickup")
 				.addArgument(variableA)
 				.build();
-		Set<Operator> operators = new HashSet<Operator>();
-		operators.add(operatorA);
-		domain.setOperators(operators);
+		
+		Domain domain = domainBuilderFactory.createDomainBuilder()
+				.addOperator(operatorA)
+				.build();
+
 	}
 
 }

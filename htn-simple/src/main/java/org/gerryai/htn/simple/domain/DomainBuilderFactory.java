@@ -15,25 +15,27 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.domain.impl;
-
-import static org.junit.Assert.*;
-
-import org.junit.Test;
+package org.gerryai.htn.simple.domain;
 
 /**
+ * Interface for a factory that creates domain and operator builders.
+ * @param <O> the class of operator the builder will handle
+ * @param <M> the class of method the builder will handle
+ * @param <C> the class of constraint the builder will handle
+ * @param <E> the class of effect the builder will handle
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class SimpleOperatorBuilderFactoryTest {
+public interface DomainBuilderFactory<O, M, C, E> {
 
 	/**
-	 * Test builder creation.
+	 * Create a domain builder of the required type.
+	 * @return the domain builder
 	 */
-	@Test
-	public void testCreate() {
-		SimpleDomainBuilderFactory factory = new SimpleDomainBuilderFactory();
-		assertTrue(factory.createOperatorBuilder() instanceof SimpleOperatorBuilder);
-	}
-
+	DomainBuilder<O, M> createDomainBuilder();
+	
+	/**
+	 * Create an operator builder of the required type.
+	 * @return the operator builder
+	 */
+	OperatorBuilder<C, E> createOperatorBuilder();
 }
