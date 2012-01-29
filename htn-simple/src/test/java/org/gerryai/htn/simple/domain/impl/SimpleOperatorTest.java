@@ -18,6 +18,7 @@
 package org.gerryai.htn.simple.domain.impl;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,7 +39,10 @@ public class SimpleOperatorTest {
 	@Test
 	public void testName() {
 		String name = "testname";
-		SimpleOperator operator = new SimpleOperator();
+		
+		SimpleOperatorBuilder mockBuilder = mock(SimpleOperatorBuilder.class);
+		SimpleOperator operator = new SimpleOperator(mockBuilder);
+		
 		operator.setName(name);
 		assertEquals(name, operator.getName());
 	}
@@ -46,7 +50,8 @@ public class SimpleOperatorTest {
 	@Test
 	public void testArguments() {
 		List<Variable> arguments = new ArrayList<Variable>();
-		SimpleOperator operator = new SimpleOperator();
+		SimpleOperatorBuilder mockBuilder = mock(SimpleOperatorBuilder.class);
+		SimpleOperator operator = new SimpleOperator(mockBuilder);
 		operator.setArguments(arguments);
 		assertEquals(arguments, operator.getArguments());
 	}
@@ -54,7 +59,8 @@ public class SimpleOperatorTest {
 	@Test
 	public void testPreconditions() {
 		Set<Constraint> constraints = new HashSet<Constraint>();
-		SimpleOperator operator = new SimpleOperator();
+		SimpleOperatorBuilder mockBuilder = mock(SimpleOperatorBuilder.class);
+		SimpleOperator operator = new SimpleOperator(mockBuilder);
 		operator.setPreconditions(constraints);
 		assertEquals(constraints, operator.getPreconditions());
 	}
@@ -62,7 +68,8 @@ public class SimpleOperatorTest {
 	@Test
 	public void testEffects() {
 		Set<Effect> effects = new HashSet<Effect>();
-		SimpleOperator operator = new SimpleOperator();
+		SimpleOperatorBuilder mockBuilder = mock(SimpleOperatorBuilder.class);
+		SimpleOperator operator = new SimpleOperator(mockBuilder);
 		operator.setEffects(effects);
 		assertEquals(effects, operator.getEffects());
 	}

@@ -52,6 +52,17 @@ public class SimpleOperator implements Operator {
 	private Set<Effect> effects;
 	
 	/**
+	 * Constructor for a simple operator.
+	 * @param builder the builder to build the operator
+	 */
+	protected SimpleOperator(SimpleOperatorBuilder builder) {
+		this.setName(builder.getName());
+		this.setArguments(builder.getArguments());
+		this.setPreconditions(builder.getPreconditions());
+		this.setEffects(builder.getEffects());
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	public final String getName() {
