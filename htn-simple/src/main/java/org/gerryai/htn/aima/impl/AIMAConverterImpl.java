@@ -24,10 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.aima.AIMAConverter;
+import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
-import org.gerryai.logic.VariableImpl;
 import org.gerryai.logic.unification.Unifier;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
@@ -103,7 +103,7 @@ public class AIMAConverterImpl implements AIMAConverter {
 	 */
 	public final Variable convert(
 			aima.core.logic.fol.parsing.ast.Variable aimaVariable) {
-		VariableImpl variable = new VariableImpl();
+		SimpleVariable variable = new SimpleVariable();
 		variable.setName(aimaVariable.getSymbolicName());
 		return variable;
 	}

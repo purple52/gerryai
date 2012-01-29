@@ -23,8 +23,8 @@ import static org.mockito.Mockito.mock;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 import org.junit.Test;
 
 /**
@@ -58,16 +58,16 @@ public class SimpleConstraintFactoryTest {
 	@Test
 	public void testCreateBeforeConstraint() {
 		Set<Task> mockTasks = new HashSet<Task>();
-		Term mockLiteral = mock(Term.class);
+		Condition mockCondition = mock(Condition.class);
 		
 		// Create factory under test
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
 		
 		//Try and create the constraint
-		SimpleBeforeConstraint constraint = factory.createBeforeConstraint(mockTasks, mockLiteral);
+		SimpleBeforeConstraint constraint = factory.createBeforeConstraint(mockTasks, mockCondition);
 		
 		assertEquals(mockTasks,constraint.getTasks());
-		assertEquals(mockLiteral,constraint.getLiteral());
+		assertEquals(mockCondition,constraint.getCondition());
 	}
 
 	/**
@@ -76,16 +76,16 @@ public class SimpleConstraintFactoryTest {
 	@Test
 	public void testCreateAfterConstraint() {
 		Set<Task> mockTasks = new HashSet<Task>();
-		Term mockLiteral = mock(Term.class);
+		Condition mockCondition = mock(Condition.class);
 		
 		// Create factory under test
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
 		
 		//Try and create the constraint
-		SimpleAfterConstraint constraint = factory.createAfterConstraint(mockTasks, mockLiteral);
+		SimpleAfterConstraint constraint = factory.createAfterConstraint(mockTasks, mockCondition);
 		
 		assertEquals(mockTasks,constraint.getTasks());
-		assertEquals(mockLiteral,constraint.getLiteral());
+		assertEquals(mockCondition,constraint.getCondition());
 	}
 
 	/**
@@ -95,17 +95,17 @@ public class SimpleConstraintFactoryTest {
 	public void testCreateBetweenConstraint() {
 		Set<Task> mockTasksA = new HashSet<Task>();
 		Set<Task> mockTasksB = new HashSet<Task>();
-		Term mockLiteral = mock(Term.class);
+		Condition mockCondition = mock(Condition.class);
 		
 		// Create factory under test
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
 		
 		//Try and create the constraint
-		SimpleBetweenConstraint constraint = factory.createBetweenConstraint(mockTasksA, mockTasksB, mockLiteral);
+		SimpleBetweenConstraint constraint = factory.createBetweenConstraint(mockTasksA, mockTasksB, mockCondition);
 		
 		assertEquals(mockTasksA,constraint.getPrecedingTasks());
 		assertEquals(mockTasksB,constraint.getProcedingTasks());
-		assertEquals(mockLiteral,constraint.getLiteral());
+		assertEquals(mockCondition,constraint.getCondition());
 	}
 
 }

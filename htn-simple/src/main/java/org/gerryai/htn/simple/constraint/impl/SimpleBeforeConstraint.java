@@ -19,11 +19,11 @@ package org.gerryai.htn.simple.constraint.impl;
 
 import java.util.Set;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 import com.google.common.base.Objects;
 
@@ -39,9 +39,9 @@ public class SimpleBeforeConstraint implements ValidatableBeforeConstraint<Simpl
 	private Set<Task> tasks;
 	
 	/**
-	 * The literal that must be true directly before the first of these tasks.
+	 * The condition that must be true directly before the first of these tasks.
 	 */
-	private Term literal;
+	private Condition condition;
 	
 	/**
 	 * Set the set of tasks that this constraint must hold for.
@@ -52,11 +52,11 @@ public class SimpleBeforeConstraint implements ValidatableBeforeConstraint<Simpl
 	}
 	
 	/**
-	 * Set the literal that must be true directly before the first of these tasks.
-	 * @param literal the literal
+	 * Set the condition that must be true directly before the first of these tasks.
+	 * @param condition the condition
 	 */
-	public final void setLiteral(Term literal) {
-		this.literal = literal;
+	public final void setCondition(Condition condition) {
+		this.condition = condition;
 	}
 	
 	/**
@@ -68,11 +68,11 @@ public class SimpleBeforeConstraint implements ValidatableBeforeConstraint<Simpl
 	}
 
 	/**
-	 * Get the literal that must be true directly before the first of these tasks.
-	 * @return the literal
+	 * Get the condition that must be true directly before the first of these tasks.
+	 * @return the condition
 	 */
-	public final Term getLiteral() {
-		return literal;
+	public final Condition getCondition() {
+		return condition;
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class SimpleBeforeConstraint implements ValidatableBeforeConstraint<Simpl
 	
 	@Override
 	public final int hashCode() {
-		return Objects.hashCode(tasks, literal);
+		return Objects.hashCode(tasks, condition);
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class SimpleBeforeConstraint implements ValidatableBeforeConstraint<Simpl
 		if (obj instanceof SimpleBeforeConstraint) {
 	        final SimpleBeforeConstraint other = (SimpleBeforeConstraint) obj;
 	        return Objects.equal(tasks, other.tasks)
-	            && Objects.equal(literal, other.literal);
+	            && Objects.equal(condition, other.condition);
 	    } else {
 	        return false;
 	    }

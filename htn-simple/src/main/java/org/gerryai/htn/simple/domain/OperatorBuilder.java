@@ -25,7 +25,7 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface for a class that can build operators.
- * @param <C> class of constraint the builder can handle
+ * @param <C> class of condition the builder can handle
  * @param <E> class of effect the builder can handle
  * @author David Edwards <david@more.fool.me.uk>
  *
@@ -55,17 +55,17 @@ public interface OperatorBuilder<C, E> {
 
 	/**
 	 * Add an argument to the operator.
-	 * @param constraint the term to add
+	 * @param condition the condition to add
 	 * @return the updated builder
 	 */
-	OperatorBuilder<C, E> addPrecondition(C constraint);
+	OperatorBuilder<C, E> addPrecondition(C condition);
 	
 	/**
 	 * Add a set of preconditions to the operator.
-	 * @param constraints the constraints to add
+	 * @param conditions the conditions to add
 	 * @return the updated builder
 	 */
-	OperatorBuilder<C, E> addPreconditions(Set<C> constraints);
+	OperatorBuilder<C, E> addPreconditions(Set<C> conditions);
 
 	/**
 	 * Add an effect to the operator.

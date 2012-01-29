@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
@@ -30,7 +30,7 @@ import org.gerryai.htn.simple.domain.DomainBuilderFactory;
  *
  */
 public class SimpleDomainBuilderFactory implements
-		DomainBuilderFactory<Operator, Method, Constraint, Effect> {
+		DomainBuilderFactory<Operator, Method, Condition, Effect> {
 
 	/**
 	 * {@inheritDoc}
@@ -42,7 +42,7 @@ public class SimpleDomainBuilderFactory implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final OperatorBuilder<Constraint, Effect> createOperatorBuilder() {
+	public final OperatorBuilder<Condition, Effect> createOperatorBuilder() {
 		return new SimpleOperatorBuilder();	
 	}
 

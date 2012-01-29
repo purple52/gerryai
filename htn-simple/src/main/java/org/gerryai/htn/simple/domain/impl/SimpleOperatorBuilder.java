@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.domain.OperatorBuilder;
 import org.gerryai.logic.Variable;
@@ -31,7 +31,7 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleOperatorBuilder implements OperatorBuilder<Constraint, Effect> {
+public class SimpleOperatorBuilder implements OperatorBuilder<Condition, Effect> {
 
 	/**
 	 * Name of the operator.
@@ -46,7 +46,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<Constraint, Effect
 	/**
 	 * Set of preconditions that must hold for the operator to be valid.
 	 */
-	private Set<Constraint> preconditions;
+	private Set<Condition> preconditions;
 	
 	/**
 	 * Set of effects that the operator has.
@@ -58,7 +58,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<Constraint, Effect
 	 */
 	protected SimpleOperatorBuilder() {
 		arguments = new ArrayList<Variable>();
-		preconditions = new HashSet<Constraint>();
+		preconditions = new HashSet<Condition>();
 		effects = new HashSet<Effect>();
 	}
 	
@@ -89,16 +89,16 @@ public class SimpleOperatorBuilder implements OperatorBuilder<Constraint, Effect
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperatorBuilder addPrecondition(Constraint constraint) {
-		preconditions.add(constraint);
+	public final SimpleOperatorBuilder addPrecondition(Condition condition) {
+		preconditions.add(condition);
 		return this;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperatorBuilder addPreconditions(Set<Constraint> constraints) {
-		preconditions.addAll(constraints);
+	public final SimpleOperatorBuilder addPreconditions(Set<Condition> conditions) {
+		preconditions.addAll(conditions);
 		return this;
 	}
 
@@ -142,7 +142,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<Constraint, Effect
 	/**
 	 * @return the preconditions
 	 */
-	protected final Set<Constraint> getPreconditions() {
+	protected final Set<Condition> getPreconditions() {
 		return preconditions;
 	}
 

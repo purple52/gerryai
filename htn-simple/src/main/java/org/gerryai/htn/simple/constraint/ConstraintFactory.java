@@ -23,8 +23,8 @@ import org.gerryai.htn.constraint.AfterConstraint;
 import org.gerryai.htn.constraint.BeforeConstraint;
 import org.gerryai.htn.constraint.BetweenConstraint;
 import org.gerryai.htn.constraint.PrecedenceConstraint;
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -43,26 +43,26 @@ public interface ConstraintFactory {
 	/**
 	 * Create a before constraint.
 	 * @param tasks set of tasks that the constraint must hold for
-	 * @param literal the literal that must be true directly before the first task in the set
+	 * @param condition the condition that must be true directly before the first task in the set
 	 * @return the constraint
 	 */
-	BeforeConstraint createBeforeConstraint(Set<Task> tasks, Term literal);
+	BeforeConstraint createBeforeConstraint(Set<Task> tasks, Condition condition);
 	
 	/**
 	 * Create an after constraint.
 	 * @param tasks set of tasks that the constrain must hold for
-	 * @param literal the literal that must be true directly after the last task in the set
+	 * @param condition the condition that must be true directly after the last task in the set
 	 * @return the constraint
 	 */
-	AfterConstraint createAfterConstraint(Set<Task> tasks, Term literal);
+	AfterConstraint createAfterConstraint(Set<Task> tasks, Condition condition);
 	
 	/**
 	 * Create a between constraint.
 	 * @param precedingTasks the set of tasks that this constraint must hold after
 	 * @param procedingTasks the set of tasks that this constraint must hold before
-	 * @param literal the literal that must be true between the two sets of tasks
+	 * @param condition the condition that must be true between the two sets of tasks
 	 * @return the constraint
 	 */
-	BetweenConstraint createBetweenConstraint(Set<Task> precedingTasks, Set<Task> procedingTasks, Term literal);
+	BetweenConstraint createBetweenConstraint(Set<Task> precedingTasks, Set<Task> procedingTasks, Condition condition);
 
 }

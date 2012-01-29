@@ -20,7 +20,6 @@ package org.gerryai.htn.domain;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.logic.Variable;
 
 /**
@@ -57,13 +56,13 @@ public interface Operator {
 	 * Get the preconditions for this operator.
 	 * @return the preconditions
 	 */
-	Set<Constraint> getPreconditions();
+	Set<Condition> getPreconditions();
 	
 	/**
 	 * Set the preconditions for this operator.
 	 * @param preconditions preconditions to set
 	 */
-	void setPreconditions(Set<Constraint> preconditions);
+	void setPreconditions(Set<Condition> preconditions);
 	
 	/**
 	 * Get the effects of this operator.

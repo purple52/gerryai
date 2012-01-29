@@ -19,9 +19,9 @@ package org.gerryai.htn.simple.constraint.impl;
 
 import java.util.Set;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ConstraintFactory;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -42,20 +42,20 @@ public class SimpleConstraintFactory implements ConstraintFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleBeforeConstraint createBeforeConstraint(Set<Task> tasks, Term literal) {
+	public final SimpleBeforeConstraint createBeforeConstraint(Set<Task> tasks, Condition condition) {
 		SimpleBeforeConstraint constraint = new SimpleBeforeConstraint();
 		constraint.setTasks(tasks);
-		constraint.setLiteral(literal);
+		constraint.setCondition(condition);
 		return constraint;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleAfterConstraint createAfterConstraint(Set<Task> tasks, Term literal) {
+	public final SimpleAfterConstraint createAfterConstraint(Set<Task> tasks, Condition condition) {
 		SimpleAfterConstraint constraint = new SimpleAfterConstraint();
 		constraint.setTasks(tasks);
-		constraint.setLiteral(literal);
+		constraint.setCondition(condition);
 		return constraint;
 	}
 
@@ -63,11 +63,11 @@ public class SimpleConstraintFactory implements ConstraintFactory {
 	 * {@inheritDoc}
 	 */
 	public final SimpleBetweenConstraint createBetweenConstraint(Set<Task> precedingTasks,
-			Set<Task> procedingTasks, Term literal) {
+			Set<Task> procedingTasks, Condition condition) {
 		SimpleBetweenConstraint constraint = new SimpleBetweenConstraint();
 		constraint.setPrecedingTasks(precedingTasks);
 		constraint.setProcedingTasks(procedingTasks);
-		constraint.setLiteral(literal);
+		constraint.setCondition(condition);
 		return constraint;
 	}
 

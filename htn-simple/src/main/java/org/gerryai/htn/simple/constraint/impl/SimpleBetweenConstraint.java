@@ -19,11 +19,11 @@ package org.gerryai.htn.simple.constraint.impl;
 
 import java.util.Set;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 import com.google.common.base.Objects;
 
@@ -46,7 +46,7 @@ public class SimpleBetweenConstraint implements ValidatableBetweenConstraint<Sim
 	/**
 	 * The literal that must be true directly between the two sets of tasks.
 	 */
-	private Term literal;
+	private Condition condition;
 	
 	/**
 	 * Set the set of tasks that this constraint must hold after.
@@ -65,11 +65,11 @@ public class SimpleBetweenConstraint implements ValidatableBetweenConstraint<Sim
 	}
 	
 	/**
-	 * Set the literal that must be true directly after the last of these tasks.
-	 * @param literal the literal
+	 * Set the condition that must be true directly after the last of these tasks.
+	 * @param condition the condition
 	 */
-	public final void setLiteral(Term literal) {
-		this.literal = literal;
+	public final void setCondition(Condition condition) {
+		this.condition = condition;
 	}
 	
 	/**
@@ -89,11 +89,11 @@ public class SimpleBetweenConstraint implements ValidatableBetweenConstraint<Sim
 	}
 	
 	/**
-	 * Get the literal that must be true directly after the last of these tasks.
-	 * @return the literal
+	 * Get the condition that must be true directly after the last of these tasks.
+	 * @return the condition
 	 */
-	public final Term getLiteral() {
-		return literal;
+	public final Condition getCondition() {
+		return condition;
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class SimpleBetweenConstraint implements ValidatableBetweenConstraint<Sim
 	
 	@Override
 	public final int hashCode() {
-		return Objects.hashCode(precedingTasks, procedingTasks, literal);
+		return Objects.hashCode(precedingTasks, procedingTasks, condition);
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class SimpleBetweenConstraint implements ValidatableBetweenConstraint<Sim
 	        final SimpleBetweenConstraint other = (SimpleBetweenConstraint) obj;
 	        return Objects.equal(precedingTasks, other.precedingTasks)
 	        	&& Objects.equal(procedingTasks, other.procedingTasks)
-	            && Objects.equal(literal, other.literal);
+	            && Objects.equal(condition, other.condition);
 	    } else {
 	        return false;
 	    }

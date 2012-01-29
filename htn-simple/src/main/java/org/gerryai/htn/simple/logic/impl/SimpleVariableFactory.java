@@ -15,35 +15,24 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.constraint;
+package org.gerryai.htn.simple.logic.impl;
 
-import java.util.Set;
-
-import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.simple.logic.VariableFactory;
+import org.gerryai.logic.Variable;
 
 /**
- * Interface for a constraint that dictates the state immediately after this task.
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public interface BetweenConstraint extends Constraint {
+public class SimpleVariableFactory implements VariableFactory<Variable> {
 
 	/**
-	 * The set of tasks after which this constraint must hold.
-	 * @return the set of tasks
+	 * {@inheritDoc}
 	 */
-	Set<Task> getPrecedingTasks();
+	public final Variable create(String name) {
+		Variable variable = new SimpleVariable();
+		variable.setName(name);
+		return variable;
+	}
 
-	/**
-	 * The set of tasks before which this constraint must hold.
-	 * @return the set of tasks
-	 */
-	Set<Task> getProcedingTasks();
-	
-	
-	/**
-	 * The condition that must be true between the two sets of tasks.
-	 * @return the literal
-	 */
-	Condition getCondition();
 }

@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.logic.Variable;
 import org.junit.Test;
@@ -58,11 +58,11 @@ public class SimpleOperatorTest {
 	
 	@Test
 	public void testPreconditions() {
-		Set<Constraint> constraints = new HashSet<Constraint>();
+		Set<Condition> conditions = new HashSet<Condition>();
 		SimpleOperatorBuilder mockBuilder = mock(SimpleOperatorBuilder.class);
 		SimpleOperator operator = new SimpleOperator(mockBuilder);
-		operator.setPreconditions(constraints);
-		assertEquals(constraints, operator.getPreconditions());
+		operator.setPreconditions(conditions);
+		assertEquals(conditions, operator.getPreconditions());
 	}
 	
 	@Test

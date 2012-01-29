@@ -19,8 +19,8 @@ package org.gerryai.htn.constraint;
 
 import java.util.Set;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 /**
  * Interface for a constraint that dictates the state immediately after this task.
@@ -35,8 +35,8 @@ public interface AfterConstraint extends Constraint {
 	Set<Task> getTasks();
 	
 	/**
-	 * The literal that must be true just after the last of the tasks is achieved.
+	 * The condition that must be true just after the last of the tasks is achieved.
 	 * @return the literal
 	 */
-	Term getLiteral();
+	Condition getCondition();
 }

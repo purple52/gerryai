@@ -15,35 +15,20 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.constraint;
-
-import java.util.Set;
-
-import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.tasknetwork.Task;
+package org.gerryai.htn.simple.logic;
 
 /**
- * Interface for a constraint that dictates the state immediately after this task.
+ * Interface for a variable factory.
+ * @param <V> the type of variable this factory produces
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public interface BetweenConstraint extends Constraint {
+public interface VariableFactory<V> {
 
 	/**
-	 * The set of tasks after which this constraint must hold.
-	 * @return the set of tasks
+	 * Create a variable.
+	 * @param name the name of the variable
+	 * @return the variable
 	 */
-	Set<Task> getPrecedingTasks();
-
-	/**
-	 * The set of tasks before which this constraint must hold.
-	 * @return the set of tasks
-	 */
-	Set<Task> getProcedingTasks();
-	
-	
-	/**
-	 * The condition that must be true between the two sets of tasks.
-	 * @return the literal
-	 */
-	Condition getCondition();
+	V create(String name);
 }

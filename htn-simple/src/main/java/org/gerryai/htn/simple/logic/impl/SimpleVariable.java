@@ -15,7 +15,9 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.logic;
+package org.gerryai.htn.simple.logic.impl;
+
+import org.gerryai.logic.Variable;
 
 
 /**
@@ -23,7 +25,7 @@ package org.gerryai.logic;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class VariableImpl implements Variable {
+public class SimpleVariable implements Variable {
 
 	/**
 	 * Name of this variable.

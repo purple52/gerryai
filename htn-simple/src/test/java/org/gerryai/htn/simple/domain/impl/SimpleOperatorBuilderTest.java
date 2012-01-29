@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.logic.Variable;
 import org.junit.Test;
@@ -108,14 +108,14 @@ public class SimpleOperatorBuilderTest {
 	 */
 	@Test
 	public void testAddPrecondition() {
-		Constraint mockConstraintA = mock(Constraint.class);
-		Constraint mockConstraintB = mock(Constraint.class);
+		Condition mockConditionA = mock(Condition.class);
+		Condition mockConditionB = mock(Condition.class);
 		SimpleOperatorBuilder builder = new SimpleOperatorBuilder()
-				.addPrecondition(mockConstraintA)
-				.addPrecondition(mockConstraintB);
+				.addPrecondition(mockConditionA)
+				.addPrecondition(mockConditionB);
 		assertEquals(2, builder.getPreconditions().size());
-		assertTrue(builder.getPreconditions().contains(mockConstraintA));
-		assertTrue(builder.getPreconditions().contains(mockConstraintB));
+		assertTrue(builder.getPreconditions().contains(mockConditionA));
+		assertTrue(builder.getPreconditions().contains(mockConditionB));
 	}
 
 	/**
@@ -123,25 +123,25 @@ public class SimpleOperatorBuilderTest {
 	 */
 	@Test
 	public void testAddPreconditions() {
-		Constraint mockConstraintA = mock(Constraint.class);
-		Constraint mockConstraintB = mock(Constraint.class);
-		Set<Constraint> mockConstraintsA = new HashSet<Constraint>();
-		mockConstraintsA.add(mockConstraintA);
-		mockConstraintsA.add(mockConstraintB);
-		Constraint mockConstraintC = mock(Constraint.class);
-		Constraint mockConstraintD = mock(Constraint.class);
-		Set<Constraint> mockConstraintsB = new HashSet<Constraint>();
-		mockConstraintsA.add(mockConstraintC);
-		mockConstraintsA.add(mockConstraintD);
+		Condition mockConditionA = mock(Condition.class);
+		Condition mockConditionB = mock(Condition.class);
+		Set<Condition> mockConditionsA = new HashSet<Condition>();
+		mockConditionsA.add(mockConditionA);
+		mockConditionsA.add(mockConditionB);
+		Condition mockConditionC = mock(Condition.class);
+		Condition mockConditionD = mock(Condition.class);
+		Set<Condition> mockConditionsB = new HashSet<Condition>();
+		mockConditionsB.add(mockConditionC);
+		mockConditionsB.add(mockConditionD);
 		
 		SimpleOperatorBuilder builder = new SimpleOperatorBuilder()
-				.addPreconditions(mockConstraintsA)
-				.addPreconditions(mockConstraintsB);
+				.addPreconditions(mockConditionsA)
+				.addPreconditions(mockConditionsB);
 		assertEquals(4, builder.getPreconditions().size());
-		assertTrue(builder.getPreconditions().contains(mockConstraintA));
-		assertTrue(builder.getPreconditions().contains(mockConstraintB));
-		assertTrue(builder.getPreconditions().contains(mockConstraintC));
-		assertTrue(builder.getPreconditions().contains(mockConstraintD));
+		assertTrue(builder.getPreconditions().contains(mockConditionA));
+		assertTrue(builder.getPreconditions().contains(mockConditionB));
+		assertTrue(builder.getPreconditions().contains(mockConditionC));
+		assertTrue(builder.getPreconditions().contains(mockConditionD));
 	}
 
 	/**
@@ -193,9 +193,9 @@ public class SimpleOperatorBuilderTest {
 		Variable mockVariable = mock(Variable.class);
 		List<Variable> mockArguments = new ArrayList<Variable>();
 		mockArguments.add(mockVariable);
-		Constraint mockConstraint = mock(Constraint.class);
-		Set<Constraint> mockConstraints = new HashSet<Constraint>();
-		mockConstraints.add(mockConstraint);
+		Condition mockCondition = mock(Condition.class);
+		Set<Condition> mockConditions = new HashSet<Condition>();
+		mockConditions.add(mockCondition);
 		Effect mockEffect = mock(Effect.class);
 		Set<Effect> mockEffects = new HashSet<Effect>();
 		mockEffects.add(mockEffect);
@@ -203,7 +203,7 @@ public class SimpleOperatorBuilderTest {
 		SimpleOperator operator = new SimpleOperatorBuilder()
 				.setName("testname")
 				.addArguments(mockArguments)
-				.addPreconditions(mockConstraints)
+				.addPreconditions(mockConditions)
 				.addEffects(mockEffects)
 				.build();
 		
@@ -211,7 +211,7 @@ public class SimpleOperatorBuilderTest {
 		assertEquals(1, operator.getArguments().size());
 		assertTrue(operator.getArguments().contains(mockVariable));
 		assertEquals(1, operator.getPreconditions().size());
-		assertTrue(operator.getPreconditions().contains(mockConstraint));
+		assertTrue(operator.getPreconditions().contains(mockCondition));
 		assertEquals(1, operator.getEffects().size());
 		assertTrue(operator.getEffects().contains(mockEffect));
 	}

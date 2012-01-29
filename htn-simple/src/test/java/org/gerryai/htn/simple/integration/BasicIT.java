@@ -22,8 +22,8 @@ import static org.junit.Assert.*;
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
+import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.logic.Variable;
-import org.gerryai.logic.VariableImpl;
 import org.junit.Test;
 
 /**
@@ -37,7 +37,7 @@ public class BasicIT {
 		
 		SimpleDomainBuilderFactory domainBuilderFactory = new SimpleDomainBuilderFactory();
 		
-		Variable variableA = new VariableImpl();
+		Variable variableA = new SimpleVariable();
 		variableA.setName("a");
 		
 		Operator operatorA = domainBuilderFactory.createOperatorBuilder()
