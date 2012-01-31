@@ -33,7 +33,8 @@ public class SimpleMethodTest {
 	@Test
 	public void testName() {
 		String name = "testname";
-		SimpleMethod method = new SimpleMethod();
+		SimpleMethodBuilder mockBuilder = mock(SimpleMethodBuilder.class);
+		SimpleMethod method = new SimpleMethod(mockBuilder);
 		method.setName(name);
 		assertEquals(name, method.getName());
 	}
@@ -41,7 +42,8 @@ public class SimpleMethodTest {
 	@Test
 	public void testTask() {
 		Task task = mock(Task.class);
-		SimpleMethod method = new SimpleMethod();
+		SimpleMethodBuilder mockBuilder = mock(SimpleMethodBuilder.class);
+		SimpleMethod method = new SimpleMethod(mockBuilder);
 		method.setTask(task);
 		assertEquals(task, method.getTask());
 	}
@@ -49,7 +51,8 @@ public class SimpleMethodTest {
 	@Test
 	public void testTaskNetwork() {
 		TaskNetwork taskNetwork = mock(TaskNetwork.class);
-		SimpleMethod method = new SimpleMethod();
+		SimpleMethodBuilder mockBuilder = mock(SimpleMethodBuilder.class);
+		SimpleMethod method = new SimpleMethod(mockBuilder);
 		method.setTaskNetwork(taskNetwork);
 		assertEquals(taskNetwork, method.getTaskNetwork());
 	}

@@ -15,33 +15,28 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.domain;
+package org.gerryai.htn.simple.logic.impl;
+
+import org.gerryai.logic.Constant;
 
 /**
- * Interface for a factory that creates domain and operator builders.
- * @param <O> the class of operator the builder will handle
- * @param <M> the class of method the builder will handle
- * @param <C> the class of constraint the builder will handle
- * @param <E> the class of effect the builder will handle
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public interface DomainBuilderFactory<O, M, T, N, C, E> {
+public class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant implements Constant {
 
 	/**
-	 * Create a domain builder of the required type.
-	 * @return the domain builder
+	 * @param s
 	 */
-	DomainBuilder<O, M> createDomainBuilder();
-	
-	/**
-	 * Create an operator builder of the required type.
-	 * @return the operator builder
-	 */
-	OperatorBuilder<C, E> createOperatorBuilder();
+	public SimpleConstant(String s) {
+		super(s);
+	}
 
-	/**
-	 * Create a method builder of the required type.
-	 * @return the method builder
+	/* (non-Javadoc)
+	 * @see org.gerryai.logic.Term#getName()
 	 */
-	MethodBuilder<T, N> createMethodBuilder();
+	public String getName() {
+		return this.getSymbolicName();
+	}
+
 }

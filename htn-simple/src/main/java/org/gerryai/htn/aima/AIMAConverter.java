@@ -17,6 +17,7 @@
  */
 package org.gerryai.htn.aima;
 
+import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.tasknetwork.Task;
@@ -47,6 +48,13 @@ public interface AIMAConverter {
 	aima.core.logic.fol.parsing.ast.Term convert(Term term);
 	
 	/**
+	 * Convert a list of Gerry AI Terms into AIMA Terms.
+	 * @param terms list of terms to convert
+	 * @return list of converted terms
+	 */
+	List<aima.core.logic.fol.parsing.ast.Term> convert(List<Term> terms);
+	
+	/**
 	 * Convert an AIMA Term into a Gerry AI Term.
 	 * @param term term to convert
 	 * @return converted term
@@ -57,15 +65,16 @@ public interface AIMAConverter {
 	 * Convert a Gerry AI Variable into an AIMA Variable.
 	 * @param variable variable to convert
 	 * @return converted variable
-	 */
+	 *
 	aima.core.logic.fol.parsing.ast.Variable convert(Variable variable);
 	
 	/**
 	 * Convert an AIMA Variable into Gerry AI Variable.
 	 * @param variable variable to convert
 	 * @return converted variable
-	 */
+	 *
 	Variable convert(aima.core.logic.fol.parsing.ast.Variable variable);
+	*/
 	
 	/**
 	 * Convert an AIMA Map<Variable, Term> into a Gerry AI Unifier.

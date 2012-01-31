@@ -19,13 +19,12 @@ package org.gerryai.htn.aima.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.aima.AIMAConverter;
-import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 import org.gerryai.logic.unification.Unifier;
@@ -44,43 +43,51 @@ public class AIMAConverterImpl implements AIMAConverter {
 	public final Predicate convert(Task task) {
 
 		String name = task.getName();
-		List<Term> taskTerms = task.getArguments();
+		List<aima.core.logic.fol.parsing.ast.Term> terms = convert(task.getArguments());
 
-		List<aima.core.logic.fol.parsing.ast.Term> terms = new ArrayList<aima.core.logic.fol.parsing.ast.Term>();
-		Iterator<Term> taskTermIterator = taskTerms.iterator();
-		while (taskTermIterator.hasNext()) {
-			Term taskTerm = taskTermIterator.next();
-			aima.core.logic.fol.parsing.ast.Term term = convert(taskTerm);
-			terms.add(term);
-		}
 		return new Predicate(name, terms);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	public final List<aima.core.logic.fol.parsing.ast.Term> convert(List<Term> terms) {
+		List<aima.core.logic.fol.parsing.ast.Term> aimaTerms = new ArrayList<aima.core.logic.fol.parsing.ast.Term>();
+		for (Term taskTerm : terms) {
+			aima.core.logic.fol.parsing.ast.Term term = convert(taskTerm);
+			aimaTerms.add(term);
+		}
+		return aimaTerms;
+	}
+	/**
+	 * {@inheritDoc}
+	 */
 	public final aima.core.logic.fol.parsing.ast.Term convert(Term term) {
-		aima.core.logic.fol.parsing.ast.Constant constant = new aima.core.logic.fol.parsing.ast.Constant(
-				term.getName());
-		// TODO Implement
-		return constant;
+	    // TODO Implement properly
+		aima.core.logic.fol.parsing.ast.Term aimaTerm;
+		if (term instanceof Constant) {
+			aimaTerm = new aima.core.logic.fol.parsing.ast.Constant(term.getName());
+		} else if (term instanceof Variable) {
+			aimaTerm = new aima.core.logic.fol.parsing.ast.Variable(term.getName());
+		} else {
+			throw new IllegalArgumentException();
+		}
+		
+		return aimaTerm;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Unifier convert(
-			Map<aima.core.logic.fol.parsing.ast.Variable,
+	public final Unifier convert(Map<aima.core.logic.fol.parsing.ast.Variable,
 			aima.core.logic.fol.parsing.ast.Term> map) {
+		
 		Map<Variable, Term> substitutionMap = new HashMap<Variable, Term>();
 
-		Iterator<aima.core.logic.fol.parsing.ast.Variable> variableIterator = map
-				.keySet().iterator();
-		while (variableIterator.hasNext()) {
-			aima.core.logic.fol.parsing.ast.Variable variable = variableIterator
-					.next();
+		for (aima.core.logic.fol.parsing.ast.Variable variable : map.keySet()) {
+
 			// TODO: Avoid cast
-			Variable key = convert(variable);
+			Variable key = (Variable)convert(variable);
 			Term value = convert(map.get(variable));
 			substitutionMap.put(key, value);
 		}
@@ -92,7 +99,7 @@ public class AIMAConverterImpl implements AIMAConverter {
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 *
 	public final aima.core.logic.fol.parsing.ast.Variable convert(
 			Variable variable) {
 		return new aima.core.logic.fol.parsing.ast.Variable(variable.getName());
@@ -100,14 +107,15 @@ public class AIMAConverterImpl implements AIMAConverter {
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 *
 	public final Variable convert(
 			aima.core.logic.fol.parsing.ast.Variable aimaVariable) {
 		SimpleVariable variable = new SimpleVariable();
 		variable.setName(aimaVariable.getSymbolicName());
 		return variable;
 	}
-
+	 */
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -115,5 +123,5 @@ public class AIMAConverterImpl implements AIMAConverter {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 }

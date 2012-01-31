@@ -17,22 +17,37 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import org.gerryai.htn.simple.logic.VariableFactory;
-import org.gerryai.logic.Variable;
+import java.util.List;
+
+import org.gerryai.htn.simple.logic.LogicFactory;
+import org.gerryai.logic.Term;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleVariableFactory implements VariableFactory<Variable> {
+public class SimpleLogicFactory implements LogicFactory<SimpleVariable, SimpleConstant, SimplePredicate, Term> {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Variable create(String name) {
-		Variable variable = new SimpleVariable();
-		variable.setName(name);
-		return variable;
+	public final SimpleVariable createVariable(String name) {
+		return new SimpleVariable(name);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final SimpleConstant createConstant(String name) {
+		return new SimpleConstant(name);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final SimplePredicate createPredicate(String name, List<Term> terms) {
+		return new SimplePredicate(name, terms);
+	}
+	
 
 }

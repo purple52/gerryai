@@ -17,32 +17,27 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.logic.Variable;
 
-
 /**
- * Interface that a task symbol must implement.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleVariable implements Variable {
+public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable implements Variable {
 
 	/**
-	 * Name of this variable.
+	 * @param s
 	 */
-	private String name;
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final String getName() {
-		return name;
+	public SimpleVariable(String s) {
+		super(s);
 	}
-	
-	/**
-	 * {@inheritDoc}
+
+	/* (non-Javadoc)
+	 * @see org.gerryai.logic.Term#getName()
 	 */
-	public final void setName(String name) {
-		this.name = name;
+	public String getName() {
+		return this.getSymbolicName();
 	}
+
 }

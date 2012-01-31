@@ -22,15 +22,18 @@ import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.domain.DomainBuilder;
+import org.gerryai.htn.simple.domain.MethodBuilder;
 import org.gerryai.htn.simple.domain.OperatorBuilder;
 import org.gerryai.htn.simple.domain.DomainBuilderFactory;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public class SimpleDomainBuilderFactory implements
-		DomainBuilderFactory<Operator, Method, Condition, Effect> {
+		DomainBuilderFactory<Operator, Method, Task, TaskNetwork, Condition, Effect> {
 
 	/**
 	 * {@inheritDoc}
@@ -44,6 +47,14 @@ public class SimpleDomainBuilderFactory implements
 	 */
 	public final OperatorBuilder<Condition, Effect> createOperatorBuilder() {
 		return new SimpleOperatorBuilder();	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public MethodBuilder<Task, TaskNetwork> createMethodBuilder() {
+		// TODO Auto-generated method stub
+		return new SimpleMethodBuilder();
 	}
 
 }

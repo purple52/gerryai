@@ -24,8 +24,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.aima.AIMAConverter;
-import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
@@ -62,19 +63,23 @@ public class AIMAUnificationService implements UnificationService {
 	/**
 	 * Factory for creating task network builders.
 	 */
-	private TaskNetworkBuilderFactory<Task, Constraint>  taskNetworkBuilderFactory;
+	private TaskNetworkBuilderFactory<Task, ValidatableConstraint<SimpleConstraintValidator>> taskNetworkBuilderFactory;
 	
 	/**
 	 * Constructor taking all required dependencies.
 	 * @param unifier AIMA unifier object
 	 * @param converter converted to translate between the two class schemes
 	 * @param domainHelper helper object to deal with the domain
+	 * @param taskNetworkBuilderFactory factory for creating task network builders
 	 */
 	public AIMAUnificationService(aima.core.logic.fol.Unifier unifier,
-			AIMAConverter converter, DomainHelper domainHelper) {
+			AIMAConverter converter, DomainHelper domainHelper,
+			TaskNetworkBuilderFactory<Task, ValidatableConstraint<SimpleConstraintValidator>>
+					taskNetworkBuilderFactory) {
 		this.unifier = unifier;
 		this.converter = converter;
 		this.domainHelper = domainHelper;
+		this.taskNetworkBuilderFactory = taskNetworkBuilderFactory;
 	}
 	/**
 	 * {@inheritDoc}
@@ -83,7 +88,7 @@ public class AIMAUnificationService implements UnificationService {
 
 		Predicate taskPredicate = converter.convert(task);
 		Predicate methodTaskPredicate = converter.convert(method.getTask());
-
+		
 		Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map
 				= unifier.unify(taskPredicate, methodTaskPredicate);
 		return converter.convert(map);

@@ -21,6 +21,8 @@ import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.aima.impl.AIMAConverterImpl;
 import org.gerryai.htn.aima.unification.AIMAUnificationService;
 import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.impl.SimpleDecompositionService;
 import org.gerryai.htn.simple.domain.DomainHelper;
@@ -33,6 +35,9 @@ import org.gerryai.htn.simple.plan.impl.SimpleActionFactoryHelper;
 import org.gerryai.htn.simple.plan.impl.SimplePlanFactory;
 import org.gerryai.htn.simple.planner.PlannerFactory;
 import org.gerryai.htn.simple.planner.PlannerHelper;
+import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilderFactory;
+import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -54,7 +59,10 @@ public class SimplePlannerFactory implements PlannerFactory {
 		
 		aima.core.logic.fol.Unifier unifier = new aima.core.logic.fol.Unifier();
 		AIMAConverter converter = new AIMAConverterImpl();
-		AIMAUnificationService unificationService = new AIMAUnificationService(unifier, converter, domainHelper);
+		TaskNetworkBuilderFactory<Task, ValidatableConstraint<SimpleConstraintValidator>>
+				taskNetworkBuilderFactory = new SimpleTaskNetworkBuilderFactory();
+		AIMAUnificationService unificationService =
+				new AIMAUnificationService(unifier, converter, domainHelper, taskNetworkBuilderFactory);
 		
 		DecompositionService decompositionService = new SimpleDecompositionService(unificationService);
 		

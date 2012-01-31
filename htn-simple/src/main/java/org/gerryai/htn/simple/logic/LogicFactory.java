@@ -17,18 +17,35 @@
  */
 package org.gerryai.htn.simple.logic;
 
+import java.util.List;
+
 /**
  * Interface for a variable factory.
  * @param <V> the type of variable this factory produces
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface VariableFactory<V> {
+public interface LogicFactory<V, C, P, T> {
 
 	/**
 	 * Create a variable.
 	 * @param name the name of the variable
 	 * @return the variable
 	 */
-	V create(String name);
+	V createVariable(String name);
+	
+	/**
+	 * Create a constant.
+	 * @param name the name of the variable
+	 * @return the variable
+	 */
+	C createConstant(String name);
+	
+	/**
+	 * Create a predicate.
+	 * @param name the name of the variable
+	 * @return the variable
+	 */
+	P createPredicate(String name, List<T> terms);
+	
 }

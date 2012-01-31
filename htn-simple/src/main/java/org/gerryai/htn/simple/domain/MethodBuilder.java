@@ -17,31 +17,41 @@
  */
 package org.gerryai.htn.simple.domain;
 
+import org.gerryai.htn.domain.Method;
+
 /**
- * Interface for a factory that creates domain and operator builders.
- * @param <O> the class of operator the builder will handle
- * @param <M> the class of method the builder will handle
- * @param <C> the class of constraint the builder will handle
- * @param <E> the class of effect the builder will handle
+ * Interface for a class that can build methods.
+ * @param <T> class of task the builder can handle
+ * @param <N> class of network the builder can handle
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public interface DomainBuilderFactory<O, M, T, N, C, E> {
+public interface MethodBuilder<T, N> {
 
 	/**
-	 * Create a domain builder of the required type.
-	 * @return the domain builder
+	 * Set the name of the operator.
+	 * @param name the name
+	 * @return the updated builder
 	 */
-	DomainBuilder<O, M> createDomainBuilder();
+	MethodBuilder<T, N> setName(String name);
 	
 	/**
-	 * Create an operator builder of the required type.
-	 * @return the operator builder
+	 * Add an argument to the operator.
+	 * @param argument the variable to add
+	 * @return the updated builder
 	 */
-	OperatorBuilder<C, E> createOperatorBuilder();
+	MethodBuilder<T, N> setTask(T task);
 
 	/**
-	 * Create a method builder of the required type.
-	 * @return the method builder
+	 * Add an argument to the operator.
+	 * @param condition the condition to add
+	 * @return the updated builder
 	 */
-	MethodBuilder<T, N> createMethodBuilder();
+	MethodBuilder<T, N> setTaskNetwork(N taskNetwork);
+
+	/**
+	 * Build the method.
+	 * @return the method
+	 */
+	Method build();
 }

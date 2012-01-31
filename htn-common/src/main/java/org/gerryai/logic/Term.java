@@ -32,6 +32,7 @@ public interface Term {
 	/**
 	 * Set the name of this term.
 	 * @param name name to set
-	 */
+	 *
 	void setName(String name);
+	*/
 }

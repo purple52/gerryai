@@ -18,6 +18,7 @@
 package org.gerryai.htn.simple.domain.impl;
 
 import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.simple.domain.MethodBuilder;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
@@ -25,69 +26,55 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleMethod implements Method {
+public class SimpleMethodBuilder implements MethodBuilder<Task, TaskNetwork> {
 
-	/**
-	 * Name of this method.
-	 */
 	private String name;
 	
-	/**
-	 * Task that this method decomposes.
-	 */
 	private Task task;
 	
-	/**
-	 * Sub tasks that this method decomposes its task into.
-	 */
 	private TaskNetwork taskNetwork;
 	
-	
-	protected SimpleMethod(SimpleMethodBuilder builder) {
-		name = builder.getName();
-		task = builder.getTask();
-		taskNetwork = builder.getTaskNetwork();
-	}
 	/**
 	 * {@inheritDoc}
 	 */
-	public final String getName() {
+	public MethodBuilder<Task, TaskNetwork> setName(String name) {
+		this.name = name;
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public MethodBuilder<Task, TaskNetwork> setTask(Task task) {
+		this.task = task;
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public MethodBuilder<Task, TaskNetwork> setTaskNetwork(TaskNetwork taskNetwork) {
+		this.taskNetwork = taskNetwork;
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public Method build() {
+		return new SimpleMethod(this);
+	}
+	
+	protected String getName() {
 		return name;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setName(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final Task getTask() {
+	
+	protected Task getTask() {
 		return task;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setTask(Task task) {
-		this.task = task;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final TaskNetwork getTaskNetwork() {
+	
+	protected TaskNetwork getTaskNetwork() {
 		return taskNetwork;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setTaskNetwork(TaskNetwork taskNetwork) {
-		this.taskNetwork = taskNetwork;
 	}
 
 }
