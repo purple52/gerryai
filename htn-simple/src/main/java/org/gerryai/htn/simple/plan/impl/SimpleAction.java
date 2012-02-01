@@ -19,7 +19,7 @@ package org.gerryai.htn.simple.plan.impl;
 
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Action;
-import org.gerryai.logic.unification.Bindings;
+import org.gerryai.htn.plan.Bindings;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>

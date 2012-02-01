@@ -59,15 +59,25 @@ public class BasicIT {
 				.setName("pickup")
 				.addArgument(variableA)
 				.build();
-;
+		Operator operatorB = domainBuilderFactory.createOperatorBuilder()
+				.setName("drop")
+				.addArgument(variableA)
+				.build();
+		
 		Domain domain = domainBuilderFactory.createDomainBuilder()
 				.addOperator(operatorA)
+				.addOperator(operatorB)
 				.build();
 		SimpleDomainHelper domainHelper = new SimpleDomainHelper(domain);
 		
 		SimpleVariable variableX = new SimpleVariable("x");
 		SimpleVariable variableY = new SimpleVariable("y");
 		Task methodATask  = new SimpleTaskBuilder(domainHelper)
+				.setName("swap")
+				.addArgument(variableX)
+				.addArgument(variableY)
+				.build();
+		Task methodBTask  = new SimpleTaskBuilder(domainHelper)
 				.setName("swap")
 				.addArgument(variableX)
 				.addArgument(variableY)
@@ -80,27 +90,35 @@ public class BasicIT {
 				.setName("pickup")
 				.addArgument(variableY)
 				.build();
-		Task methodASubTask3  = new SimpleTaskBuilder(domainHelper)
+		Task methodBSubTask1  = new SimpleTaskBuilder(domainHelper)
 				.setName("drop")
-				.addArgument(variableX)
-				.build();
-		Task methodASubTask4  = new SimpleTaskBuilder(domainHelper)
-				.setName("pickup")
 				.addArgument(variableY)
+				.build();
+		Task methodBSubTask2  = new SimpleTaskBuilder(domainHelper)
+				.setName("pickup")
+				.addArgument(variableX)
 				.build();
 		TaskNetwork methodATaskNetwork = taskNetworkBuilderFactory.create()
 				.addTask(methodASubTask1)
 				.addTask(methodASubTask2)
-				.addTask(methodASubTask3)
-				.addTask(methodASubTask4)
 				.build();
-	
+		TaskNetwork methodBTaskNetwork = taskNetworkBuilderFactory.create()
+				.addTask(methodBSubTask1)
+				.addTask(methodBSubTask2)
+				.build();
+		
 		Method methodA = domainBuilderFactory.createMethodBuilder()
 				.setName("swap")
 				.setTask(methodATask)
 				.setTaskNetwork(methodATaskNetwork)
 				.build();
+		Method methodB = domainBuilderFactory.createMethodBuilder()
+				.setName("swap")
+				.setTask(methodBTask)
+				.setTaskNetwork(methodBTaskNetwork)
+				.build();
 		domain.getMethods().add(methodA);
+		domain.getMethods().add(methodB);
 		
 		
 		SimpleConstant constantKiwi = new SimpleConstant("kiwi");
@@ -119,7 +137,20 @@ public class BasicIT {
 		problem.setDomain(domain);
 		problem.setTaskNetwork(taskNetwork);
 		
-		//Plan plan = planningService.solve(problem);
+		/*
+		Plan plan = planningService.solve(problem);
+		
+		assertEquals(plan.getActions().size(),2);
+		assertEquals(plan.getActions().get(0).getOperator().getName(),"drop");
+		assertEquals(plan.getActions().get(0).getBindings().getMap().size(),1);
+		assertEquals(plan.getActions().get(0).getBindings().getMap()
+				.get(plan.getActions().get(0).getOperator().getArguments().get(0)), constantKiwi);
+		assertEquals(plan.getActions().get(1).getOperator().getName(),"pickup");
+		assertEquals(plan.getActions().get(1).getBindings().getMap().size(),1);
+		assertEquals(plan.getActions().get(1).getBindings().getMap()
+				.get(plan.getActions().get(1).getOperator().getArguments().get(0)), constantBanjo);
+		
+		*/
 	}
 
 }

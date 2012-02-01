@@ -52,7 +52,7 @@ public class SimplePlannerFactory implements PlannerFactory {
 		
 		DomainHelper domainHelper = new SimpleDomainHelper(domain);
 		
-		ActionFactoryHelper actionFactoryHelper = new SimpleActionFactoryHelper();
+		ActionFactoryHelper actionFactoryHelper = new SimpleActionFactoryHelper(domainHelper);
 		ActionFactory actionFactory = new SimpleActionFactory(actionFactoryHelper);
 		
 		PlanFactory planFactory = new SimplePlanFactory();

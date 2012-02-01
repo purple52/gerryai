@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.aima.AIMAConverter;
+import org.gerryai.htn.simple.logic.impl.SimpleConstant;
+import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
@@ -110,18 +112,25 @@ public class AIMAConverterImpl implements AIMAConverter {
 	 *
 	public final Variable convert(
 			aima.core.logic.fol.parsing.ast.Variable aimaVariable) {
-		SimpleVariable variable = new SimpleVariable();
-		variable.setName(aimaVariable.getSymbolicName());
+		SimpleVariable variable = new SimpleVariable(aimaVariable.getSymbolicName());
 		return variable;
 	}
-	 */
+	*/
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Term convert(aima.core.logic.fol.parsing.ast.Term term) {
-		// TODO Auto-generated method stub
-		return null;
+	public final Term convert(aima.core.logic.fol.parsing.ast.Term aimaTerm) {
+		 // TODO Implement properly
+		Term term;
+		if (aimaTerm instanceof aima.core.logic.fol.parsing.ast.Constant) {
+			term = new SimpleConstant(aimaTerm.getSymbolicName());
+		} else if (aimaTerm instanceof aima.core.logic.fol.parsing.ast.Variable) {
+			term = new SimpleVariable(aimaTerm.getSymbolicName());
+		} else {
+			throw new IllegalArgumentException();
+		}
+		return term;
 	}
 	
 }

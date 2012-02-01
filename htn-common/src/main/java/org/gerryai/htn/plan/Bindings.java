@@ -15,12 +15,13 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.logic.unification;
+package org.gerryai.htn.plan;
 
 import java.util.Map;
 
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Variable;
+import org.gerryai.logic.unification.Substitution;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>

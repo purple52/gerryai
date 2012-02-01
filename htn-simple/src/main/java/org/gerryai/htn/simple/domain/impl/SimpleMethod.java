@@ -42,7 +42,10 @@ public class SimpleMethod implements Method {
 	 */
 	private TaskNetwork taskNetwork;
 	
-	
+	/**
+	 * Constructor using a builder.
+	 * @param builder the builder to use
+	 */
 	protected SimpleMethod(SimpleMethodBuilder builder) {
 		name = builder.getName();
 		task = builder.getTask();

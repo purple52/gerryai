@@ -18,9 +18,9 @@
 package org.gerryai.htn.simple.plan;
 
 import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.unification.Bindings;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>

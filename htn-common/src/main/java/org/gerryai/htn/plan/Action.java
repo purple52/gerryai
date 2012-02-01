@@ -18,7 +18,6 @@
 package org.gerryai.htn.plan;
 
 import org.gerryai.htn.domain.Operator;
-import org.gerryai.logic.unification.Bindings;
 
 /**
  * Interface to be implemented by an action within a plan.
