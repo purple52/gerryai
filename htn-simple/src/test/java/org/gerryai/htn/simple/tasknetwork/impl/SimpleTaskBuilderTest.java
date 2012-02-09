@@ -19,15 +19,12 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.domain.OperatorNotFound;
-import org.gerryai.htn.simple.domain.DomainHelper;
-import org.gerryai.logic.Term;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.junit.Test;
 
 /**
@@ -42,10 +39,8 @@ public class SimpleTaskBuilderTest {
 	 */
 	@Test
 	public void testSimpleTaskBuilder() {
-		DomainHelper mockDomainHelper = mock(DomainHelper.class);
-		
 		// Create the builder under test
-		SimpleTaskBuilder builder = new SimpleTaskBuilder(mockDomainHelper);
+		SimpleTaskBuilder builder = new SimpleTaskBuilder();
 		
 		// Check that the arguments list has been initialised
 		assertTrue(builder.getArguments().isEmpty());
@@ -57,10 +52,8 @@ public class SimpleTaskBuilderTest {
 	 */
 	@Test
 	public void testSetName() {
-		DomainHelper mockDomainHelper = mock(DomainHelper.class);
-		
 		// Create the builder under test
-		SimpleTaskBuilder builder = new SimpleTaskBuilder(mockDomainHelper)
+		SimpleTaskBuilder builder = new SimpleTaskBuilder()
 				.setName("testname");
 		
 		// Check that the name has been set
@@ -73,12 +66,12 @@ public class SimpleTaskBuilderTest {
 	 */
 	@Test
 	public void testAddArgument() {
-		DomainHelper mockDomainHelper = mock(DomainHelper.class);
-		Term mockTermA = mock(Term.class);
-		Term mockTermB = mock(Term.class);
+
+		SimpleTerm mockTermA = mock(SimpleTerm.class);
+		SimpleTerm mockTermB = mock(SimpleTerm.class);
 		
 		// Create the builder under test
-		SimpleTaskBuilder builder = new SimpleTaskBuilder(mockDomainHelper)
+		SimpleTaskBuilder builder = new SimpleTaskBuilder()
 				.addArgument(mockTermA)
 				.addArgument(mockTermB);
 		
@@ -94,22 +87,21 @@ public class SimpleTaskBuilderTest {
 	 */
 	@Test
 	public void testAddArguments() {
-		DomainHelper mockDomainHelper = mock(DomainHelper.class);
 		
-		Term mockTermA = mock(Term.class);
-		Term mockTermB = mock(Term.class);
-		List<Term> mockTermsOne = new ArrayList<Term>();
+		SimpleTerm mockTermA = mock(SimpleTerm.class);
+		SimpleTerm mockTermB = mock(SimpleTerm.class);
+		List<SimpleTerm> mockTermsOne = new ArrayList<SimpleTerm>();
 		mockTermsOne.add(mockTermA);
 		mockTermsOne.add(mockTermB);
 
-		Term mockTermC = mock(Term.class);
-		Term mockTermD = mock(Term.class);
-		List<Term> mockTermsTwo = new ArrayList<Term>();
+		SimpleTerm mockTermC = mock(SimpleTerm.class);
+		SimpleTerm mockTermD = mock(SimpleTerm.class);
+		List<SimpleTerm> mockTermsTwo = new ArrayList<SimpleTerm>();
 		mockTermsTwo.add(mockTermC);
 		mockTermsTwo.add(mockTermD);
 		
 		// Create the builder under test
-		SimpleTaskBuilder builder = new SimpleTaskBuilder(mockDomainHelper)
+		SimpleTaskBuilder builder = new SimpleTaskBuilder()
 				.addArguments(mockTermsOne)
 				.addArguments(mockTermsTwo);
 		
@@ -127,15 +119,14 @@ public class SimpleTaskBuilderTest {
 	 */
 	@Test
 	public void testBuildPrimitive() throws OperatorNotFound {
-		Operator mockOperator = mock(Operator.class);
-		DomainHelper mockDomainHelper = mock(DomainHelper.class);
-		when(mockDomainHelper.getOperatorByName("testname")).thenReturn(mockOperator);
-		Term mockTerm = mock(Term.class);
+
+		SimpleTerm mockTerm = mock(SimpleTerm.class);
 		
 		// Create the builder under test
-		SimpleTask primitiveTask = new SimpleTaskBuilder(mockDomainHelper)
+		SimpleTask primitiveTask = new SimpleTaskBuilder()
 				.setName("testname")
 				.addArgument(mockTerm)
+				.setIsPrimitive(true)
 				.build();
 		assertEquals("testname",primitiveTask.getName());
 		assertEquals(1, primitiveTask.getArguments().size());
@@ -149,14 +140,14 @@ public class SimpleTaskBuilderTest {
 	 */
 	@Test
 	public void testBuildNonPrimitive() throws OperatorNotFound {
-		DomainHelper mockDomainHelper = mock(DomainHelper.class);
-		when(mockDomainHelper.getOperatorByName("testname")).thenThrow(new OperatorNotFound());
-		Term mockTerm = mock(Term.class);
+
+		SimpleTerm mockTerm = mock(SimpleTerm.class);
 		
 		// Create the builder under test
-		SimpleTask primitiveTask = new SimpleTaskBuilder(mockDomainHelper)
+		SimpleTask primitiveTask = new SimpleTaskBuilder()
 				.setName("testname")
 				.addArgument(mockTerm)
+				.setIsPrimitive(false)
 				.build();
 		assertEquals("testname",primitiveTask.getName());
 		assertEquals(1, primitiveTask.getArguments().size());

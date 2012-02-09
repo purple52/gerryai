@@ -17,13 +17,81 @@
  */
 package org.gerryai.htn.simple.constraint.validation;
 
-/**
- * Base interface for constraint validators.
- * Should be extended to declare the types of constraints that a validator can validate.
- * @author David Edwards <david@more.fool.me.uk>
- *
- */
-public interface ConstraintValidator {
-	
+import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
+import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
+import org.gerryai.htn.simple.constraint.ValidatableBetweenConstraint;
+import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
+import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Term;
 
+/**
+ * Implementation of a validator for simple constraints.
+ * @param <T> type of logical term the constraints use
+ * @param <K> type of task the constraints use
+ * @author David Edwards <david@more.fool.me.uk>
+ */
+public interface ConstraintValidator<T extends Term, K extends Task<T>> {
+
+	/**
+	 * Validation check for simple before constraints, but does not add the constraint.
+	 * @param constraint the constraint to validate
+	 * @return true if the constraint passes validation
+	 */
+	boolean validate(ValidatableBeforeConstraint<T, K> constraint);
+
+	/**
+	 * Validation check for simple after constraints, but does not add the constraint.
+	 * @param constraint the constraint to validate
+	 * @return true if the constraint passes validation
+	 */
+	boolean validate(ValidatableAfterConstraint<T, K> constraint);
+
+	/**
+	 * Validation check for simple between constraints, but does not add the constraint.
+	 * @param constraint the constraint to validate
+	 * @return true if the constraint passes validation
+	 */
+	boolean validate(ValidatableBetweenConstraint<T, K> constraint);
+
+	/**
+	 * Validation check for simple precedence constraints, but does not add the constraint.
+	 * @param constraint the constraint to validate
+	 * @return true if the constraint passes validation
+	 */
+	boolean validate(ValidatablePrecedenceConstraint<T, K> constraint);
+
+	/**
+	 * Validates and adds the given constraint to the validator.
+	 * @param constraint the constraint to add
+	 * @throws InvalidConstraint if the constraint cannot be added
+	 */
+	void add(ValidatableBeforeConstraint<T, K> constraint) throws InvalidConstraint;
+
+	/**
+	 * Validates and adds the given constraint to the validator.
+	 * @param constraint the constraint to add
+	 * @throws InvalidConstraint if the constraint cannot be added
+	 */
+	void add(ValidatableAfterConstraint<T, K> constraint) throws InvalidConstraint;
+
+	/**
+	 * Validates and adds the given constraint to the validator.
+	 * @param constraint the constraint to add
+	 * @throws InvalidConstraint if the constraint cannot be added
+	 */
+	void add(ValidatableBetweenConstraint<T, K> constraint) throws InvalidConstraint;
+
+	/**
+	 * Validates and adds the given constraint to the validator.
+	 * @param constraint the constraint to add
+	 * @throws InvalidConstraint if the constraint cannot be added
+	 */
+	void add(ValidatablePrecedenceConstraint<T, K> constraint) throws InvalidConstraint;
+
+	/**
+	 * Add the given task to the validator.
+	 * @param task the task to add
+	 */
+	void add(K task);
 }

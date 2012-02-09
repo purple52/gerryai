@@ -25,12 +25,15 @@ import org.gerryai.htn.constraint.BetweenConstraint;
 import org.gerryai.htn.constraint.PrecedenceConstraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Term;
 
 /**
+ * @param <T> type of logical term used by the constraints created by this factory
+ * @param <K> type of task used by the constraints created by this factory
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ConstraintFactory {
+public interface ConstraintFactory<T extends Term, K extends Task<T>> {
 
 	/**
 	 * Create a precedence constraint.
@@ -38,7 +41,7 @@ public interface ConstraintFactory {
 	 * @param procedingTask the task that must come last
 	 * @return the constraint
 	 */
-	PrecedenceConstraint createPrecedenceConstraint(Task precedingTask, Task procedingTask);
+	PrecedenceConstraint<T, K> createPrecedenceConstraint(K precedingTask, K procedingTask);
 	
 	/**
 	 * Create a before constraint.
@@ -46,7 +49,7 @@ public interface ConstraintFactory {
 	 * @param condition the condition that must be true directly before the first task in the set
 	 * @return the constraint
 	 */
-	BeforeConstraint createBeforeConstraint(Set<Task> tasks, Condition condition);
+	BeforeConstraint<T, K> createBeforeConstraint(Set<K> tasks, Condition condition);
 	
 	/**
 	 * Create an after constraint.
@@ -54,7 +57,7 @@ public interface ConstraintFactory {
 	 * @param condition the condition that must be true directly after the last task in the set
 	 * @return the constraint
 	 */
-	AfterConstraint createAfterConstraint(Set<Task> tasks, Condition condition);
+	AfterConstraint<T, K> createAfterConstraint(Set<K> tasks, Condition condition);
 	
 	/**
 	 * Create a between constraint.
@@ -63,6 +66,6 @@ public interface ConstraintFactory {
 	 * @param condition the condition that must be true between the two sets of tasks
 	 * @return the constraint
 	 */
-	BetweenConstraint createBetweenConstraint(Set<Task> precedingTasks, Set<Task> procedingTasks, Condition condition);
+	BetweenConstraint<T, K> createBetweenConstraint(Set<K> precedingTasks, Set<K> procedingTasks, Condition condition);
 
 }

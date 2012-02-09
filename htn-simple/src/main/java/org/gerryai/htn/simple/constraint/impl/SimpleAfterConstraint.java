@@ -21,9 +21,10 @@ import java.util.Set;
 
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
-import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 
 import com.google.common.base.Objects;
 
@@ -31,12 +32,12 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleAfterConstraint implements ValidatableAfterConstraint<SimpleConstraintValidator> {
+public class SimpleAfterConstraint implements ValidatableAfterConstraint<SimpleTerm, SimpleTask> {
 
 	/**
 	 * The set of tasks that this constraint must hold for.
 	 */
-	private Set<Task> tasks;
+	private Set<SimpleTask> tasks;
 	
 	/**
 	 * The condition that must be true directly after the last of these tasks.
@@ -47,7 +48,7 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<SimpleC
 	 * Set the set of tasks that this constraint must hold for.
 	 * @param tasks the tasks
 	 */
-	public final void setTasks(Set<Task> tasks) {
+	public final void setTasks(Set<SimpleTask> tasks) {
 		this.tasks = tasks;
 	}
 	
@@ -63,7 +64,7 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<SimpleC
 	 * Get the set of tasks that this constraint must hold for.
 	 * @return the tasks
 	 */
-	public final Set<Task> getTasks() {
+	public final Set<SimpleTask> getTasks() {
 		return tasks;
 	}
 
@@ -78,14 +79,14 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<SimpleC
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(SimpleConstraintValidator validator) {
+	public final boolean validate(ConstraintValidator<SimpleTerm, SimpleTask> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(SimpleConstraintValidator validator)
+	public final void add(ConstraintValidator<SimpleTerm, SimpleTask> validator)
 			throws InvalidConstraint {
 		validator.add(this);
 	}

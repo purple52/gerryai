@@ -17,27 +17,38 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.MethodBuilder;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleMethodBuilder implements MethodBuilder<Task, TaskNetwork> {
+public class SimpleMethodBuilder implements MethodBuilder<SimpleTerm, SimpleTask, SimpleTaskNetwork,
+ValidatableConstraint<SimpleTerm, SimpleTask>> {
 
+	/**
+	 * Name of the method being built.
+	 */
 	private String name;
 	
-	private Task task;
+	/**
+	 * Task that the method being built will decompose.
+	 */
+	private SimpleTask task;
 	
-	private TaskNetwork taskNetwork;
+	/**
+	 * Task network that the method being built decomposes into.
+	 */
+	private SimpleTaskNetwork taskNetwork;
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public MethodBuilder<Task, TaskNetwork> setName(String name) {
+	public final SimpleMethodBuilder setName(String name) {
 		this.name = name;
 		return this;
 	}
@@ -45,7 +56,7 @@ public class SimpleMethodBuilder implements MethodBuilder<Task, TaskNetwork> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public MethodBuilder<Task, TaskNetwork> setTask(Task task) {
+	public final SimpleMethodBuilder setTask(SimpleTask task) {
 		this.task = task;
 		return this;
 	}
@@ -53,7 +64,7 @@ public class SimpleMethodBuilder implements MethodBuilder<Task, TaskNetwork> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public MethodBuilder<Task, TaskNetwork> setTaskNetwork(TaskNetwork taskNetwork) {
+	public final SimpleMethodBuilder setTaskNetwork(SimpleTaskNetwork taskNetwork) {
 		this.taskNetwork = taskNetwork;
 		return this;
 	}
@@ -61,19 +72,31 @@ public class SimpleMethodBuilder implements MethodBuilder<Task, TaskNetwork> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Method build() {
+	public final SimpleMethod build() {
 		return new SimpleMethod(this);
 	}
 	
-	protected String getName() {
+	/**
+	 * Get the name of the method being built.
+	 * @return the name
+	 */
+	protected final String getName() {
 		return name;
 	}
 	
-	protected Task getTask() {
+	/**
+	 * Get the task for the method being built.
+	 * @return the task
+	 */
+	protected final SimpleTask getTask() {
 		return task;
 	}
 	
-	protected TaskNetwork getTaskNetwork() {
+	/**
+	 * Get the task network for the method being built.
+	 * @return the task network
+	 */
+	protected final SimpleTaskNetwork getTaskNetwork() {
 		return taskNetwork;
 	}
 

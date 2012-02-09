@@ -17,27 +17,35 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.simple.decomposition.SimpleSubstituter;
 import org.gerryai.logic.Variable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable implements Variable {
+public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable implements Variable, SimpleTerm {
 
 	/**
-	 * @param s
+	 * @param name name of the variable
 	 */
-	public SimpleVariable(String s) {
-		super(s);
+	public SimpleVariable(String name) {
+		super(name);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.gerryai.logic.Term#getName()
+	/**
+	 * {@inheritDoc}
 	 */
-	public String getName() {
+	public final String getName() {
 		return this.getSymbolicName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final SimpleTerm apply(
+			SimpleSubstituter<SimpleTerm, SimpleVariable, SimpleConstant> substituter) {
+		return substituter.apply(this);
 	}
 
 }

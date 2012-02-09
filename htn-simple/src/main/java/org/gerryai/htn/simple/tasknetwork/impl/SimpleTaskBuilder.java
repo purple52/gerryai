@@ -17,99 +17,21 @@
  */
 package org.gerryai.htn.simple.tasknetwork.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.gerryai.htn.domain.OperatorNotFound;
-import org.gerryai.htn.simple.domain.DomainHelper;
-import org.gerryai.htn.simple.tasknetwork.TaskBuilder;
-import org.gerryai.logic.Term;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 
 /**
- * Builder for simple tasks.
+ * Concrete builder for SimpleTask objects.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleTaskBuilder implements TaskBuilder {
+public class SimpleTaskBuilder extends AbstractTaskBuilder<SimpleTerm, SimpleTask, SimpleTaskBuilder> {
 
-	/**
-	 * Domain helper for looking up operators.
-	 */
-	private DomainHelper domainHelper;
-	
-	/**
-	 * Name of the task being built.
-	 */
-	private String name;
-	
-	/**
-	 * List of arguments for the task.
-	 */
-	private List<Term> arguments;
-
-	/**
-	 * Constructor, requires a domain helper to determine if the task is primitive.
-	 * @param domainHelper domain helper to use
-	 */
-	public SimpleTaskBuilder(DomainHelper domainHelper) {
-		arguments = new ArrayList<Term>();
-		this.domainHelper = domainHelper;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SimpleTaskBuilder setName(String name) {
-		this.name = name;
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SimpleTaskBuilder addArgument(Term term) {
-		arguments.add(term);
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SimpleTaskBuilder addArguments(List<Term> terms) {
-		arguments.addAll(terms);
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
+	@Override
 	public final SimpleTask build() {
-		
-		SimpleTask task;
-		
-		try {
-			domainHelper.getOperatorByName(name);
-			task = new SimplePrimitiveTask(this);
-		} catch (OperatorNotFound e) {
-			task = new SimpleNonPrimitiveTask(this);
-		}
-
-		return task;
-	}
-
-	/**
-	 * Get the name of the task to be built.
-	 * @return the name
-	 */
-	protected final String getName() {
-		return name;
+		return new SimpleTask(this);
 	}
 	
-	/**
-	 * Get the arguments for the tack to be built.
-	 * @return the arguments
-	 */
-	protected final List<Term> getArguments() {
-		return arguments;
+	@Override
+	protected final SimpleTaskBuilder me() {
+		return this;
 	}
-
 }

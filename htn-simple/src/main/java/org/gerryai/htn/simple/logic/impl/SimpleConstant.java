@@ -17,26 +17,37 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
+import org.gerryai.htn.simple.decomposition.SimpleSubstituter;
 import org.gerryai.logic.Constant;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant implements Constant {
+public class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant implements Constant, SimpleTerm {
 
 	/**
-	 * @param s
+	 * Constructor.
+	 * @param s name of the constant
 	 */
 	public SimpleConstant(String s) {
 		super(s);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.gerryai.logic.Term#getName()
+	/**
+	 * {@inheritDoc}
 	 */
-	public String getName() {
+	public final String getName() {
 		return this.getSymbolicName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final SimpleTerm
+			apply(SimpleSubstituter<SimpleTerm, SimpleVariable, SimpleConstant> substituter) {
+		// TODO Check implementation
+		return substituter.apply(this);
 	}
 
 }

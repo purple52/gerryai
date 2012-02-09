@@ -20,16 +20,16 @@ package org.gerryai.htn.simple.domain.impl;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.logic.Variable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleOperator implements Operator {
+public class SimpleOperator implements Operator<SimpleCondition> {
 
 	/**
 	 * Name of this operator.
@@ -44,7 +44,7 @@ public class SimpleOperator implements Operator {
 	/**
 	 * Preconditions for this operator.
 	 */
-	private Set<Condition> preconditions;
+	private Set<SimpleCondition> preconditions;
 	
 	/**
 	 * Effects of this operator.
@@ -93,14 +93,14 @@ public class SimpleOperator implements Operator {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<Condition> getPreconditions() {
+	public final Set<SimpleCondition> getPreconditions() {
 		return preconditions;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setPreconditions(Set<Condition> preconditions) {
+	public final void setPreconditions(Set<SimpleCondition> preconditions) {
 		this.preconditions = preconditions;
 	}
 

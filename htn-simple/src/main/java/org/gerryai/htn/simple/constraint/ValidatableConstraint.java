@@ -20,27 +20,30 @@ package org.gerryai.htn.simple.constraint;
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Term;
 
 /**
  * Extended constraint interface that supports being validated.
  * The constraint needs to identify what class of validator it needs to use.
- * @param <V> the class of validator that the constraint uses
+ * @param <T> type of logical term used by this constraint
+ * @param <K> type of task used by this sort of constraint
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ValidatableConstraint<V extends ConstraintValidator> extends Constraint {
+public interface ValidatableConstraint<T extends Term, K extends Task<T>> extends Constraint<T> {
 
 	/**
 	 * Validate this constraint using the validator provided.
 	 * @param validator the validator to use
 	 * @return true if the constraint passed validation
 	 */
-	boolean validate(V validator);
+	boolean validate(ConstraintValidator<T, K> validator);
 	
 	/**
 	 * Add the constraint to the validator so it is considered when validating in future.
 	 * @param validator the validator to add to.
 	 * @throws InvalidConstraint if constraint cannot be added
 	 */
-	void add(V validator) throws InvalidConstraint;
+	void add(ConstraintValidator<T, K> validator) throws InvalidConstraint;
 	
 }

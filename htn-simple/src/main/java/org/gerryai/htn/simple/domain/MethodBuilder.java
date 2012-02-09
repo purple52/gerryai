@@ -17,41 +17,51 @@
  */
 package org.gerryai.htn.simple.domain;
 
+import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Term;
 
 /**
  * Interface for a class that can build methods.
  * @param <T> class of task the builder can handle
+ * @param <K> type of task this builder can handle
  * @param <N> class of network the builder can handle
+ * @param <C> class of constraint the builder can handle
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface MethodBuilder<T, N> {
+public interface MethodBuilder<
+		T extends Term,
+		K extends Task<T>,
+		N extends TaskNetwork<T, K, C>,
+		C extends Constraint<T>> {
 
 	/**
 	 * Set the name of the operator.
 	 * @param name the name
 	 * @return the updated builder
 	 */
-	MethodBuilder<T, N> setName(String name);
+	MethodBuilder<T, K, N, C> setName(String name);
 	
 	/**
 	 * Add an argument to the operator.
-	 * @param argument the variable to add
+	 * @param task the task to add
 	 * @return the updated builder
 	 */
-	MethodBuilder<T, N> setTask(T task);
+	MethodBuilder<T, K, N, C> setTask(K task);
 
 	/**
 	 * Add an argument to the operator.
-	 * @param condition the condition to add
+	 * @param taskNetwork the task network to add
 	 * @return the updated builder
 	 */
-	MethodBuilder<T, N> setTaskNetwork(N taskNetwork);
+	MethodBuilder<T, K, N, C> setTaskNetwork(N taskNetwork);
 
 	/**
 	 * Build the method.
 	 * @return the method
 	 */
-	Method build();
+	Method<T, K, N, C> build();
 }

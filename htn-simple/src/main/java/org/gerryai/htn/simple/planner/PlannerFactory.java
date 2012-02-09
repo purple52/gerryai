@@ -17,21 +17,42 @@
  */
 package org.gerryai.htn.simple.planner;
 
+import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.planner.Planner;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Term;
 
 /**
  * Interface for factories that create planners.
+ * @param <O> type of operator this planner factory uses
+ * @param <M> type of method this planner factory uses
+ * @param <T> type of logical term this planner factory uses
+ * @param <K> type of task this planner factory uses
+ * @param <N> type of task network this planner factory uses
+ * @param <C> type of constraint this planner factory uses
+ * @param <I> type of condition this factory uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface PlannerFactory {
+public interface PlannerFactory<
+		O extends Operator<I>,
+		M extends Method<T, K, N, C>,
+		T extends Term,
+		K extends Task<T>,
+		N extends TaskNetwork<T, K, C>,
+		C extends Constraint<T>,
+		I extends Condition> {
 
 	/**
 	 * Create a planner instance using the domain provided.
 	 * @param domain the domain the planner will work in
 	 * @return the planner
 	 */
-	Planner create(Domain domain);
+	Planner<O, M, T, K, N, C, I> create(Domain<O, M, T, K, N, C, I> domain);
 	
 }

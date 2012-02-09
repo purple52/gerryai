@@ -20,38 +20,43 @@ package org.gerryai.htn.simple.domain.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainBuilder;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleDomainBuilder implements DomainBuilder<Operator, Method> {
+public class SimpleDomainBuilder implements	DomainBuilder<SimpleDomain, SimpleOperator,
+		SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+		ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> {
 
 	/**
 	 * Set of operators the domain uses.
 	 */
-	private Set<Operator> operators;
+	private Set<SimpleOperator> operators;
 	
 	/**
 	 * Set of methods that the domain uses.
 	 */
-	private Set<Method> methods;
+	private Set<SimpleMethod> methods;
 	
 	/**
 	 * Default constructor.
 	 */
 	protected SimpleDomainBuilder() {
-		operators = new HashSet<Operator>();
-		methods = new HashSet<Method>();
+		operators = new HashSet<SimpleOperator>();
+		methods = new HashSet<SimpleMethod>();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleDomainBuilder addOperator(Operator operator) {
+	public final SimpleDomainBuilder addOperator(SimpleOperator operator) {
 		operators.add(operator);
 		return this;
 	}
@@ -59,7 +64,7 @@ public class SimpleDomainBuilder implements DomainBuilder<Operator, Method> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleDomainBuilder addMethod(Method method) {
+	public final SimpleDomainBuilder addMethod(SimpleMethod method) {
 		methods.add(method);
 		return this;
 	}
@@ -74,14 +79,14 @@ public class SimpleDomainBuilder implements DomainBuilder<Operator, Method> {
 	/**
 	 * @return the operators
 	 */
-	protected final Set<Operator> getOperators() {
+	protected final Set<SimpleOperator> getOperators() {
 		return operators;
 	}
 
 	/**
 	 * @return the effects
 	 */
-	protected final Set<Method> getMethods() {
+	protected final Set<SimpleMethod> getMethods() {
 		return methods;
 	}
 

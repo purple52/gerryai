@@ -24,8 +24,10 @@ import static org.mockito.Mockito.when;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
-import org.gerryai.htn.tasknetwork.Task;
 import org.junit.Test;
 
 /**
@@ -39,9 +41,10 @@ public class SimpleTaskNetworkTest {
 	 */
 	@Test
 	public void testIsPrimitiveNoTasks() {
-		SimpleTaskNetworkBuilder<?> mockBuilder = mock(SimpleTaskNetworkBuilder.class);
+
+		SimpleTaskNetworkBuilder mockBuilder = mock(SimpleTaskNetworkBuilder.class);
 		SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
-		Set<Task> tasks = new HashSet<Task>();
+		Set<SimpleTask> tasks = new HashSet<SimpleTask>();
 		taskNetwork.setTasks(tasks);
 		
 		assertTrue(taskNetwork.isPrimitive());
@@ -52,10 +55,13 @@ public class SimpleTaskNetworkTest {
 	 */
 	@Test
 	public void testIsPrimitiveOnePrimitiveTask() {
-		SimpleTaskNetworkBuilder<?> mockBuilder = mock(SimpleTaskNetworkBuilder.class);
+		@SuppressWarnings("unchecked")
+		TaskNetworkBuilder<SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>>
+				mockBuilder = mock(TaskNetworkBuilder.class);
 		SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
-		Set<Task> tasks = new HashSet<Task>();
-		Task mockPrimitiveTask = mock(Task.class);
+		Set<SimpleTask> tasks = new HashSet<SimpleTask>();
+		SimpleTask mockPrimitiveTask = mock(SimpleTask.class);
 		when(mockPrimitiveTask.isPrimitive()).thenReturn(true);
 		tasks.add(mockPrimitiveTask);
 		taskNetwork.setTasks(tasks);
@@ -68,10 +74,12 @@ public class SimpleTaskNetworkTest {
 	 */
 	@Test
 	public void testIsPrimitiveOneNonPrimitiveTask() {
-		SimpleTaskNetworkBuilder<?> mockBuilder = mock(SimpleTaskNetworkBuilder.class);
-		SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
-		Set<Task> tasks = new HashSet<Task>();
-		Task mockNonPrimitiveTask = mock(Task.class);
+		@SuppressWarnings("unchecked")
+		TaskNetworkBuilder<SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>>
+				mockBuilder = mock(TaskNetworkBuilder.class);SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
+		Set<SimpleTask> tasks = new HashSet<SimpleTask>();
+		SimpleTask mockNonPrimitiveTask = mock(SimpleTask.class);
 		when(mockNonPrimitiveTask.isPrimitive()).thenReturn(false);
 		tasks.add(mockNonPrimitiveTask);
 		taskNetwork.setTasks(tasks);
@@ -84,14 +92,17 @@ public class SimpleTaskNetworkTest {
 	 */
 	@Test
 	public void testIsPrimitiveManyTasksAllPrimitive() {
-		SimpleTaskNetworkBuilder<?> mockBuilder = mock(SimpleTaskNetworkBuilder.class);
+		@SuppressWarnings("unchecked")
+		TaskNetworkBuilder<SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>>
+				mockBuilder = mock(TaskNetworkBuilder.class);
 		SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
-		Set<Task> tasks = new HashSet<Task>();
-		Task mockPrimitiveTaskOne = mock(Task.class);
+		Set<SimpleTask> tasks = new HashSet<SimpleTask>();
+		SimpleTask mockPrimitiveTaskOne = mock(SimpleTask.class);
 		when(mockPrimitiveTaskOne.isPrimitive()).thenReturn(true);
-		Task mockPrimitiveTaskTwo = mock(Task.class);
+		SimpleTask mockPrimitiveTaskTwo = mock(SimpleTask.class);
 		when(mockPrimitiveTaskTwo.isPrimitive()).thenReturn(true);		
-		Task mockPrimitiveTaskThree = mock(Task.class);
+		SimpleTask mockPrimitiveTaskThree = mock(SimpleTask.class);
 		when(mockPrimitiveTaskThree.isPrimitive()).thenReturn(true);	
 		tasks.add(mockPrimitiveTaskOne);
 		tasks.add(mockPrimitiveTaskTwo);
@@ -106,14 +117,17 @@ public class SimpleTaskNetworkTest {
 	 */
 	@Test
 	public void testIsPrimitiveManyTasksOneNonPrimitive() {
-		SimpleTaskNetworkBuilder<?> mockBuilder = mock(SimpleTaskNetworkBuilder.class);
+		@SuppressWarnings("unchecked")
+		TaskNetworkBuilder<SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>>
+				mockBuilder = mock(TaskNetworkBuilder.class);
 		SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
-		Set<Task> tasks = new HashSet<Task>();
-		Task mockPrimitiveTaskOne = mock(Task.class);
+		Set<SimpleTask> tasks = new HashSet<SimpleTask>();
+		SimpleTask mockPrimitiveTaskOne = mock(SimpleTask.class);
 		when(mockPrimitiveTaskOne.isPrimitive()).thenReturn(true);
-		Task mockPrimitiveTaskTwo = mock(Task.class);
+		SimpleTask mockPrimitiveTaskTwo = mock(SimpleTask.class);
 		when(mockPrimitiveTaskTwo.isPrimitive()).thenReturn(false);		
-		Task mockPrimitiveTaskThree = mock(Task.class);
+		SimpleTask mockPrimitiveTaskThree = mock(SimpleTask.class);
 		when(mockPrimitiveTaskThree.isPrimitive()).thenReturn(true);	
 		tasks.add(mockPrimitiveTaskOne);
 		tasks.add(mockPrimitiveTaskTwo);

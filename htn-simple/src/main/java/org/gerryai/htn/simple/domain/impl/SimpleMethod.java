@@ -18,14 +18,17 @@
 package org.gerryai.htn.simple.domain.impl;
 
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleMethod implements Method {
+public class SimpleMethod implements Method<SimpleTerm, SimpleTask, SimpleTaskNetwork,
+		ValidatableConstraint<SimpleTerm, SimpleTask>> {
 
 	/**
 	 * Name of this method.
@@ -35,12 +38,12 @@ public class SimpleMethod implements Method {
 	/**
 	 * Task that this method decomposes.
 	 */
-	private Task task;
+	private SimpleTask task;
 	
 	/**
 	 * Sub tasks that this method decomposes its task into.
 	 */
-	private TaskNetwork taskNetwork;
+	private SimpleTaskNetwork taskNetwork;
 	
 	/**
 	 * Constructor using a builder.
@@ -68,28 +71,28 @@ public class SimpleMethod implements Method {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Task getTask() {
+	public final SimpleTask getTask() {
 		return task;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setTask(Task task) {
+	public final void setTask(SimpleTask task) {
 		this.task = task;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final TaskNetwork getTaskNetwork() {
+	public final SimpleTaskNetwork getTaskNetwork() {
 		return taskNetwork;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setTaskNetwork(TaskNetwork taskNetwork) {
+	public final void setTaskNetwork(SimpleTaskNetwork taskNetwork) {
 		this.taskNetwork = taskNetwork;
 	}
 

@@ -15,27 +15,27 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.tasknetwork.impl;
+package org.gerryai.htn.simple.constraint.validation.impl;
 
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Term;
 
 /**
+ * Generic constraint validator factory.
+ * @param <T> type of term the validator will handle
+ * @param <K> type of task the validator will handle
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePrimitiveTask extends SimpleTask {
-	
-	/**
-	 * @param builder the builder to use to build this task
-	 */
-	protected SimplePrimitiveTask(SimpleTaskBuilder builder) {
-		super(builder);
-	}
+public class GenericConstraintValidatorFactory<T extends Term, K extends Task<T>>
+		implements ConstraintValidatorFactory<T, K> {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean isPrimitive() {
-		return true;
+	public final GenericConstraintValidator<T, K> create() {
+		return new GenericConstraintValidator<T, K>();
 	}
 
 }

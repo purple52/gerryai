@@ -19,34 +19,53 @@ package org.gerryai.htn.domain;
 
 import java.util.Set;
 
+import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Term;
+
 /**
  * Interface that a domain must implement.
+ * @param <O> type of operator this domain uses
+ * @param <M> type of operator this domain uses
+ * @param <T> type of logical term this domain uses
+ * @param <K> type of task this domain uses
+ * @param <N> type of task network this domain uses
+ * @param <C> type of constraint this domain uses
+ * @param <I> the class of condition the domain will handle
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Domain {
+public interface Domain<
+		O extends Operator<I>,
+		M extends Method<T, K, N, C>,
+		T extends Term,
+		K extends Task<T>,
+		N extends TaskNetwork<T, K, C>,
+		C extends Constraint<T>,
+		I extends Condition> {
 
 	/**
 	 * Get the full set of available operators for this domain.
 	 * @return the operators
 	 */
-	Set<Operator> getOperators();
+	Set<O> getOperators();
 	
 	/**
 	 * Set the available operators for this domain.
 	 * @param operators the set of operators
 	 */
-	void setOperators(Set<Operator> operators);
+	void setOperators(Set<O> operators);
 	
 	/**
 	 * Get the set of methods available for this domain.
 	 * @return the methods
 	 */
-	Set<Method> getMethods();
+	Set<M> getMethods();
 	
 	/**
 	 * Set the available methods for this domain.
 	 * @param methods the set of methods
 	 */
-	void setMethods(Set<Method> methods);
+	void setMethods(Set<M> methods);
 	
 }

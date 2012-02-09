@@ -18,25 +18,44 @@
 package org.gerryai.htn.simple.tasknetwork.impl;
 
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
-import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
-import org.gerryai.htn.simple.constraint.validation.impl.SimpleConstraintValidatorImpl;
-import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
-import org.gerryai.htn.tasknetwork.Task;
 
 /**
+ * Factory for SimpleTask and SimpleTaskNetwork objects.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public class SimpleTaskNetworkBuilderFactory implements
-		TaskNetworkBuilderFactory<Task, ValidatableConstraint<SimpleConstraintValidator>> {
+		TaskNetworkBuilderFactory<SimpleTerm, SimpleTask, SimpleTaskNetwork, 
+		ValidatableConstraint<SimpleTerm, SimpleTask>> {
+
+	/**
+	 * Factory for creating constraint validators, as used by the task network builders.
+	 */
+	private ConstraintValidatorFactory<SimpleTerm, SimpleTask> constraintValidatorFactory;
+	
+	/**
+	 * Constructor, requiring a factory for creating constraint validators.
+	 * @param constraintValidatorFactory the constraint validator factory
+	 */
+	public SimpleTaskNetworkBuilderFactory(ConstraintValidatorFactory<SimpleTerm,
+			SimpleTask> constraintValidatorFactory) {
+		this.constraintValidatorFactory = constraintValidatorFactory;
+	}
+	/**
+	 * {@inheritDoc}
+	 */
+	public final SimpleTaskNetworkBuilder createTaskNetworkBuilder() {
+		ConstraintValidator<SimpleTerm, SimpleTask> constraintValidator = constraintValidatorFactory.create();
+		return new SimpleTaskNetworkBuilder(constraintValidator);	
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final TaskNetworkBuilder<Task, ValidatableConstraint<SimpleConstraintValidator>> create() {
-		SimpleConstraintValidator constraintValidator = new SimpleConstraintValidatorImpl();
-		return new SimpleTaskNetworkBuilder<SimpleConstraintValidator>(constraintValidator);	
+	public final SimpleTaskBuilder createTaskBuilder() {
+		return new SimpleTaskBuilder();	
 	}
-
 }

@@ -15,37 +15,23 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.logic.unification;
+package org.gerryai.htn.simple.constraint.validation;
 
-import java.util.Map;
-
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
-import org.gerryai.logic.Variable;
 
 /**
- * Class representing a unifier of two expressions as a set of substitutions.
+ * Interface for factories that create constraint validators.
+ * @param <T> type of term the validator will work with
+ * @param <K> type of task the validator will work with
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class Unifier implements Substitution<Term> {
-	
-	/**
-	 * The map of variables to terms.
-	 */
-	private Map<Variable, Term> map;
+public interface ConstraintValidatorFactory<T extends Term, K extends Task<T>> {
 
 	/**
-	 * {@inheritDoc}
+	 * Create a validator.
+	 * @return the validator
 	 */
-	public final Map<Variable, Term> getMap() {
-		return map;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setMap(Map<Variable, Term> map) {
-		this.map = map;
-	}
-
+	ConstraintValidator<T, K> create();
 }

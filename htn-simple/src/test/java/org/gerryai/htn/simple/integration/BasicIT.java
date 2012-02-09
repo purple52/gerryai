@@ -25,18 +25,26 @@ import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.Problem;
+import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
+import org.gerryai.htn.simple.domain.impl.SimpleMethod;
+import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleConstant;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.planner.impl.SimplePlannerFactory;
 import org.gerryai.htn.simple.planner.impl.SimplePlanningService;
 import org.gerryai.htn.simple.problem.impl.SimpleProblem;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskBuilder;
+import org.gerryai.htn.simple.tasknetwork.impl.AbstractTaskBuilder;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilderFactory;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Variable;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -45,21 +53,26 @@ import org.junit.Test;
  */
 public class BasicIT {
 
+	@Ignore
 	@Test
 	public void test() throws PlanNotFound {
 		
-		SimpleDomainBuilderFactory domainBuilderFactory = new SimpleDomainBuilderFactory();
-		SimpleTaskNetworkBuilderFactory taskNetworkBuilderFactory = new SimpleTaskNetworkBuilderFactory();
+		SimpleDomainBuilderFactory domainBuilderFactory
+				= new SimpleDomainBuilderFactory();
+		GenericConstraintValidatorFactory<SimpleTerm, SimpleTask> constraintValidatorFactory
+				= new GenericConstraintValidatorFactory<SimpleTerm, SimpleTask>();
+		SimpleTaskNetworkBuilderFactory taskNetworkBuilderFactory
+				= new SimpleTaskNetworkBuilderFactory(constraintValidatorFactory);
 		
 		SimplePlannerFactory plannerFactory = new SimplePlannerFactory();
 		SimplePlanningService planningService = new SimplePlanningService(plannerFactory);
-		
+
 		SimpleVariable variableA = new SimpleVariable("a");
-		Operator operatorA = domainBuilderFactory.createOperatorBuilder()
+		SimpleOperator operatorA = domainBuilderFactory.createOperatorBuilder()
 				.setName("pickup")
 				.addArgument(variableA)
 				.build();
-		Operator operatorB = domainBuilderFactory.createOperatorBuilder()
+		SimpleOperator operatorB = domainBuilderFactory.createOperatorBuilder()
 				.setName("drop")
 				.addArgument(variableA)
 				.build();
@@ -72,47 +85,53 @@ public class BasicIT {
 		
 		SimpleVariable variableX = new SimpleVariable("x");
 		SimpleVariable variableY = new SimpleVariable("y");
-		Task methodATask  = new SimpleTaskBuilder(domainHelper)
+		SimpleTask methodATask  = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("swap")
 				.addArgument(variableX)
 				.addArgument(variableY)
+				.setIsPrimitive(false)
 				.build();
-		Task methodBTask  = new SimpleTaskBuilder(domainHelper)
+		SimpleTask methodBTask  = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("swap")
 				.addArgument(variableX)
 				.addArgument(variableY)
+				.setIsPrimitive(false)
 				.build();
-		Task methodASubTask1  = new SimpleTaskBuilder(domainHelper)
+		SimpleTask methodASubTask1  = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("drop")
 				.addArgument(variableX)
+				.setIsPrimitive(true)
 				.build();
-		Task methodASubTask2  = new SimpleTaskBuilder(domainHelper)
+		SimpleTask methodASubTask2  = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("pickup")
 				.addArgument(variableY)
+				.setIsPrimitive(true)
 				.build();
-		Task methodBSubTask1  = new SimpleTaskBuilder(domainHelper)
+		SimpleTask methodBSubTask1  = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("drop")
 				.addArgument(variableY)
+				.setIsPrimitive(true)
 				.build();
-		Task methodBSubTask2  = new SimpleTaskBuilder(domainHelper)
+		SimpleTask methodBSubTask2  = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("pickup")
 				.addArgument(variableX)
+				.setIsPrimitive(true)
 				.build();
-		TaskNetwork methodATaskNetwork = taskNetworkBuilderFactory.create()
+		SimpleTaskNetwork methodATaskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
 				.addTask(methodASubTask1)
 				.addTask(methodASubTask2)
 				.build();
-		TaskNetwork methodBTaskNetwork = taskNetworkBuilderFactory.create()
+		SimpleTaskNetwork methodBTaskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
 				.addTask(methodBSubTask1)
 				.addTask(methodBSubTask2)
 				.build();
 		
-		Method methodA = domainBuilderFactory.createMethodBuilder()
+		SimpleMethod methodA = domainBuilderFactory.createMethodBuilder()
 				.setName("swap")
 				.setTask(methodATask)
 				.setTaskNetwork(methodATaskNetwork)
 				.build();
-		Method methodB = domainBuilderFactory.createMethodBuilder()
+		SimpleMethod methodB = domainBuilderFactory.createMethodBuilder()
 				.setName("swap")
 				.setTask(methodBTask)
 				.setTaskNetwork(methodBTaskNetwork)
@@ -123,13 +142,14 @@ public class BasicIT {
 		
 		SimpleConstant constantKiwi = new SimpleConstant("kiwi");
 		SimpleConstant constantBanjo = new SimpleConstant("banjo");
-		Task task = new SimpleTaskBuilder(domainHelper)
+		SimpleTask task = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("swap")
 				.addArgument(constantKiwi)
 				.addArgument(constantBanjo)
+				.setIsPrimitive(false)
 				.build();
 		
-		TaskNetwork taskNetwork = taskNetworkBuilderFactory.create()
+		SimpleTaskNetwork taskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
 				.addTask(task)
 				.build();
 		
@@ -137,11 +157,11 @@ public class BasicIT {
 		problem.setDomain(domain);
 		problem.setTaskNetwork(taskNetwork);
 		
-		/*
-		Plan plan = planningService.solve(problem);
+		
+		Plan<SimpleOperator, SimpleCondition> plan = planningService.solve(problem);
 		
 		assertEquals(plan.getActions().size(),2);
-		assertEquals(plan.getActions().get(0).getOperator().getName(),"drop");
+		assertEquals("drop", plan.getActions().get(0).getOperator().getName());
 		assertEquals(plan.getActions().get(0).getBindings().getMap().size(),1);
 		assertEquals(plan.getActions().get(0).getBindings().getMap()
 				.get(plan.getActions().get(0).getOperator().getArguments().get(0)), constantKiwi);
@@ -149,8 +169,7 @@ public class BasicIT {
 		assertEquals(plan.getActions().get(1).getBindings().getMap().size(),1);
 		assertEquals(plan.getActions().get(1).getBindings().getMap()
 				.get(plan.getActions().get(1).getOperator().getArguments().get(0)), constantBanjo);
-		
-		*/
+
 	}
 
 }

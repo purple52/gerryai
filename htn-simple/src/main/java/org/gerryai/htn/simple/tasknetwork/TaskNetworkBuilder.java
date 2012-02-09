@@ -19,29 +19,38 @@ package org.gerryai.htn.simple.tasknetwork;
 
 import java.util.Set;
 
+import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Term;
 
 /**
  * Interface for a task network builder.
- * @param <T> class of tasks
+ * @param <T> type of term used by the task network
+ * @param <K> class of tasks
+ * @param <N> type of task network being built
  * @param <C> class of constraints
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface TaskNetworkBuilder<T, C> {
+public interface TaskNetworkBuilder<
+		T extends Term,
+		K extends Task<T>,
+		N extends TaskNetwork<T, K, C>,
+		C extends Constraint<T>> {
 
 	/**
 	 * Add a task.
 	 * @param task the task
 	 * @return the updated builder
 	 */
-	TaskNetworkBuilder<T, C> addTask(T task);
+	TaskNetworkBuilder<T, K, N, C> addTask(K task);
 
 	/**
 	 * Add a set of tasks.
-	 * @param task the tasks
+	 * @param tasks the tasks
 	 * @return the updated builder
 	 */
-	TaskNetworkBuilder<T, C> addTasks(Set<T> task);
+	TaskNetworkBuilder<T, K, N, C> addTasks(Set<K> tasks);
 	
 	/**
 	 * Add a constraint.
@@ -52,7 +61,7 @@ public interface TaskNetworkBuilder<T, C> {
 	 * @return the updated builder
 	 * @throws InvalidConstraint if the constraint could not be added
 	 */
-	TaskNetworkBuilder<T, C> addConstraint(C constraint) throws InvalidConstraint;
+	TaskNetworkBuilder<T, K, N, C> addConstraint(C constraint) throws InvalidConstraint;
 	
 	/**
 	 * Add a set of constraints.
@@ -61,11 +70,23 @@ public interface TaskNetworkBuilder<T, C> {
 	 * @return the updated builder
 	 * @throws InvalidConstraint if the constraint could not be added
 	 */
-	TaskNetworkBuilder<T, C> addConstraints(Set<C> constraints) throws InvalidConstraint;
+	TaskNetworkBuilder<T, K, N, C> addConstraints(Set<C> constraints) throws InvalidConstraint;
+	
+	/**
+	 * Get the set of tasks for the task network to be built.
+	 * @return the tasks
+	 */
+	Set<K> getTasks();
+	
+	/**
+	 * Get the set of constraints for the task network to be built.
+	 * @return the constraints
+	 */
+	Set<C> getConstraints();
 	
 	/**
 	 * Build the task network.
 	 * @return the task network
 	 */
-	TaskNetwork build();
+	N build();
 }

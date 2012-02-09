@@ -19,23 +19,28 @@ package org.gerryai.htn.plan;
 
 import java.util.List;
 
+import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Operator;
+
 
 /**
  * Interface that a plan must implement.
+ * @param <O> type of operator this plan uses
+ * @param <I> type of condition the plan uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Plan {
+public interface Plan<O extends Operator<I>, I extends Condition> {
 	
 	/**
 	 * Get the actions that make up this plan.
 	 * @return the actions
 	 */
-	List<Action> getActions();
+	List<Action<O, I>> getActions();
 	
 	/**
 	 * Set the actions that make up this plan.
 	 * @param actions actions to set
 	 */
-	void setActions(List<Action> actions);
+	void setActions(List<Action<O, I>> actions);
 
 }

@@ -18,7 +18,10 @@
 package org.gerryai.htn.simple.tasknetwork.impl;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.junit.Test;
 
 /**
@@ -28,12 +31,25 @@ import org.junit.Test;
 public class SimpleTaskNetworkBuilderFactoryTest {
 
 	/**
-	 * Test builder creation.
+	 * Test task builder creation.
 	 */
 	@Test
-	public void testCreate() {
-		SimpleTaskNetworkBuilderFactory factory = new SimpleTaskNetworkBuilderFactory();
-		assertTrue(factory.create() instanceof SimpleTaskNetworkBuilder);
+	public void testCreateTaskBuilder() {
+		@SuppressWarnings("unchecked")
+		ConstraintValidatorFactory<SimpleTerm, SimpleTask> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
+		SimpleTaskNetworkBuilderFactory factory = new SimpleTaskNetworkBuilderFactory(mockConstraintValidatorFactory);
+		assertTrue(factory.createTaskBuilder() instanceof SimpleTaskBuilder);
+	}
+	
+	/**
+	 * Test task network builder creation.
+	 */
+	@Test
+	public void testCreateTaskNetworkBuilder() {
+		@SuppressWarnings("unchecked")
+		ConstraintValidatorFactory<SimpleTerm, SimpleTask> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
+		SimpleTaskNetworkBuilderFactory factory = new SimpleTaskNetworkBuilderFactory(mockConstraintValidatorFactory);
+		assertTrue(factory.createTaskNetworkBuilder() instanceof SimpleTaskNetworkBuilder);
 	}
 
 }

@@ -27,7 +27,7 @@ import org.gerryai.logic.unification.Substitution;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class Bindings implements Substitution<Constant> {
+public class Bindings implements Substitution<Constant, Variable> {
 	
 	/**
 	 * Map of variables to constants, which represents these bindings.

@@ -19,15 +19,17 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 
 import java.util.List;
 
+import org.gerryai.htn.simple.decomposition.SimpleSubstituter;
+import org.gerryai.htn.simple.decomposition.Substitutable;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 import com.google.common.base.Objects;
 
 /**
  * Basic implementation of the Task interface.
  */
-public abstract class SimpleTask implements Task {
+public class SimpleTask implements Task<SimpleTerm>, Substitutable<SimpleSubstituter> {
 	
 	/**
 	 * Name for this task.
@@ -35,17 +37,23 @@ public abstract class SimpleTask implements Task {
 	private String name;
 	
 	/**
+	 * Whether this task is primitive.
+	 */
+	private boolean isPrimitive;
+	
+	/**
 	 * Arguments for this task.
 	 */
-	private List<Term> arguments;
+	private List<SimpleTerm> arguments;
 
 	/**
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
-	protected SimpleTask(SimpleTaskBuilder builder) {
+	protected SimpleTask(AbstractTaskBuilder<SimpleTerm, SimpleTask, ?> builder) {
 		this.setName(builder.getName());
 		this.setArguments(builder.getArguments());
+		this.setIsPrimitive(builder.getIsPrimitive());
 	}
 	
 	/**
@@ -65,15 +73,36 @@ public abstract class SimpleTask implements Task {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<Term> getArguments() {
+	public boolean isPrimitive() {
+		return isPrimitive;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setIsPrimitive(boolean isPrimitive) {
+		this.isPrimitive = isPrimitive;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final List<SimpleTerm> getArguments() {
 		return arguments;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setArguments(List<Term> arguments) {
+	public final void setArguments(List<SimpleTerm> arguments) {
 		this.arguments = arguments;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final SimpleTask apply(SimpleSubstituter substituter) {
+		return substituter.apply(this);
 	}
 	
 	@Override

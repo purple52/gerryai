@@ -20,37 +20,40 @@ package org.gerryai.htn.tasknetwork;
 import java.util.Set;
 
 import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.logic.Term;
 
 /**
  * Interface that a task network must implement.
+ * @param <T> type of logical term this network and its tasks work with
+ * @param <K> type of task this network holds
+ * @param <C> type of constraint this network uses
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface TaskNetwork {
+public interface TaskNetwork<T extends Term, K extends Task<T>, C extends Constraint<T>> {
 
 	/**
 	 * Get the tasks that make up this network.
 	 * @return the tasks
 	 */
-	Set<Task> getTasks();
+	Set<K> getTasks();
 	
 	/**
 	 * Set the tasks that make up this network.
 	 * @param tasks tasks to set
 	 */
-	void setTasks(Set<Task> tasks);
+	void setTasks(Set<K> tasks);
 	
 	/**
 	 * Get the constraints for this network.
 	 * @return the constraints
 	 */
-	Set<Constraint> getConstraints();
+	Set<C> getConstraints();
 	
 	/**
 	 * Set the constraints for this network.
 	 * @param constraints constraints to set
 	 */
-	void setConstraints(Set<Constraint> constraints);
+	void setConstraints(Set<C> constraints);
 	
 	/**
 	 * Check if the task network is primitive by examining its tasks.

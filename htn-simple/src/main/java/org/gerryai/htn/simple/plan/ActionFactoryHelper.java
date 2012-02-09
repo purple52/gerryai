@@ -17,16 +17,21 @@
  */
 package org.gerryai.htn.simple.plan;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Term;
 
 /**
+ * @param <O> type of operator this action uses
+ * @param <I> type of condition the action uses
+ * @param <T> type of logical term this helper has to deal with
+ * @param <K> type of task this helper works with
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface ActionFactoryHelper {
+public interface ActionFactoryHelper<O extends Operator<I>, T extends Term, K extends Task<T>, I extends Condition> {
 	
 	/**
 	 * Get the operator for the given task.
@@ -34,7 +39,7 @@ public interface ActionFactoryHelper {
 	 * @return the operator
 	 * @throws TaskNotActionable if an operator does not exist for this task
 	 */
-	Operator getOperator(Task task) throws TaskNotActionable;
+	O getOperator(K task) throws TaskNotActionable;
 	
 	/**
 	 * Get the bindings for grounding this task.
@@ -43,6 +48,6 @@ public interface ActionFactoryHelper {
 	 * @return a set of bindings that ground this operator to implement this task
 	 * @throws TaskNotActionable if a set of bindings cannot be generated
 	 */
-	Bindings getBindings(Task task, Operator operator) throws TaskNotActionable;
+	Bindings getBindings(K task, O operator) throws TaskNotActionable;
 
 }

@@ -19,23 +19,41 @@ package org.gerryai.htn.simple.domain;
 
 import java.util.Set;
 
+import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Term;
 
 /**
  * Interface for a service that manages a domain.
+ * @param <O> type of operator this domain helper uses
+ * @param <M> type of method this domain helpers uses
+ * @param <T> type of logical term this domain helper uses
+ * @param <K> type of task this domain helper uses
+ * @param <N> type of task network this domain helper uses
+ * @param <C> type of constraint this domain helper uses
+ * @param <I> the class of condition the domain will handle
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface DomainHelper {
+public interface DomainHelper<
+		O extends Operator<I>,
+		M extends Method<T, K, N, C>,
+		T extends Term,
+		K extends Task<T>,
+		N extends TaskNetwork<T, K, C>,
+		C extends Constraint<T>,
+		I extends Condition> {
 	
 	/**
 	 * Get the domain that this service is managing.
 	 * @return the domain
 	 */
-	Domain getDomain();
+	Domain<O, M, T, K, N, C, I> getDomain();
 	
 	/**
 	 * Get an operator by name.
@@ -43,12 +61,12 @@ public interface DomainHelper {
 	 * @return the operator
 	 * @throws OperatorNotFound if no such operator exists
 	 */
-	Operator getOperatorByName(String name) throws OperatorNotFound;
+	O getOperatorByName(String name) throws OperatorNotFound;
 	
 	/**
 	 * Get a set of methods that match the given task.
 	 * @param task the task being matched
 	 * @return a set of matching methods
 	 */
-	Set<Method> getMethodsByTask(Task task);
+	Set<M> getMethodsByTask(K task);
 }

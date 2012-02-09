@@ -23,22 +23,25 @@ import java.util.Map;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
-import org.gerryai.logic.unification.Unifier;
+import org.gerryai.logic.unification.Substitution;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
 
 /**
  * Interface for a converter between AIMA first order logic classes and our classes.
+ * @param <T> type of term the converter can handle
+ * @param <V> type of variable the converter can handle
+ * @param <K> type of task the converter can handle
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface AIMAConverter {
+public interface AIMAConverter<T extends Term, V extends Variable, K extends Task<T>> {
 
 	/**
 	 * Convert a Gerry AI Task into an AIMA Predicate.
 	 * @param task task to convert
 	 * @return predicate
 	 */
-	Predicate convert(Task task);
+	Predicate convert(K task);
 	
 	/**
 	 * Convert a Gerry AI Term into an AIMA Term.
@@ -52,14 +55,14 @@ public interface AIMAConverter {
 	 * @param terms list of terms to convert
 	 * @return list of converted terms
 	 */
-	List<aima.core.logic.fol.parsing.ast.Term> convert(List<Term> terms);
+	List<aima.core.logic.fol.parsing.ast.Term> convert(List<T> terms);
 	
 	/**
 	 * Convert an AIMA Term into a Gerry AI Term.
 	 * @param term term to convert
 	 * @return converted term
 	 */
-	Term convert(aima.core.logic.fol.parsing.ast.Term term);
+	T convert(aima.core.logic.fol.parsing.ast.Term term);
 	
 	/**
 	 * Convert a Gerry AI Variable into an AIMA Variable.
@@ -81,5 +84,5 @@ public interface AIMAConverter {
 	 * @param map map to convert
 	 * @return the unifier
 	 */
-	Unifier convert(Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map);
+	Substitution<T, V> convert(Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map);
 }

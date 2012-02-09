@@ -21,6 +21,13 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.domain.impl.SimpleMethod;
+import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.junit.Test;
 
 /**
@@ -34,7 +41,9 @@ public class SimplePlannerFactoryTest {
 	 */
 	@Test
 	public void testCreate() {
-		Domain mockDomain = mock(Domain.class);
+		@SuppressWarnings("unchecked")
+		Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+		ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> mockDomain = mock(Domain.class);
 		SimplePlannerFactory factory = new SimplePlannerFactory();
 		
 		assertTrue(factory.create(mockDomain) instanceof SimplePlanner);

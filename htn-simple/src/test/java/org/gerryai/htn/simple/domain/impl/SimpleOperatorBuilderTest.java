@@ -25,8 +25,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Effect;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.logic.Variable;
 import org.junit.Test;
 
@@ -108,8 +108,8 @@ public class SimpleOperatorBuilderTest {
 	 */
 	@Test
 	public void testAddPrecondition() {
-		Condition mockConditionA = mock(Condition.class);
-		Condition mockConditionB = mock(Condition.class);
+		SimpleCondition mockConditionA = mock(SimpleCondition.class);
+		SimpleCondition mockConditionB = mock(SimpleCondition.class);
 		SimpleOperatorBuilder builder = new SimpleOperatorBuilder()
 				.addPrecondition(mockConditionA)
 				.addPrecondition(mockConditionB);
@@ -123,14 +123,14 @@ public class SimpleOperatorBuilderTest {
 	 */
 	@Test
 	public void testAddPreconditions() {
-		Condition mockConditionA = mock(Condition.class);
-		Condition mockConditionB = mock(Condition.class);
-		Set<Condition> mockConditionsA = new HashSet<Condition>();
+		SimpleCondition mockConditionA = mock(SimpleCondition.class);
+		SimpleCondition mockConditionB = mock(SimpleCondition.class);
+		Set<SimpleCondition> mockConditionsA = new HashSet<SimpleCondition>();
 		mockConditionsA.add(mockConditionA);
 		mockConditionsA.add(mockConditionB);
-		Condition mockConditionC = mock(Condition.class);
-		Condition mockConditionD = mock(Condition.class);
-		Set<Condition> mockConditionsB = new HashSet<Condition>();
+		SimpleCondition mockConditionC = mock(SimpleCondition.class);
+		SimpleCondition mockConditionD = mock(SimpleCondition.class);
+		Set<SimpleCondition> mockConditionsB = new HashSet<SimpleCondition>();
 		mockConditionsB.add(mockConditionC);
 		mockConditionsB.add(mockConditionD);
 		
@@ -193,8 +193,8 @@ public class SimpleOperatorBuilderTest {
 		Variable mockVariable = mock(Variable.class);
 		List<Variable> mockArguments = new ArrayList<Variable>();
 		mockArguments.add(mockVariable);
-		Condition mockCondition = mock(Condition.class);
-		Set<Condition> mockConditions = new HashSet<Condition>();
+		SimpleCondition mockCondition = mock(SimpleCondition.class);
+		Set<SimpleCondition> mockConditions = new HashSet<SimpleCondition>();
 		mockConditions.add(mockCondition);
 		Effect mockEffect = mock(Effect.class);
 		Set<Effect> mockEffects = new HashSet<Effect>();

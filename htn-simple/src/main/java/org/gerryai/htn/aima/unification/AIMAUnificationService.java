@@ -24,26 +24,43 @@ import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.aima.AIMAConverter;
+import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.constraint.ValidatableConstraint;
-import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
+import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskBuilder;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
-import org.gerryai.logic.unification.Unifier;
+import org.gerryai.logic.Variable;
+import org.gerryai.logic.unification.Substitution;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
 
 /**
+ * Unification service that use an AIMA unifier underneath.
+ * @param <O> the type of operator this service works with
+ * @param <M> the type of method this service works with
+ * @param <T> the type of logical term this service works with
+ * @param <K> the type of task this service works with
+ * @param <N> the type of task network this service works with
+ * @param <C> the type of constraint this service works with
+ * @param <I> the class of condition the builder will handle
+ * @param <V> the type of variable this service works with
  * @author David Edwards <david@more.fool.me.uk>
- * 
  */
-public class AIMAUnificationService implements UnificationService {
+public class AIMAUnificationService<
+		O extends Operator<I>,
+		M extends Method<T, K, N, C>,
+		T extends Term,
+		K extends Task<T>,
+		N extends TaskNetwork<T, K, C>,
+		C extends Constraint<T>,
+		I extends Condition,
+		V extends Variable>
+				implements UnificationService<M, T, K, N, C, I, V> {
 
 	/**
 	 * AIMA Unifier object to do the underlying expression unification.
@@ -53,17 +70,12 @@ public class AIMAUnificationService implements UnificationService {
 	/**
 	 * Converter to convert between our classes and the AIMA FOL classes.
 	 */
-	private AIMAConverter converter;
-	
-	/**
-	 * Helper for checking whether tasks are primitive or not.
-	 */
-	private DomainHelper domainHelper;
+	private AIMAConverter<T, V, K> converter;
 	
 	/**
 	 * Factory for creating task network builders.
 	 */
-	private TaskNetworkBuilderFactory<Task, ValidatableConstraint<SimpleConstraintValidator>> taskNetworkBuilderFactory;
+	private TaskNetworkBuilderFactory<T, K, N, C> taskNetworkBuilderFactory;
 	
 	/**
 	 * Constructor taking all required dependencies.
@@ -73,18 +85,17 @@ public class AIMAUnificationService implements UnificationService {
 	 * @param taskNetworkBuilderFactory factory for creating task network builders
 	 */
 	public AIMAUnificationService(aima.core.logic.fol.Unifier unifier,
-			AIMAConverter converter, DomainHelper domainHelper,
-			TaskNetworkBuilderFactory<Task, ValidatableConstraint<SimpleConstraintValidator>>
-					taskNetworkBuilderFactory) {
+			AIMAConverter<T, V, K> converter,
+			DomainHelper<O, M, T, K, N, C, I> domainHelper,
+			TaskNetworkBuilderFactory<T, K, N, C> taskNetworkBuilderFactory) {
 		this.unifier = unifier;
 		this.converter = converter;
-		this.domainHelper = domainHelper;
 		this.taskNetworkBuilderFactory = taskNetworkBuilderFactory;
 	}
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Unifier findUnifier(Task task, Method method) {
+	public final Substitution<T, V>	findUnifier(K task, M method) {
 
 		Predicate taskPredicate = converter.convert(task);
 		Predicate methodTaskPredicate = converter.convert(method.getTask());
@@ -97,17 +108,18 @@ public class AIMAUnificationService implements UnificationService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final TaskNetwork apply(Unifier unifier, TaskNetwork taskNetwork) {
+	public final N apply(
+			Substitution<T, V> unifier, 
+			N taskNetwork) {
 		
 		// TODO Add support constraints
-		Set<Task> updatedTasks = new HashSet<Task>();
-		for (Task task : taskNetwork.getTasks()) {
-			Task updatedTask = apply(unifier, task);
+		Set<K> updatedTasks = new HashSet<K>();
+		for (K task : taskNetwork.getTasks()) {
+			K updatedTask = apply(unifier, task);
 			updatedTasks.add(updatedTask);
 		}
 
-		TaskNetwork updatedTaskNetwork =
-				taskNetworkBuilderFactory.create()
+		N updatedTaskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
 				.addTasks(updatedTasks)
 				.build();
 		
@@ -117,10 +129,10 @@ public class AIMAUnificationService implements UnificationService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTask apply(Unifier unifier, Task task) {
+	public final K apply(Substitution<T, V> unifier, K task) {
 		
-		List<Term> updatedTerms = new ArrayList<Term>();		
-		for (Term term : task.getArguments()) {
+		List<T> updatedTerms = new ArrayList<T>();		
+		for (T term : task.getArguments()) {
 			if (unifier.getMap().containsKey(term)) {
 				updatedTerms.add(unifier.getMap().get(term));
 			} else {
@@ -128,7 +140,7 @@ public class AIMAUnificationService implements UnificationService {
 			}
 		}
 
-		SimpleTask updatedTask = new SimpleTaskBuilder(domainHelper)
+		K updatedTask = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName(task.getName())
 				.addArguments(updatedTerms)
 				.build();

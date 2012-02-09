@@ -22,16 +22,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.domain.OperatorBuilder;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.logic.Variable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleOperatorBuilder implements OperatorBuilder<Condition, Effect> {
+public class SimpleOperatorBuilder implements OperatorBuilder<SimpleCondition, Effect> {
 
 	/**
 	 * Name of the operator.
@@ -46,7 +46,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<Condition, Effect>
 	/**
 	 * Set of preconditions that must hold for the operator to be valid.
 	 */
-	private Set<Condition> preconditions;
+	private Set<SimpleCondition> preconditions;
 	
 	/**
 	 * Set of effects that the operator has.
@@ -58,7 +58,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<Condition, Effect>
 	 */
 	protected SimpleOperatorBuilder() {
 		arguments = new ArrayList<Variable>();
-		preconditions = new HashSet<Condition>();
+		preconditions = new HashSet<SimpleCondition>();
 		effects = new HashSet<Effect>();
 	}
 	
@@ -89,7 +89,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<Condition, Effect>
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperatorBuilder addPrecondition(Condition condition) {
+	public final SimpleOperatorBuilder addPrecondition(SimpleCondition condition) {
 		preconditions.add(condition);
 		return this;
 	}
@@ -97,7 +97,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<Condition, Effect>
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperatorBuilder addPreconditions(Set<Condition> conditions) {
+	public final SimpleOperatorBuilder addPreconditions(Set<SimpleCondition> conditions) {
 		preconditions.addAll(conditions);
 		return this;
 	}
@@ -142,7 +142,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<Condition, Effect>
 	/**
 	 * @return the preconditions
 	 */
-	protected final Set<Condition> getPreconditions() {
+	protected final Set<SimpleCondition> getPreconditions() {
 		return preconditions;
 	}
 

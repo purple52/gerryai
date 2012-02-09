@@ -21,9 +21,10 @@ import java.util.Set;
 
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ValidatableBetweenConstraint;
-import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 
 import com.google.common.base.Objects;
 
@@ -31,17 +32,18 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleBetweenConstraint implements ValidatableBetweenConstraint<SimpleConstraintValidator> {
+public class SimpleBetweenConstraint implements
+		ValidatableBetweenConstraint<SimpleTerm, SimpleTask> {
 
 	/**
 	 * The set of tasks that this constraint must hold after.
 	 */
-	private Set<Task> precedingTasks;
+	private Set<SimpleTask> precedingTasks;
 
 	/**
 	 * The set of tasks that this constraint must hold before.
 	 */
-	private Set<Task> procedingTasks;
+	private Set<SimpleTask> procedingTasks;
 	
 	/**
 	 * The literal that must be true directly between the two sets of tasks.
@@ -52,7 +54,7 @@ public class SimpleBetweenConstraint implements ValidatableBetweenConstraint<Sim
 	 * Set the set of tasks that this constraint must hold after.
 	 * @param precedingTasks the tasks
 	 */
-	public final void setPrecedingTasks(Set<Task> precedingTasks) {
+	public final void setPrecedingTasks(Set<SimpleTask> precedingTasks) {
 		this.precedingTasks = precedingTasks;
 	}
 
@@ -60,7 +62,7 @@ public class SimpleBetweenConstraint implements ValidatableBetweenConstraint<Sim
 	 * Set the set of tasks that this constraint must hold before.
 	 * @param procedingTasks the tasks
 	 */
-	public final void setProcedingTasks(Set<Task> procedingTasks) {
+	public final void setProcedingTasks(Set<SimpleTask> procedingTasks) {
 		this.procedingTasks = procedingTasks;
 	}
 	
@@ -76,7 +78,7 @@ public class SimpleBetweenConstraint implements ValidatableBetweenConstraint<Sim
 	 * Get the set of tasks that this constraint must hold after.
 	 * @return the tasks
 	 */
-	public final Set<Task> getPrecedingTasks() {
+	public final Set<SimpleTask> getPrecedingTasks() {
 		return precedingTasks;
 	}
 
@@ -84,7 +86,7 @@ public class SimpleBetweenConstraint implements ValidatableBetweenConstraint<Sim
 	 * Get the set of tasks that this constraint must hold before.
 	 * @return the tasks
 	 */
-	public final Set<Task> getProcedingTasks() {
+	public final Set<SimpleTask> getProcedingTasks() {
 		return procedingTasks;
 	}
 	
@@ -99,14 +101,14 @@ public class SimpleBetweenConstraint implements ValidatableBetweenConstraint<Sim
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(SimpleConstraintValidator validator) {
+	public final boolean validate(ConstraintValidator<SimpleTerm, SimpleTask> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(SimpleConstraintValidator validator)
+	public final void add(ConstraintValidator<SimpleTerm, SimpleTask> validator)
 			throws InvalidConstraint {
 		validator.add(this);
 	}

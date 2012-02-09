@@ -18,9 +18,10 @@
 package org.gerryai.htn.simple.constraint.impl;
 
 import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
-import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 
 import com.google.common.base.Objects;
 
@@ -28,24 +29,24 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePrecedenceConstraint
-		implements ValidatablePrecedenceConstraint<SimpleConstraintValidator> {
+public class SimplePrecedenceConstraint	implements
+		ValidatablePrecedenceConstraint<SimpleTerm, SimpleTask> {
 
 	/**
 	 * The task that must come first.
 	 */
-	private Task precedingTask;
+	private SimpleTask precedingTask;
 	
 	/**
 	 * The task that must come last.
 	 */
-	private Task procedingTask;
+	private SimpleTask procedingTask;
 	
 	/**
 	 * Set the task to come first.
 	 * @param precedingTask the task
 	 */
-	public final void setPrecedingTask(Task precedingTask) {
+	public final void setPrecedingTask(SimpleTask precedingTask) {
 		this.precedingTask = precedingTask;
 	}
 	
@@ -53,7 +54,7 @@ public class SimplePrecedenceConstraint
 	 * Set the task to come last.
 	 * @param procedingTask the task
 	 */
-	public final void setProcedingTask(Task procedingTask) {
+	public final void setProcedingTask(SimpleTask procedingTask) {
 		this.procedingTask = procedingTask;
 	}
 	
@@ -61,28 +62,28 @@ public class SimplePrecedenceConstraint
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Task getPrecedingTask() {
+	public final SimpleTask getPrecedingTask() {
 		return precedingTask;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Task getProcedingTask() {
+	public final SimpleTask getProcedingTask() {
 		return procedingTask;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(SimpleConstraintValidator validator) {
+	public final boolean validate(ConstraintValidator<SimpleTerm, SimpleTask> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(SimpleConstraintValidator validator) throws InvalidConstraint {
+	public final void add(ConstraintValidator<SimpleTerm, SimpleTask> validator) throws InvalidConstraint {
 		validator.add(this);
 	}
 	

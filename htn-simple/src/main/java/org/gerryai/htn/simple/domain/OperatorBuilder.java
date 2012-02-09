@@ -20,70 +20,71 @@ package org.gerryai.htn.simple.domain;
 import java.util.List;
 import java.util.Set;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.logic.Variable;
 
 /**
  * Interface for a class that can build operators.
- * @param <C> class of condition the builder can handle
+ * @param <I> class of condition the builder can handle
  * @param <E> class of effect the builder can handle
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface OperatorBuilder<C, E> {
+public interface OperatorBuilder<I extends Condition, E> {
 
 	/**
 	 * Set the name of the operator.
 	 * @param name the name
 	 * @return the updated builder
 	 */
-	OperatorBuilder<C, E> setName(String name);
+	OperatorBuilder<I, E> setName(String name);
 	
 	/**
 	 * Add an argument to the operator.
 	 * @param argument the variable to add
 	 * @return the updated builder
 	 */
-	OperatorBuilder<C, E> addArgument(Variable argument);
+	OperatorBuilder<I, E> addArgument(Variable argument);
 
 	/**
 	 * Add a list of arguments to the operator.
 	 * @param arguments the variables to add
 	 * @return the updated builder
 	 */
-	OperatorBuilder<C, E> addArguments(List<Variable> arguments);
+	OperatorBuilder<I, E> addArguments(List<Variable> arguments);
 
 	/**
 	 * Add an argument to the operator.
 	 * @param condition the condition to add
 	 * @return the updated builder
 	 */
-	OperatorBuilder<C, E> addPrecondition(C condition);
+	OperatorBuilder<I, E> addPrecondition(I condition);
 	
 	/**
 	 * Add a set of preconditions to the operator.
 	 * @param conditions the conditions to add
 	 * @return the updated builder
 	 */
-	OperatorBuilder<C, E> addPreconditions(Set<C> conditions);
+	OperatorBuilder<I, E> addPreconditions(Set<I> conditions);
 
 	/**
 	 * Add an effect to the operator.
 	 * @param effect the effect to add
 	 * @return the updated builder
 	 */
-	OperatorBuilder<C, E> addEffect(E effect);
+	OperatorBuilder<I, E> addEffect(E effect);
 	
 	/**
 	 * Add a set of effects to the operator.
 	 * @param effects the effects to add
 	 * @return the updated builder
 	 */
-	OperatorBuilder<C, E> addEffects(Set<E> effects);
+	OperatorBuilder<I, E> addEffects(Set<E> effects);
 	
 	/**
 	 * Build the operator.
 	 * @return the operator
 	 */
-	Operator build();
+	Operator<I> build();
 }

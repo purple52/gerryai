@@ -17,28 +17,31 @@
  */
 package org.gerryai.htn.plan;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Operator;
 
 /**
  * Interface to be implemented by an action within a plan.
  * An action must an specify an operator that it actions and
  * a set of bindings to ground the operator.
+ * @param <O> type of operator this action uses
+ * @param <I> type of condition the action uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface Action {
+public interface Action<O extends Operator<I>, I extends Condition> {
 
 	/**
 	 * Get the operator that this action uses.
 	 * @return the operator
 	 */
-	Operator getOperator();
+	O getOperator();
 	
 	/**
 	 * Set the operator that this action uses.
 	 * @param operator operator to set
 	 */
-	void setOperator(Operator operator);
+	void setOperator(O operator);
 	
 	/**
 	 * Get the bindings for this action.

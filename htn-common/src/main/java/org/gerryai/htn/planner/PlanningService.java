@@ -17,15 +17,36 @@
  */
 package org.gerryai.htn.planner;
 
+import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.problem.Problem;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Term;
 
 /**
  * Interface for a service that can solve problems.
+ * @param <O> type of operator this service works with
+ * @param <M> type of method this service works with
+ * @param <T> type of logical term this service works with
+ * @param <K> type of task this service works with
+ * @param <N> type of task network this service works with
+ * @param <C> type of constraint this service works with
+ * @param <I> the class of condition this service will handle
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface PlanningService {
+public interface PlanningService<
+		O extends Operator<I>,
+		M extends Method<T, K, N, C>,
+		T extends Term,
+		K extends Task<T>,
+		N extends TaskNetwork<T, K, C>,
+		C extends Constraint<T>,
+		I extends Condition> {
 	
 	/**
 	 * Find a plan that solve the given problem.
@@ -33,6 +54,6 @@ public interface PlanningService {
 	 * @return a solution
 	 * @throws PlanNotFound if no plan exists for the given problem
 	 */
-	Plan solve(Problem problem) throws PlanNotFound;
+	Plan<O, I> solve(Problem<O, M, T, K, N, C, I> problem) throws PlanNotFound;
 	
 }

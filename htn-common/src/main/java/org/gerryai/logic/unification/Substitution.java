@@ -19,23 +19,22 @@ package org.gerryai.logic.unification;
 
 import java.util.Map;
 
-import org.gerryai.logic.Variable;
-
 /**
  * @author David Edwards <david@more.fool.me.uk>
  * @param <T> type of term being substituted
+ * @param <V> type of variable being substituted
  */
-public interface Substitution<T> {
+public interface Substitution<T, V> {
 
 	/**
 	 * Get the substitution map.
 	 * @return the map
 	 */
-	Map<Variable, T> getMap();
+	Map<V, T> getMap();
 	
 	/**
 	 * Set the substitution map.
 	 * @param map the map to set
 	 */
-	void setMap(Map<Variable, T> map);
+	void setMap(Map<V, T> map);
 }

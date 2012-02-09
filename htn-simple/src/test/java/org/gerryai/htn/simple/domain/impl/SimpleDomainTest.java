@@ -23,8 +23,6 @@ import static org.mockito.Mockito.mock;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.domain.Operator;
 import org.junit.Test;
 
 /**
@@ -35,7 +33,7 @@ public class SimpleDomainTest {
 
 	@Test
 	public void testOperators() {
-		Set<Operator> operators = new HashSet<Operator>();
+		Set<SimpleOperator> operators = new HashSet<SimpleOperator>();
 		
 		SimpleDomainBuilder mockBuilder = mock(SimpleDomainBuilder.class);
 		SimpleDomain domain = new SimpleDomain(mockBuilder);
@@ -47,7 +45,7 @@ public class SimpleDomainTest {
 
 	@Test
 	public void testMethods() {
-		Set<Method> methods = new HashSet<Method>();
+		Set<SimpleMethod> methods = new HashSet<SimpleMethod>();
 		
 		SimpleDomainBuilder mockBuilder = mock(SimpleDomainBuilder.class);
 		SimpleDomain domain = new SimpleDomain(mockBuilder);

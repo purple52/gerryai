@@ -25,10 +25,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.domain.Domain;
-import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.domain.OperatorNotFound;
-import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.junit.Test;
 
 /**
@@ -43,7 +45,10 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetDomain() {
 		
-		Domain mockDomain = mock(Domain.class);
+		@SuppressWarnings("unchecked")
+		Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockDomain = mock(Domain.class);
 		
 		// Create the domain helper under test
 		SimpleDomainHelper domainHelper = new SimpleDomainHelper(mockDomain);
@@ -57,8 +62,12 @@ public class SimpleDomainHelperTest {
 	 */
 	@Test(expected=OperatorNotFound.class)
 	public void testGetOperatorByNameEmptyList() throws OperatorNotFound {
-		Domain mockDomain = mock(Domain.class);
-		when(mockDomain.getOperators()).thenReturn(new HashSet<Operator>());
+		
+		@SuppressWarnings("unchecked")
+		Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockDomain = mock(Domain.class);
+		when(mockDomain.getOperators()).thenReturn(new HashSet<SimpleOperator>());
 
 		// Create the domain helper under test
 		SimpleDomainHelper domainHelper = new SimpleDomainHelper(mockDomain);
@@ -72,12 +81,15 @@ public class SimpleDomainHelperTest {
 	 */
 	@Test(expected=OperatorNotFound.class)
 	public void testGetOperatorByNameNotFound() throws OperatorNotFound {
-		Domain mockDomain = mock(Domain.class);
-		Operator mockOperatorA = mock(Operator.class);
+		@SuppressWarnings("unchecked")
+		Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockDomain = mock(Domain.class);
+		SimpleOperator mockOperatorA = mock(SimpleOperator.class);
 		when(mockOperatorA.getName()).thenReturn("operatorA");
-		Operator mockOperatorB = mock(Operator.class);
+		SimpleOperator mockOperatorB = mock(SimpleOperator.class);
 		when(mockOperatorB.getName()).thenReturn("operatorB");
-		Set<Operator> operators = new HashSet<Operator>();
+		Set<SimpleOperator> operators = new HashSet<SimpleOperator>();
 		operators.add(mockOperatorA);
 		operators.add(mockOperatorB);
 		when(mockDomain.getOperators()).thenReturn(operators);
@@ -94,12 +106,15 @@ public class SimpleDomainHelperTest {
 	 */
 	@Test
 	public void testGetOperatorByNameFound() throws OperatorNotFound {
-		Domain mockDomain = mock(Domain.class);
-		Operator mockOperatorA = mock(Operator.class);
+		@SuppressWarnings("unchecked")
+		Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockDomain = mock(Domain.class);
+		SimpleOperator mockOperatorA = mock(SimpleOperator.class);
 		when(mockOperatorA.getName()).thenReturn("operatorA");
-		Operator mockOperatorB = mock(Operator.class);
+		SimpleOperator mockOperatorB = mock(SimpleOperator.class);
 		when(mockOperatorB.getName()).thenReturn("operatorB");
-		Set<Operator> operators = new HashSet<Operator>();
+		Set<SimpleOperator> operators = new HashSet<SimpleOperator>();
 		operators.add(mockOperatorA);
 		operators.add(mockOperatorB);
 		when(mockDomain.getOperators()).thenReturn(operators);
@@ -117,10 +132,13 @@ public class SimpleDomainHelperTest {
 	 */
 	@Test
 	public void testGetMethodByTaskEmptyList() {
-		Domain mockDomain = mock(Domain.class);
-		when(mockDomain.getMethods()).thenReturn(new HashSet<Method>());
+		@SuppressWarnings("unchecked")
+		Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockDomain = mock(Domain.class);
+		when(mockDomain.getMethods()).thenReturn(new HashSet<SimpleMethod>());
 
-		Task mockTask = mock(Task.class);
+		SimpleTask mockTask = mock(SimpleTask.class);
 		
 		// Create the domain helper under test
 		SimpleDomainHelper domainHelper = new SimpleDomainHelper(mockDomain);
@@ -134,21 +152,24 @@ public class SimpleDomainHelperTest {
 	 */
 	@Test
 	public void testGetMethodByTaskNotFound() {
-		Domain mockDomain = mock(Domain.class);
+		@SuppressWarnings("unchecked")
+		Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockDomain = mock(Domain.class);
 		
-		Task mockTaskA = mock(Task.class);
+		SimpleTask mockTaskA = mock(SimpleTask.class);
 		when(mockTaskA.getName()).thenReturn("taskA");
-		Task mockTaskB = mock(Task.class);
+		SimpleTask mockTaskB = mock(SimpleTask.class);
 		when(mockTaskB.getName()).thenReturn("taskB");
-		Task mockTaskC = mock(Task.class);
+		SimpleTask mockTaskC = mock(SimpleTask.class);
 		when(mockTaskC.getName()).thenReturn("taskC");
 		
-		Method mockMethodA = mock(Method.class);
+		SimpleMethod mockMethodA = mock(SimpleMethod.class);
 		when(mockMethodA.getTask()).thenReturn(mockTaskA);
-		Method mockMethodB = mock(Method.class);
+		SimpleMethod mockMethodB = mock(SimpleMethod.class);
 		when(mockMethodB.getTask()).thenReturn(mockTaskB);
 		
-		Set<Method> methods = new HashSet<Method>();
+		Set<SimpleMethod> methods = new HashSet<SimpleMethod>();
 		methods.add(mockMethodA);
 		methods.add(mockMethodB);
 		when(mockDomain.getMethods()).thenReturn(methods);
@@ -165,19 +186,22 @@ public class SimpleDomainHelperTest {
 	 */
 	@Test
 	public void testGetMethodByTaskOneFound() {
-		Domain mockDomain = mock(Domain.class);
+		@SuppressWarnings("unchecked")
+		Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockDomain = mock(Domain.class);
 		
-		Task mockTaskA = mock(Task.class);
+		SimpleTask mockTaskA = mock(SimpleTask.class);
 		when(mockTaskA.getName()).thenReturn("taskA");
-		Task mockTaskB = mock(Task.class);
+		SimpleTask mockTaskB = mock(SimpleTask.class);
 		when(mockTaskB.getName()).thenReturn("taskB");
 		
-		Method mockMethodA = mock(Method.class);
+		SimpleMethod mockMethodA = mock(SimpleMethod.class);
 		when(mockMethodA.getTask()).thenReturn(mockTaskA);
-		Method mockMethodB = mock(Method.class);
+		SimpleMethod mockMethodB = mock(SimpleMethod.class);
 		when(mockMethodB.getTask()).thenReturn(mockTaskB);
 		
-		Set<Method> methods = new HashSet<Method>();
+		Set<SimpleMethod> methods = new HashSet<SimpleMethod>();
 		methods.add(mockMethodA);
 		methods.add(mockMethodB);
 		when(mockDomain.getMethods()).thenReturn(methods);
@@ -197,21 +221,24 @@ public class SimpleDomainHelperTest {
 	 */
 	@Test
 	public void testGetMethodByTaskTwoFound() {
-		Domain mockDomain = mock(Domain.class);
+		@SuppressWarnings("unchecked")
+		Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockDomain = mock(Domain.class);
 		
-		Task mockTaskA = mock(Task.class);
+		SimpleTask mockTaskA = mock(SimpleTask.class);
 		when(mockTaskA.getName()).thenReturn("taskA");
-		Task mockTaskB = mock(Task.class);
+		SimpleTask mockTaskB = mock(SimpleTask.class);
 		when(mockTaskB.getName()).thenReturn("taskB");
 		
-		Method mockMethodA = mock(Method.class);
+		SimpleMethod mockMethodA = mock(SimpleMethod.class);
 		when(mockMethodA.getTask()).thenReturn(mockTaskA);
-		Method mockMethodB = mock(Method.class);
+		SimpleMethod mockMethodB = mock(SimpleMethod.class);
 		when(mockMethodB.getTask()).thenReturn(mockTaskB);
-		Method mockMethodC = mock(Method.class);
+		SimpleMethod mockMethodC = mock(SimpleMethod.class);
 		when(mockMethodC.getTask()).thenReturn(mockTaskB);
 		
-		Set<Method> methods = new HashSet<Method>();
+		Set<SimpleMethod> methods = new HashSet<SimpleMethod>();
 		methods.add(mockMethodA);
 		methods.add(mockMethodB);
 		methods.add(mockMethodC);

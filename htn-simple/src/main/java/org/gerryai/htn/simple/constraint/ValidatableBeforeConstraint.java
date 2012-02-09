@@ -18,15 +18,17 @@
 package org.gerryai.htn.simple.constraint;
 
 import org.gerryai.htn.constraint.BeforeConstraint;
-import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Term;
 
 /**
  * Extension of validatable and precedence constraint interfaces.
- * @param <V> class of constraint validator required
+ * @param <T> type of logical term this constraint uses
+ * @param <K> type of task  the constraint applies to
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ValidatableBeforeConstraint<V extends ConstraintValidator> extends
-		ValidatableConstraint<V>, BeforeConstraint {
+public interface ValidatableBeforeConstraint<T extends Term, K extends Task<T>>
+		extends ValidatableConstraint<T, K>, BeforeConstraint<T, K> {
 
 }

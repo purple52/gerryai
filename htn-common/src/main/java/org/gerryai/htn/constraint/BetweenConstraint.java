@@ -21,24 +21,27 @@ import java.util.Set;
 
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Term;
 
 /**
  * Interface for a constraint that dictates the state immediately after this task.
+ * @param <T> type of logical term this constraint works with
+ * @param <K> type of task this constraint works with
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface BetweenConstraint extends Constraint {
+public interface BetweenConstraint<T extends Term, K extends Task<T>> extends Constraint<T> {
 
 	/**
 	 * The set of tasks after which this constraint must hold.
 	 * @return the set of tasks
 	 */
-	Set<Task> getPrecedingTasks();
+	Set<K> getPrecedingTasks();
 
 	/**
 	 * The set of tasks before which this constraint must hold.
 	 * @return the set of tasks
 	 */
-	Set<Task> getProcedingTasks();
+	Set<K> getProcedingTasks();
 	
 	
 	/**

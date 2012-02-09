@@ -21,13 +21,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.plan.TaskNotActionable;
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.domain.impl.SimpleMethod;
+import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
-import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
@@ -36,23 +41,31 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleActionFactoryHelper implements ActionFactoryHelper {
+public class SimpleActionFactoryHelper implements ActionFactoryHelper<SimpleOperator,
+		SimpleTerm, SimpleTask, SimpleCondition> {
 
 	/**
 	 * Service for the domain that we are working in.
 	 */
-	private DomainHelper domainHelper;
+	private DomainHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask,
+			SimpleTaskNetwork, ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> domainHelper;
 	
-	public SimpleActionFactoryHelper(DomainHelper domainHelper) {
+	/**
+	 * Constructor requiring a domain helper.
+	 * @param domainHelper helper to use
+	 */
+	public SimpleActionFactoryHelper(DomainHelper<SimpleOperator, SimpleMethod,
+			SimpleTerm, SimpleTask, SimpleTaskNetwork,
+			ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> domainHelper) {
 		this.domainHelper = domainHelper;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Operator getOperator(Task task) throws TaskNotActionable {
+	public final SimpleOperator getOperator(SimpleTask task) throws TaskNotActionable {
 		
-		Operator operator;
+		SimpleOperator operator;
 		
 		try {
 			operator = domainHelper.getOperatorByName(task.getName());
@@ -66,13 +79,13 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Bindings getBindings(Task task, Operator operator) throws TaskNotActionable {
+	public final Bindings getBindings(SimpleTask task, SimpleOperator operator) throws TaskNotActionable {
 
 		Bindings bindings = new Bindings();
 		Map<Variable, Constant> bindingsMap = new HashMap<Variable, Constant>();
 		bindings.setMap(bindingsMap);
 		
-		List<Term> taskArguments = task.getArguments();
+		List<SimpleTerm> taskArguments = task.getArguments();
 		List<Variable> operatorArguments = operator.getArguments();
 		
 		if (taskArguments.size() != operatorArguments.size()) {

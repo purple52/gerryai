@@ -17,17 +17,20 @@
  */
 package org.gerryai.htn.simple.plan;
 
+import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Plan;
 
 /**
+ * @param <O> type of operator this action uses
+ * @param <I> type of condition the action uses
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface PlanFactory {
+public interface PlanFactory<O extends Operator<I>, I extends Condition> {
 
 	/**
 	 * Create a new empty plan.
 	 * @return an empty plan
 	 */
-	Plan create();
+	Plan<O, I> create();
 }

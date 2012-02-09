@@ -17,42 +17,45 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Effect;
-import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainBuilder;
 import org.gerryai.htn.simple.domain.MethodBuilder;
 import org.gerryai.htn.simple.domain.OperatorBuilder;
 import org.gerryai.htn.simple.domain.DomainBuilderFactory;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public class SimpleDomainBuilderFactory implements
-		DomainBuilderFactory<Operator, Method, Task, TaskNetwork, Condition, Effect> {
+		DomainBuilderFactory<SimpleDomain, SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask,
+				SimpleTaskNetwork, ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition, Effect> {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final DomainBuilder<Operator, Method> createDomainBuilder() {
+	public final DomainBuilder<SimpleDomain, SimpleOperator, SimpleMethod, SimpleTerm,
+			SimpleTask, SimpleTaskNetwork, ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+			createDomainBuilder() {
 		return new SimpleDomainBuilder();	
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final OperatorBuilder<Condition, Effect> createOperatorBuilder() {
+	public final SimpleOperatorBuilder createOperatorBuilder() {
 		return new SimpleOperatorBuilder();	
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public MethodBuilder<Task, TaskNetwork> createMethodBuilder() {
+	public final SimpleMethodBuilder createMethodBuilder() {
 		// TODO Auto-generated method stub
 		return new SimpleMethodBuilder();
 	}

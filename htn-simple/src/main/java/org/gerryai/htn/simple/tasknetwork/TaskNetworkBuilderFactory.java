@@ -17,17 +17,34 @@
  */
 package org.gerryai.htn.simple.tasknetwork;
 
+import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Term;
+
 /**
  * Interface for a factory that creates task network builders.
  * @param <T> the class of task the builder will handle
+ * @param <K> type of task this factory uses
+ * @param <N> type of task network this factory uses
  * @param <C> the class of constraint the builder will handle
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface TaskNetworkBuilderFactory<T, C> {
+public interface TaskNetworkBuilderFactory<
+		T extends Term,
+		K extends Task<T>,
+		N extends TaskNetwork<T, K, C>,
+		C extends Constraint<T>> {
 
 	/**
 	 * Create a task network builder of the required type.
 	 * @return the task network builder
 	 */
-	TaskNetworkBuilder<T, C> create();
+	TaskNetworkBuilder<T, K, N, C> createTaskNetworkBuilder();
+	
+	/**
+	 * Create a task builder of the required type.
+	 * @return the task builder
+	 */
+	TaskBuilder<T, K> createTaskBuilder();
 }

@@ -19,7 +19,9 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 
 import java.util.Set;
 
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
@@ -27,23 +29,25 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleTaskNetwork implements TaskNetwork {
+public class SimpleTaskNetwork implements TaskNetwork<SimpleTerm, SimpleTask,
+		ValidatableConstraint<SimpleTerm, SimpleTask>> {
 
 	/**
 	 * Set of tasks to be solved in this network.
 	 */
-	private Set<Task> tasks;
+	private Set<SimpleTask> tasks;
 	
 	/**
 	 * Set of constraints to be met.
 	 */
-	private Set<Constraint> constraints;
+	private Set<ValidatableConstraint<SimpleTerm, SimpleTask>> constraints;
 	
 	/**
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
-	protected SimpleTaskNetwork(SimpleTaskNetworkBuilder<?> builder) {
+	protected SimpleTaskNetwork(TaskNetworkBuilder<SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>> builder) {
 		this.setTasks(builder.getTasks());
 		this.setConstraints(builder.getConstraints());
 	}
@@ -51,28 +55,30 @@ public class SimpleTaskNetwork implements TaskNetwork {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<Task> getTasks() {
+	public final Set<SimpleTask> getTasks() {
 		return tasks;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setTasks(Set<Task> tasks) {
+	public final void setTasks(Set<SimpleTask> tasks) {
 		this.tasks = tasks;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<Constraint> getConstraints() {
+	public final Set<ValidatableConstraint<
+			SimpleTerm, SimpleTask>> getConstraints() {
 		return constraints;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setConstraints(Set<Constraint> constraints) {
+	public final void setConstraints(Set<ValidatableConstraint<
+			SimpleTerm, SimpleTask>> constraints) {
 		this.constraints = constraints;
 	}
 
@@ -81,7 +87,7 @@ public class SimpleTaskNetwork implements TaskNetwork {
 	 */
 	public final boolean isPrimitive() {
 		
-		for (Task task : getTasks()) {
+		for (Task<SimpleTerm> task : getTasks()) {
 			if (!task.isPrimitive()) {
 				// If any of our tasks are non-primitive, the whole network is non-primitive
 				return false;

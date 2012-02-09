@@ -17,39 +17,51 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
-import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.problem.State;
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.domain.impl.SimpleMethod;
+import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 
 /**
  * Implementation of a planner.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimplePlanner implements Planner {
+public class SimplePlanner implements
+		Planner<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+		ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> {
 	
 	/**
 	 * Manager the domain being worked in.
 	 */
-	private DomainHelper domainHelper;
+	private DomainHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+	ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> domainHelper;
 	
 	/**
 	 * Helper for off-loading some of the logic.
 	 */
-	private PlannerHelper plannerHelper;
+	private PlannerHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+	ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> plannerHelper;
 	
 	/**
 	 * Constructor taking the domain manager and planner helper to use.
 	 * @param domainHelper the domain manager
 	 * @param plannerHelper the planner helper
 	 */
-	public SimplePlanner(DomainHelper domainHelper, PlannerHelper plannerHelper) {
+	public SimplePlanner(
+			DomainHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+					ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> domainHelper,
+			PlannerHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+					ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> plannerHelper) {
 		this.domainHelper = domainHelper;
 		this.plannerHelper = plannerHelper;
 	}
@@ -57,7 +69,8 @@ public class SimplePlanner implements Planner {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Plan findPlan(State state, TaskNetwork taskNetwork) throws PlanNotFound {
+	public final Plan<SimpleOperator, SimpleCondition>
+			findPlan(State state, SimpleTaskNetwork taskNetwork) throws PlanNotFound {
 		
 		if (plannerHelper.isUnsolvable(taskNetwork)) {
 			// 1. No solution
@@ -67,14 +80,14 @@ public class SimplePlanner implements Planner {
 
 			try {
 				// Try and find a non-primitive task to deal with
-				Task task = plannerHelper.getNonPrimitiveTask(taskNetwork);
+				SimpleTask task = plannerHelper.getNonPrimitiveTask(taskNetwork);
 
 				// 3. Task network is non-primitive
 				// TODO: Confirm implementation
 				// TODO: Handle state changes (and correct backtracking?)			
-				for (Method method : domainHelper.getMethodsByTask(task)) {
+				for (SimpleMethod method : domainHelper.getMethodsByTask(task)) {
 					try {
-						TaskNetwork decomposedNetwork = plannerHelper.decompose(taskNetwork, task, method);
+						SimpleTaskNetwork decomposedNetwork = plannerHelper.decompose(taskNetwork, task, method);
 						// Try recursing to further process the decomposed network
 						return findPlan(state, decomposedNetwork);
 					} catch (DecompositionNotFound e) {

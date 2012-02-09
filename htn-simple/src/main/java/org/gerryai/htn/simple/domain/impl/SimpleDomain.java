@@ -20,25 +20,29 @@ package org.gerryai.htn.simple.domain.impl;
 import java.util.Set;
 
 import org.gerryai.htn.domain.Domain;
-import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 
 /**
  * Simple representation of a domain.
  * Wraps a set of operators and a set of methods to define the domain.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleDomain implements Domain {
+public class SimpleDomain implements Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+		ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> {
 
 	/**
 	 * Operators available in this domain.
 	 */
-	private Set<Operator> operators;
+	private Set<SimpleOperator> operators;
 	
 	/**
 	 * Methods available in this domain.
 	 */
-	private Set<Method> methods;
+	private Set<SimpleMethod> methods;
 	
 	/**
 	 * Constructor for a simple domain.
@@ -52,28 +56,28 @@ public class SimpleDomain implements Domain {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<Operator> getOperators() {
+	public final Set<SimpleOperator> getOperators() {
 		return operators;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setOperators(Set<Operator> operators) {
+	public final void setOperators(Set<SimpleOperator> operators) {
 		this.operators = operators;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<Method> getMethods() {
+	public final Set<SimpleMethod> getMethods() {
 		return methods;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setMethods(Set<Method> methods) {
+	public final void setMethods(Set<SimpleMethod> methods) {
 		this.methods = methods;
 	}
 

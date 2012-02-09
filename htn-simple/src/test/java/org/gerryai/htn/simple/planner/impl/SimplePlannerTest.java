@@ -26,16 +26,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.State;
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.domain.impl.SimpleMethod;
+import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.junit.Test;
 
 /**
@@ -53,23 +57,31 @@ public class SimplePlannerTest {
 	public void testEmptyProblem() throws PlanNotFound, NonPrimitiveTaskNotFound {
 		
 		State mockState = mock(State.class);
-		TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
-		Plan mockPlan = mock(Plan.class);
-		List<Action> actions = new ArrayList<Action>();
+		SimpleTaskNetwork mockTaskNetwork = mock(SimpleTaskNetwork.class);
+		@SuppressWarnings("unchecked")
+		Plan<SimpleOperator, SimpleCondition> mockPlan = mock(Plan.class);
+		List<Action<SimpleOperator, SimpleCondition>> actions
+				= new ArrayList<Action<SimpleOperator, SimpleCondition>>();
 		when(mockPlan.getActions()).thenReturn(actions);
 		
 		// Create a mock planner helper that will throw an exception if no primitive tasks were found
 		// And no plan if an empty network is searched
-		PlannerHelper mockPlannerHelper = mock(PlannerHelper.class);
+		@SuppressWarnings("unchecked")
+		PlannerHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockPlannerHelper = mock(PlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenThrow(new NonPrimitiveTaskNotFound());
 		when(mockPlannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork)).thenReturn(mockPlan);
-		DomainHelper mockDomainHelper = mock(DomainHelper.class);
+		@SuppressWarnings("unchecked")
+		DomainHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockDomainHelper = mock(DomainHelper.class);
 		
 		// Create the planner to be tested
 		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
 		
 		// Try and find a plan
-		Plan plan = planner.findPlan(mockState, mockTaskNetwork);
+		Plan<SimpleOperator, SimpleCondition> plan = planner.findPlan(mockState, mockTaskNetwork);
 		
 		assertTrue(plan.getActions().isEmpty());
 	}
@@ -84,19 +96,24 @@ public class SimplePlannerTest {
 		
 		State mockState = mock(State.class);
 		
-		Task mockTaskA = mock(Task.class);
-		Set<Task> tasks = new HashSet<Task>();
+		SimpleTask mockTaskA = mock(SimpleTask.class);
+		Set<SimpleTask> tasks = new HashSet<SimpleTask>();
 		tasks.add(mockTaskA);
-		TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
+		SimpleTaskNetwork mockTaskNetwork = mock(SimpleTaskNetwork.class);
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
 		
 		// Create a mock planner helper that will throw an exception since no non-primitive tasks were found
 		// and an exception when trying to action the primitive task
-		PlannerHelper mockPlannerHelper = mock(PlannerHelper.class);
+		@SuppressWarnings("unchecked")
+		PlannerHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockPlannerHelper = mock(PlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenThrow(new NonPrimitiveTaskNotFound());
 		when(mockPlannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork)).thenThrow(new PlanNotFound());
-		
-		DomainHelper mockDomainHelper = mock(DomainHelper.class);
+		@SuppressWarnings("unchecked")
+		DomainHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockDomainHelper = mock(DomainHelper.class);
 		
 		// Create the planner to be tested
 		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
@@ -115,19 +132,24 @@ public class SimplePlannerTest {
 		
 		State mockState = mock(State.class);
 		
-		Task mockTaskA = mock(Task.class);
-		Set<Task> tasks = new HashSet<Task>();
+		SimpleTask mockTaskA = mock(SimpleTask.class);
+		Set<SimpleTask> tasks = new HashSet<SimpleTask>();
 		tasks.add(mockTaskA);
-		TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
+		SimpleTaskNetwork mockTaskNetwork = mock(SimpleTaskNetwork.class);
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
 		
 		// Create a mock planner helper that will throw an exception since no non-primitive tasks were found
 		// and an exception when trying to action the primitive task
-		PlannerHelper mockPlannerHelper = mock(PlannerHelper.class);
+		@SuppressWarnings("unchecked")
+		PlannerHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockPlannerHelper = mock(PlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenReturn(mockTaskA);
-		
-		DomainHelper mockDomainHelper = mock(DomainHelper.class);
-		Set<Method> methods = new HashSet<Method>();
+		@SuppressWarnings("unchecked")
+		DomainHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockDomainHelper = mock(DomainHelper.class);
+		Set<SimpleMethod> methods = new HashSet<SimpleMethod>();
 		when(mockDomainHelper.getMethodsByTask(mockTaskA)).thenReturn(methods);
 		
 		// Create the planner to be tested
@@ -148,24 +170,30 @@ public class SimplePlannerTest {
 		
 		State mockState = mock(State.class);
 		
-		Task mockTaskA = mock(Task.class);
-		Set<Task> tasks = new HashSet<Task>();
+		SimpleTask mockTaskA = mock(SimpleTask.class);
+		Set<SimpleTask> tasks = new HashSet<SimpleTask>();
 		tasks.add(mockTaskA);
-		TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
+		SimpleTaskNetwork mockTaskNetwork = mock(SimpleTaskNetwork.class);
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
 
 		// Create a domain helper that has two potentially matching methods
-		DomainHelper mockDomainHelper = mock(DomainHelper.class);
-		Method mockMethodA = mock(Method.class);
-		Method mockMethodB = mock(Method.class);
-		Set<Method> methods = new HashSet<Method>();
+		@SuppressWarnings("unchecked")
+		DomainHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockDomainHelper = mock(DomainHelper.class);
+		SimpleMethod mockMethodA = mock(SimpleMethod.class);
+		SimpleMethod mockMethodB = mock(SimpleMethod.class);
+		Set<SimpleMethod> methods = new HashSet<SimpleMethod>();
 		methods.add(mockMethodA);
 		methods.add(mockMethodB);
 		when(mockDomainHelper.getMethodsByTask(mockTaskA)).thenReturn(methods);
 		
 		// Create a mock planner helper that will throw an exception since no non-primitive tasks were found
 		// and an exception when trying to action the primitive task
-		PlannerHelper mockPlannerHelper = mock(PlannerHelper.class);
+		@SuppressWarnings("unchecked")
+		PlannerHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockPlannerHelper = mock(PlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenReturn(mockTaskA);
 		when(mockPlannerHelper.decompose(mockTaskNetwork, mockTaskA, mockMethodA)).thenThrow(new DecompositionNotFound());
 		when(mockPlannerHelper.decompose(mockTaskNetwork, mockTaskA, mockMethodB)).thenThrow(new DecompositionNotFound());
@@ -187,30 +215,38 @@ public class SimplePlannerTest {
 		
 		State mockState = mock(State.class);
 		
-		Task mockTaskA = mock(Task.class);
-		Set<Task> tasks = new HashSet<Task>();
+		SimpleTask mockTaskA = mock(SimpleTask.class);
+		Set<SimpleTask> tasks = new HashSet<SimpleTask>();
 		tasks.add(mockTaskA);
-		TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
+		SimpleTaskNetwork mockTaskNetwork = mock(SimpleTaskNetwork.class);
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
 		
-		Plan mockPlan = mock(Plan.class);
-		List<Action> actions = new ArrayList<Action>();
-		Action mockActionA = mock(Action.class);
+		@SuppressWarnings("unchecked")
+		Plan<SimpleOperator, SimpleCondition> mockPlan = mock(Plan.class);
+		List<Action<SimpleOperator, SimpleCondition>> actions = new ArrayList<Action<SimpleOperator, SimpleCondition>>();
+		@SuppressWarnings("unchecked")
+		Action<SimpleOperator, SimpleCondition> mockActionA = mock(Action.class);
 		actions.add(mockActionA);
 		when(mockPlan.getActions()).thenReturn(actions);
 		
 		// Create a mock planner helper that will throw an exception if no primitive tasks were found
 		// and a plan that returns one action in response to our network of one primitive task
-		PlannerHelper mockPlannerHelper = mock(PlannerHelper.class);
+		@SuppressWarnings("unchecked")
+		PlannerHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockPlannerHelper = mock(PlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenThrow(new NonPrimitiveTaskNotFound());
 		when(mockPlannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork)).thenReturn(mockPlan);
-		DomainHelper mockDomainHelper = mock(DomainHelper.class);
+		@SuppressWarnings("unchecked")
+		DomainHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockDomainHelper = mock(DomainHelper.class);
 		
 		// Create the planner to be tested
 		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
 		
 		// Try and find a plan
-		Plan plan = planner.findPlan(mockState, mockTaskNetwork);
+		Plan<SimpleOperator, SimpleCondition> plan = planner.findPlan(mockState, mockTaskNetwork);
 		
 		assertEquals(1, plan.getActions().size());
 		assertEquals(mockActionA, plan.getActions().get(0));
@@ -228,35 +264,43 @@ public class SimplePlannerTest {
 		State mockState = mock(State.class);
 		
 		// Initial task network containing task A
-		Task mockTaskA = mock(Task.class);
-		Set<Task> tasks = new HashSet<Task>();
+		SimpleTask mockTaskA = mock(SimpleTask.class);
+		Set<SimpleTask> tasks = new HashSet<SimpleTask>();
 		tasks.add(mockTaskA);
-		TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
+		SimpleTaskNetwork mockTaskNetwork = mock(SimpleTaskNetwork.class);
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
 
 		// The network that the initial network will decompose into, containing task B
-		Task mockTaskB = mock(Task.class);
-		Set<Task> decomposedTasks = new HashSet<Task>();
+		SimpleTask mockTaskB = mock(SimpleTask.class);
+		Set<SimpleTask> decomposedTasks = new HashSet<SimpleTask>();
 		decomposedTasks.add(mockTaskB);
-		TaskNetwork mockDecomposedTaskNetwork = mock(TaskNetwork.class);
+		SimpleTaskNetwork mockDecomposedTaskNetwork = mock(SimpleTaskNetwork.class);
 		when(mockDecomposedTaskNetwork.getTasks()).thenReturn(decomposedTasks);
 		
 		// The target plan containing action B
-		Plan mockPlan = mock(Plan.class);
-		List<Action> actions = new ArrayList<Action>();
-		Action mockActionB = mock(Action.class);
+		@SuppressWarnings("unchecked")
+		Plan<SimpleOperator, SimpleCondition> mockPlan = mock(Plan.class);
+		List<Action<SimpleOperator, SimpleCondition>> actions = new ArrayList<Action<SimpleOperator, SimpleCondition>>();
+		@SuppressWarnings("unchecked")
+		Action<SimpleOperator, SimpleCondition> mockActionB = mock(Action.class);
 		actions.add(mockActionB);
 		when(mockPlan.getActions()).thenReturn(actions);
 		
 		// Domain helper should return method A for decomposing task A
-		Method mockMethodA = mock(Method.class);
-		Set<Method> methods = new HashSet<Method>();
+		SimpleMethod mockMethodA = mock(SimpleMethod.class);
+		Set<SimpleMethod> methods = new HashSet<SimpleMethod>();
 		methods.add(mockMethodA);
-		DomainHelper mockDomainHelper = mock(DomainHelper.class);
+		@SuppressWarnings("unchecked")
+		DomainHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockDomainHelper = mock(DomainHelper.class);
 		when(mockDomainHelper.getMethodsByTask(mockTaskA)).thenReturn(methods);
 		
 		// Create a mock planner helper
-		PlannerHelper mockPlannerHelper = mock(PlannerHelper.class);
+		@SuppressWarnings("unchecked")
+		PlannerHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				mockPlannerHelper = mock(PlannerHelper.class);
 		// Task A is primitive
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenReturn(mockTaskA);
 		// Method A will decompose task A into task B
@@ -270,7 +314,7 @@ public class SimplePlannerTest {
 		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
 		
 		// Try and find a plan
-		Plan plan = planner.findPlan(mockState, mockTaskNetwork);
+		Plan<SimpleOperator, SimpleCondition> plan = planner.findPlan(mockState, mockTaskNetwork);
 		
 		assertEquals(1, plan.getActions().size());
 		assertEquals(mockActionB, plan.getActions().get(0));

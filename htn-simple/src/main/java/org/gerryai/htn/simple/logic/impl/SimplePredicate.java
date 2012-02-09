@@ -17,10 +17,15 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.simple.decomposition.SimpleSubstituter;
+import org.gerryai.htn.simple.decomposition.Substitutable;
+import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 import org.gerryai.logic.Term;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
@@ -29,19 +34,41 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePredicate extends Predicate implements Condition {
+public class SimplePredicate extends Predicate implements Condition, SimpleTerm {
 
-	private List<Term> terms;
+	/**
+	 * List of terms belonging to this predicate.
+	 */
+	private List<SimpleTerm> terms;
 	
-	private static AIMAConverter converter;
+	private static AIMAConverter<SimpleTerm, SimpleVariable, SimpleTask> converter;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final String getName() {
+		return this.getSymbolicName();
+	}
 	
 	/**
 	 * @param predicateName
-	 * @param terms
+	 * @param updatedTerms
 	 */
-	public SimplePredicate(String predicateName, List<Term> terms) {
+	public SimplePredicate(String predicateName, List<SimpleTerm> terms) {
 		super(predicateName, converter.convert(terms));
 		this.terms = terms;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final SimpleTerm apply(
+			SimpleSubstituter<SimpleTerm, SimpleVariable, SimpleConstant> substituter) {
+		List<SimpleTerm> updatedTerms = new ArrayList<SimpleTerm>();
+		for (SimpleTerm term : terms) {
+			updatedTerms.add(term.apply(substituter));
+		}
+		return new SimplePredicate(this.getSymbolicName(), updatedTerms);
 	}
 
 }

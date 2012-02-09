@@ -17,16 +17,29 @@
  */
 package org.gerryai.htn.simple.decomposition;
 
+import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.unification.Unifier;
+import org.gerryai.logic.Term;
+import org.gerryai.logic.unification.Substitution;
 
 /**
+ * @param <M> type of method this service can decompose
+ * @param <T> type of term this service can use to decompose
+ * @param <K> type of task this service works with
+ * @param <N> type of task network this service works with
+ * @param <C> type of constraint this service works with
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface DecompositionService {
+public interface DecompositionService<
+		M extends Method<T, K, N, C>,
+		T extends Term,
+		K extends Task<T>,
+		N extends TaskNetwork<T, K, C>,
+		C extends Constraint<T>> {
 
 	/**
 	 * Decomposes a task within a task network using the given method and unifier.
@@ -36,6 +49,6 @@ public interface DecompositionService {
 	 * @param method the method with which to decompose the task
 	 * @return the decomposed task network
 	 */
-	TaskNetwork decompose(Unifier unifier, TaskNetwork taskNetwork, Task task, Method method);
+	N decompose(Substitution<T, SimpleVariable> unifier, N taskNetwork, K task, M method);
 	
 }

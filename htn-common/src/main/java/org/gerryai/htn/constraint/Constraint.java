@@ -17,10 +17,13 @@
  */
 package org.gerryai.htn.constraint;
 
+import org.gerryai.logic.Term;
+
 /**
  * Interface that constraints must implement.
+ * @param <T> type of logical term this constraint works with
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Constraint {
+public interface Constraint<T extends Term> {
 
 }

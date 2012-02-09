@@ -24,12 +24,13 @@ import java.util.Map;
 
 import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.simple.logic.impl.SimpleConstant;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.logic.impl.SimpleUnifier;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
-import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
-import org.gerryai.logic.unification.Unifier;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
 
@@ -37,12 +38,12 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  * @author David Edwards <david@more.fool.me.uk>
  * 
  */
-public class AIMAConverterImpl implements AIMAConverter {
+public class AIMAConverterImpl implements AIMAConverter<SimpleTerm, SimpleVariable, SimpleTask> {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Predicate convert(Task task) {
+	public final Predicate convert(SimpleTask task) {
 
 		String name = task.getName();
 		List<aima.core.logic.fol.parsing.ast.Term> terms = convert(task.getArguments());
@@ -53,7 +54,7 @@ public class AIMAConverterImpl implements AIMAConverter {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<aima.core.logic.fol.parsing.ast.Term> convert(List<Term> terms) {
+	public final List<aima.core.logic.fol.parsing.ast.Term> convert(List<SimpleTerm> terms) {
 		List<aima.core.logic.fol.parsing.ast.Term> aimaTerms = new ArrayList<aima.core.logic.fol.parsing.ast.Term>();
 		for (Term taskTerm : terms) {
 			aima.core.logic.fol.parsing.ast.Term term = convert(taskTerm);
@@ -81,20 +82,20 @@ public class AIMAConverterImpl implements AIMAConverter {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Unifier convert(Map<aima.core.logic.fol.parsing.ast.Variable,
+	public final SimpleUnifier convert(Map<aima.core.logic.fol.parsing.ast.Variable,
 			aima.core.logic.fol.parsing.ast.Term> map) {
 		
-		Map<Variable, Term> substitutionMap = new HashMap<Variable, Term>();
+		Map<SimpleVariable, SimpleTerm> substitutionMap = new HashMap<SimpleVariable, SimpleTerm>();
 
 		for (aima.core.logic.fol.parsing.ast.Variable variable : map.keySet()) {
 
 			// TODO: Avoid cast
-			Variable key = (Variable)convert(variable);
-			Term value = convert(map.get(variable));
+			SimpleVariable key = (SimpleVariable) convert(variable);
+			SimpleTerm value = convert(map.get(variable));
 			substitutionMap.put(key, value);
 		}
 
-		Unifier substitution = new Unifier();
+		SimpleUnifier substitution = new SimpleUnifier();
 		substitution.setMap(substitutionMap);
 		return substitution;
 	}
@@ -120,9 +121,9 @@ public class AIMAConverterImpl implements AIMAConverter {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Term convert(aima.core.logic.fol.parsing.ast.Term aimaTerm) {
+	public final SimpleTerm convert(aima.core.logic.fol.parsing.ast.Term aimaTerm) {
 		 // TODO Implement properly
-		Term term;
+		SimpleTerm term;
 		if (aimaTerm instanceof aima.core.logic.fol.parsing.ast.Constant) {
 			term = new SimpleConstant(aimaTerm.getSymbolicName());
 		} else if (aimaTerm instanceof aima.core.logic.fol.parsing.ast.Variable) {

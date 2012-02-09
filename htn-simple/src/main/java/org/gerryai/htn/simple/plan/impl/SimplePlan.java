@@ -21,30 +21,31 @@ import java.util.List;
 
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
-
+import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePlan implements Plan {
+public class SimplePlan implements Plan<SimpleOperator, SimpleCondition> {
 
 	/**
 	 * List of actions that implement this plan.
 	 */
-	private List<Action> actions;
+	private List<Action<SimpleOperator, SimpleCondition>> actions;
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<Action> getActions() {
+	public final List<Action<SimpleOperator, SimpleCondition>> getActions() {
 		return actions;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setActions(List<Action> actions) {
+	public final void setActions(List<Action<SimpleOperator, SimpleCondition>> actions) {
 		this.actions = actions;
 	}
 

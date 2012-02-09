@@ -25,8 +25,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Effect;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.logic.Variable;
 import org.junit.Test;
 
@@ -58,7 +58,7 @@ public class SimpleOperatorTest {
 	
 	@Test
 	public void testPreconditions() {
-		Set<Condition> conditions = new HashSet<Condition>();
+		Set<SimpleCondition> conditions = new HashSet<SimpleCondition>();
 		SimpleOperatorBuilder mockBuilder = mock(SimpleOperatorBuilder.class);
 		SimpleOperator operator = new SimpleOperator(mockBuilder);
 		operator.setPreconditions(conditions);

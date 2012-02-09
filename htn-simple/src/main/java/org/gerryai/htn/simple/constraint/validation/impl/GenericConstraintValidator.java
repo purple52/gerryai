@@ -25,66 +25,69 @@ import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.ValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Term;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 /**
  * Class for validating precedence constraints.
+ * @param <T> type of logical term used by teh constraints being validated
+ * @param <K> type of task being used by teh constraints being validated
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleConstraintValidatorImpl implements ConstraintValidator, SimpleConstraintValidator {
+public class GenericConstraintValidator<T extends Term, K extends Task<T>>
+		implements ConstraintValidator<T, K> {
 
 	/**
 	 * Set of tasks that have been added to the validator so far.
 	 */
-	private Set<Task> tasks;
+	private Set<K> tasks;
 	
 	/**
 	 * Set of precedence constraints that have been added so far.
 	 */
-	private Set<ValidatablePrecedenceConstraint<?>> precedenceConstraints;
+	private Set<ValidatablePrecedenceConstraint<T, K>> precedenceConstraints;
 	
 	/**
 	 * Set of before constraints that have been added so far.
 	 */
-	private Set<ValidatableBeforeConstraint<?>> beforeConstraints;
+	private Set<ValidatableBeforeConstraint<T, K>> beforeConstraints;
 
 	/**
 	 * Set of after constraints that have been added so far.
 	 */
-	private Set<ValidatableAfterConstraint<?>> afterConstraints;
+	private Set<ValidatableAfterConstraint<T, K>> afterConstraints;
 
 	/**
 	 * Set of between constraints that have been added so far.
 	 */
-	private Set<ValidatableBetweenConstraint<?>> betweenConstraints;
+	private Set<ValidatableBetweenConstraint<T, K>> betweenConstraints;
 	
 	/**
 	 * Map of precedence constraints, using their preceding task as the key.
 	 * Used to simplify looking for cycles.
 	 */
-	private Multimap<Task, ValidatablePrecedenceConstraint<?>> precedingTasks;
+	private Multimap<K, ValidatablePrecedenceConstraint<T, K>> precedingTasks;
 	
 	/**
 	 * Default constructor.
 	 */
-	public SimpleConstraintValidatorImpl() {
-		tasks = new HashSet<Task>();
-		precedenceConstraints = new HashSet<ValidatablePrecedenceConstraint<?>>();
+	public GenericConstraintValidator() {
+		tasks = new HashSet<K>();
+		precedenceConstraints = new HashSet<ValidatablePrecedenceConstraint<T, K>>();
 		precedingTasks = HashMultimap.create();
-		beforeConstraints = new HashSet<ValidatableBeforeConstraint<?>>();
-		afterConstraints = new HashSet<ValidatableAfterConstraint<?>>();
-		betweenConstraints = new HashSet<ValidatableBetweenConstraint<?>>();
+		beforeConstraints = new HashSet<ValidatableBeforeConstraint<T, K>>();
+		afterConstraints = new HashSet<ValidatableAfterConstraint<T, K>>();
+		betweenConstraints = new HashSet<ValidatableBetweenConstraint<T, K>>();
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ValidatablePrecedenceConstraint<?> constraint) {
+	public final boolean validate(ValidatablePrecedenceConstraint<T, K> constraint) {
 		
 		// Check tasks have already been added
 		if (!tasks.contains(constraint.getPrecedingTask()) || !tasks.contains(constraint.getProcedingTask())) {
@@ -92,7 +95,7 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 		}
 		
 		// Check if an existing identical constraint exists
-		for (ValidatablePrecedenceConstraint<?> existingConstraint : precedenceConstraints) {	
+		for (ValidatablePrecedenceConstraint<T, K> existingConstraint : precedenceConstraints) {	
 			if (existingConstraint.equals(constraint)) {
 				return false;
 			}
@@ -110,15 +113,15 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ValidatableBeforeConstraint<?> constraint) {
+	public final boolean validate(ValidatableBeforeConstraint<T, K> constraint) {
 		// Check tasks have already been added
-		for (Task task : constraint.getTasks()) {
+		for (K task : constraint.getTasks()) {
 			if (!tasks.contains(task)) {
 				return false;
 			}
 		}
 		// Check if an existing identical constraint exists
-		for (ValidatableBeforeConstraint<?> existingConstraint : beforeConstraints) {	
+		for (ValidatableBeforeConstraint<T, K> existingConstraint : beforeConstraints) {	
 			if (existingConstraint.equals(constraint)) {
 				return false;
 			}
@@ -129,15 +132,15 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ValidatableAfterConstraint<?> constraint) {
+	public final boolean validate(ValidatableAfterConstraint<T, K> constraint) {
 		// Check tasks have already been added
-		for (Task task : constraint.getTasks()) {
+		for (K task : constraint.getTasks()) {
 			if (!tasks.contains(task)) {
 				return false;
 			}
 		}
 		// Check if an existing identical constraint exists
-		for (ValidatableAfterConstraint<?> existingConstraint : afterConstraints) {	
+		for (ValidatableAfterConstraint<T, K> existingConstraint : afterConstraints) {	
 			if (existingConstraint.equals(constraint)) {
 				return false;
 			}
@@ -148,20 +151,20 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ValidatableBetweenConstraint<?> constraint) {
+	public final boolean validate(ValidatableBetweenConstraint<T, K> constraint) {
 		// Check tasks have already been added
-		for (Task task : constraint.getPrecedingTasks()) {
+		for (K task : constraint.getPrecedingTasks()) {
 			if (!tasks.contains(task)) {
 				return false;
 			}
 		}
-		for (Task task : constraint.getProcedingTasks()) {
+		for (K task : constraint.getProcedingTasks()) {
 			if (!tasks.contains(task)) {
 				return false;
 			}
 		}
 		// Check if an existing identical constraint exists
-		for (ValidatableBetweenConstraint<?> existingConstraint : betweenConstraints) {	
+		for (ValidatableBetweenConstraint<T, K> existingConstraint : betweenConstraints) {	
 			if (existingConstraint.equals(constraint)) {
 				return false;
 			}
@@ -172,7 +175,8 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ValidatablePrecedenceConstraint<?> constraint) throws InvalidConstraint {
+	public final void add(ValidatablePrecedenceConstraint<T, K> constraint)
+			throws InvalidConstraint {
 		if (validate(constraint)) {
 			precedenceConstraints.add(constraint);
 			precedingTasks.get(constraint.getPrecedingTask()).add(constraint);
@@ -184,7 +188,7 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ValidatableBeforeConstraint<?> constraint)
+	public final void add(ValidatableBeforeConstraint<T, K> constraint)
 			throws InvalidConstraint {
 		if (validate(constraint)) {
 			beforeConstraints.add(constraint);
@@ -196,7 +200,7 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ValidatableAfterConstraint<?> constraint)
+	public final void add(ValidatableAfterConstraint<T, K> constraint)
 			throws InvalidConstraint {
 		if (validate(constraint)) {
 			afterConstraints.add(constraint);
@@ -208,7 +212,7 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ValidatableBetweenConstraint<?> constraint)
+	public final void add(ValidatableBetweenConstraint<T, K> constraint)
 			throws InvalidConstraint {
 		if (validate(constraint)) {
 			betweenConstraints.add(constraint);
@@ -220,7 +224,7 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(Task task) {
+	public final void add(K task) {
 		tasks.add(task);
 	}
 
@@ -230,14 +234,14 @@ public class SimpleConstraintValidatorImpl implements ConstraintValidator, Simpl
 	 * @param nextTask next task we should check from
 	 * @return true if a cycle was found
 	 */
-	private boolean checkForPrecedenceConstraintCycle(Task initialTask, Task nextTask) {
+	private boolean checkForPrecedenceConstraintCycle(K initialTask, K nextTask) {
 		
 		if (initialTask.equals(nextTask)) {
 			return true;
 		} else if (!precedingTasks.containsKey(nextTask)) {
 			return false;
 		} else {
-			for (ValidatablePrecedenceConstraint<?> constraint : precedingTasks.get(nextTask)) {
+			for (ValidatablePrecedenceConstraint<T, K> constraint : precedingTasks.get(nextTask)) {
 				if (checkForPrecedenceConstraintCycle(initialTask, constraint.getProcedingTask())) {
 					return true;
 				}

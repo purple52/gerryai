@@ -15,27 +15,36 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.tasknetwork.impl;
+package org.gerryai.htn.simple.logic.impl;
 
+import java.util.Map;
+
+import org.gerryai.logic.unification.Substitution;
 
 /**
+ * Class representing a unifier of two expressions as a set of substitutions.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleNonPrimitiveTask extends SimpleTask {
+public class SimpleUnifier implements Substitution<SimpleTerm, SimpleVariable> {
 	
 	/**
-	 * @param builder the builder to use to build this task
+	 * The map of variables to terms.
 	 */
-	protected SimpleNonPrimitiveTask(SimpleTaskBuilder builder) {
-		super(builder);
+	private Map<SimpleVariable, SimpleTerm> map;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public final Map<SimpleVariable, SimpleTerm> getMap() {
+		return map;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean isPrimitive() {
-		return false;
+	public final void setMap(Map<SimpleVariable, SimpleTerm> map) {
+		this.map = map;
 	}
 
 }

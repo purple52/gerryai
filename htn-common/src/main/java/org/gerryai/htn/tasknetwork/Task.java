@@ -23,9 +23,10 @@ import org.gerryai.logic.Term;
 
 /**
  * Interface that a task must implement.
+ * @param <T> type of logical term this task works with
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Task {
+public interface Task<T extends Term> {
 
 	/**
 	 * Get this task's name.
@@ -43,13 +44,13 @@ public interface Task {
 	 * Get this task's arguments.
 	 * @return the list of arguments
 	 */
-	List<Term> getArguments();
+	List<T> getArguments();
 	
 	/**
 	 * Set this task's arguments.
 	 * @param arguments arguments to set
 	 */
-	void setArguments(List<Term> arguments);
+	void setArguments(List<T> arguments);
 	
 	/**
 	 * Determine whether this task is a primitive.

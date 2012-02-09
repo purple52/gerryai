@@ -21,18 +21,20 @@ import java.util.Set;
 
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ConstraintFactory;
-import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleConstraintFactory implements ConstraintFactory {
+public class SimpleConstraintFactory implements ConstraintFactory<SimpleTerm, SimpleTask> {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimplePrecedenceConstraint createPrecedenceConstraint(Task precedingTask, Task procedingTask) {
+	public final SimplePrecedenceConstraint
+			createPrecedenceConstraint(SimpleTask precedingTask, SimpleTask procedingTask) {
 		SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint();
 		constraint.setPrecedingTask(precedingTask);
 		constraint.setProcedingTask(procedingTask);
@@ -42,7 +44,7 @@ public class SimpleConstraintFactory implements ConstraintFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleBeforeConstraint createBeforeConstraint(Set<Task> tasks, Condition condition) {
+	public final SimpleBeforeConstraint createBeforeConstraint(Set<SimpleTask> tasks, Condition condition) {
 		SimpleBeforeConstraint constraint = new SimpleBeforeConstraint();
 		constraint.setTasks(tasks);
 		constraint.setCondition(condition);
@@ -52,7 +54,7 @@ public class SimpleConstraintFactory implements ConstraintFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleAfterConstraint createAfterConstraint(Set<Task> tasks, Condition condition) {
+	public final SimpleAfterConstraint createAfterConstraint(Set<SimpleTask> tasks, Condition condition) {
 		SimpleAfterConstraint constraint = new SimpleAfterConstraint();
 		constraint.setTasks(tasks);
 		constraint.setCondition(condition);
@@ -62,8 +64,8 @@ public class SimpleConstraintFactory implements ConstraintFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleBetweenConstraint createBetweenConstraint(Set<Task> precedingTasks,
-			Set<Task> procedingTasks, Condition condition) {
+	public final SimpleBetweenConstraint createBetweenConstraint(Set<SimpleTask> precedingTasks,
+			Set<SimpleTask> procedingTasks, Condition condition) {
 		SimpleBetweenConstraint constraint = new SimpleBetweenConstraint();
 		constraint.setPrecedingTasks(precedingTasks);
 		constraint.setProcedingTasks(procedingTasks);

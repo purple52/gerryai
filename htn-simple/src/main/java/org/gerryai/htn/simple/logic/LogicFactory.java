@@ -22,6 +22,9 @@ import java.util.List;
 /**
  * Interface for a variable factory.
  * @param <V> the type of variable this factory produces
+ * @param <C> type of constant this factory produces
+ * @param <P> type of predicate this factory produces
+ * @param <T> type of term this factory uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
@@ -43,7 +46,8 @@ public interface LogicFactory<V, C, P, T> {
 	
 	/**
 	 * Create a predicate.
-	 * @param name the name of the variable
+	 * @param name the name of the predicate
+	 * @param terms list of terms for the predicate
 	 * @return the variable
 	 */
 	P createPredicate(String name, List<T> terms);

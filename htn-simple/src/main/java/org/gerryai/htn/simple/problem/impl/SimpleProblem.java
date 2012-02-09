@@ -3,7 +3,13 @@ package org.gerryai.htn.simple.problem.impl;
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.problem.State;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.domain.impl.SimpleMethod;
+import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 
 /**
  *  Gerry AI - Open framework for automated planning algorithms
@@ -27,7 +33,8 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleProblem implements Problem {
+public class SimpleProblem implements Problem<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> {
 
 	/**
 	 * The initial state for this problem.
@@ -37,12 +44,13 @@ public class SimpleProblem implements Problem {
 	/**
 	 * The task network to acheive.
 	 */
-	private TaskNetwork taskNetwork;
+	private SimpleTaskNetwork taskNetwork;
 	
 	/**
 	 * The domain to operate in.
 	 */
-	private Domain domain;
+	private Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+	ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> domain;
 	
 	/**
 	 * {@inheritDoc}
@@ -61,28 +69,30 @@ public class SimpleProblem implements Problem {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final TaskNetwork getTaskNetwork() {
+	public final SimpleTaskNetwork getTaskNetwork() {
 		return taskNetwork;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setTaskNetwork(TaskNetwork taskNetwork) {
+	public final void setTaskNetwork(SimpleTaskNetwork taskNetwork) {
 		this.taskNetwork = taskNetwork;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Domain getDomain() {
+	public final Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+	ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> getDomain() {
 		return domain;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setDomain(Domain domain) {
+	public final void setDomain(Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
+			ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> domain) {
 		this.domain = domain;
 	}
 

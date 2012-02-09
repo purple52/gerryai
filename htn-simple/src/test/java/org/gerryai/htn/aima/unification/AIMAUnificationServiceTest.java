@@ -25,13 +25,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.gerryai.htn.aima.AIMAConverter;
+import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.constraint.ValidatableConstraint;
-import org.gerryai.htn.simple.constraint.validation.SimpleConstraintValidator;
+import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.unification.Unifier;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
+import org.gerryai.logic.unification.Substitution;
 import org.junit.Test;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
@@ -48,16 +52,36 @@ public class AIMAUnificationServiceTest {
 	@Test
 	public void testFindUnifier() {
 		aima.core.logic.fol.Unifier aimaUnifier = mock(aima.core.logic.fol.Unifier.class);
-		AIMAConverter aimaConverter = mock(AIMAConverter.class);
-		DomainHelper domainHelper = mock(DomainHelper.class);
 		@SuppressWarnings("unchecked")
-		TaskNetworkBuilderFactory<Task, ValidatableConstraint<SimpleConstraintValidator>>
-			taskNetworkBuilderFactory = mock(TaskNetworkBuilderFactory.class);
-		AIMAUnificationService unificationService = new AIMAUnificationService(aimaUnifier, aimaConverter, domainHelper, taskNetworkBuilderFactory);
+		AIMAConverter<Term, Variable, Task<Term>> aimaConverter
+				= mock(AIMAConverter.class);
+		@SuppressWarnings("unchecked")
+		DomainHelper<Operator<Condition>, Method<Term, Task<Term>,
+				TaskNetwork<Term, Task<Term>, Constraint<Term>>,
+				Constraint<Term>>, Term, Task<Term>, TaskNetwork<Term, Task<Term>,
+				Constraint<Term>>, Constraint<Term>, Condition> mockDomainHelper
+					= mock(DomainHelper.class);
+		@SuppressWarnings("unchecked")
+		TaskNetworkBuilderFactory<Term, Task<Term>, TaskNetwork<Term, Task<Term>,
+				Constraint<Term>>, Constraint<Term>> mockTaskNetworkBuilderFactory
+					= mock(TaskNetworkBuilderFactory.class);
+		AIMAUnificationService<Operator<Condition>, Method<Term, Task<Term>,
+				TaskNetwork<Term, Task<Term>, Constraint<Term>>, Constraint<Term>>,
+				Term, Task<Term>, TaskNetwork<Term, Task<Term>, Constraint<Term>>,
+				Constraint<Term>, Condition, Variable> unificationService
+					= new AIMAUnificationService<Operator<Condition>, Method<Term,
+				Task<Term>, TaskNetwork<Term, Task<Term>, Constraint<Term>>,
+				Constraint<Term>>, Term, Task<Term>, TaskNetwork<Term, Task<Term>,
+				Constraint<Term>>, Constraint<Term>, Condition, Variable>(
+					aimaUnifier, aimaConverter, mockDomainHelper, 
+					mockTaskNetworkBuilderFactory);
 		
-		Task mockTaskA = mock(Task.class);
-		Task mockTaskB = mock(Task.class);
-		Method mockMethod = mock(Method.class);
+		@SuppressWarnings("unchecked")
+		Task<Term> mockTaskA = mock(Task.class);
+		@SuppressWarnings("unchecked")
+		Task<Term> mockTaskB = mock(Task.class);
+		@SuppressWarnings("unchecked")
+		Method<Term, Task<Term>, TaskNetwork<Term, Task<Term>, Constraint<Term>>, Constraint<Term>> mockMethod = mock(Method.class);
 		when(mockMethod.getTask()).thenReturn(mockTaskB);
 		Predicate mockPredicateA = mock(Predicate.class);
 		Predicate mockPredicateB = mock(Predicate.class);
@@ -67,9 +91,10 @@ public class AIMAUnificationServiceTest {
 		Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> mockMap = new HashMap<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term>();
 		when(aimaUnifier.unify(mockPredicateA, mockPredicateB)).thenReturn(mockMap);
 		
-		Unifier mockUnifier = mock(Unifier.class);
+		@SuppressWarnings("unchecked")
+		Substitution<Term, Variable> mockUnifier = mock(Substitution.class);
 		when(aimaConverter.convert(mockMap)).thenReturn(mockUnifier);
-		Unifier unifier = unificationService.findUnifier(mockTaskA, mockMethod);
+		Substitution<Term, Variable> unifier = unificationService.findUnifier(mockTaskA, mockMethod);
 		assertEquals(mockUnifier,unifier);
 	}
 

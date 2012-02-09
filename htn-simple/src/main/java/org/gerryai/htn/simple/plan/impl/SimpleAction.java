@@ -17,20 +17,20 @@
  */
 package org.gerryai.htn.simple.plan.impl;
 
-import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Bindings;
+import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class SimpleAction implements Action {
+public class SimpleAction implements Action<SimpleOperator, SimpleCondition> {
 
 	/**
 	 * Operator that this action is a grounded instance of.
 	 */
-	private Operator operator;
+	private SimpleOperator operator;
 	
 	/**
 	 * Bindings that ground the operator.
@@ -40,14 +40,14 @@ public class SimpleAction implements Action {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Operator getOperator() {
+	public final SimpleOperator getOperator() {
 		return operator;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setOperator(Operator operator) {
+	public final void setOperator(SimpleOperator operator) {
 		this.operator = operator;
 	}
 
