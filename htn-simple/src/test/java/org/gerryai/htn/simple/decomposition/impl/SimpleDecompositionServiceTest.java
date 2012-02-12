@@ -28,8 +28,9 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
-import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
@@ -47,8 +48,8 @@ public class SimpleDecompositionServiceTest {
     public void testDecompose() {
     	
     	@SuppressWarnings("unchecked")
-    	UnificationService<SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-    			ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition,
+    	UnificationService<SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
+    			ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition,
     			SimpleVariable> mockUnificationService = mock(UnificationService.class);
     	SimpleDecompositionService decompositionService = new SimpleDecompositionService(mockUnificationService);
     	
@@ -82,7 +83,7 @@ public class SimpleDecompositionServiceTest {
     	
     	// Mock unifier to make no changes
     	@SuppressWarnings("unchecked")
-    	Substitution<SimpleTerm, SimpleVariable> mockUnifier = mock(Substitution.class);
+    	Substitution<SubstitutableTerm, SimpleVariable> mockUnifier = mock(Substitution.class);
     	when(mockUnificationService.apply(mockUnifier, mockTaskNetwork)).thenReturn(mockUnifiedTaskNetwork);
     	when(mockUnificationService.apply(mockUnifier, mockMethodSubTasks)).thenReturn(mockUnifiedMethodSubTasks);
     	

@@ -24,7 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gerryai.htn.domain.OperatorNotFound;
-import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
+
 import org.junit.Test;
 
 /**
@@ -67,8 +68,8 @@ public class SimpleTaskBuilderTest {
 	@Test
 	public void testAddArgument() {
 
-		SimpleTerm mockTermA = mock(SimpleTerm.class);
-		SimpleTerm mockTermB = mock(SimpleTerm.class);
+		SubstitutableTerm mockTermA = mock(SubstitutableTerm.class);
+		SubstitutableTerm mockTermB = mock(SubstitutableTerm.class);
 		
 		// Create the builder under test
 		SimpleTaskBuilder builder = new SimpleTaskBuilder()
@@ -88,15 +89,15 @@ public class SimpleTaskBuilderTest {
 	@Test
 	public void testAddArguments() {
 		
-		SimpleTerm mockTermA = mock(SimpleTerm.class);
-		SimpleTerm mockTermB = mock(SimpleTerm.class);
-		List<SimpleTerm> mockTermsOne = new ArrayList<SimpleTerm>();
+		SubstitutableTerm mockTermA = mock(SubstitutableTerm.class);
+		SubstitutableTerm mockTermB = mock(SubstitutableTerm.class);
+		List<SubstitutableTerm> mockTermsOne = new ArrayList<SubstitutableTerm>();
 		mockTermsOne.add(mockTermA);
 		mockTermsOne.add(mockTermB);
 
-		SimpleTerm mockTermC = mock(SimpleTerm.class);
-		SimpleTerm mockTermD = mock(SimpleTerm.class);
-		List<SimpleTerm> mockTermsTwo = new ArrayList<SimpleTerm>();
+		SubstitutableTerm mockTermC = mock(SubstitutableTerm.class);
+		SubstitutableTerm mockTermD = mock(SubstitutableTerm.class);
+		List<SubstitutableTerm> mockTermsTwo = new ArrayList<SubstitutableTerm>();
 		mockTermsTwo.add(mockTermC);
 		mockTermsTwo.add(mockTermD);
 		
@@ -120,7 +121,7 @@ public class SimpleTaskBuilderTest {
 	@Test
 	public void testBuildPrimitive() throws OperatorNotFound {
 
-		SimpleTerm mockTerm = mock(SimpleTerm.class);
+		SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
 		
 		// Create the builder under test
 		SimpleTask primitiveTask = new SimpleTaskBuilder()
@@ -141,7 +142,7 @@ public class SimpleTaskBuilderTest {
 	@Test
 	public void testBuildNonPrimitive() throws OperatorNotFound {
 
-		SimpleTerm mockTerm = mock(SimpleTerm.class);
+		SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
 		
 		// Create the builder under test
 		SimpleTask primitiveTask = new SimpleTaskBuilder()

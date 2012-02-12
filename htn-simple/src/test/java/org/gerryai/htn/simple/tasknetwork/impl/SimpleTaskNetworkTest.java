@@ -25,7 +25,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
-import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.junit.Test;
@@ -56,8 +57,8 @@ public class SimpleTaskNetworkTest {
 	@Test
 	public void testIsPrimitiveOnePrimitiveTask() {
 		@SuppressWarnings("unchecked")
-		TaskNetworkBuilder<SimpleTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SimpleTerm, SimpleTask>>
+		TaskNetworkBuilder<SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>>
 				mockBuilder = mock(TaskNetworkBuilder.class);
 		SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
 		Set<SimpleTask> tasks = new HashSet<SimpleTask>();
@@ -75,8 +76,8 @@ public class SimpleTaskNetworkTest {
 	@Test
 	public void testIsPrimitiveOneNonPrimitiveTask() {
 		@SuppressWarnings("unchecked")
-		TaskNetworkBuilder<SimpleTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SimpleTerm, SimpleTask>>
+		TaskNetworkBuilder<SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>>
 				mockBuilder = mock(TaskNetworkBuilder.class);SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
 		Set<SimpleTask> tasks = new HashSet<SimpleTask>();
 		SimpleTask mockNonPrimitiveTask = mock(SimpleTask.class);
@@ -93,8 +94,8 @@ public class SimpleTaskNetworkTest {
 	@Test
 	public void testIsPrimitiveManyTasksAllPrimitive() {
 		@SuppressWarnings("unchecked")
-		TaskNetworkBuilder<SimpleTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SimpleTerm, SimpleTask>>
+		TaskNetworkBuilder<SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>>
 				mockBuilder = mock(TaskNetworkBuilder.class);
 		SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
 		Set<SimpleTask> tasks = new HashSet<SimpleTask>();
@@ -118,8 +119,8 @@ public class SimpleTaskNetworkTest {
 	@Test
 	public void testIsPrimitiveManyTasksOneNonPrimitive() {
 		@SuppressWarnings("unchecked")
-		TaskNetworkBuilder<SimpleTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SimpleTerm, SimpleTask>>
+		TaskNetworkBuilder<SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
+				ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>>
 				mockBuilder = mock(TaskNetworkBuilder.class);
 		SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
 		Set<SimpleTask> tasks = new HashSet<SimpleTask>();

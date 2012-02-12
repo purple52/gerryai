@@ -20,8 +20,6 @@ package org.gerryai.htn.simple.integration;
 import static org.junit.Assert.*;
 
 import org.gerryai.htn.domain.Domain;
-import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.Problem;
@@ -30,20 +28,17 @@ import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleConstant;
-import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.planner.impl.SimplePlannerFactory;
 import org.gerryai.htn.simple.planner.impl.SimplePlanningService;
 import org.gerryai.htn.simple.problem.impl.SimpleProblem;
-import org.gerryai.htn.simple.tasknetwork.impl.AbstractTaskBuilder;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilderFactory;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.Variable;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -59,8 +54,8 @@ public class BasicIT {
 		
 		SimpleDomainBuilderFactory domainBuilderFactory
 				= new SimpleDomainBuilderFactory();
-		GenericConstraintValidatorFactory<SimpleTerm, SimpleTask> constraintValidatorFactory
-				= new GenericConstraintValidatorFactory<SimpleTerm, SimpleTask>();
+		GenericConstraintValidatorFactory<SubstitutableTerm, SimpleTask, SubstitutableCondition> constraintValidatorFactory
+				= new GenericConstraintValidatorFactory<SubstitutableTerm, SimpleTask, SubstitutableCondition>();
 		SimpleTaskNetworkBuilderFactory taskNetworkBuilderFactory
 				= new SimpleTaskNetworkBuilderFactory(constraintValidatorFactory);
 		

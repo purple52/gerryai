@@ -20,11 +20,14 @@ package org.gerryai.htn.simple.decomposition.impl;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
+import org.gerryai.htn.simple.constraint.ConstraintFactory;
 import org.gerryai.htn.simple.constraint.impl.SimpleBeforeConstraint;
-import org.gerryai.htn.simple.constraint.impl.SimpleConstraintFactory;
-import org.gerryai.htn.simple.domain.DomainHelper;
-import org.gerryai.htn.simple.logic.impl.SimpleUnifier;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.SubstitutableVariable;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.logic.unification.Substitution;
+
 import org.junit.Test;
 
 /**
@@ -39,14 +42,15 @@ public class SimpleSubstituterImplTest {
 	@Test
 	public void testApplySimpleBeforeConstraint() {
 		
-		SimpleUnifier mockUnifier = mock(SimpleUnifier.class);
-		DomainHelper mockDomainHelper = mock(DomainHelper.class);
-		SimpleConstraintFactory mockConstraintFactory = mock(SimpleConstraintFactory.class);
-		GenericSubstituter substituter = new GenericSubstituter(mockUnifier, mockDomainHelper, mockConstraintFactory);
+		@SuppressWarnings("unchecked")
+		Substitution<SubstitutableTerm, SubstitutableVariable> mockUnifier = mock(Substitution.class);
+		@SuppressWarnings("unchecked")
+		ConstraintFactory<SubstitutableTerm, SubstitutableTask<SubstitutableTerm>, SubstitutableCondition> mockConstraintFactory = mock(ConstraintFactory.class);
+		GenericSubstituter<SubstitutableTerm> substituter = new GenericSubstituter<SubstitutableTerm>(mockUnifier, mockConstraintFactory);
 		
 		SimpleBeforeConstraint constraint = mock(SimpleBeforeConstraint.class);
 		
-		SimpleBeforeConstraint updatedConstraint = substituter.apply(constraint);
+		SimpleBeforeConstraint updatedConstraint = (SimpleBeforeConstraint) substituter.apply(constraint);
 		
 		//assertEquals(updatedConstraint.getCondition(),constraint)
 		fail("Not yet implemented");
