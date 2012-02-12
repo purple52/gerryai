@@ -17,20 +17,21 @@
  */
 package org.gerryai.htn.simple.constraint;
 
-import org.gerryai.htn.constraint.BeforeConstraint;
-import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
+import org.gerryai.htn.simple.decomposition.Substitutable;
+import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 
 /**
- * Extension of validatable and precedence constraint interfaces.
- * @param <T> type of logical term this constraint uses
- * @param <K> type of task  the constraint applies to
- * @param <I> type of condition this constraint uses
+ * Extended constraint interface that supports being validated.
+ * The constraint needs to identify what class of validator it needs to use.
+ * @param <T> type of logical term used by this constraint
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface ValidatableBeforeConstraint<T extends Term, K extends Task<T>, I extends Condition>
-		extends ValidatableConstraint<T, K, I>, BeforeConstraint<T, K, I> {
+public interface SubstitutableConstraint<T extends SubstitutableTerm> extends Substitutable<T> {
 
+	/**
+	 * {@inheritDoc}
+	 */
+	SubstitutableConstraint<T> apply(Substituter<T> substituter);
+	
 }

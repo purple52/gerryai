@@ -27,9 +27,10 @@ import org.gerryai.logic.Term;
  * Interface for a constraint that dictates the state immediately after this task.
  * @param <T> type of logical term this constraint works with
  * @param <K> type of task this constraint works with
+ * @param <I> type of condition this constraint uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface BetweenConstraint<T extends Term, K extends Task<T>> extends Constraint<T> {
+public interface BetweenConstraint<T extends Term, K extends Task<T>, I extends Condition> extends Constraint<T> {
 
 	/**
 	 * The set of tasks after which this constraint must hold.
@@ -48,5 +49,5 @@ public interface BetweenConstraint<T extends Term, K extends Task<T>> extends Co
 	 * The condition that must be true between the two sets of tasks.
 	 * @return the literal
 	 */
-	Condition getCondition();
+	I getCondition();
 }

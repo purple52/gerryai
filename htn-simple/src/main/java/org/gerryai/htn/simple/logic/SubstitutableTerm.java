@@ -17,21 +17,19 @@
  */
 package org.gerryai.htn.simple.logic;
 
-import org.gerryai.htn.simple.decomposition.SimpleSubstituter;
 import org.gerryai.htn.simple.decomposition.Substitutable;
-import org.gerryai.logic.Constant;
-import org.gerryai.logic.Variable;
+import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.logic.Term;
 
 /**
  * Extended interface for terms that support a visitor for doing substitutions.
- * @param <T> the type of term the substituter supports
- * @param <C> the type of variable the substituter supports
- * @param <V> the type of constant the substituter supports
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface SubstitutableTerm<T extends Term, V extends Variable, C extends Constant>
-		extends Term, Substitutable<SimpleSubstituter<T, V, C>> {
+public interface SubstitutableTerm extends Substitutable<SubstitutableTerm>, Term {
 
+	/**
+	 * {@inheritDoc}
+	 */
+	SubstitutableTerm apply(Substituter<SubstitutableTerm> substituter);
 }

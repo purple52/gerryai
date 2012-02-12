@@ -17,14 +17,16 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import org.gerryai.htn.simple.decomposition.SimpleSubstituter;
-import org.gerryai.logic.Constant;
+import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.logic.SubstitutableConstant;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant implements Constant, SimpleTerm {
+public class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant
+		implements SubstitutableConstant, SimpleTerm {
 
 	/**
 	 * Constructor.
@@ -44,8 +46,8 @@ public class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant imp
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTerm
-			apply(SimpleSubstituter<SimpleTerm, SimpleVariable, SimpleConstant> substituter) {
+	public final SubstitutableTerm
+			apply(Substituter<SubstitutableTerm> substituter) {
 		// TODO Check implementation
 		return substituter.apply(this);
 	}

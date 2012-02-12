@@ -6,6 +6,7 @@ import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
@@ -34,7 +35,7 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
  *
  */
 public class SimpleProblem implements Problem<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> {
+ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> {
 
 	/**
 	 * The initial state for this problem.
@@ -50,7 +51,7 @@ ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> {
 	 * The domain to operate in.
 	 */
 	private Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-	ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> domain;
+	ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> domain;
 	
 	/**
 	 * {@inheritDoc}
@@ -84,7 +85,7 @@ ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> {
 	 * {@inheritDoc}
 	 */
 	public final Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-	ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> getDomain() {
+	ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> getDomain() {
 		return domain;
 	}
 
@@ -92,7 +93,7 @@ ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> {
 	 * {@inheritDoc}
 	 */
 	public final void setDomain(Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-			ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> domain) {
+			ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> domain) {
 		this.domain = domain;
 	}
 

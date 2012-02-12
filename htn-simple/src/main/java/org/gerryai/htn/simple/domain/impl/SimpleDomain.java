@@ -21,6 +21,7 @@ import java.util.Set;
 
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
@@ -32,7 +33,7 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class SimpleDomain implements Domain<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-		ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> {
+		ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> {
 
 	/**
 	 * Operators available in this domain.

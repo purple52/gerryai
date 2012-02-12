@@ -17,14 +17,16 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import org.gerryai.htn.simple.decomposition.SimpleSubstituter;
-import org.gerryai.logic.Variable;
+import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.SubstitutableVariable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable implements Variable, SimpleTerm {
+public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable
+		implements SubstitutableVariable, SimpleTerm {
 
 	/**
 	 * @param name name of the variable
@@ -43,8 +45,7 @@ public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable imp
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTerm apply(
-			SimpleSubstituter<SimpleTerm, SimpleVariable, SimpleConstant> substituter) {
+	public final SubstitutableTerm apply(Substituter<SubstitutableTerm> substituter) {
 		return substituter.apply(this);
 	}
 

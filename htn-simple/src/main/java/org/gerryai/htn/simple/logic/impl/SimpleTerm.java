@@ -17,17 +17,12 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import org.gerryai.htn.simple.decomposition.SimpleSubstituter;
-import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface SimpleTerm extends
-		SubstitutableTerm<SimpleTerm, SimpleVariable, SimpleConstant> {
+public interface SimpleTerm extends	SubstitutableTerm {
 
-	SimpleTerm apply(SimpleSubstituter<SimpleTerm, SimpleVariable, SimpleConstant> substituter);
 }

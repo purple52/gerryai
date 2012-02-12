@@ -21,12 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gerryai.htn.aima.AIMAConverter;
-import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.simple.decomposition.SimpleSubstituter;
-import org.gerryai.htn.simple.decomposition.Substitutable;
 import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.logic.LogicFactory;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.logic.SubstitutableConstant;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.SubstitutableVariable;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
-import org.gerryai.logic.Term;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
 
@@ -34,14 +35,23 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePredicate extends Predicate implements Condition, SimpleTerm {
+public class SimplePredicate extends Predicate implements SubstitutableCondition, SimpleTerm {
 
 	/**
 	 * List of terms belonging to this predicate.
 	 */
 	private List<SimpleTerm> terms;
 	
+	/**
+	 * Converter to help build the underlying AIMA objects.
+	 */
 	private static AIMAConverter<SimpleTerm, SimpleVariable, SimpleTask> converter;
+	
+	/**
+	 * Factory for creating new logic objects.
+	 */
+	private LogicFactory<SubstitutableVariable, SubstitutableConstant,
+			SubstitutableCondition, SubstitutableTerm> logicFactory;
 	
 	/**
 	 * {@inheritDoc}
@@ -51,8 +61,9 @@ public class SimplePredicate extends Predicate implements Condition, SimpleTerm 
 	}
 	
 	/**
-	 * @param predicateName
-	 * @param updatedTerms
+	 * Constructor, taking a name and a list of terms.
+	 * @param predicateName the name
+	 * @param terms the terms
 	 */
 	public SimplePredicate(String predicateName, List<SimpleTerm> terms) {
 		super(predicateName, converter.convert(terms));
@@ -62,13 +73,12 @@ public class SimplePredicate extends Predicate implements Condition, SimpleTerm 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTerm apply(
-			SimpleSubstituter<SimpleTerm, SimpleVariable, SimpleConstant> substituter) {
-		List<SimpleTerm> updatedTerms = new ArrayList<SimpleTerm>();
-		for (SimpleTerm term : terms) {
+	public final SubstitutableTerm apply(Substituter<SubstitutableTerm> substituter) {
+		List<SubstitutableTerm> updatedTerms = new ArrayList<SubstitutableTerm>();
+		for (SubstitutableTerm term : terms) {
 			updatedTerms.add(term.apply(substituter));
 		}
-		return new SimplePredicate(this.getSymbolicName(), updatedTerms);
+		return logicFactory.createPredicate(this.getSymbolicName(), updatedTerms);
 	}
 
 }

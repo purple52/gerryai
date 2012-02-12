@@ -19,8 +19,8 @@ package org.gerryai.htn.simple.constraint.impl;
 
 import java.util.Set;
 
-import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ConstraintFactory;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 
@@ -28,7 +28,7 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleConstraintFactory implements ConstraintFactory<SimpleTerm, SimpleTask> {
+public class SimpleConstraintFactory implements ConstraintFactory<SimpleTerm, SimpleTask, SubstitutableCondition> {
 
 	/**
 	 * {@inheritDoc}
@@ -44,7 +44,8 @@ public class SimpleConstraintFactory implements ConstraintFactory<SimpleTerm, Si
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleBeforeConstraint createBeforeConstraint(Set<SimpleTask> tasks, Condition condition) {
+	public final SimpleBeforeConstraint createBeforeConstraint(Set<SimpleTask> tasks,
+			SubstitutableCondition condition) {
 		SimpleBeforeConstraint constraint = new SimpleBeforeConstraint();
 		constraint.setTasks(tasks);
 		constraint.setCondition(condition);
@@ -54,7 +55,7 @@ public class SimpleConstraintFactory implements ConstraintFactory<SimpleTerm, Si
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleAfterConstraint createAfterConstraint(Set<SimpleTask> tasks, Condition condition) {
+	public final SimpleAfterConstraint createAfterConstraint(Set<SimpleTask> tasks, SubstitutableCondition condition) {
 		SimpleAfterConstraint constraint = new SimpleAfterConstraint();
 		constraint.setTasks(tasks);
 		constraint.setCondition(condition);
@@ -65,7 +66,7 @@ public class SimpleConstraintFactory implements ConstraintFactory<SimpleTerm, Si
 	 * {@inheritDoc}
 	 */
 	public final SimpleBetweenConstraint createBetweenConstraint(Set<SimpleTask> precedingTasks,
-			Set<SimpleTask> procedingTasks, Condition condition) {
+			Set<SimpleTask> procedingTasks, SubstitutableCondition condition) {
 		SimpleBetweenConstraint constraint = new SimpleBetweenConstraint();
 		constraint.setPrecedingTasks(precedingTasks);
 		constraint.setProcedingTasks(procedingTasks);

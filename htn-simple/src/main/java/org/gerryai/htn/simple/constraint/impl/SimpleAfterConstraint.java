@@ -19,9 +19,11 @@ package org.gerryai.htn.simple.constraint.impl;
 
 import java.util.Set;
 
-import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
 import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
+import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
@@ -32,7 +34,8 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleAfterConstraint implements ValidatableAfterConstraint<SimpleTerm, SimpleTask> {
+public class SimpleAfterConstraint implements ValidatableAfterConstraint<SimpleTerm,
+		SimpleTask, SubstitutableCondition>, SubstitutableConstraint<SimpleTerm> {
 
 	/**
 	 * The set of tasks that this constraint must hold for.
@@ -42,7 +45,7 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<SimpleT
 	/**
 	 * The condition that must be true directly after the last of these tasks.
 	 */
-	private Condition condition;
+	private SubstitutableCondition condition;
 	
 	/**
 	 * Set the set of tasks that this constraint must hold for.
@@ -56,7 +59,7 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<SimpleT
 	 * Set the condition that must be true directly after the last of these tasks.
 	 * @param condition the literal
 	 */
-	public final void setCondition(Condition condition) {
+	public final void setCondition(SubstitutableCondition condition) {
 		this.condition = condition;
 	}
 	
@@ -72,25 +75,32 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<SimpleT
 	 * Get the condition that must be true directly after the last of these tasks.
 	 * @return the condition
 	 */
-	public final Condition getCondition() {
+	public final SubstitutableCondition getCondition() {
 		return condition;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<SimpleTerm, SimpleTask> validator) {
+	public final boolean validate(ConstraintValidator<SimpleTerm, SimpleTask, SubstitutableCondition> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<SimpleTerm, SimpleTask> validator)
+	public final void add(ConstraintValidator<SimpleTerm, SimpleTask, SubstitutableCondition> validator)
 			throws InvalidConstraint {
 		validator.add(this);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public final SubstitutableConstraint<SimpleTerm> apply(Substituter<SimpleTerm> substituter) {
+		return substituter.apply(this);
+	}
+	
 	@Override
 	public final int hashCode() {
 		return Objects.hashCode(tasks, condition);

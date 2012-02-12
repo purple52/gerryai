@@ -18,6 +18,7 @@
 package org.gerryai.htn.simple.constraint;
 
 import org.gerryai.htn.constraint.BetweenConstraint;
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
@@ -25,10 +26,11 @@ import org.gerryai.logic.Term;
  * Extension of validatable and precedence constraint interfaces.
  * @param <T> type of logical term this constraint uses
  * @param <K> type of task  the constraint applies to
+ * @param <I> type of condition this constraint uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ValidatableBetweenConstraint<T extends Term, K extends Task<T>>
-		extends ValidatableConstraint<T, K>, BetweenConstraint<T, K> {
+public interface ValidatableBetweenConstraint<T extends Term, K extends Task<T>, I extends Condition>
+		extends ValidatableConstraint<T, K, I>, BetweenConstraint<T, K, I> {
 
 }

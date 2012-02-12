@@ -17,18 +17,20 @@
  */
 package org.gerryai.htn.simple.decomposition;
 
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
+
 /**
  * Interface that indicates that substitutions can be applied to the implementing class.
- * @param <S> the class of substituter that the class supports
+ * @param <T> type of logical term used by the substituter
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Substitutable<S extends Substituter> {
+public interface Substitutable<T extends SubstitutableTerm> {
 
 	/**
 	 * Apply a substitution to this object using the substituter provided.
 	 * @param substituter the substituter to use
 	 * @return a copy of the object with the substitution applied
 	 */
-	Substitutable<S> apply(S substituter);
+	Substitutable<T> apply(Substituter<T> substituter);
 	
 }

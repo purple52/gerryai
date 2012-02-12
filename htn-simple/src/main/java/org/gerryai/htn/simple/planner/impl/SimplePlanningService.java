@@ -25,6 +25,7 @@ import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.planner.PlannerFactory;
@@ -37,20 +38,20 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
  */
 public class SimplePlanningService implements PlanningService<SimpleOperator,
 		SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-		ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> {
+		ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> {
 
 	/**
 	 * A factory for creating planners.
 	 */
 	private PlannerFactory<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-	ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> plannerFactory;
+	ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> plannerFactory;
 	
 	/**
 	 * Constructor taking a factory for creating planners.
 	 * @param plannerFactory the factory
 	 */
 	public SimplePlanningService(PlannerFactory<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-			ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> plannerFactory) {
+			ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> plannerFactory) {
 		this.plannerFactory = plannerFactory;
 	}
 	
@@ -59,11 +60,12 @@ public class SimplePlanningService implements PlanningService<SimpleOperator,
 	 */
 	public final Plan<SimpleOperator, SimpleCondition> solve(Problem<SimpleOperator,
 			SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-			ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> problem) throws PlanNotFound {
+			ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>,
+			SimpleCondition> problem) throws PlanNotFound {
 		
 		// Create a planner that will work in the domain of the given problem
 		Planner<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
+				ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition>
 				planner = plannerFactory.create(problem.getDomain());
 				
 		// Find a plan of the given problem

@@ -25,6 +25,7 @@ import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
@@ -38,19 +39,19 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
  */
 public class SimplePlanner implements
 		Planner<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-		ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> {
+		ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> {
 	
 	/**
 	 * Manager the domain being worked in.
 	 */
 	private DomainHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-	ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> domainHelper;
+	ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> domainHelper;
 	
 	/**
 	 * Helper for off-loading some of the logic.
 	 */
 	private PlannerHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-	ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> plannerHelper;
+	ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> plannerHelper;
 	
 	/**
 	 * Constructor taking the domain manager and planner helper to use.
@@ -59,9 +60,11 @@ public class SimplePlanner implements
 	 */
 	public SimplePlanner(
 			DomainHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-					ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> domainHelper,
+					ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>,
+					SimpleCondition> domainHelper,
 			PlannerHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-					ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> plannerHelper) {
+					ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>,
+					SimpleCondition> plannerHelper) {
 		this.domainHelper = domainHelper;
 		this.plannerHelper = plannerHelper;
 	}

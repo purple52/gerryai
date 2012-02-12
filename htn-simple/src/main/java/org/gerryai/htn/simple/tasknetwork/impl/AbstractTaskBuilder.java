@@ -94,26 +94,23 @@ public abstract class AbstractTaskBuilder< T extends Term, K extends Task<T>,
 	public abstract K build();
 
 	/**
-	 * Get the name of the task to be built.
-	 * @return the name
+	 * {@inheritDoc}
 	 */
-	protected final String getName() {
+	public final String getName() {
 		return name;
 	}
 	
 	/**
-	 * Get whether the task to be built is primitive.
-	 * @return the name
+	 * {@inheritDoc}
 	 */
-	protected final boolean getIsPrimitive() {
+	public final boolean getIsPrimitive() {
 		return isPrimitive;
 	}
 	
 	/**
-	 * Get the arguments for the tack to be built.
-	 * @return the arguments
+	 * {@inheritDoc}
 	 */
-	protected final List<T> getArguments() {
+	public final List<T> getArguments() {
 		return arguments;
 	}
 	

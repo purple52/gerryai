@@ -19,11 +19,11 @@ package org.gerryai.htn.simple.constraint.impl;
 
 import java.util.Set;
 
-import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
 import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.decomposition.SimpleSubstituter;
-import org.gerryai.htn.simple.decomposition.Substitutable;
+import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
@@ -35,8 +35,8 @@ import com.google.common.base.Objects;
  *
  */
 public class SimpleBeforeConstraint implements
-		ValidatableBeforeConstraint<SimpleTerm, SimpleTask>,
-		Substitutable<SimpleSubstituter> {
+		ValidatableBeforeConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>,
+		SubstitutableConstraint<SimpleTerm> {
 
 	/**
 	 * The set of tasks that this constraint must hold for.
@@ -46,7 +46,7 @@ public class SimpleBeforeConstraint implements
 	/**
 	 * The condition that must be true directly before the first of these tasks.
 	 */
-	private Condition condition;
+	private SubstitutableCondition condition;
 	
 	/**
 	 * Set the set of tasks that this constraint must hold for.
@@ -60,7 +60,7 @@ public class SimpleBeforeConstraint implements
 	 * Set the condition that must be true directly before the first of these tasks.
 	 * @param condition the condition
 	 */
-	public final void setCondition(Condition condition) {
+	public final void setCondition(SubstitutableCondition condition) {
 		this.condition = condition;
 	}
 	
@@ -76,21 +76,21 @@ public class SimpleBeforeConstraint implements
 	 * Get the condition that must be true directly before the first of these tasks.
 	 * @return the condition
 	 */
-	public final Condition getCondition() {
+	public final SubstitutableCondition getCondition() {
 		return condition;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<SimpleTerm, SimpleTask> validator) {
+	public final boolean validate(ConstraintValidator<SimpleTerm, SimpleTask, SubstitutableCondition> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<SimpleTerm, SimpleTask> validator)
+	public final void add(ConstraintValidator<SimpleTerm, SimpleTask, SubstitutableCondition> validator)
 			throws InvalidConstraint {
 		validator.add(this);
 	}
@@ -98,7 +98,7 @@ public class SimpleBeforeConstraint implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleBeforeConstraint apply(SimpleSubstituter substituter) {
+	public final SubstitutableConstraint<SimpleTerm> apply(Substituter<SimpleTerm> substituter) {
 		return substituter.apply(this);
 	}
 	

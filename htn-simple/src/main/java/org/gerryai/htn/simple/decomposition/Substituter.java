@@ -17,10 +17,81 @@
  */
 package org.gerryai.htn.simple.decomposition;
 
+import org.gerryai.htn.constraint.AfterConstraint;
+import org.gerryai.htn.constraint.BetweenConstraint;
+import org.gerryai.htn.constraint.PrecedenceConstraint;
+import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.logic.SubstitutableConstant;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.SubstitutableVariable;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Term;
+
 /**
- * Base interface for a class that can apply substitutions.
+ * Interface for a class that can apply substitutions to objects from the simple HTN implementation.
+ * @param <T> type of term used by this substituter
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Substituter {
+public interface Substituter<T extends SubstitutableTerm> {
 
+	/**
+	 * Use this substituter to apply a substitution of the given variable.
+	 * @param variable the variable
+	 * @return a copy of the variable with the substitution applied
+	 */
+	SubstitutableTerm apply(SubstitutableVariable variable);
+
+	/**
+	 * Use this substituter to apply a substitution of the given constant.
+	 * @param constant the constant
+	 * @return a copy of the constant with the substitution applied
+	 */
+	SubstitutableTerm apply(SubstitutableConstant constant);
+
+	/**
+	 * Use this substituter to apply a substitution of the given term.
+	 * @param term the term
+	 * @return a copy of the term with the substitution applied
+	 */
+	T apply(T term);
+	
+	/**
+	 * Use this substituter to apply a substitution to the given constraint.
+	 * @param constraint the constraint to apply the substitution to
+	 * @return a copy of the constraint with the substitution applied
+	 */
+	SubstitutableConstraint<T> apply(SubstitutableConstraint<T> constraint);
+	
+	/**
+	 * Use this substituter to apply a substitution to the given constraint.
+	 * @param constraint the constraint to apply the substitution to
+	 * @return a copy of the constraint with the substitution applied
+	 */
+	AfterConstraint<Term, Task<Term>, SubstitutableCondition>
+			apply(AfterConstraint<Term, Task<Term>, SubstitutableCondition> constraint);
+	
+	/**
+	 * Use this substituter to apply a substitution to the given constraint.
+	 * @param constraint the constraint to apply the substitution to
+	 * @return a copy of the constraint with the substitution applied
+	 */
+	BetweenConstraint<Term, Task<Term>, SubstitutableCondition>
+			apply(BetweenConstraint<Term, Task<Term>, SubstitutableCondition> constraint);
+
+	/**
+	 * Use this substituter to apply a substitution to the given constraint.
+	 * @param constraint the constraint to apply the substitution to
+	 * @return a copy of the constraint with the substitution applied
+	 */
+	PrecedenceConstraint<Term, Task<Term>> apply(PrecedenceConstraint<Term, Task<Term>> constraint);
+	
+	/**
+	 * Use this substituter to apply a substitution to the given task.
+	 * @param task the task to apply the substitution to
+	 * @return a copy of the task with the substitution applied
+	 */
+	SubstitutableTask<T> apply(SubstitutableTask<T> task);
+	
 }

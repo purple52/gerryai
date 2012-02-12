@@ -28,6 +28,7 @@ import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.decomposition.UnifierNotFound;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleUnifier;
@@ -47,7 +48,7 @@ import org.gerryai.logic.unification.Substitution;
  */
 public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, SimpleMethod,
 		SimpleTerm, SimpleTask, SimpleTaskNetwork,
-		ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> {
+		ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> {
 
 	/**
 	 * Factory for creating actions.
@@ -63,13 +64,13 @@ public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, Simple
 	 * Service for decomposing tasks.
 	 */
 	private DecompositionService<SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-			ValidatableConstraint<SimpleTerm, SimpleTask>> decompositionService;
+			ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>> decompositionService;
 	
 	/**
 	 * Service for finding unifiers.
 	 */
 	private UnificationService<SimpleMethod, SimpleTerm, SimpleTask,
-			SimpleTaskNetwork, ValidatableConstraint<SimpleTerm, SimpleTask>,
+			SimpleTaskNetwork, ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>,
 			SimpleCondition, SimpleVariable>  unificationService;
 	
 	/**
@@ -83,9 +84,10 @@ public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, Simple
 			ActionFactory<SimpleOperator, SimpleTerm, SimpleTask, SimpleCondition> actionFactory,
 			PlanFactory<SimpleOperator, SimpleCondition> planFactory,
 			DecompositionService<SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SimpleTerm, SimpleTask>> decompositionservice,
+				ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>> decompositionservice,
 			UnificationService<SimpleMethod, SimpleTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition, SimpleVariable>  unificationService) {
+				ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>,
+				SimpleCondition, SimpleVariable>  unificationService) {
 		this.actionFactory = actionFactory;
 		this.planFactory = planFactory;
 		this.decompositionService = decompositionservice;

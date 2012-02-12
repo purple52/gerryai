@@ -34,7 +34,7 @@ import org.junit.Test;
 public class SimpleSubstituterImplTest {
 
 	/**
-	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.SimpleSubstituterImpl#apply(org.gerryai.htn.simple.constraint.impl.SimpleBeforeConstraint)}.
+	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.GenericSubstituter#apply(org.gerryai.htn.simple.constraint.impl.SimpleBeforeConstraint)}.
 	 */
 	@Test
 	public void testApplySimpleBeforeConstraint() {
@@ -42,7 +42,7 @@ public class SimpleSubstituterImplTest {
 		SimpleUnifier mockUnifier = mock(SimpleUnifier.class);
 		DomainHelper mockDomainHelper = mock(DomainHelper.class);
 		SimpleConstraintFactory mockConstraintFactory = mock(SimpleConstraintFactory.class);
-		SimpleSubstituterImpl substituter = new SimpleSubstituterImpl(mockUnifier, mockDomainHelper, mockConstraintFactory);
+		GenericSubstituter substituter = new GenericSubstituter(mockUnifier, mockDomainHelper, mockConstraintFactory);
 		
 		SimpleBeforeConstraint constraint = mock(SimpleBeforeConstraint.class);
 		
@@ -53,7 +53,7 @@ public class SimpleSubstituterImplTest {
 	}
 
 	/**
-	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.SimpleSubstituterImpl#apply(org.gerryai.htn.simple.constraint.impl.SimpleAfterConstraint)}.
+	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.GenericSubstituter#apply(org.gerryai.htn.simple.constraint.impl.SimpleAfterConstraint)}.
 	 */
 	@Test
 	public void testApplySimpleAfterConstraint() {
@@ -61,7 +61,7 @@ public class SimpleSubstituterImplTest {
 	}
 
 	/**
-	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.SimpleSubstituterImpl#apply(org.gerryai.htn.simple.constraint.impl.SimpleBetweenConstraint)}.
+	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.GenericSubstituter#apply(org.gerryai.htn.simple.constraint.impl.SimpleBetweenConstraint)}.
 	 */
 	@Test
 	public void testApplySimpleBetweenConstraint() {
@@ -69,7 +69,7 @@ public class SimpleSubstituterImplTest {
 	}
 
 	/**
-	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.SimpleSubstituterImpl#apply(org.gerryai.htn.simple.constraint.impl.SimplePrecedenceConstraint)}.
+	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.GenericSubstituter#apply(org.gerryai.htn.simple.constraint.impl.SimplePrecedenceConstraint)}.
 	 */
 	@Test
 	public void testApplySimplePrecedenceConstraint() {
@@ -77,7 +77,7 @@ public class SimpleSubstituterImplTest {
 	}
 
 	/**
-	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.SimpleSubstituterImpl#apply(org.gerryai.htn.simple.tasknetwork.impl.SimpleNonPrimitiveTask)}.
+	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.GenericSubstituter#apply(org.gerryai.htn.simple.tasknetwork.impl.SimpleNonPrimitiveTask)}.
 	 */
 	@Test
 	public void testApplySimpleNonPrimitiveTask() {
@@ -85,7 +85,7 @@ public class SimpleSubstituterImplTest {
 	}
 
 	/**
-	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.SimpleSubstituterImpl#apply(org.gerryai.htn.simple.tasknetwork.impl.SimplePrimitiveTask)}.
+	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.GenericSubstituter#apply(org.gerryai.htn.simple.tasknetwork.impl.SimplePrimitiveTask)}.
 	 */
 	@Test
 	public void testApplySimplePrimitiveTask() {

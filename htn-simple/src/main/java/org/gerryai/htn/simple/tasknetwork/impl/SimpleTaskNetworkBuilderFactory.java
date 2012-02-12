@@ -20,6 +20,7 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
 
@@ -29,26 +30,27 @@ import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
  */
 public class SimpleTaskNetworkBuilderFactory implements
 		TaskNetworkBuilderFactory<SimpleTerm, SimpleTask, SimpleTaskNetwork, 
-		ValidatableConstraint<SimpleTerm, SimpleTask>> {
+		ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>> {
 
 	/**
 	 * Factory for creating constraint validators, as used by the task network builders.
 	 */
-	private ConstraintValidatorFactory<SimpleTerm, SimpleTask> constraintValidatorFactory;
+	private ConstraintValidatorFactory<SimpleTerm, SimpleTask, SubstitutableCondition> constraintValidatorFactory;
 	
 	/**
 	 * Constructor, requiring a factory for creating constraint validators.
 	 * @param constraintValidatorFactory the constraint validator factory
 	 */
 	public SimpleTaskNetworkBuilderFactory(ConstraintValidatorFactory<SimpleTerm,
-			SimpleTask> constraintValidatorFactory) {
+			SimpleTask, SubstitutableCondition> constraintValidatorFactory) {
 		this.constraintValidatorFactory = constraintValidatorFactory;
 	}
 	/**
 	 * {@inheritDoc}
 	 */
 	public final SimpleTaskNetworkBuilder createTaskNetworkBuilder() {
-		ConstraintValidator<SimpleTerm, SimpleTask> constraintValidator = constraintValidatorFactory.create();
+		ConstraintValidator<SimpleTerm, SimpleTask, SubstitutableCondition>
+				constraintValidator = constraintValidatorFactory.create();
 		return new SimpleTaskNetworkBuilder(constraintValidator);	
 	}
 

@@ -20,9 +20,8 @@ package org.gerryai.htn.simple.domain.impl;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainBuilder;
-import org.gerryai.htn.simple.domain.MethodBuilder;
-import org.gerryai.htn.simple.domain.OperatorBuilder;
 import org.gerryai.htn.simple.domain.DomainBuilderFactory;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
@@ -34,14 +33,15 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
  */
 public class SimpleDomainBuilderFactory implements
 		DomainBuilderFactory<SimpleDomain, SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask,
-				SimpleTaskNetwork, ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition, Effect> {
+				SimpleTaskNetwork, ValidatableConstraint<SimpleTerm, SimpleTask,
+				SubstitutableCondition>, SimpleCondition, Effect> {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public final DomainBuilder<SimpleDomain, SimpleOperator, SimpleMethod, SimpleTerm,
-			SimpleTask, SimpleTaskNetwork, ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition>
-			createDomainBuilder() {
+			SimpleTask, SimpleTaskNetwork, ValidatableConstraint<SimpleTerm, SimpleTask,
+			SubstitutableCondition>, SimpleCondition> createDomainBuilder() {
 		return new SimpleDomainBuilder();	
 	}
 	

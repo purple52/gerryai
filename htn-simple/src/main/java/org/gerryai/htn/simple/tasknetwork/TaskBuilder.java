@@ -42,6 +42,24 @@ public interface TaskBuilder<T extends Term, K extends Task<T>> {
 	TaskBuilder<T, K> addArguments(List<T> terms);
 	
 	/**
+	 * Get the name of the task to be built.
+	 * @return the name
+	 */
+	String getName();
+	
+	/**
+	 * Get whether the task to be built is primitive.
+	 * @return the name
+	 */
+	boolean getIsPrimitive();
+	
+	/**
+	 * Get the arguments for the tack to be built.
+	 * @return the arguments
+	 */
+	List<T> getArguments();
+	
+	/**
 	 * Build the task.
 	 * @return the task
 	 */

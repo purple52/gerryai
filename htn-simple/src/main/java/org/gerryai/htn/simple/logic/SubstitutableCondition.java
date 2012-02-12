@@ -15,22 +15,15 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.constraint;
+package org.gerryai.htn.simple.logic;
 
-import org.gerryai.htn.constraint.BeforeConstraint;
 import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 /**
- * Extension of validatable and precedence constraint interfaces.
- * @param <T> type of logical term this constraint uses
- * @param <K> type of task  the constraint applies to
- * @param <I> type of condition this constraint uses
+ * Extended interface for variables that support a visitor for doing substitutions.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ValidatableBeforeConstraint<T extends Term, K extends Task<T>, I extends Condition>
-		extends ValidatableConstraint<T, K, I>, BeforeConstraint<T, K, I> {
+public interface SubstitutableCondition extends Condition, SubstitutableTerm {
 
 }

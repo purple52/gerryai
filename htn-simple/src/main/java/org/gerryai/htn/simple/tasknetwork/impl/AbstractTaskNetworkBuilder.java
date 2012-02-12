@@ -20,6 +20,7 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -34,6 +35,7 @@ import org.gerryai.logic.Term;
  * @param <K> type of task this builder will create
  * @param <N> type of task network this builder will create
  * @param <C> type of constraint this builder will create
+ * @param <I> type of condition the constraints will use
  * @param <B> type of builder implemented
  * @author David Edwards <david@more.fool.me.uk>
  */
@@ -41,8 +43,9 @@ public abstract class AbstractTaskNetworkBuilder<
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
-		C extends ValidatableConstraint<T, K>,
-		B extends AbstractTaskNetworkBuilder<T, K, N, C, B>>
+		C extends ValidatableConstraint<T, K, I>,
+		I extends Condition,
+		B extends AbstractTaskNetworkBuilder<T, K, N, C, I, B>>
 		implements TaskNetworkBuilder<T, K, N, C> {
 
 	/**
@@ -58,7 +61,7 @@ public abstract class AbstractTaskNetworkBuilder<
 	/**
 	 * Constraint validator.
 	 */
-	private ConstraintValidator<T, K> constraintValidator;
+	private ConstraintValidator<T, K, I> constraintValidator;
 	
 	/**
 	 * Default constructor.
@@ -71,14 +74,14 @@ public abstract class AbstractTaskNetworkBuilder<
 	/**
 	 * @return the constraintValidator
 	 */
-	protected final ConstraintValidator<T, K> getConstraintValidator() {
+	protected final ConstraintValidator<T, K, I> getConstraintValidator() {
 		return constraintValidator;
 	}
 
 	/**
 	 * @param constraintValidator the constraintValidator to set
 	 */
-	protected final void setConstraintValidator(ConstraintValidator<T, K> constraintValidator) {
+	protected final void setConstraintValidator(ConstraintValidator<T, K, I> constraintValidator) {
 		this.constraintValidator = constraintValidator;
 	}
 	
@@ -149,9 +152,7 @@ public abstract class AbstractTaskNetworkBuilder<
 	 * @param constraint the constraint
 	 * @throws InvalidConstraint if the constraint was invalid
 	 */
-	private void addConstraintInternal(
-			C
-			constraint)	throws InvalidConstraint {
+	private void addConstraintInternal(C constraint) throws InvalidConstraint {
 		if (constraint.validate(getConstraintValidator())) { 
 			constraints.add(constraint);
 			constraint.add(getConstraintValidator());

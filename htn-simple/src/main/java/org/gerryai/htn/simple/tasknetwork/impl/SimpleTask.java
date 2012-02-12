@@ -19,17 +19,17 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 
 import java.util.List;
 
-import org.gerryai.htn.simple.decomposition.SimpleSubstituter;
-import org.gerryai.htn.simple.decomposition.Substitutable;
+import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
-import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.TaskBuilder;
 
 import com.google.common.base.Objects;
 
 /**
  * Basic implementation of the Task interface.
  */
-public class SimpleTask implements Task<SimpleTerm>, Substitutable<SimpleSubstituter> {
+public class SimpleTask implements SubstitutableTask<SimpleTerm> {
 	
 	/**
 	 * Name for this task.
@@ -50,7 +50,7 @@ public class SimpleTask implements Task<SimpleTerm>, Substitutable<SimpleSubstit
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
-	protected SimpleTask(AbstractTaskBuilder<SimpleTerm, SimpleTask, ?> builder) {
+	protected SimpleTask(TaskBuilder<SimpleTerm, SimpleTask> builder) {
 		this.setName(builder.getName());
 		this.setArguments(builder.getArguments());
 		this.setIsPrimitive(builder.getIsPrimitive());
@@ -73,7 +73,7 @@ public class SimpleTask implements Task<SimpleTerm>, Substitutable<SimpleSubstit
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean isPrimitive() {
+	public final boolean isPrimitive() {
 		return isPrimitive;
 	}
 	
@@ -101,7 +101,10 @@ public class SimpleTask implements Task<SimpleTerm>, Substitutable<SimpleSubstit
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTask apply(SimpleSubstituter substituter) {
+	public final SubstitutableTask<SimpleTerm> apply(Substituter<SimpleTerm> substituter) {
+		for (SimpleTerm term : arguments) {
+			term.apply(substituter);
+		}
 		return substituter.apply(this);
 	}
 	

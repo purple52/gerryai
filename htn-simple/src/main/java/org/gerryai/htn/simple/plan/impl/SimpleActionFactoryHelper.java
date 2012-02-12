@@ -28,6 +28,7 @@ import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
@@ -48,7 +49,8 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<SimpleOper
 	 * Service for the domain that we are working in.
 	 */
 	private DomainHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask,
-			SimpleTaskNetwork, ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> domainHelper;
+			SimpleTaskNetwork, ValidatableConstraint<SimpleTerm, SimpleTask,
+			SubstitutableCondition>, SimpleCondition> domainHelper;
 	
 	/**
 	 * Constructor requiring a domain helper.
@@ -56,7 +58,7 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<SimpleOper
 	 */
 	public SimpleActionFactoryHelper(DomainHelper<SimpleOperator, SimpleMethod,
 			SimpleTerm, SimpleTask, SimpleTaskNetwork,
-			ValidatableConstraint<SimpleTerm, SimpleTask>, SimpleCondition> domainHelper) {
+			ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> domainHelper) {
 		this.domainHelper = domainHelper;
 	}
 	

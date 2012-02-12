@@ -30,10 +30,11 @@ import org.gerryai.logic.Term;
 /**
  * @param <T> type of logical term used by the constraints created by this factory
  * @param <K> type of task used by the constraints created by this factory
+ * @param <I> type of condition used by the constraints created by this factory
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ConstraintFactory<T extends Term, K extends Task<T>> {
+public interface ConstraintFactory<T extends Term, K extends Task<T>, I extends Condition> {
 
 	/**
 	 * Create a precedence constraint.
@@ -49,7 +50,7 @@ public interface ConstraintFactory<T extends Term, K extends Task<T>> {
 	 * @param condition the condition that must be true directly before the first task in the set
 	 * @return the constraint
 	 */
-	BeforeConstraint<T, K> createBeforeConstraint(Set<K> tasks, Condition condition);
+	BeforeConstraint<T, K, I> createBeforeConstraint(Set<K> tasks, I condition);
 	
 	/**
 	 * Create an after constraint.
@@ -57,7 +58,7 @@ public interface ConstraintFactory<T extends Term, K extends Task<T>> {
 	 * @param condition the condition that must be true directly after the last task in the set
 	 * @return the constraint
 	 */
-	AfterConstraint<T, K> createAfterConstraint(Set<K> tasks, Condition condition);
+	AfterConstraint<T, K, I> createAfterConstraint(Set<K> tasks, I condition);
 	
 	/**
 	 * Create a between constraint.
@@ -66,6 +67,6 @@ public interface ConstraintFactory<T extends Term, K extends Task<T>> {
 	 * @param condition the condition that must be true between the two sets of tasks
 	 * @return the constraint
 	 */
-	BetweenConstraint<T, K> createBetweenConstraint(Set<K> precedingTasks, Set<K> procedingTasks, Condition condition);
+	BetweenConstraint<T, K, I> createBetweenConstraint(Set<K> precedingTasks, Set<K> procedingTasks, I condition);
 
 }

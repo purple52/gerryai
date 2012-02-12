@@ -20,6 +20,7 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
 import org.gerryai.htn.tasknetwork.Task;
@@ -30,7 +31,7 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  *
  */
 public class SimpleTaskNetwork implements TaskNetwork<SimpleTerm, SimpleTask,
-		ValidatableConstraint<SimpleTerm, SimpleTask>> {
+		ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>> {
 
 	/**
 	 * Set of tasks to be solved in this network.
@@ -40,14 +41,14 @@ public class SimpleTaskNetwork implements TaskNetwork<SimpleTerm, SimpleTask,
 	/**
 	 * Set of constraints to be met.
 	 */
-	private Set<ValidatableConstraint<SimpleTerm, SimpleTask>> constraints;
+	private Set<ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>> constraints;
 	
 	/**
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
 	protected SimpleTaskNetwork(TaskNetworkBuilder<SimpleTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SimpleTerm, SimpleTask>> builder) {
+				ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>> builder) {
 		this.setTasks(builder.getTasks());
 		this.setConstraints(builder.getConstraints());
 	}
@@ -69,16 +70,15 @@ public class SimpleTaskNetwork implements TaskNetwork<SimpleTerm, SimpleTask,
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<ValidatableConstraint<
-			SimpleTerm, SimpleTask>> getConstraints() {
+	public final Set<ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>> getConstraints() {
 		return constraints;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setConstraints(Set<ValidatableConstraint<
-			SimpleTerm, SimpleTask>> constraints) {
+	public final void setConstraints(Set<ValidatableConstraint<SimpleTerm,
+			SimpleTask, SubstitutableCondition>> constraints) {
 		this.constraints = constraints;
 	}
 

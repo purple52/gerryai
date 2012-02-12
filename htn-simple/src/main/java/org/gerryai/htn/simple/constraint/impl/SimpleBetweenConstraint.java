@@ -19,9 +19,11 @@ package org.gerryai.htn.simple.constraint.impl;
 
 import java.util.Set;
 
-import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
 import org.gerryai.htn.simple.constraint.ValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
+import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
@@ -33,7 +35,8 @@ import com.google.common.base.Objects;
  *
  */
 public class SimpleBetweenConstraint implements
-		ValidatableBetweenConstraint<SimpleTerm, SimpleTask> {
+		ValidatableBetweenConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>,
+		SubstitutableConstraint<SimpleTerm> {
 
 	/**
 	 * The set of tasks that this constraint must hold after.
@@ -48,7 +51,7 @@ public class SimpleBetweenConstraint implements
 	/**
 	 * The literal that must be true directly between the two sets of tasks.
 	 */
-	private Condition condition;
+	private SubstitutableCondition condition;
 	
 	/**
 	 * Set the set of tasks that this constraint must hold after.
@@ -70,7 +73,7 @@ public class SimpleBetweenConstraint implements
 	 * Set the condition that must be true directly after the last of these tasks.
 	 * @param condition the condition
 	 */
-	public final void setCondition(Condition condition) {
+	public final void setCondition(SubstitutableCondition condition) {
 		this.condition = condition;
 	}
 	
@@ -94,23 +97,30 @@ public class SimpleBetweenConstraint implements
 	 * Get the condition that must be true directly after the last of these tasks.
 	 * @return the condition
 	 */
-	public final Condition getCondition() {
+	public final SubstitutableCondition getCondition() {
 		return condition;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<SimpleTerm, SimpleTask> validator) {
+	public final boolean validate(ConstraintValidator<SimpleTerm, SimpleTask, SubstitutableCondition> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<SimpleTerm, SimpleTask> validator)
+	public final void add(ConstraintValidator<SimpleTerm, SimpleTask, SubstitutableCondition> validator)
 			throws InvalidConstraint {
 		validator.add(this);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final SubstitutableConstraint<SimpleTerm> apply(Substituter<SimpleTerm> substituter) {
+		return substituter.apply(this);
 	}
 	
 	@Override

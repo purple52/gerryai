@@ -27,9 +27,10 @@ import org.gerryai.logic.Term;
  * Interface for a constraint that dictates the state immediately before this task.
  * @param <T> type of logical term this constraint works with
  * @param <K> type of task this constraint works with
+ * @param <I> type of condition this constraint uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface BeforeConstraint<T extends Term, K extends Task<T>> extends Constraint<T> {
+public interface BeforeConstraint<T extends Term, K extends Task<T>, I extends Condition> extends Constraint<T> {
 
 	/**
 	 * The set of tasks for which this constraint must hold.
@@ -41,5 +42,5 @@ public interface BeforeConstraint<T extends Term, K extends Task<T>> extends Con
 	 * The condition that must be true just before the first of the tasks is achieved.
 	 * @return the literal
 	 */
-	Condition getCondition();
+	I getCondition();
 }
