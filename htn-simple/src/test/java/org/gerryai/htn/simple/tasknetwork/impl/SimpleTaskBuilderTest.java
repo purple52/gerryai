@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 
 import org.junit.Test;
 
@@ -124,7 +125,7 @@ public class SimpleTaskBuilderTest {
 		SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
 		
 		// Create the builder under test
-		SimpleTask primitiveTask = new SimpleTaskBuilder()
+		SubstitutableTask primitiveTask = new SimpleTaskBuilder()
 				.setName("testname")
 				.addArgument(mockTerm)
 				.setIsPrimitive(true)
@@ -145,7 +146,7 @@ public class SimpleTaskBuilderTest {
 		SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
 		
 		// Create the builder under test
-		SimpleTask primitiveTask = new SimpleTaskBuilder()
+		SubstitutableTask primitiveTask = new SimpleTaskBuilder()
 				.setName("testname")
 				.addArgument(mockTerm)
 				.setIsPrimitive(false)

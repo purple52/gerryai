@@ -36,6 +36,7 @@ import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.planner.impl.SimplePlannerFactory;
 import org.gerryai.htn.simple.planner.impl.SimplePlanningService;
 import org.gerryai.htn.simple.problem.impl.SimpleProblem;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilderFactory;
@@ -54,8 +55,8 @@ public class BasicIT {
 		
 		SimpleDomainBuilderFactory domainBuilderFactory
 				= new SimpleDomainBuilderFactory();
-		GenericConstraintValidatorFactory<SubstitutableTerm, SimpleTask, SubstitutableCondition> constraintValidatorFactory
-				= new GenericConstraintValidatorFactory<SubstitutableTerm, SimpleTask, SubstitutableCondition>();
+		GenericConstraintValidatorFactory<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> constraintValidatorFactory
+				= new GenericConstraintValidatorFactory<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>();
 		SimpleTaskNetworkBuilderFactory taskNetworkBuilderFactory
 				= new SimpleTaskNetworkBuilderFactory(constraintValidatorFactory);
 		
@@ -80,34 +81,34 @@ public class BasicIT {
 		
 		SimpleVariable variableX = new SimpleVariable("x");
 		SimpleVariable variableY = new SimpleVariable("y");
-		SimpleTask methodATask  = taskNetworkBuilderFactory.createTaskBuilder()
+		SubstitutableTask methodATask  = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("swap")
 				.addArgument(variableX)
 				.addArgument(variableY)
 				.setIsPrimitive(false)
 				.build();
-		SimpleTask methodBTask  = taskNetworkBuilderFactory.createTaskBuilder()
+		SubstitutableTask methodBTask  = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("swap")
 				.addArgument(variableX)
 				.addArgument(variableY)
 				.setIsPrimitive(false)
 				.build();
-		SimpleTask methodASubTask1  = taskNetworkBuilderFactory.createTaskBuilder()
+		SubstitutableTask methodASubTask1  = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("drop")
 				.addArgument(variableX)
 				.setIsPrimitive(true)
 				.build();
-		SimpleTask methodASubTask2  = taskNetworkBuilderFactory.createTaskBuilder()
+		SubstitutableTask methodASubTask2  = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("pickup")
 				.addArgument(variableY)
 				.setIsPrimitive(true)
 				.build();
-		SimpleTask methodBSubTask1  = taskNetworkBuilderFactory.createTaskBuilder()
+		SubstitutableTask methodBSubTask1  = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("drop")
 				.addArgument(variableY)
 				.setIsPrimitive(true)
 				.build();
-		SimpleTask methodBSubTask2  = taskNetworkBuilderFactory.createTaskBuilder()
+		SubstitutableTask methodBSubTask2  = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("pickup")
 				.addArgument(variableX)
 				.setIsPrimitive(true)
@@ -137,7 +138,7 @@ public class BasicIT {
 		
 		SimpleConstant constantKiwi = new SimpleConstant("kiwi");
 		SimpleConstant constantBanjo = new SimpleConstant("banjo");
-		SimpleTask task = taskNetworkBuilderFactory.createTaskBuilder()
+		SubstitutableTask task = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("swap")
 				.addArgument(constantKiwi)
 				.addArgument(constantBanjo)

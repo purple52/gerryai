@@ -92,6 +92,6 @@ public interface Substituter<T extends SubstitutableTerm> {
 	 * @param task the task to apply the substitution to
 	 * @return a copy of the task with the substitution applied
 	 */
-	SubstitutableTask<T> apply(SubstitutableTask<T> task);
+	SubstitutableTask apply(SubstitutableTask task);
 	
 }

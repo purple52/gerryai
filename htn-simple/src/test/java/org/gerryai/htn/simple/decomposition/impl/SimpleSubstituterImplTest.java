@@ -45,8 +45,8 @@ public class SimpleSubstituterImplTest {
 		@SuppressWarnings("unchecked")
 		Substitution<SubstitutableTerm, SubstitutableVariable> mockUnifier = mock(Substitution.class);
 		@SuppressWarnings("unchecked")
-		ConstraintFactory<SubstitutableTerm, SubstitutableTask<SubstitutableTerm>, SubstitutableCondition> mockConstraintFactory = mock(ConstraintFactory.class);
-		GenericSubstituter<SubstitutableTerm> substituter = new GenericSubstituter<SubstitutableTerm>(mockUnifier, mockConstraintFactory);
+		ConstraintFactory<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintFactory = mock(ConstraintFactory.class);
+		GenericSubstituter substituter = new GenericSubstituter(mockUnifier, mockConstraintFactory);
 		
 		SimpleBeforeConstraint constraint = mock(SimpleBeforeConstraint.class);
 		

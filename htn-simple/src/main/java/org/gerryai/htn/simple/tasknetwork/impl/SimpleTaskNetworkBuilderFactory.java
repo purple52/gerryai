@@ -22,6 +22,7 @@ import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
 
 /**
@@ -29,27 +30,27 @@ import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class SimpleTaskNetworkBuilderFactory implements
-		TaskNetworkBuilderFactory<SubstitutableTerm, SimpleTask, SimpleTaskNetwork, 
-		ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>> {
+		TaskNetworkBuilderFactory<SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork, 
+		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> {
 
 	/**
 	 * Factory for creating constraint validators, as used by the task network builders.
 	 */
-	private ConstraintValidatorFactory<SubstitutableTerm, SimpleTask, SubstitutableCondition> constraintValidatorFactory;
+	private ConstraintValidatorFactory<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> constraintValidatorFactory;
 	
 	/**
 	 * Constructor, requiring a factory for creating constraint validators.
 	 * @param constraintValidatorFactory the constraint validator factory
 	 */
 	public SimpleTaskNetworkBuilderFactory(ConstraintValidatorFactory<SubstitutableTerm,
-			SimpleTask, SubstitutableCondition> constraintValidatorFactory) {
+			SubstitutableTask, SubstitutableCondition> constraintValidatorFactory) {
 		this.constraintValidatorFactory = constraintValidatorFactory;
 	}
 	/**
 	 * {@inheritDoc}
 	 */
 	public final SimpleTaskNetworkBuilder createTaskNetworkBuilder() {
-		ConstraintValidator<SubstitutableTerm, SimpleTask, SubstitutableCondition>
+		ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>
 				constraintValidator = constraintValidatorFactory.create();
 		return new SimpleTaskNetworkBuilder(constraintValidator);	
 	}

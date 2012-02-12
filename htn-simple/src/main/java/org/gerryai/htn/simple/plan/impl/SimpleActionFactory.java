@@ -24,32 +24,32 @@ import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleActionFactory implements ActionFactory<SimpleOperator, SubstitutableTerm, SimpleTask, SimpleCondition> {
+public class SimpleActionFactory implements ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition> {
 
 	/**
 	 * Helper object for doing the difficult bits.
 	 */
-	private ActionFactoryHelper<SimpleOperator, SubstitutableTerm, SimpleTask, SimpleCondition> actionFactoryHelper;
+	private ActionFactoryHelper<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition> actionFactoryHelper;
 	
 	/**
 	 * Constructor taking all required dependencies.
 	 * @param actionFactoryHelper the action factory
 	 */
 	public SimpleActionFactory(ActionFactoryHelper<SimpleOperator, SubstitutableTerm,
-			SimpleTask, SimpleCondition> actionFactoryHelper) {
+			SubstitutableTask, SimpleCondition> actionFactoryHelper) {
 		this.actionFactoryHelper = actionFactoryHelper;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleAction create(SimpleTask task) throws TaskNotActionable {
+	public final SimpleAction create(SubstitutableTask task) throws TaskNotActionable {
 
 		// Try and get the operator
 		SimpleOperator operator = actionFactoryHelper.getOperator(task);

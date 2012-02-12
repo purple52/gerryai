@@ -28,7 +28,7 @@ import org.gerryai.htn.simple.logic.impl.SimpleConstant;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleUnifier;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
@@ -39,12 +39,12 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  * @author David Edwards <david@more.fool.me.uk>
  * 
  */
-public class AIMAConverterImpl implements AIMAConverter<SubstitutableTerm, SimpleVariable, SimpleTask> {
+public class AIMAConverterImpl implements AIMAConverter<SubstitutableTerm, SimpleVariable, SubstitutableTask> {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Predicate convert(SimpleTask task) {
+	public final Predicate convert(SubstitutableTask task) {
 
 		String name = task.getName();
 		List<aima.core.logic.fol.parsing.ast.Term> terms = convert(task.getArguments());

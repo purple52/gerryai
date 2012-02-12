@@ -22,6 +22,7 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
@@ -30,25 +31,25 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleTaskNetwork implements TaskNetwork<SubstitutableTerm, SimpleTask,
-		ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>> {
+public class SimpleTaskNetwork implements TaskNetwork<SubstitutableTerm, SubstitutableTask,
+		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> {
 
 	/**
 	 * Set of tasks to be solved in this network.
 	 */
-	private Set<SimpleTask> tasks;
+	private Set<SubstitutableTask> tasks;
 	
 	/**
 	 * Set of constraints to be met.
 	 */
-	private Set<ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>> constraints;
+	private Set<ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> constraints;
 	
 	/**
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
-	protected SimpleTaskNetwork(TaskNetworkBuilder<SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>> builder) {
+	protected SimpleTaskNetwork(TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> builder) {
 		this.setTasks(builder.getTasks());
 		this.setConstraints(builder.getConstraints());
 	}
@@ -56,21 +57,21 @@ public class SimpleTaskNetwork implements TaskNetwork<SubstitutableTerm, SimpleT
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<SimpleTask> getTasks() {
+	public final Set<SubstitutableTask> getTasks() {
 		return tasks;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setTasks(Set<SimpleTask> tasks) {
+	public final void setTasks(Set<SubstitutableTask> tasks) {
 		this.tasks = tasks;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>> getConstraints() {
+	public final Set<ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> getConstraints() {
 		return constraints;
 	}
 
@@ -78,7 +79,7 @@ public class SimpleTaskNetwork implements TaskNetwork<SubstitutableTerm, SimpleT
 	 * {@inheritDoc}
 	 */
 	public final void setConstraints(Set<ValidatableConstraint<SubstitutableTerm,
-			SimpleTask, SubstitutableCondition>> constraints) {
+			SubstitutableTask, SubstitutableCondition>> constraints) {
 		this.constraints = constraints;
 	}
 

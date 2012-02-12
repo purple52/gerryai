@@ -30,7 +30,7 @@ import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 
 /**
@@ -38,20 +38,20 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class SimplePlanner implements
-		Planner<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-		ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> {
+		Planner<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> {
 	
 	/**
 	 * Manager the domain being worked in.
 	 */
-	private DomainHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-	ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> domainHelper;
+	private DomainHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+	ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> domainHelper;
 	
 	/**
 	 * Helper for off-loading some of the logic.
 	 */
-	private PlannerHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-	ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> plannerHelper;
+	private PlannerHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+	ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> plannerHelper;
 	
 	/**
 	 * Constructor taking the domain manager and planner helper to use.
@@ -59,11 +59,11 @@ public class SimplePlanner implements
 	 * @param plannerHelper the planner helper
 	 */
 	public SimplePlanner(
-			DomainHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-					ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>,
+			DomainHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+					ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
 					SimpleCondition> domainHelper,
-			PlannerHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-					ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>,
+			PlannerHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+					ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
 					SimpleCondition> plannerHelper) {
 		this.domainHelper = domainHelper;
 		this.plannerHelper = plannerHelper;
@@ -83,7 +83,7 @@ public class SimplePlanner implements
 
 			try {
 				// Try and find a non-primitive task to deal with
-				SimpleTask task = plannerHelper.getNonPrimitiveTask(taskNetwork);
+				SubstitutableTask task = plannerHelper.getNonPrimitiveTask(taskNetwork);
 
 				// 3. Task network is non-primitive
 				// TODO: Confirm implementation

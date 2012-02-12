@@ -18,15 +18,16 @@
 package org.gerryai.htn.simple.tasknetwork.impl;
 
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 
 /**
  * Concrete builder for SimpleTask objects.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleTaskBuilder extends AbstractTaskBuilder<SubstitutableTerm, SimpleTask, SimpleTaskBuilder> {
+public class SimpleTaskBuilder extends AbstractTaskBuilder<SubstitutableTerm, SubstitutableTask, SimpleTaskBuilder> {
 
 	@Override
-	public final SimpleTask build() {
+	public final SubstitutableTask build() {
 		return new SimpleTask(this);
 	}
 	

@@ -37,7 +37,7 @@ import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.PlanFactory;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.unification.Substitution;
@@ -47,13 +47,13 @@ import org.gerryai.logic.unification.Substitution;
  *
  */
 public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, SimpleMethod,
-		SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-		ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> {
+		SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> {
 
 	/**
 	 * Factory for creating actions.
 	 */
-	private ActionFactory<SimpleOperator, SubstitutableTerm, SimpleTask, SimpleCondition> actionFactory;
+	private ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition> actionFactory;
 	
 	/**
 	 * Factory for creating plans.
@@ -63,14 +63,14 @@ public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, Simple
 	/**
 	 * Service for decomposing tasks.
 	 */
-	private DecompositionService<SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-			ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>> decompositionService;
+	private DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> decompositionService;
 	
 	/**
 	 * Service for finding unifiers.
 	 */
-	private UnificationService<SimpleMethod, SubstitutableTerm, SimpleTask,
-			SimpleTaskNetwork, ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>,
+	private UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask,
+			SimpleTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
 			SimpleCondition, SimpleVariable>  unificationService;
 	
 	/**
@@ -81,12 +81,12 @@ public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, Simple
 	 * @param unificationService the unification service
 	 */
 	public SimplePlannerHelper(
-			ActionFactory<SimpleOperator, SubstitutableTerm, SimpleTask, SimpleCondition> actionFactory,
+			ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition> actionFactory,
 			PlanFactory<SimpleOperator, SimpleCondition> planFactory,
-			DecompositionService<SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>> decompositionservice,
-			UnificationService<SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>,
+			DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> decompositionservice,
+			UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
 				SimpleCondition, SimpleVariable>  unificationService) {
 		this.actionFactory = actionFactory;
 		this.planFactory = planFactory;
@@ -112,7 +112,7 @@ public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, Simple
 		
 		Plan<SimpleOperator, SimpleCondition> plan = planFactory.create();
 		
-		for (SimpleTask task : taskNetwork.getTasks()) {
+		for (SubstitutableTask task : taskNetwork.getTasks()) {
 			Action<SimpleOperator, SimpleCondition> action;
 			try {
 				action = actionFactory.create(task);
@@ -137,8 +137,8 @@ public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, Simple
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTask getNonPrimitiveTask(SimpleTaskNetwork taskNetwork) throws NonPrimitiveTaskNotFound {
-		for (SimpleTask task : taskNetwork.getTasks()) {
+	public final SubstitutableTask getNonPrimitiveTask(SimpleTaskNetwork taskNetwork) throws NonPrimitiveTaskNotFound {
+		for (SubstitutableTask task : taskNetwork.getTasks()) {
 			if (!task.isPrimitive()) {
 				return task;
 			}
@@ -150,7 +150,7 @@ public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, Simple
 	 * {@inheritDoc}
 	 */
 	public final SimpleTaskNetwork decompose(SimpleTaskNetwork taskNetwork,
-			SimpleTask task, SimpleMethod method) throws DecompositionNotFound {
+			SubstitutableTask task, SimpleMethod method) throws DecompositionNotFound {
 		Substitution<SubstitutableTerm, SimpleVariable> unifier;
 		try {
 			unifier = unificationService.findUnifier(task, method);

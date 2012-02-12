@@ -29,7 +29,7 @@ import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.planner.PlannerFactory;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 
 /**
@@ -37,21 +37,21 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class SimplePlanningService implements PlanningService<SimpleOperator,
-		SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-		ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> {
+		SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> {
 
 	/**
 	 * A factory for creating planners.
 	 */
-	private PlannerFactory<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-	ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> plannerFactory;
+	private PlannerFactory<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+	ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> plannerFactory;
 	
 	/**
 	 * Constructor taking a factory for creating planners.
 	 * @param plannerFactory the factory
 	 */
-	public SimplePlanningService(PlannerFactory<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-			ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> plannerFactory) {
+	public SimplePlanningService(PlannerFactory<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> plannerFactory) {
 		this.plannerFactory = plannerFactory;
 	}
 	
@@ -59,13 +59,13 @@ public class SimplePlanningService implements PlanningService<SimpleOperator,
 	 * {@inheritDoc}
 	 */
 	public final Plan<SimpleOperator, SimpleCondition> solve(Problem<SimpleOperator,
-			SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-			ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>,
+			SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
 			SimpleCondition> problem) throws PlanNotFound {
 		
 		// Create a planner that will work in the domain of the given problem
-		Planner<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition>
+		Planner<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				planner = plannerFactory.create(problem.getDomain());
 				
 		// Find a plan of the given problem

@@ -36,7 +36,7 @@ import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.planner.PlannerFactory;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.junit.Test;
 
@@ -55,17 +55,17 @@ public class SimplePlanningServiceTest {
 		
 		@SuppressWarnings("unchecked")
 		Plan<SimpleOperator, SimpleCondition> mockPlan = mock(Plan.class);
-		Problem<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition>
+		Problem<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				mockProblem = createMockProblem();
 		@SuppressWarnings("unchecked")
-		Planner<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition>
+		Planner<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				mockPlanner = mock(Planner.class);
 		when(mockPlanner.findPlan(mockProblem.getState(), mockProblem.getTaskNetwork())).thenReturn(mockPlan);
 		@SuppressWarnings("unchecked")
-		PlannerFactory<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask,
-				SimpleTaskNetwork, ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>,
+		PlannerFactory<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask,
+				SimpleTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
 				SimpleCondition> mockPlannerFactory = mock(PlannerFactory.class);
 		
 		when(mockPlannerFactory.create(any(Domain.class))).thenReturn(mockPlanner);
@@ -88,16 +88,16 @@ public class SimplePlanningServiceTest {
 	@Test(expected=PlanNotFound.class)
 	public void testSolvePlanNotFound() throws PlanNotFound {
 		
-		Problem<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork, ValidatableConstraint<SubstitutableTerm,
-				SimpleTask, SubstitutableCondition>, SimpleCondition> mockProblem = createMockProblem();
+		Problem<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork, ValidatableConstraint<SubstitutableTerm,
+		SubstitutableTask, SubstitutableCondition>, SimpleCondition> mockProblem = createMockProblem();
 		@SuppressWarnings("unchecked")
-		Planner<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition>
+		Planner<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				mockPlanner = mock(Planner.class);
 		when(mockPlanner.findPlan(mockProblem.getState(), mockProblem.getTaskNetwork())).thenThrow(new PlanNotFound());
 		@SuppressWarnings("unchecked")
-		PlannerFactory<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition>
+		PlannerFactory<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				mockPlannerFactory = mock(PlannerFactory.class);
 		
 		when(mockPlannerFactory.create(any(Domain.class))).thenReturn(mockPlanner);
@@ -113,18 +113,18 @@ public class SimplePlanningServiceTest {
 	 * Create a simple mocked Problem.
 	 * @return a mock problem
 	 */
-	private Problem<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-			ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>,SimpleCondition> createMockProblem() {
+	private Problem<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,SimpleCondition> createMockProblem() {
 		
 		SimpleTaskNetwork mockTaskNetwork = mock(SimpleTaskNetwork.class);
 		State mockState = mock(State.class);
 		@SuppressWarnings("unchecked")
-		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition>
+		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				mockDomain = mock(Domain.class);
 		@SuppressWarnings("unchecked")
-		Problem<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition>
+		Problem<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				mockProblem = mock(Problem.class);
 		when(mockProblem.getTaskNetwork()).thenReturn(mockTaskNetwork);
 		when(mockProblem.getState()).thenReturn(mockState);

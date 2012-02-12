@@ -44,12 +44,12 @@ import org.gerryai.logic.unification.Substitution;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class GenericSubstituter<T extends SubstitutableTerm> implements Substituter<T> {
+public class GenericSubstituter implements Substituter<SubstitutableTerm> {
 
 	/**
 	 * The unifier containing the substitution to use.
 	 */
-	private Substitution<T, SubstitutableVariable> unifier;
+	private Substitution<SubstitutableTerm, SubstitutableVariable> unifier;
 	
 	/**
 	 * Constraint factory to use.
@@ -59,11 +59,11 @@ public class GenericSubstituter<T extends SubstitutableTerm> implements Substitu
 	/**
 	 * Factory for building task and task networks.
 	 */
-	private TaskNetworkBuilderFactory<T,
-			SubstitutableTask<T>,
-			TaskNetwork<T, SubstitutableTask<T>,
-			Constraint<T>>,
-			Constraint<T>>
+	private TaskNetworkBuilderFactory<SubstitutableTerm,
+			SubstitutableTask,
+			TaskNetwork<SubstitutableTerm, SubstitutableTask,
+			Constraint<SubstitutableTerm>>,
+			Constraint<SubstitutableTerm>>
 			taskNetworkBuilderFactory;
 	
 	/**
@@ -71,8 +71,8 @@ public class GenericSubstituter<T extends SubstitutableTerm> implements Substitu
 	 * @param unifier the unifier to work with
 	 * @param constraintFactory the factory for creating new tasks and task networks
 	 */
-	public GenericSubstituter(Substitution<T, SubstitutableVariable> unifier,
-			ConstraintFactory<T, SubstitutableTask<T>, SubstitutableCondition> constraintFactory) {
+	public GenericSubstituter(Substitution<SubstitutableTerm, SubstitutableVariable> unifier,
+			ConstraintFactory<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> constraintFactory) {
 		this.unifier = unifier;
 		//this.constraintFactory = constraintFactory;
 	}
@@ -112,7 +112,7 @@ public class GenericSubstituter<T extends SubstitutableTerm> implements Substitu
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableConstraint<T> apply(SubstitutableConstraint<T> constraint) {
+	public final SubstitutableConstraint<SubstitutableTerm> apply(SubstitutableConstraint<SubstitutableTerm> constraint) {
 		// TODO Implement
 		//Condition updatedCondition = apply(constraint.getCondition());
 		//return constraintFactory.createBeforeConstraint(constraint.getTasks(), updatedCondition);
@@ -147,11 +147,11 @@ public class GenericSubstituter<T extends SubstitutableTerm> implements Substitu
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTask<T> apply(SubstitutableTask<T> task) {
-		List<T> updatedTerms = new ArrayList<T>();		
+	public final SubstitutableTask apply(SubstitutableTask task) {
+		List<SubstitutableTerm> updatedTerms = new ArrayList<SubstitutableTerm>();		
 		//TODO: Implement
 
-		SubstitutableTask<T> updatedTask = taskNetworkBuilderFactory.createTaskBuilder()
+		SubstitutableTask updatedTask = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName(task.getName())
 				.addArguments(updatedTerms)
 				.build();

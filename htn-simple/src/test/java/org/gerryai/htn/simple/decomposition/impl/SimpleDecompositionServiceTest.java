@@ -32,7 +32,7 @@ import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.gerryai.logic.unification.Substitution;
 import org.junit.Test;
@@ -48,19 +48,19 @@ public class SimpleDecompositionServiceTest {
     public void testDecompose() {
     	
     	@SuppressWarnings("unchecked")
-    	UnificationService<SimpleMethod, SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-    			ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition,
+    	UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+    			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition,
     			SimpleVariable> mockUnificationService = mock(UnificationService.class);
     	SimpleDecompositionService decompositionService = new SimpleDecompositionService(mockUnificationService);
     	
     	// TaskA will be decomposed into TaskB and TaskC
-    	SimpleTask mockTaskA = mock(SimpleTask.class);
-    	SimpleTask mockTaskB = mock(SimpleTask.class);
-    	SimpleTask mockTaskC = mock(SimpleTask.class);
+    	SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
+    	SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
+    	SubstitutableTask mockTaskC = mock(SubstitutableTask.class);
     	
-    	Set<SimpleTask> taskNetworkTasks = new HashSet<SimpleTask>();
+    	Set<SubstitutableTask> taskNetworkTasks = new HashSet<SubstitutableTask>();
     	taskNetworkTasks.add(mockTaskA);
-    	Set<SimpleTask> methodSubTasks = new HashSet<SimpleTask>();
+    	Set<SubstitutableTask> methodSubTasks = new HashSet<SubstitutableTask>();
     	methodSubTasks.add(mockTaskB);
     	methodSubTasks.add(mockTaskC);
     	

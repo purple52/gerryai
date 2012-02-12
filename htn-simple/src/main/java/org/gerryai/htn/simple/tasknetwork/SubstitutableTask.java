@@ -25,7 +25,7 @@ import org.gerryai.htn.tasknetwork.Task;
  * @param <T> type of logical term used 
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface SubstitutableTask<T extends SubstitutableTerm>
-		extends Task<T>, Substitutable<T> {
+public interface SubstitutableTask
+		extends Task<SubstitutableTerm>, Substitutable<SubstitutableTerm> {
 
 }

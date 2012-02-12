@@ -21,15 +21,15 @@ import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.MethodBuilder;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleMethodBuilder implements MethodBuilder<SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
-ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>> {
+public class SimpleMethodBuilder implements MethodBuilder<SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> {
 
 	/**
 	 * Name of the method being built.
@@ -39,7 +39,7 @@ ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>> {
 	/**
 	 * Task that the method being built will decompose.
 	 */
-	private SimpleTask task;
+	private SubstitutableTask task;
 	
 	/**
 	 * Task network that the method being built decomposes into.
@@ -57,7 +57,7 @@ ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleMethodBuilder setTask(SimpleTask task) {
+	public final SimpleMethodBuilder setTask(SubstitutableTask task) {
 		this.task = task;
 		return this;
 	}
@@ -89,7 +89,7 @@ ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>> {
 	 * Get the task for the method being built.
 	 * @return the task
 	 */
-	protected final SimpleTask getTask() {
+	protected final SubstitutableTask getTask() {
 		return task;
 	}
 	

@@ -29,7 +29,7 @@ import com.google.common.base.Objects;
 /**
  * Basic implementation of the Task interface.
  */
-public class SimpleTask implements SubstitutableTask<SubstitutableTerm> {
+public class SimpleTask implements SubstitutableTask {
 	
 	/**
 	 * Name for this task.
@@ -50,7 +50,7 @@ public class SimpleTask implements SubstitutableTask<SubstitutableTerm> {
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
-	protected SimpleTask(TaskBuilder<SubstitutableTerm, SimpleTask> builder) {
+	protected SimpleTask(TaskBuilder<SubstitutableTerm, SubstitutableTask> builder) {
 		this.setName(builder.getName());
 		this.setArguments(builder.getArguments());
 		this.setIsPrimitive(builder.getIsPrimitive());
@@ -101,7 +101,7 @@ public class SimpleTask implements SubstitutableTask<SubstitutableTerm> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTask<SubstitutableTerm> apply(Substituter<SubstitutableTerm> substituter) {
+	public final SubstitutableTask apply(Substituter<SubstitutableTerm> substituter) {
 		// TODO: copy and rebuild
 		for (SubstitutableTerm term : arguments) {
 			SubstitutableTerm updatedTerm = (SubstitutableTerm) term.apply(substituter);
