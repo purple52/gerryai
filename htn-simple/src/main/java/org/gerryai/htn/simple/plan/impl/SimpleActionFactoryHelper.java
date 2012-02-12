@@ -29,8 +29,8 @@ import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.domain.impl.SimpleOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
-import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
@@ -43,13 +43,13 @@ import org.gerryai.logic.Variable;
  *
  */
 public class SimpleActionFactoryHelper implements ActionFactoryHelper<SimpleOperator,
-		SimpleTerm, SimpleTask, SimpleCondition> {
+		SubstitutableTerm, SimpleTask, SimpleCondition> {
 
 	/**
 	 * Service for the domain that we are working in.
 	 */
-	private DomainHelper<SimpleOperator, SimpleMethod, SimpleTerm, SimpleTask,
-			SimpleTaskNetwork, ValidatableConstraint<SimpleTerm, SimpleTask,
+	private DomainHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SimpleTask,
+			SimpleTaskNetwork, ValidatableConstraint<SubstitutableTerm, SimpleTask,
 			SubstitutableCondition>, SimpleCondition> domainHelper;
 	
 	/**
@@ -57,8 +57,8 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<SimpleOper
 	 * @param domainHelper helper to use
 	 */
 	public SimpleActionFactoryHelper(DomainHelper<SimpleOperator, SimpleMethod,
-			SimpleTerm, SimpleTask, SimpleTaskNetwork,
-			ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> domainHelper) {
+			SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
+			ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>, SimpleCondition> domainHelper) {
 		this.domainHelper = domainHelper;
 	}
 	
@@ -87,7 +87,7 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<SimpleOper
 		Map<Variable, Constant> bindingsMap = new HashMap<Variable, Constant>();
 		bindings.setMap(bindingsMap);
 		
-		List<SimpleTerm> taskArguments = task.getArguments();
+		List<SubstitutableTerm> taskArguments = task.getArguments();
 		List<Variable> operatorArguments = operator.getArguments();
 		
 		if (taskArguments.size() != operatorArguments.size()) {

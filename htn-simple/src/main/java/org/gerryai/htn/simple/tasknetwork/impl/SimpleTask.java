@@ -20,7 +20,7 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 import java.util.List;
 
 import org.gerryai.htn.simple.decomposition.Substituter;
-import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.TaskBuilder;
 
@@ -29,7 +29,7 @@ import com.google.common.base.Objects;
 /**
  * Basic implementation of the Task interface.
  */
-public class SimpleTask implements SubstitutableTask<SimpleTerm> {
+public class SimpleTask implements SubstitutableTask<SubstitutableTerm> {
 	
 	/**
 	 * Name for this task.
@@ -44,13 +44,13 @@ public class SimpleTask implements SubstitutableTask<SimpleTerm> {
 	/**
 	 * Arguments for this task.
 	 */
-	private List<SimpleTerm> arguments;
+	private List<SubstitutableTerm> arguments;
 
 	/**
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
-	protected SimpleTask(TaskBuilder<SimpleTerm, SimpleTask> builder) {
+	protected SimpleTask(TaskBuilder<SubstitutableTerm, SimpleTask> builder) {
 		this.setName(builder.getName());
 		this.setArguments(builder.getArguments());
 		this.setIsPrimitive(builder.getIsPrimitive());
@@ -87,23 +87,24 @@ public class SimpleTask implements SubstitutableTask<SimpleTerm> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<SimpleTerm> getArguments() {
+	public final List<SubstitutableTerm> getArguments() {
 		return arguments;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setArguments(List<SimpleTerm> arguments) {
+	public final void setArguments(List<SubstitutableTerm> arguments) {
 		this.arguments = arguments;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTask<SimpleTerm> apply(Substituter<SimpleTerm> substituter) {
-		for (SimpleTerm term : arguments) {
-			term.apply(substituter);
+	public final SubstitutableTask<SubstitutableTerm> apply(Substituter<SubstitutableTerm> substituter) {
+		// TODO: copy and rebuild
+		for (SubstitutableTerm term : arguments) {
+			SubstitutableTerm updatedTerm = (SubstitutableTerm) term.apply(substituter);
 		}
 		return substituter.apply(this);
 	}

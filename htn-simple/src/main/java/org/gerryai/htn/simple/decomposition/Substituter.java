@@ -55,7 +55,7 @@ public interface Substituter<T extends SubstitutableTerm> {
 	 * @param term the term
 	 * @return a copy of the term with the substitution applied
 	 */
-	T apply(T term);
+	SubstitutableTerm apply(SubstitutableTerm term);
 	
 	/**
 	 * Use this substituter to apply a substitution to the given constraint.

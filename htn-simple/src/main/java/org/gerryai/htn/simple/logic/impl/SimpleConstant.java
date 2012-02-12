@@ -46,10 +46,10 @@ public class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTerm
-			apply(Substituter<SubstitutableTerm> substituter) {
+	public final SubstitutableTerm	apply(Substituter<SubstitutableTerm> substituter) {
 		// TODO Check implementation
 		return substituter.apply(this);
 	}
+	
 
 }

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.aima.AIMAConverter;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleConstant;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleUnifier;
@@ -38,7 +39,7 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  * @author David Edwards <david@more.fool.me.uk>
  * 
  */
-public class AIMAConverterImpl implements AIMAConverter<SimpleTerm, SimpleVariable, SimpleTask> {
+public class AIMAConverterImpl implements AIMAConverter<SubstitutableTerm, SimpleVariable, SimpleTask> {
 
 	/**
 	 * {@inheritDoc}
@@ -54,7 +55,7 @@ public class AIMAConverterImpl implements AIMAConverter<SimpleTerm, SimpleVariab
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<aima.core.logic.fol.parsing.ast.Term> convert(List<SimpleTerm> terms) {
+	public final List<aima.core.logic.fol.parsing.ast.Term> convert(List<SubstitutableTerm> terms) {
 		List<aima.core.logic.fol.parsing.ast.Term> aimaTerms = new ArrayList<aima.core.logic.fol.parsing.ast.Term>();
 		for (Term taskTerm : terms) {
 			aima.core.logic.fol.parsing.ast.Term term = convert(taskTerm);
@@ -85,7 +86,7 @@ public class AIMAConverterImpl implements AIMAConverter<SimpleTerm, SimpleVariab
 	public final SimpleUnifier convert(Map<aima.core.logic.fol.parsing.ast.Variable,
 			aima.core.logic.fol.parsing.ast.Term> map) {
 		
-		Map<SimpleVariable, SimpleTerm> substitutionMap = new HashMap<SimpleVariable, SimpleTerm>();
+		Map<SimpleVariable, SubstitutableTerm> substitutionMap = new HashMap<SimpleVariable, SubstitutableTerm>();
 
 		for (aima.core.logic.fol.parsing.ast.Variable variable : map.keySet()) {
 

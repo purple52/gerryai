@@ -19,6 +19,7 @@ package org.gerryai.htn.simple.logic.impl;
 
 import java.util.Map;
 
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.logic.unification.Substitution;
 
 /**
@@ -26,24 +27,24 @@ import org.gerryai.logic.unification.Substitution;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleUnifier implements Substitution<SimpleTerm, SimpleVariable> {
+public class SimpleUnifier implements Substitution<SubstitutableTerm, SimpleVariable> {
 	
 	/**
 	 * The map of variables to terms.
 	 */
-	private Map<SimpleVariable, SimpleTerm> map;
+	private Map<SimpleVariable, SubstitutableTerm> map;
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Map<SimpleVariable, SimpleTerm> getMap() {
+	public final Map<SimpleVariable, SubstitutableTerm> getMap() {
 		return map;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setMap(Map<SimpleVariable, SimpleTerm> map) {
+	public final void setMap(Map<SimpleVariable, SubstitutableTerm> map) {
 		this.map = map;
 	}
 

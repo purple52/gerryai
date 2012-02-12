@@ -20,7 +20,7 @@ package org.gerryai.htn.simple.domain.impl;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.MethodBuilder;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 
@@ -28,8 +28,8 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleMethodBuilder implements MethodBuilder<SimpleTerm, SimpleTask, SimpleTaskNetwork,
-ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>> {
+public class SimpleMethodBuilder implements MethodBuilder<SubstitutableTerm, SimpleTask, SimpleTaskNetwork,
+ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>> {
 
 	/**
 	 * Name of the method being built.

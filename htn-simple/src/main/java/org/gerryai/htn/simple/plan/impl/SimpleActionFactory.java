@@ -20,8 +20,8 @@ package org.gerryai.htn.simple.plan.impl;
 import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
-import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
@@ -30,18 +30,18 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleActionFactory implements ActionFactory<SimpleOperator, SimpleTerm, SimpleTask, SimpleCondition> {
+public class SimpleActionFactory implements ActionFactory<SimpleOperator, SubstitutableTerm, SimpleTask, SimpleCondition> {
 
 	/**
 	 * Helper object for doing the difficult bits.
 	 */
-	private ActionFactoryHelper<SimpleOperator, SimpleTerm, SimpleTask, SimpleCondition> actionFactoryHelper;
+	private ActionFactoryHelper<SimpleOperator, SubstitutableTerm, SimpleTask, SimpleCondition> actionFactoryHelper;
 	
 	/**
 	 * Constructor taking all required dependencies.
 	 * @param actionFactoryHelper the action factory
 	 */
-	public SimpleActionFactory(ActionFactoryHelper<SimpleOperator, SimpleTerm,
+	public SimpleActionFactory(ActionFactoryHelper<SimpleOperator, SubstitutableTerm,
 			SimpleTask, SimpleCondition> actionFactoryHelper) {
 		this.actionFactoryHelper = actionFactoryHelper;
 	}

@@ -22,6 +22,7 @@ import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
@@ -33,7 +34,7 @@ import com.google.common.base.Objects;
  *
  */
 public class SimplePrecedenceConstraint	implements
-		ValidatablePrecedenceConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>,
+		ValidatablePrecedenceConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>,
 		SubstitutableConstraint<SimpleTerm> {
 
 	/**
@@ -80,14 +81,14 @@ public class SimplePrecedenceConstraint	implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<SimpleTerm, SimpleTask, SubstitutableCondition> validator) {
+	public final boolean validate(ConstraintValidator<SubstitutableTerm, SimpleTask, SubstitutableCondition> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<SimpleTerm, SimpleTask,
+	public final void add(ConstraintValidator<SubstitutableTerm, SimpleTask,
 			SubstitutableCondition> validator) throws InvalidConstraint {
 		validator.add(this);
 	}

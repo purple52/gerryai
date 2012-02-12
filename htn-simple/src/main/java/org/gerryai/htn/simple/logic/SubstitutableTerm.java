@@ -18,7 +18,6 @@
 package org.gerryai.htn.simple.logic;
 
 import org.gerryai.htn.simple.decomposition.Substitutable;
-import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.logic.Term;
 
 /**
@@ -28,8 +27,4 @@ import org.gerryai.logic.Term;
  */
 public interface SubstitutableTerm extends Substitutable<SubstitutableTerm>, Term {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	SubstitutableTerm apply(Substituter<SubstitutableTerm> substituter);
 }

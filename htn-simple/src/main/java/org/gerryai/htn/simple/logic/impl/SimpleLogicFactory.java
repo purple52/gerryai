@@ -20,12 +20,13 @@ package org.gerryai.htn.simple.logic.impl;
 import java.util.List;
 
 import org.gerryai.htn.simple.logic.LogicFactory;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleLogicFactory implements LogicFactory<SimpleVariable, SimpleConstant, SimplePredicate, SimpleTerm> {
+public class SimpleLogicFactory implements LogicFactory<SimpleVariable, SimpleConstant, SimplePredicate, SubstitutableTerm> {
 
 	/**
 	 * {@inheritDoc}
@@ -44,7 +45,7 @@ public class SimpleLogicFactory implements LogicFactory<SimpleVariable, SimpleCo
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimplePredicate createPredicate(String name, List<SimpleTerm> terms) {
+	public final SimplePredicate createPredicate(String name, List<SubstitutableTerm> terms) {
 		return new SimplePredicate(name, terms);
 	}
 	

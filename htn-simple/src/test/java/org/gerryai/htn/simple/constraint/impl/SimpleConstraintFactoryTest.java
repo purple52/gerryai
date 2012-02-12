@@ -23,7 +23,7 @@ import static org.mockito.Mockito.mock;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 import org.junit.Test;
 
@@ -58,7 +58,7 @@ public class SimpleConstraintFactoryTest {
 	@Test
 	public void testCreateBeforeConstraint() {
 		Set<SimpleTask> mockTasks = new HashSet<SimpleTask>();
-		Condition mockCondition = mock(Condition.class);
+		SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 		
 		// Create factory under test
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
@@ -76,7 +76,7 @@ public class SimpleConstraintFactoryTest {
 	@Test
 	public void testCreateAfterConstraint() {
 		Set<SimpleTask> mockTasks = new HashSet<SimpleTask>();
-		Condition mockCondition = mock(Condition.class);
+		SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 		
 		// Create factory under test
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
@@ -95,7 +95,7 @@ public class SimpleConstraintFactoryTest {
 	public void testCreateBetweenConstraint() {
 		Set<SimpleTask> mockTasksA = new HashSet<SimpleTask>();
 		Set<SimpleTask> mockTasksB = new HashSet<SimpleTask>();
-		Condition mockCondition = mock(Condition.class);
+		SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 		
 		// Create factory under test
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();

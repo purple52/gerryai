@@ -54,7 +54,7 @@ public class GenericSubstituter<T extends SubstitutableTerm> implements Substitu
 	/**
 	 * Constraint factory to use.
 	 */
-	private ConstraintFactory<T, SubstitutableTask<T>, SubstitutableCondition> constraintFactory;
+	//private ConstraintFactory<T, SubstitutableTask<T>, SubstitutableCondition> constraintFactory;
 	
 	/**
 	 * Factory for building task and task networks.
@@ -74,7 +74,7 @@ public class GenericSubstituter<T extends SubstitutableTerm> implements Substitu
 	public GenericSubstituter(Substitution<T, SubstitutableVariable> unifier,
 			ConstraintFactory<T, SubstitutableTask<T>, SubstitutableCondition> constraintFactory) {
 		this.unifier = unifier;
-		this.constraintFactory = constraintFactory;
+		//this.constraintFactory = constraintFactory;
 	}
 	
 	/**
@@ -104,7 +104,7 @@ public class GenericSubstituter<T extends SubstitutableTerm> implements Substitu
 	/**
 	 * {@inheritDoc}
 	 */
-	public final T apply(T term) {
+	public final SubstitutableTerm apply(SubstitutableTerm term) {
 		// TODO Auto-generated method stub
 		return null;
 	}

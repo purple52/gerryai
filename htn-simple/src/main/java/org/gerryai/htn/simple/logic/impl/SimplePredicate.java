@@ -40,12 +40,12 @@ public class SimplePredicate extends Predicate implements SubstitutableCondition
 	/**
 	 * List of terms belonging to this predicate.
 	 */
-	private List<SimpleTerm> terms;
+	private List<SubstitutableTerm> terms;
 	
 	/**
 	 * Converter to help build the underlying AIMA objects.
 	 */
-	private static AIMAConverter<SimpleTerm, SimpleVariable, SimpleTask> converter;
+	private static AIMAConverter<SubstitutableTerm, SimpleVariable, SimpleTask> converter;
 	
 	/**
 	 * Factory for creating new logic objects.
@@ -65,7 +65,7 @@ public class SimplePredicate extends Predicate implements SubstitutableCondition
 	 * @param predicateName the name
 	 * @param terms the terms
 	 */
-	public SimplePredicate(String predicateName, List<SimpleTerm> terms) {
+	public SimplePredicate(String predicateName, List<SubstitutableTerm> terms) {
 		super(predicateName, converter.convert(terms));
 		this.terms = terms;
 	}
@@ -76,7 +76,7 @@ public class SimplePredicate extends Predicate implements SubstitutableCondition
 	public final SubstitutableTerm apply(Substituter<SubstitutableTerm> substituter) {
 		List<SubstitutableTerm> updatedTerms = new ArrayList<SubstitutableTerm>();
 		for (SubstitutableTerm term : terms) {
-			updatedTerms.add(term.apply(substituter));
+			updatedTerms.add((SubstitutableTerm) term.apply(substituter));
 		}
 		return logicFactory.createPredicate(this.getSymbolicName(), updatedTerms);
 	}

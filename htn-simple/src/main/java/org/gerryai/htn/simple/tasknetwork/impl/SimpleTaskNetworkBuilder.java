@@ -20,22 +20,22 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 
 /**
  * Concrete builder for SimpleTaskNetwork objects.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleTaskNetworkBuilder extends AbstractTaskNetworkBuilder<SimpleTerm,
-		SimpleTask, SimpleTaskNetwork, ValidatableConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>,
+public class SimpleTaskNetworkBuilder extends AbstractTaskNetworkBuilder<SubstitutableTerm,
+		SimpleTask, SimpleTaskNetwork, ValidatableConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>,
 		SubstitutableCondition, SimpleTaskNetworkBuilder> {
 
 	/**
 	 * Constructor, taking a constraint validator to use.
 	 * @param constraintValidator the constraint validator
 	 */
-	SimpleTaskNetworkBuilder(ConstraintValidator<SimpleTerm, SimpleTask, SubstitutableCondition> constraintValidator) {
+	SimpleTaskNetworkBuilder(ConstraintValidator<SubstitutableTerm, SimpleTask, SubstitutableCondition> constraintValidator) {
 		this.setConstraintValidator(constraintValidator);
 	}
 	

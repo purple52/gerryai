@@ -24,7 +24,7 @@ import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.impl.SimpleTerm;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 
@@ -35,8 +35,8 @@ import com.google.common.base.Objects;
  *
  */
 public class SimpleBeforeConstraint implements
-		ValidatableBeforeConstraint<SimpleTerm, SimpleTask, SubstitutableCondition>,
-		SubstitutableConstraint<SimpleTerm> {
+		ValidatableBeforeConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>,
+		SubstitutableConstraint<SubstitutableTerm> {
 
 	/**
 	 * The set of tasks that this constraint must hold for.
@@ -83,14 +83,14 @@ public class SimpleBeforeConstraint implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<SimpleTerm, SimpleTask, SubstitutableCondition> validator) {
+	public final boolean validate(ConstraintValidator<SubstitutableTerm, SimpleTask, SubstitutableCondition> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<SimpleTerm, SimpleTask, SubstitutableCondition> validator)
+	public final void add(ConstraintValidator<SubstitutableTerm, SimpleTask, SubstitutableCondition> validator)
 			throws InvalidConstraint {
 		validator.add(this);
 	}
@@ -98,7 +98,7 @@ public class SimpleBeforeConstraint implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableConstraint<SimpleTerm> apply(Substituter<SimpleTerm> substituter) {
+	public final SubstitutableConstraint<SubstitutableTerm> apply(Substituter<SubstitutableTerm> substituter) {
 		return substituter.apply(this);
 	}
 	
