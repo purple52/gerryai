@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gerryai.htn.plan.Action;
-import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.plan.PlanFactory;
 
@@ -29,15 +29,15 @@ import org.gerryai.htn.simple.plan.PlanFactory;
  * Factory for creating simple plans.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimplePlanFactory implements PlanFactory<SimpleOperator, SubstitutableCondition> {
+public class SimplePlanFactory implements PlanFactory<SubstitutableOperator, SubstitutableCondition> {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public final SimplePlan create() {
 		SimplePlan plan = new SimplePlan();
-		List<Action<SimpleOperator, SubstitutableCondition>> actions
-				= new ArrayList<Action<SimpleOperator, SubstitutableCondition>>();
+		List<Action<SubstitutableOperator, SubstitutableCondition>> actions
+				= new ArrayList<Action<SubstitutableOperator, SubstitutableCondition>>();
 		plan.setActions(actions);
 		
 		return plan;

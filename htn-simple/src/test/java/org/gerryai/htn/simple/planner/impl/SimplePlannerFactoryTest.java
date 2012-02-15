@@ -22,8 +22,8 @@ import static org.mockito.Mockito.mock;
 
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
-import org.gerryai.htn.simple.domain.impl.SimpleOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
@@ -42,7 +42,7 @@ public class SimplePlannerFactoryTest {
 	@Test
 	public void testCreate() {
 		@SuppressWarnings("unchecked")
-		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> mockDomain = mock(Domain.class);
 		SimplePlannerFactory factory = new SimplePlannerFactory();
 		

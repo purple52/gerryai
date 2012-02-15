@@ -21,31 +21,31 @@ import java.util.List;
 
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
-import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePlan implements Plan<SimpleOperator, SubstitutableCondition> {
+public class SimplePlan implements Plan<SubstitutableOperator, SubstitutableCondition> {
 
 	/**
 	 * List of actions that implement this plan.
 	 */
-	private List<Action<SimpleOperator, SubstitutableCondition>> actions;
+	private List<Action<SubstitutableOperator, SubstitutableCondition>> actions;
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<Action<SimpleOperator, SubstitutableCondition>> getActions() {
+	public final List<Action<SubstitutableOperator, SubstitutableCondition>> getActions() {
 		return actions;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setActions(List<Action<SimpleOperator, SubstitutableCondition>> actions) {
+	public final void setActions(List<Action<SubstitutableOperator, SubstitutableCondition>> actions) {
 		this.actions = actions;
 	}
 

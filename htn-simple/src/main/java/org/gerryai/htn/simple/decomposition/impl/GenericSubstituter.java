@@ -40,7 +40,6 @@ import org.gerryai.logic.unification.Substitution;
 
 /**
  * Generic class for doing substitutions using the visitor pattern.
- * @param <T> type of logical term required
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
@@ -112,7 +111,8 @@ public class GenericSubstituter implements Substituter<SubstitutableTerm> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableConstraint<SubstitutableTerm> apply(SubstitutableConstraint<SubstitutableTerm> constraint) {
+	public final SubstitutableConstraint<SubstitutableTerm>
+			apply(SubstitutableConstraint<SubstitutableTerm> constraint) {
 		// TODO Implement
 		//Condition updatedCondition = apply(constraint.getCondition());
 		//return constraintFactory.createBeforeConstraint(constraint.getTasks(), updatedCondition);
@@ -122,7 +122,8 @@ public class GenericSubstituter implements Substituter<SubstitutableTerm> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final AfterConstraint<Term, Task<Term>, SubstitutableCondition> apply(AfterConstraint<Term, Task<Term>, SubstitutableCondition> constraint) {
+	public final AfterConstraint<Term, Task<Term>, SubstitutableCondition>
+			apply(AfterConstraint<Term, Task<Term>, SubstitutableCondition> constraint) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -130,7 +131,8 @@ public class GenericSubstituter implements Substituter<SubstitutableTerm> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final BetweenConstraint<Term, Task<Term>, SubstitutableCondition> apply(BetweenConstraint<Term, Task<Term>, SubstitutableCondition> constraint) {
+	public final BetweenConstraint<Term, Task<Term>, SubstitutableCondition>
+			apply(BetweenConstraint<Term, Task<Term>, SubstitutableCondition> constraint) {
 		// TODO Auto-generated method stub
 		return null;
 	}

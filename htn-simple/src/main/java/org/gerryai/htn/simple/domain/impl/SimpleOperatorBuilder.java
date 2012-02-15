@@ -24,6 +24,7 @@ import java.util.Set;
 
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.domain.OperatorBuilder;
+import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.logic.Variable;
 
@@ -121,7 +122,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<SubstitutableCondi
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperator build() {
+	public final SubstitutableOperator build() {
 		return new SimpleOperator(this);
 	}
 

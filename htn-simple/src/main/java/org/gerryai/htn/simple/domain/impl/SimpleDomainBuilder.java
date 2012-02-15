@@ -22,6 +22,7 @@ import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainBuilder;
+import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
@@ -31,14 +32,14 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleDomainBuilder implements	DomainBuilder<SimpleDomain, SimpleOperator,
+public class SimpleDomainBuilder implements	DomainBuilder<SimpleDomain, SubstitutableOperator,
 		SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
 
 	/**
 	 * Set of operators the domain uses.
 	 */
-	private Set<SimpleOperator> operators;
+	private Set<SubstitutableOperator> operators;
 	
 	/**
 	 * Set of methods that the domain uses.
@@ -49,14 +50,14 @@ public class SimpleDomainBuilder implements	DomainBuilder<SimpleDomain, SimpleOp
 	 * Default constructor.
 	 */
 	protected SimpleDomainBuilder() {
-		operators = new HashSet<SimpleOperator>();
+		operators = new HashSet<SubstitutableOperator>();
 		methods = new HashSet<SimpleMethod>();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleDomainBuilder addOperator(SimpleOperator operator) {
+	public final SimpleDomainBuilder addOperator(SubstitutableOperator operator) {
 		operators.add(operator);
 		return this;
 	}
@@ -79,7 +80,7 @@ public class SimpleDomainBuilder implements	DomainBuilder<SimpleDomain, SimpleOp
 	/**
 	 * @return the operators
 	 */
-	protected final Set<SimpleOperator> getOperators() {
+	protected final Set<SubstitutableOperator> getOperators() {
 		return operators;
 	}
 

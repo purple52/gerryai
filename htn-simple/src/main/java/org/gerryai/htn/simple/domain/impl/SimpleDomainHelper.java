@@ -24,6 +24,7 @@ import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
@@ -33,14 +34,14 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleDomainHelper implements DomainHelper<SimpleOperator, SimpleMethod,
+public class SimpleDomainHelper implements DomainHelper<SubstitutableOperator, SimpleMethod,
 		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
 
 	/**
 	 * Domain this helper is working on.
 	 */
-	private Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask,
+	private Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask,
 	SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition>, SubstitutableCondition> domain;
 	
@@ -48,7 +49,7 @@ public class SimpleDomainHelper implements DomainHelper<SimpleOperator, SimpleMe
 	 * Constructor taking a domain to work on.
 	 * @param domain the domain to work on
 	 */
-	public SimpleDomainHelper(Domain<SimpleOperator, SimpleMethod, SubstitutableTerm,
+	public SimpleDomainHelper(Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm,
 			SubstitutableTask, SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition>, SubstitutableCondition> domain) {
 		this.domain = domain;
@@ -57,7 +58,7 @@ public class SimpleDomainHelper implements DomainHelper<SimpleOperator, SimpleMe
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask,
+	public final Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask,
 	SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition>, SubstitutableCondition> getDomain() {
 		return domain;
@@ -66,9 +67,9 @@ public class SimpleDomainHelper implements DomainHelper<SimpleOperator, SimpleMe
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperator getOperatorByName(String name) throws OperatorNotFound {
+	public final SubstitutableOperator getOperatorByName(String name) throws OperatorNotFound {
 		// TODO Ensure that two operators cannot have the same name and arguments match
-		for (SimpleOperator operator : domain.getOperators()) {
+		for (SubstitutableOperator operator : domain.getOperators()) {
 			if (operator.getName().equals(name)) {
 				return operator;
 			}

@@ -26,8 +26,8 @@ import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.decomposition.UnifierNotFound;
+import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
-import org.gerryai.htn.simple.domain.impl.SimpleOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleUnifier;
@@ -45,19 +45,20 @@ import org.gerryai.logic.unification.Substitution;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, SimpleMethod,
+public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator, SimpleMethod,
 		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
 
 	/**
 	 * Factory for creating actions.
 	 */
-	private ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SubstitutableCondition> actionFactory;
+	private ActionFactory<SubstitutableOperator, SubstitutableTerm, SubstitutableTask,
+			SubstitutableCondition> actionFactory;
 	
 	/**
 	 * Factory for creating plans.
 	 */
-	private PlanFactory<SimpleOperator, SubstitutableCondition> planFactory;
+	private PlanFactory<SubstitutableOperator, SubstitutableCondition> planFactory;
 	
 	/**
 	 * Service for decomposing tasks.
@@ -81,8 +82,9 @@ public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, Simple
 	 * @param unificationService the unification service
 	 */
 	public SimplePlannerHelper(
-			ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SubstitutableCondition> actionFactory,
-			PlanFactory<SimpleOperator, SubstitutableCondition> planFactory,
+			ActionFactory<SubstitutableOperator, SubstitutableTerm, SubstitutableTask,
+					SubstitutableCondition> actionFactory,
+			PlanFactory<SubstitutableOperator, SubstitutableCondition> planFactory,
 			DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> decompositionservice,
 			UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
@@ -105,15 +107,15 @@ public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, Simple
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Plan<SimpleOperator, SubstitutableCondition>
+	public final Plan<SubstitutableOperator, SubstitutableCondition>
 		findPlanForPrimitive(State state, SubstitutableTaskNetwork taskNetwork) throws PlanNotFound {
 		// TODO: Confirm implementation
 		// TODO: Enforce constraints
 		
-		Plan<SimpleOperator, SubstitutableCondition> plan = planFactory.create();
+		Plan<SubstitutableOperator, SubstitutableCondition> plan = planFactory.create();
 		
 		for (SubstitutableTask task : taskNetwork.getTasks()) {
-			Action<SimpleOperator, SubstitutableCondition> action;
+			Action<SubstitutableOperator, SubstitutableCondition> action;
 			try {
 				action = actionFactory.create(task);
 			} catch (TaskNotActionable e) {

@@ -19,7 +19,7 @@ package org.gerryai.htn.simple.plan.impl;
 
 import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.plan.TaskNotActionable;
-import org.gerryai.htn.simple.domain.impl.SimpleOperator;
+import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.plan.ActionFactory;
@@ -30,20 +30,20 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleActionFactory implements ActionFactory<SimpleOperator,
+public class SimpleActionFactory implements ActionFactory<SubstitutableOperator,
 		SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
 
 	/**
 	 * Helper object for doing the difficult bits.
 	 */
-	private ActionFactoryHelper<SimpleOperator, SubstitutableTerm, SubstitutableTask,
+	private ActionFactoryHelper<SubstitutableOperator, SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition> actionFactoryHelper;
 	
 	/**
 	 * Constructor taking all required dependencies.
 	 * @param actionFactoryHelper the action factory
 	 */
-	public SimpleActionFactory(ActionFactoryHelper<SimpleOperator, SubstitutableTerm,
+	public SimpleActionFactory(ActionFactoryHelper<SubstitutableOperator, SubstitutableTerm,
 			SubstitutableTask, SubstitutableCondition> actionFactoryHelper) {
 		this.actionFactoryHelper = actionFactoryHelper;
 	}
@@ -54,7 +54,7 @@ public class SimpleActionFactory implements ActionFactory<SimpleOperator,
 	public final SimpleAction create(SubstitutableTask task) throws TaskNotActionable {
 
 		// Try and get the operator
-		SimpleOperator operator = actionFactoryHelper.getOperator(task);
+		SubstitutableOperator operator = actionFactoryHelper.getOperator(task);
 		
 		// Try and get the bindings
 		Bindings bindings = actionFactoryHelper.getBindings(task, operator);

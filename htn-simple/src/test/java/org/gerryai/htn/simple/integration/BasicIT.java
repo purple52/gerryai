@@ -24,6 +24,7 @@ import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
+import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
@@ -63,11 +64,11 @@ public class BasicIT {
 		SimplePlanningService planningService = new SimplePlanningService(plannerFactory);
 
 		SimpleVariable variableA = new SimpleVariable("a");
-		SimpleOperator operatorA = domainBuilderFactory.createOperatorBuilder()
+		SubstitutableOperator operatorA = domainBuilderFactory.createOperatorBuilder()
 				.setName("pickup")
 				.addArgument(variableA)
 				.build();
-		SimpleOperator operatorB = domainBuilderFactory.createOperatorBuilder()
+		SubstitutableOperator operatorB = domainBuilderFactory.createOperatorBuilder()
 				.setName("drop")
 				.addArgument(variableA)
 				.build();
@@ -153,7 +154,7 @@ public class BasicIT {
 		problem.setTaskNetwork(taskNetwork);
 		
 		
-		Plan<SimpleOperator, SubstitutableCondition> plan = planningService.solve(problem);
+		Plan<SubstitutableOperator, SubstitutableCondition> plan = planningService.solve(problem);
 		
 		assertEquals(plan.getActions().size(),2);
 		assertEquals("drop", plan.getActions().get(0).getOperator().getName());

@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.gerryai.htn.domain.Effect;
+import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.logic.Variable;
 import org.junit.Test;
@@ -200,7 +201,7 @@ public class SimpleOperatorBuilderTest {
 		Set<Effect> mockEffects = new HashSet<Effect>();
 		mockEffects.add(mockEffect);
 		
-		SimpleOperator operator = new SimpleOperatorBuilder()
+		SubstitutableOperator operator = new SimpleOperatorBuilder()
 				.setName("testname")
 				.addArguments(mockArguments)
 				.addPreconditions(mockConditions)

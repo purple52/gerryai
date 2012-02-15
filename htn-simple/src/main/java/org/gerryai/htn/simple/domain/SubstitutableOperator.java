@@ -15,54 +15,15 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.plan.impl;
+package org.gerryai.htn.simple.domain;
 
-import org.gerryai.htn.plan.Action;
-import org.gerryai.htn.plan.Bindings;
-import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 
 /**
+ * Extended operator interface that can be visited by a substituter.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleAction implements Action<SubstitutableOperator, SubstitutableCondition> {
-
-	/**
-	 * Operator that this action is a grounded instance of.
-	 */
-	private SubstitutableOperator operator;
-	
-	/**
-	 * Bindings that ground the operator.
-	 */
-	private Bindings bindings;
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SubstitutableOperator getOperator() {
-		return operator;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setOperator(SubstitutableOperator operator) {
-		this.operator = operator;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final Bindings getBindings() {
-		return bindings;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setBindings(Bindings bindings) {
-		this.bindings = bindings;
-	}
+public interface SubstitutableOperator extends Operator<SubstitutableCondition> {
 
 }

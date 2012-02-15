@@ -4,8 +4,8 @@ import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
-import org.gerryai.htn.simple.domain.impl.SimpleOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
@@ -33,7 +33,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleProblem implements Problem<SimpleOperator, SimpleMethod,
+public class SimpleProblem implements Problem<SubstitutableOperator, SimpleMethod,
 		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
 
@@ -50,7 +50,7 @@ public class SimpleProblem implements Problem<SimpleOperator, SimpleMethod,
 	/**
 	 * The domain to operate in.
 	 */
-	private Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+	private Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 	ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> domain;
 	
 	/**
@@ -84,7 +84,7 @@ public class SimpleProblem implements Problem<SimpleOperator, SimpleMethod,
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+	public final Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition>, SubstitutableCondition> getDomain() {
 		return domain;
@@ -93,7 +93,7 @@ public class SimpleProblem implements Problem<SimpleOperator, SimpleMethod,
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setDomain(Domain<SimpleOperator, SimpleMethod, SubstitutableTerm,
+	public final void setDomain(Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm,
 			SubstitutableTask, SubstitutableTaskNetwork,
 			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition>, SubstitutableCondition> domain) {

@@ -26,8 +26,8 @@ import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
-import org.gerryai.htn.simple.domain.impl.SimpleOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
@@ -41,13 +41,13 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleActionFactoryHelper implements ActionFactoryHelper<SimpleOperator,
+public class SimpleActionFactoryHelper implements ActionFactoryHelper<SubstitutableOperator,
 		SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
 
 	/**
 	 * Service for the domain that we are working in.
 	 */
-	private DomainHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask,
+	private DomainHelper<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask,
 			SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition>, SubstitutableCondition> domainHelper;
 	
@@ -55,7 +55,7 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<SimpleOper
 	 * Constructor requiring a domain helper.
 	 * @param domainHelper helper to use
 	 */
-	public SimpleActionFactoryHelper(DomainHelper<SimpleOperator, SimpleMethod,
+	public SimpleActionFactoryHelper(DomainHelper<SubstitutableOperator, SimpleMethod,
 			SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition>, SubstitutableCondition> domainHelper) {
@@ -65,9 +65,9 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<SimpleOper
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperator getOperator(SubstitutableTask task) throws TaskNotActionable {
+	public final SubstitutableOperator getOperator(SubstitutableTask task) throws TaskNotActionable {
 		
-		SimpleOperator operator;
+		SubstitutableOperator operator;
 		
 		try {
 			operator = domainHelper.getOperatorByName(task.getName());
@@ -81,7 +81,7 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<SimpleOper
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Bindings getBindings(SubstitutableTask task, SimpleOperator operator) throws TaskNotActionable {
+	public final Bindings getBindings(SubstitutableTask task, SubstitutableOperator operator) throws TaskNotActionable {
 
 		Bindings bindings = new Bindings();
 		Map<Variable, Constant> bindingsMap = new HashMap<Variable, Constant>();

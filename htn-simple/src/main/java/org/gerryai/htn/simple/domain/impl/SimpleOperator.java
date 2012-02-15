@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.gerryai.htn.domain.Effect;
-import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.logic.Variable;
 
@@ -29,7 +29,7 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleOperator implements Operator<SubstitutableCondition> {
+public class SimpleOperator implements SubstitutableOperator {
 
 	/**
 	 * Name of this operator.
