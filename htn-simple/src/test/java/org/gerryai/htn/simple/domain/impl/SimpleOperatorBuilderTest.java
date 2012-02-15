@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.gerryai.htn.domain.Effect;
-import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.logic.Variable;
 import org.junit.Test;
 
@@ -108,8 +108,8 @@ public class SimpleOperatorBuilderTest {
 	 */
 	@Test
 	public void testAddPrecondition() {
-		SimpleCondition mockConditionA = mock(SimpleCondition.class);
-		SimpleCondition mockConditionB = mock(SimpleCondition.class);
+		SubstitutableCondition mockConditionA = mock(SubstitutableCondition.class);
+		SubstitutableCondition mockConditionB = mock(SubstitutableCondition.class);
 		SimpleOperatorBuilder builder = new SimpleOperatorBuilder()
 				.addPrecondition(mockConditionA)
 				.addPrecondition(mockConditionB);
@@ -123,14 +123,14 @@ public class SimpleOperatorBuilderTest {
 	 */
 	@Test
 	public void testAddPreconditions() {
-		SimpleCondition mockConditionA = mock(SimpleCondition.class);
-		SimpleCondition mockConditionB = mock(SimpleCondition.class);
-		Set<SimpleCondition> mockConditionsA = new HashSet<SimpleCondition>();
+		SubstitutableCondition mockConditionA = mock(SubstitutableCondition.class);
+		SubstitutableCondition mockConditionB = mock(SubstitutableCondition.class);
+		Set<SubstitutableCondition> mockConditionsA = new HashSet<SubstitutableCondition>();
 		mockConditionsA.add(mockConditionA);
 		mockConditionsA.add(mockConditionB);
-		SimpleCondition mockConditionC = mock(SimpleCondition.class);
-		SimpleCondition mockConditionD = mock(SimpleCondition.class);
-		Set<SimpleCondition> mockConditionsB = new HashSet<SimpleCondition>();
+		SubstitutableCondition mockConditionC = mock(SubstitutableCondition.class);
+		SubstitutableCondition mockConditionD = mock(SubstitutableCondition.class);
+		Set<SubstitutableCondition> mockConditionsB = new HashSet<SubstitutableCondition>();
 		mockConditionsB.add(mockConditionC);
 		mockConditionsB.add(mockConditionD);
 		
@@ -193,8 +193,8 @@ public class SimpleOperatorBuilderTest {
 		Variable mockVariable = mock(Variable.class);
 		List<Variable> mockArguments = new ArrayList<Variable>();
 		mockArguments.add(mockVariable);
-		SimpleCondition mockCondition = mock(SimpleCondition.class);
-		Set<SimpleCondition> mockConditions = new HashSet<SimpleCondition>();
+		SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
+		Set<SubstitutableCondition> mockConditions = new HashSet<SubstitutableCondition>();
 		mockConditions.add(mockCondition);
 		Effect mockEffect = mock(Effect.class);
 		Set<Effect> mockEffects = new HashSet<Effect>();

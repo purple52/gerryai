@@ -23,7 +23,6 @@ import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
@@ -44,15 +43,16 @@ public class SimpleDecompositionService implements
 	 */
 	private UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
-			SimpleCondition, SimpleVariable> unificationService;
+			SubstitutableCondition, SimpleVariable> unificationService;
 	
 	/**
 	 * Set the unification service.
 	 * @param unificationService the unification service to use
 	 */
 	public SimpleDecompositionService(UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask,
-			SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
-			SimpleCondition, SimpleVariable> unificationService) {
+			SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm,
+			SubstitutableTask, SubstitutableCondition>,
+			SubstitutableCondition, SimpleVariable> unificationService) {
 		this.unificationService = unificationService;
 	}
 	

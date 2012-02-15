@@ -22,14 +22,14 @@ import java.util.Set;
 
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.logic.Variable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleOperator implements Operator<SimpleCondition> {
+public class SimpleOperator implements Operator<SubstitutableCondition> {
 
 	/**
 	 * Name of this operator.
@@ -44,7 +44,7 @@ public class SimpleOperator implements Operator<SimpleCondition> {
 	/**
 	 * Preconditions for this operator.
 	 */
-	private Set<SimpleCondition> preconditions;
+	private Set<SubstitutableCondition> preconditions;
 	
 	/**
 	 * Effects of this operator.
@@ -93,14 +93,14 @@ public class SimpleOperator implements Operator<SimpleCondition> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<SimpleCondition> getPreconditions() {
+	public final Set<SubstitutableCondition> getPreconditions() {
 		return preconditions;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setPreconditions(Set<SimpleCondition> preconditions) {
+	public final void setPreconditions(Set<SubstitutableCondition> preconditions) {
 		this.preconditions = preconditions;
 	}
 

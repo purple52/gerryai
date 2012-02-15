@@ -24,14 +24,14 @@ import java.util.Set;
 
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.domain.OperatorBuilder;
-import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.logic.Variable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleOperatorBuilder implements OperatorBuilder<SimpleCondition, Effect> {
+public class SimpleOperatorBuilder implements OperatorBuilder<SubstitutableCondition, Effect> {
 
 	/**
 	 * Name of the operator.
@@ -46,7 +46,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<SimpleCondition, E
 	/**
 	 * Set of preconditions that must hold for the operator to be valid.
 	 */
-	private Set<SimpleCondition> preconditions;
+	private Set<SubstitutableCondition> preconditions;
 	
 	/**
 	 * Set of effects that the operator has.
@@ -58,7 +58,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<SimpleCondition, E
 	 */
 	protected SimpleOperatorBuilder() {
 		arguments = new ArrayList<Variable>();
-		preconditions = new HashSet<SimpleCondition>();
+		preconditions = new HashSet<SubstitutableCondition>();
 		effects = new HashSet<Effect>();
 	}
 	
@@ -89,7 +89,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<SimpleCondition, E
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperatorBuilder addPrecondition(SimpleCondition condition) {
+	public final SimpleOperatorBuilder addPrecondition(SubstitutableCondition condition) {
 		preconditions.add(condition);
 		return this;
 	}
@@ -97,7 +97,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<SimpleCondition, E
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperatorBuilder addPreconditions(Set<SimpleCondition> conditions) {
+	public final SimpleOperatorBuilder addPreconditions(Set<SubstitutableCondition> conditions) {
 		preconditions.addAll(conditions);
 		return this;
 	}
@@ -142,7 +142,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<SimpleCondition, E
 	/**
 	 * @return the preconditions
 	 */
-	protected final Set<SimpleCondition> getPreconditions() {
+	protected final Set<SubstitutableCondition> getPreconditions() {
 		return preconditions;
 	}
 

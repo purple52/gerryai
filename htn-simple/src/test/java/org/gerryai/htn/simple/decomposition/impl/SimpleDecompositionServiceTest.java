@@ -30,7 +30,6 @@ import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
@@ -49,7 +48,7 @@ public class SimpleDecompositionServiceTest {
     	
     	@SuppressWarnings("unchecked")
     	UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-    			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition,
+    			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition,
     			SimpleVariable> mockUnificationService = mock(UnificationService.class);
     	SimpleDecompositionService decompositionService = new SimpleDecompositionService(mockUnificationService);
     	

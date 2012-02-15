@@ -39,7 +39,6 @@ import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.domain.impl.SimpleOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleUnifier;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.plan.ActionFactory;
@@ -59,10 +58,10 @@ public class SimplePlannerHelperTest {
 	public void testGetNonPrimitiveTask() throws NonPrimitiveTaskNotFound {
 		
 		@SuppressWarnings("unchecked")
-		ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition>
+		ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SubstitutableCondition>
 				mockActionFactory = mock(ActionFactory.class);
 		@SuppressWarnings("unchecked")
-		PlanFactory<SimpleOperator, SimpleCondition> mockPlanFactory
+		PlanFactory<SimpleOperator, SubstitutableCondition> mockPlanFactory
 				= mock(PlanFactory.class);
 		@SuppressWarnings("unchecked")
 		DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
@@ -70,7 +69,7 @@ public class SimplePlannerHelperTest {
 				= mock(DecompositionService.class);
 		@SuppressWarnings("unchecked")
 		UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition,
 				SimpleVariable> mockUnificationService = mock(UnificationService.class);
 
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(mockActionFactory,
@@ -88,17 +87,17 @@ public class SimplePlannerHelperTest {
 	@Test
 	public void testFindPlanForPrimitiveEmptyTaskNetwork() throws PlanNotFound {
 
-		List<Action<SimpleOperator, SimpleCondition>> actions
-				= new ArrayList<Action<SimpleOperator, SimpleCondition>>();
+		List<Action<SimpleOperator, SubstitutableCondition>> actions
+				= new ArrayList<Action<SimpleOperator, SubstitutableCondition>>();
 		@SuppressWarnings("unchecked")
-		Plan<SimpleOperator, SimpleCondition> mockPlan = mock(Plan.class);
+		Plan<SimpleOperator, SubstitutableCondition> mockPlan = mock(Plan.class);
 		when(mockPlan.getActions()).thenReturn(actions);
 		@SuppressWarnings("unchecked")
-		PlanFactory<SimpleOperator, SimpleCondition> mockPlanFactory
+		PlanFactory<SimpleOperator, SubstitutableCondition> mockPlanFactory
 				= mock(PlanFactory.class);
 		when(mockPlanFactory.create()).thenReturn(mockPlan);
 		@SuppressWarnings("unchecked")
-		ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition>
+		ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SubstitutableCondition>
 				mockActionFactory = mock(ActionFactory.class);
 		@SuppressWarnings("unchecked")
 		DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
@@ -106,7 +105,7 @@ public class SimplePlannerHelperTest {
 				mockDecompositionService = mock(DecompositionService.class);
 		@SuppressWarnings("unchecked")
 		UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition,
 				SimpleVariable> mockUnificationService = mock(UnificationService.class);
 
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(mockActionFactory,
@@ -118,7 +117,7 @@ public class SimplePlannerHelperTest {
 		State mockState = mock(State.class);
 		
 		// Try to find a plan
-		Plan<SimpleOperator, SimpleCondition> plan = plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);		
+		Plan<SimpleOperator, SubstitutableCondition> plan = plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);		
 		
 		assertTrue(plan.getActions().isEmpty());
 	}
@@ -126,18 +125,18 @@ public class SimplePlannerHelperTest {
 	@Test
 	public void testFindPlanForPrimitiveOneTask() throws PlanNotFound, TaskNotActionable {
 
-		List<Action<SimpleOperator, SimpleCondition>> actions
-				= new ArrayList<Action<SimpleOperator, SimpleCondition>>();
+		List<Action<SimpleOperator, SubstitutableCondition>> actions
+				= new ArrayList<Action<SimpleOperator, SubstitutableCondition>>();
 		@SuppressWarnings("unchecked")
-		Plan<SimpleOperator, SimpleCondition> mockPlan = mock(Plan.class);
+		Plan<SimpleOperator, SubstitutableCondition> mockPlan = mock(Plan.class);
 		when(mockPlan.getActions()).thenReturn(actions);
 		@SuppressWarnings("unchecked")
-		PlanFactory<SimpleOperator, SimpleCondition> mockPlanFactory
+		PlanFactory<SimpleOperator, SubstitutableCondition> mockPlanFactory
 				= mock(PlanFactory.class);
 		when(mockPlanFactory.create()).thenReturn(mockPlan);
 		
 		@SuppressWarnings("unchecked")
-		ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition>
+		ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SubstitutableCondition>
 				mockActionFactory = mock(ActionFactory.class);
 		@SuppressWarnings("unchecked")
 		DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
@@ -145,7 +144,7 @@ public class SimplePlannerHelperTest {
 				mockDecompositionService = mock(DecompositionService.class);
 		@SuppressWarnings("unchecked")
 		UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition,
 				SimpleVariable> mockUnificationService = mock(UnificationService.class);
 
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(mockActionFactory,
@@ -159,11 +158,11 @@ public class SimplePlannerHelperTest {
 		State mockState = mock(State.class);
 		
 		@SuppressWarnings("unchecked")
-		Action<SimpleOperator, SimpleCondition> mockActionA = mock(Action.class);
+		Action<SimpleOperator, SubstitutableCondition> mockActionA = mock(Action.class);
 		when(mockActionFactory.create(mockTaskA)).thenReturn(mockActionA);
 		
 		// Try to find a plan
-		Plan<SimpleOperator, SimpleCondition> plan = plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);		
+		Plan<SimpleOperator, SubstitutableCondition> plan = plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);		
 		
 		assertEquals(1, plan.getActions().size());
 		assertTrue(plan.getActions().contains(mockActionA));
@@ -172,18 +171,18 @@ public class SimplePlannerHelperTest {
 	@Test
 	public void testFindPlanForPrimitiveTwoTasks() throws PlanNotFound, TaskNotActionable {
 
-		List<Action<SimpleOperator, SimpleCondition>> actions
-				= new ArrayList<Action<SimpleOperator, SimpleCondition>>();
+		List<Action<SimpleOperator, SubstitutableCondition>> actions
+				= new ArrayList<Action<SimpleOperator, SubstitutableCondition>>();
 		@SuppressWarnings("unchecked")
-		Plan<SimpleOperator, SimpleCondition> mockPlan = mock(Plan.class);
+		Plan<SimpleOperator, SubstitutableCondition> mockPlan = mock(Plan.class);
 		when(mockPlan.getActions()).thenReturn(actions);
 		@SuppressWarnings("unchecked")
-		PlanFactory<SimpleOperator, SimpleCondition> mockPlanFactory
+		PlanFactory<SimpleOperator, SubstitutableCondition> mockPlanFactory
 				= mock(PlanFactory.class);
 		when(mockPlanFactory.create()).thenReturn(mockPlan);
 		
 		@SuppressWarnings("unchecked")
-		ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition>
+		ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SubstitutableCondition>
 				mockActionFactory = mock(ActionFactory.class);
 		@SuppressWarnings("unchecked")
 		DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
@@ -191,7 +190,7 @@ public class SimplePlannerHelperTest {
 				mockDecompositionService = mock(DecompositionService.class);
 		@SuppressWarnings("unchecked")
 		UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition,
 				SimpleVariable> mockUnificationService = mock(UnificationService.class);
 
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(mockActionFactory,
@@ -207,14 +206,14 @@ public class SimplePlannerHelperTest {
 		State mockState = mock(State.class);
 		
 		@SuppressWarnings("unchecked")
-		Action<SimpleOperator, SimpleCondition> mockActionA = mock(Action.class);
+		Action<SimpleOperator, SubstitutableCondition> mockActionA = mock(Action.class);
 		@SuppressWarnings("unchecked")
-		Action<SimpleOperator, SimpleCondition> mockActionB = mock(Action.class);
+		Action<SimpleOperator, SubstitutableCondition> mockActionB = mock(Action.class);
 		when(mockActionFactory.create(mockTaskA)).thenReturn(mockActionA);
 		when(mockActionFactory.create(mockTaskB)).thenReturn(mockActionB);
 		
 		// Try to find a plan
-		Plan<SimpleOperator, SimpleCondition> plan = plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);		
+		Plan<SimpleOperator, SubstitutableCondition> plan = plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);		
 		
 		assertEquals(2, plan.getActions().size());
 		assertTrue(plan.getActions().contains(mockActionA));
@@ -224,18 +223,18 @@ public class SimplePlannerHelperTest {
 	@Test(expected=PlanNotFound.class)
 	public void testFindPlanForPrimitiveTaskNotActionable() throws PlanNotFound, TaskNotActionable {
 
-		List<Action<SimpleOperator, SimpleCondition>> actions
-				= new ArrayList<Action<SimpleOperator, SimpleCondition>>();
+		List<Action<SimpleOperator, SubstitutableCondition>> actions
+				= new ArrayList<Action<SimpleOperator, SubstitutableCondition>>();
 		@SuppressWarnings("unchecked")
-		Plan<SimpleOperator, SimpleCondition> mockPlan = mock(Plan.class);
+		Plan<SimpleOperator, SubstitutableCondition> mockPlan = mock(Plan.class);
 		when(mockPlan.getActions()).thenReturn(actions);
 		@SuppressWarnings("unchecked")
-		PlanFactory<SimpleOperator, SimpleCondition> mockPlanFactory
+		PlanFactory<SimpleOperator, SubstitutableCondition> mockPlanFactory
 				= mock(PlanFactory.class);
 		when(mockPlanFactory.create()).thenReturn(mockPlan);
 		
 		@SuppressWarnings("unchecked")
-		ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition>
+		ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SubstitutableCondition>
 				mockActionFactory = mock(ActionFactory.class);
 		@SuppressWarnings("unchecked")
 		DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
@@ -243,7 +242,7 @@ public class SimplePlannerHelperTest {
 				mockDecompositionService = mock(DecompositionService.class);
 		@SuppressWarnings("unchecked")
 		UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition,
 				SimpleVariable> mockUnificationService = mock(UnificationService.class);
 
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(mockActionFactory,
@@ -275,10 +274,10 @@ public class SimplePlannerHelperTest {
 		SimpleMethod mockMethod = mock(SimpleMethod.class);
 		
 		@SuppressWarnings("unchecked")
-		PlanFactory<SimpleOperator, SimpleCondition> mockPlanFactory
+		PlanFactory<SimpleOperator, SubstitutableCondition> mockPlanFactory
 				= mock(PlanFactory.class);
 		@SuppressWarnings("unchecked")
-		ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition>
+		ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SubstitutableCondition>
 				mockActionFactory = mock(ActionFactory.class);
 		@SuppressWarnings("unchecked")
 		DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
@@ -286,7 +285,7 @@ public class SimplePlannerHelperTest {
 				mockDecompositionService = mock(DecompositionService.class);
 		@SuppressWarnings("unchecked")
 		UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition,
 				SimpleVariable> mockUnificationService = mock(UnificationService.class);
 		when(mockUnificationService.findUnifier(mockTask, mockMethod)).thenThrow(new UnifierNotFound());
 		
@@ -311,10 +310,10 @@ public class SimplePlannerHelperTest {
 		SimpleUnifier mockUnifier = mock(SimpleUnifier.class);
 		
 		@SuppressWarnings("unchecked")
-		PlanFactory<SimpleOperator, SimpleCondition> mockPlanFactory
+		PlanFactory<SimpleOperator, SubstitutableCondition> mockPlanFactory
 				= mock(PlanFactory.class);
 		@SuppressWarnings("unchecked")
-		ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition>
+		ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SubstitutableCondition>
 				mockActionFactory = mock(ActionFactory.class);
 		@SuppressWarnings("unchecked")
 		DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
@@ -322,7 +321,7 @@ public class SimplePlannerHelperTest {
 				mockDecompositionService = mock(DecompositionService.class);
 		@SuppressWarnings("unchecked")
 		UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition,
+				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition,
 				SimpleVariable> mockUnificationService = mock(UnificationService.class);
 		when(mockUnificationService.findUnifier(mockTask, mockMethod)).thenReturn(mockUnifier);
 		when(mockDecompositionService.decompose(mockUnifier, mockTaskNetwork, mockTask, mockMethod)).thenReturn(mockDecomposedTaskNetwork);

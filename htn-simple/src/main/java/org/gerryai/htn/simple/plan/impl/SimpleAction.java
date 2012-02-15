@@ -20,12 +20,12 @@ package org.gerryai.htn.simple.plan.impl;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.simple.domain.impl.SimpleOperator;
-import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleAction implements Action<SimpleOperator, SimpleCondition> {
+public class SimpleAction implements Action<SimpleOperator, SubstitutableCondition> {
 
 	/**
 	 * Operator that this action is a grounded instance of.

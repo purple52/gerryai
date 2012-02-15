@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.gerryai.htn.domain.Effect;
-import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.logic.Variable;
 import org.junit.Test;
 
@@ -58,7 +58,7 @@ public class SimpleOperatorTest {
 	
 	@Test
 	public void testPreconditions() {
-		Set<SimpleCondition> conditions = new HashSet<SimpleCondition>();
+		Set<SubstitutableCondition> conditions = new HashSet<SubstitutableCondition>();
 		SimpleOperatorBuilder mockBuilder = mock(SimpleOperatorBuilder.class);
 		SimpleOperator operator = new SimpleOperator(mockBuilder);
 		operator.setPreconditions(conditions);

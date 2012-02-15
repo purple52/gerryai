@@ -153,7 +153,7 @@ public class BasicIT {
 		problem.setTaskNetwork(taskNetwork);
 		
 		
-		Plan<SimpleOperator, SimpleCondition> plan = planningService.solve(problem);
+		Plan<SimpleOperator, SubstitutableCondition> plan = planningService.solve(problem);
 		
 		assertEquals(plan.getActions().size(),2);
 		assertEquals("drop", plan.getActions().get(0).getOperator().getName());

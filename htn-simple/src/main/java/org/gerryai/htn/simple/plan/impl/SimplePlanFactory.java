@@ -22,22 +22,22 @@ import java.util.List;
 
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.simple.domain.impl.SimpleOperator;
-import org.gerryai.htn.simple.logic.impl.SimpleCondition;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.plan.PlanFactory;
 
 /**
  * Factory for creating simple plans.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimplePlanFactory implements PlanFactory<SimpleOperator, SimpleCondition> {
+public class SimplePlanFactory implements PlanFactory<SimpleOperator, SubstitutableCondition> {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public final SimplePlan create() {
 		SimplePlan plan = new SimplePlan();
-		List<Action<SimpleOperator, SimpleCondition>> actions
-				= new ArrayList<Action<SimpleOperator, SimpleCondition>>();
+		List<Action<SimpleOperator, SubstitutableCondition>> actions
+				= new ArrayList<Action<SimpleOperator, SubstitutableCondition>>();
 		plan.setActions(actions);
 		
 		return plan;

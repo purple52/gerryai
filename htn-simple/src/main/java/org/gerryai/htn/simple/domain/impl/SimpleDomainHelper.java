@@ -26,7 +26,6 @@ import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
@@ -36,14 +35,14 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  */
 public class SimpleDomainHelper implements DomainHelper<SimpleOperator, SimpleMethod,
 		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> {
+		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
 
 	/**
 	 * Domain this helper is working on.
 	 */
 	private Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask,
 	SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-			SubstitutableCondition>, SimpleCondition> domain;
+			SubstitutableCondition>, SubstitutableCondition> domain;
 	
 	/**
 	 * Constructor taking a domain to work on.
@@ -51,7 +50,7 @@ public class SimpleDomainHelper implements DomainHelper<SimpleOperator, SimpleMe
 	 */
 	public SimpleDomainHelper(Domain<SimpleOperator, SimpleMethod, SubstitutableTerm,
 			SubstitutableTask, SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-			SubstitutableCondition>, SimpleCondition> domain) {
+			SubstitutableCondition>, SubstitutableCondition> domain) {
 		this.domain = domain;
 	}
 	
@@ -60,7 +59,7 @@ public class SimpleDomainHelper implements DomainHelper<SimpleOperator, SimpleMe
 	 */
 	public final Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask,
 	SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-			SubstitutableCondition>, SimpleCondition> getDomain() {
+			SubstitutableCondition>, SubstitutableCondition> getDomain() {
 		return domain;
 	}
 

@@ -8,7 +8,6 @@ import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.domain.impl.SimpleOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
@@ -36,7 +35,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  */
 public class SimpleProblem implements Problem<SimpleOperator, SimpleMethod,
 		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> {
+		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
 
 	/**
 	 * The initial state for this problem.
@@ -52,7 +51,7 @@ public class SimpleProblem implements Problem<SimpleOperator, SimpleMethod,
 	 * The domain to operate in.
 	 */
 	private Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-	ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> domain;
+	ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> domain;
 	
 	/**
 	 * {@inheritDoc}
@@ -86,7 +85,8 @@ public class SimpleProblem implements Problem<SimpleOperator, SimpleMethod,
 	 * {@inheritDoc}
 	 */
 	public final Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-	ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> getDomain() {
+			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
+			SubstitutableCondition>, SubstitutableCondition> getDomain() {
 		return domain;
 	}
 
@@ -96,7 +96,7 @@ public class SimpleProblem implements Problem<SimpleOperator, SimpleMethod,
 	public final void setDomain(Domain<SimpleOperator, SimpleMethod, SubstitutableTerm,
 			SubstitutableTask, SubstitutableTaskNetwork,
 			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-			SubstitutableCondition>, SimpleCondition> domain) {
+			SubstitutableCondition>, SubstitutableCondition> domain) {
 		this.domain = domain;
 	}
 

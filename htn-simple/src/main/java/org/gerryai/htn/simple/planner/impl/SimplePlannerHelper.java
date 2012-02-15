@@ -30,7 +30,6 @@ import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.domain.impl.SimpleOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleUnifier;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.plan.ActionFactory;
@@ -48,17 +47,17 @@ import org.gerryai.logic.unification.Substitution;
  */
 public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, SimpleMethod,
 		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> {
+		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
 
 	/**
 	 * Factory for creating actions.
 	 */
-	private ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition> actionFactory;
+	private ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SubstitutableCondition> actionFactory;
 	
 	/**
 	 * Factory for creating plans.
 	 */
-	private PlanFactory<SimpleOperator, SimpleCondition> planFactory;
+	private PlanFactory<SimpleOperator, SubstitutableCondition> planFactory;
 	
 	/**
 	 * Service for decomposing tasks.
@@ -70,8 +69,9 @@ public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, Simple
 	 * Service for finding unifiers.
 	 */
 	private UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask,
-	SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
-			SimpleCondition, SimpleVariable>  unificationService;
+			SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm,
+			SubstitutableTask, SubstitutableCondition>,
+			SubstitutableCondition, SimpleVariable>  unificationService;
 	
 	/**
 	 * Constructor providing all the dependencies required to function.
@@ -81,13 +81,13 @@ public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, Simple
 	 * @param unificationService the unification service
 	 */
 	public SimplePlannerHelper(
-			ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition> actionFactory,
-			PlanFactory<SimpleOperator, SimpleCondition> planFactory,
+			ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SubstitutableCondition> actionFactory,
+			PlanFactory<SimpleOperator, SubstitutableCondition> planFactory,
 			DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> decompositionservice,
 			UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
-				SimpleCondition, SimpleVariable>  unificationService) {
+				SubstitutableCondition, SimpleVariable>  unificationService) {
 		this.actionFactory = actionFactory;
 		this.planFactory = planFactory;
 		this.decompositionService = decompositionservice;
@@ -105,15 +105,15 @@ public class SimplePlannerHelper implements PlannerHelper<SimpleOperator, Simple
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Plan<SimpleOperator, SimpleCondition>
+	public final Plan<SimpleOperator, SubstitutableCondition>
 		findPlanForPrimitive(State state, SubstitutableTaskNetwork taskNetwork) throws PlanNotFound {
 		// TODO: Confirm implementation
 		// TODO: Enforce constraints
 		
-		Plan<SimpleOperator, SimpleCondition> plan = planFactory.create();
+		Plan<SimpleOperator, SubstitutableCondition> plan = planFactory.create();
 		
 		for (SubstitutableTask task : taskNetwork.getTasks()) {
-			Action<SimpleOperator, SimpleCondition> action;
+			Action<SimpleOperator, SubstitutableCondition> action;
 			try {
 				action = actionFactory.create(task);
 			} catch (TaskNotActionable e) {

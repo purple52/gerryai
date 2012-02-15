@@ -27,7 +27,6 @@ import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.domain.impl.SimpleOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
@@ -39,19 +38,21 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  */
 public class SimplePlanner implements
 		Planner<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> {
+		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
 	
 	/**
 	 * Manager the domain being worked in.
 	 */
 	private DomainHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-	ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> domainHelper;
+			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
+			SubstitutableCondition>, SubstitutableCondition> domainHelper;
 	
 	/**
 	 * Helper for off-loading some of the logic.
 	 */
 	private PlannerHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-	ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> plannerHelper;
+			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
+			SubstitutableCondition>, SubstitutableCondition> plannerHelper;
 	
 	/**
 	 * Constructor taking the domain manager and planner helper to use.
@@ -61,10 +62,10 @@ public class SimplePlanner implements
 	public SimplePlanner(
 			DomainHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 					ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
-					SimpleCondition> domainHelper,
+					SubstitutableCondition> domainHelper,
 			PlannerHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 					ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
-					SimpleCondition> plannerHelper) {
+					SubstitutableCondition> plannerHelper) {
 		this.domainHelper = domainHelper;
 		this.plannerHelper = plannerHelper;
 	}
@@ -72,7 +73,7 @@ public class SimplePlanner implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Plan<SimpleOperator, SimpleCondition>
+	public final Plan<SimpleOperator, SubstitutableCondition>
 			findPlan(State state, SubstitutableTaskNetwork taskNetwork) throws PlanNotFound {
 		
 		if (plannerHelper.isUnsolvable(taskNetwork)) {
