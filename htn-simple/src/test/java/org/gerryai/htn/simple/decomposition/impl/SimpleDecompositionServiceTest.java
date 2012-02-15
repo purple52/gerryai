@@ -33,7 +33,7 @@ import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.gerryai.logic.unification.Substitution;
 import org.junit.Test;
 
@@ -48,7 +48,7 @@ public class SimpleDecompositionServiceTest {
     public void testDecompose() {
     	
     	@SuppressWarnings("unchecked")
-    	UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+    	UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
     			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition,
     			SimpleVariable> mockUnificationService = mock(UnificationService.class);
     	SimpleDecompositionService decompositionService = new SimpleDecompositionService(mockUnificationService);
@@ -65,15 +65,15 @@ public class SimpleDecompositionServiceTest {
     	methodSubTasks.add(mockTaskC);
     	
     	// Original task network and unified version - unification makes no change
-    	SimpleTaskNetwork mockTaskNetwork = mock(SimpleTaskNetwork.class);
+    	SubstitutableTaskNetwork mockTaskNetwork = mock(SubstitutableTaskNetwork.class);
     	when(mockTaskNetwork.getTasks()).thenReturn(taskNetworkTasks);
-    	SimpleTaskNetwork mockUnifiedTaskNetwork = mock(SimpleTaskNetwork.class);
+    	SubstitutableTaskNetwork mockUnifiedTaskNetwork = mock(SubstitutableTaskNetwork.class);
     	when(mockUnifiedTaskNetwork.getTasks()).thenReturn(taskNetworkTasks);
     	
     	// Original method sub tasks and unified version - unification makes no change
-    	SimpleTaskNetwork mockMethodSubTasks = mock(SimpleTaskNetwork.class);
+    	SubstitutableTaskNetwork mockMethodSubTasks = mock(SubstitutableTaskNetwork.class);
     	when(mockTaskNetwork.getTasks()).thenReturn(methodSubTasks);
-    	SimpleTaskNetwork mockUnifiedMethodSubTasks = mock(SimpleTaskNetwork.class);
+    	SubstitutableTaskNetwork mockUnifiedMethodSubTasks = mock(SubstitutableTaskNetwork.class);
     	when(mockUnifiedMethodSubTasks.getTasks()).thenReturn(methodSubTasks);
     	
     	// Mock method converts TaskA into TaskB and TaskC
@@ -88,7 +88,7 @@ public class SimpleDecompositionServiceTest {
     	when(mockUnificationService.apply(mockUnifier, mockMethodSubTasks)).thenReturn(mockUnifiedMethodSubTasks);
     	
     	//Make the decompose call
-    	SimpleTaskNetwork decomposedTaskNetwork = decompositionService.decompose(mockUnifier, mockTaskNetwork, mockTaskA, mockMethod);
+    	SubstitutableTaskNetwork decomposedTaskNetwork = decompositionService.decompose(mockUnifier, mockTaskNetwork, mockTaskA, mockMethod);
 
     	// Verify that the original task network and the method's sub tasks got the unifier applied
     	verify(mockUnificationService).apply(mockUnifier, mockMethodSubTasks);

@@ -23,16 +23,15 @@ import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleTaskNetwork implements TaskNetwork<SubstitutableTerm, SubstitutableTask,
-		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> {
+public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
 
 	/**
 	 * Set of tasks to be solved in this network.
@@ -48,7 +47,7 @@ public class SimpleTaskNetwork implements TaskNetwork<SubstitutableTerm, Substit
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
-	protected SimpleTaskNetwork(TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+	protected SimpleTaskNetwork(TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> builder) {
 		this.setTasks(builder.getTasks());
 		this.setConstraints(builder.getConstraints());
@@ -71,7 +70,8 @@ public class SimpleTaskNetwork implements TaskNetwork<SubstitutableTerm, Substit
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> getConstraints() {
+	public final Set<ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
+			SubstitutableCondition>> getConstraints() {
 		return constraints;
 	}
 

@@ -22,14 +22,15 @@ import org.gerryai.htn.simple.domain.MethodBuilder;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleMethodBuilder implements MethodBuilder<SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
-ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> {
+public class SimpleMethodBuilder implements MethodBuilder<SubstitutableTerm,
+		SubstitutableTask, SubstitutableTaskNetwork,
+		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> {
 
 	/**
 	 * Name of the method being built.
@@ -44,7 +45,7 @@ ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableConditi
 	/**
 	 * Task network that the method being built decomposes into.
 	 */
-	private SimpleTaskNetwork taskNetwork;
+	private SubstitutableTaskNetwork taskNetwork;
 	
 	/**
 	 * {@inheritDoc}
@@ -65,7 +66,7 @@ ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableConditi
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleMethodBuilder setTaskNetwork(SimpleTaskNetwork taskNetwork) {
+	public final SimpleMethodBuilder setTaskNetwork(SubstitutableTaskNetwork taskNetwork) {
 		this.taskNetwork = taskNetwork;
 		return this;
 	}
@@ -97,7 +98,7 @@ ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableConditi
 	 * Get the task network for the method being built.
 	 * @return the task network
 	 */
-	protected final SimpleTaskNetwork getTaskNetwork() {
+	protected final SubstitutableTaskNetwork getTaskNetwork() {
 		return taskNetwork;
 	}
 

@@ -33,7 +33,7 @@ import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
@@ -49,7 +49,7 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<SimpleOper
 	 * Service for the domain that we are working in.
 	 */
 	private DomainHelper<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask,
-			SimpleTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
+			SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition>, SimpleCondition> domainHelper;
 	
 	/**
@@ -57,8 +57,9 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<SimpleOper
 	 * @param domainHelper helper to use
 	 */
 	public SimpleActionFactoryHelper(DomainHelper<SimpleOperator, SimpleMethod,
-			SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
-			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> domainHelper) {
+			SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
+			SubstitutableCondition>, SimpleCondition> domainHelper) {
 		this.domainHelper = domainHelper;
 	}
 	

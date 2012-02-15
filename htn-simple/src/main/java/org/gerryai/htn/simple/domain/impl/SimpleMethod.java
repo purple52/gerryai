@@ -22,13 +22,13 @@ import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleMethod implements Method<SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+public class SimpleMethod implements Method<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> {
 
 	/**
@@ -44,7 +44,7 @@ public class SimpleMethod implements Method<SubstitutableTerm, SubstitutableTask
 	/**
 	 * Sub tasks that this method decomposes its task into.
 	 */
-	private SimpleTaskNetwork taskNetwork;
+	private SubstitutableTaskNetwork taskNetwork;
 	
 	/**
 	 * Constructor using a builder.
@@ -86,14 +86,14 @@ public class SimpleMethod implements Method<SubstitutableTerm, SubstitutableTask
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTaskNetwork getTaskNetwork() {
+	public final SubstitutableTaskNetwork getTaskNetwork() {
 		return taskNetwork;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setTaskNetwork(SimpleTaskNetwork taskNetwork) {
+	public final void setTaskNetwork(SubstitutableTaskNetwork taskNetwork) {
 		this.taskNetwork = taskNetwork;
 	}
 

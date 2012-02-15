@@ -31,7 +31,7 @@ import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.junit.Test;
 
 /**
@@ -47,7 +47,7 @@ public class SimpleDomainHelperTest {
 	public void testGetDomain() {
 		
 		@SuppressWarnings("unchecked")
-		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				mockDomain = mock(Domain.class);
 		
@@ -65,7 +65,7 @@ public class SimpleDomainHelperTest {
 	public void testGetOperatorByNameEmptyList() throws OperatorNotFound {
 		
 		@SuppressWarnings("unchecked")
-		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				mockDomain = mock(Domain.class);
 		when(mockDomain.getOperators()).thenReturn(new HashSet<SimpleOperator>());
@@ -83,7 +83,7 @@ public class SimpleDomainHelperTest {
 	@Test(expected=OperatorNotFound.class)
 	public void testGetOperatorByNameNotFound() throws OperatorNotFound {
 		@SuppressWarnings("unchecked")
-		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				mockDomain = mock(Domain.class);
 		SimpleOperator mockOperatorA = mock(SimpleOperator.class);
@@ -108,7 +108,7 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetOperatorByNameFound() throws OperatorNotFound {
 		@SuppressWarnings("unchecked")
-		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				mockDomain = mock(Domain.class);
 		SimpleOperator mockOperatorA = mock(SimpleOperator.class);
@@ -134,7 +134,7 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetMethodByTaskEmptyList() {
 		@SuppressWarnings("unchecked")
-		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				mockDomain = mock(Domain.class);
 		when(mockDomain.getMethods()).thenReturn(new HashSet<SimpleMethod>());
@@ -154,7 +154,7 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetMethodByTaskNotFound() {
 		@SuppressWarnings("unchecked")
-		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				mockDomain = mock(Domain.class);
 		
@@ -188,7 +188,7 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetMethodByTaskOneFound() {
 		@SuppressWarnings("unchecked")
-		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				mockDomain = mock(Domain.class);
 		
@@ -223,7 +223,7 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetMethodByTaskTwoFound() {
 		@SuppressWarnings("unchecked")
-		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+		Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition>
 				mockDomain = mock(Domain.class);
 		

@@ -23,6 +23,7 @@ import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
 
 /**
@@ -30,13 +31,14 @@ import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class SimpleTaskNetworkBuilderFactory implements
-		TaskNetworkBuilderFactory<SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork, 
+		TaskNetworkBuilderFactory<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, 
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> {
 
 	/**
 	 * Factory for creating constraint validators, as used by the task network builders.
 	 */
-	private ConstraintValidatorFactory<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> constraintValidatorFactory;
+	private ConstraintValidatorFactory<SubstitutableTerm, SubstitutableTask,
+			SubstitutableCondition> constraintValidatorFactory;
 	
 	/**
 	 * Constructor, requiring a factory for creating constraint validators.

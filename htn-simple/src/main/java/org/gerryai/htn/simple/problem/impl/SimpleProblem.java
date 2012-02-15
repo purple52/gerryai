@@ -10,7 +10,7 @@ import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
 /**
  *  Gerry AI - Open framework for automated planning algorithms
@@ -34,8 +34,9 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleProblem implements Problem<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
-ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> {
+public class SimpleProblem implements Problem<SimpleOperator, SimpleMethod,
+		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> {
 
 	/**
 	 * The initial state for this problem.
@@ -45,12 +46,12 @@ ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableConditi
 	/**
 	 * The task network to acheive.
 	 */
-	private SimpleTaskNetwork taskNetwork;
+	private SubstitutableTaskNetwork taskNetwork;
 	
 	/**
 	 * The domain to operate in.
 	 */
-	private Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+	private Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 	ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> domain;
 	
 	/**
@@ -70,21 +71,21 @@ ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableConditi
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTaskNetwork getTaskNetwork() {
+	public final SubstitutableTaskNetwork getTaskNetwork() {
 		return taskNetwork;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setTaskNetwork(SimpleTaskNetwork taskNetwork) {
+	public final void setTaskNetwork(SubstitutableTaskNetwork taskNetwork) {
 		this.taskNetwork = taskNetwork;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+	public final Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 	ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> getDomain() {
 		return domain;
 	}
@@ -92,8 +93,10 @@ ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableConditi
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setDomain(Domain<SimpleOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
-			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SimpleCondition> domain) {
+	public final void setDomain(Domain<SimpleOperator, SimpleMethod, SubstitutableTerm,
+			SubstitutableTask, SubstitutableTaskNetwork,
+			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
+			SubstitutableCondition>, SimpleCondition> domain) {
 		this.domain = domain;
 	}
 

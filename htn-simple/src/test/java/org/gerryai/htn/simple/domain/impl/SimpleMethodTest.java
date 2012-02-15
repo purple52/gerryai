@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.junit.Test;
 
 /**
@@ -50,7 +50,7 @@ public class SimpleMethodTest {
 
 	@Test
 	public void testTaskNetwork() {
-		SimpleTaskNetwork taskNetwork = mock(SimpleTaskNetwork.class);
+		SubstitutableTaskNetwork taskNetwork = mock(SubstitutableTaskNetwork.class);
 		SimpleMethodBuilder mockBuilder = mock(SimpleMethodBuilder.class);
 		SimpleMethod method = new SimpleMethod(mockBuilder);
 		method.setTaskNetwork(taskNetwork);

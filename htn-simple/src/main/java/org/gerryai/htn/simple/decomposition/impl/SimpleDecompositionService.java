@@ -26,7 +26,7 @@ import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.gerryai.logic.unification.Substitution;
 
 /**
@@ -36,13 +36,13 @@ import org.gerryai.logic.unification.Substitution;
  *
  */
 public class SimpleDecompositionService implements
-		DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+		DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> {
 
 	/**
 	 * Service for performing unification actions.
 	 */
-	private UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SimpleTaskNetwork,
+	private UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
 			SimpleCondition, SimpleVariable> unificationService;
 	
@@ -51,7 +51,7 @@ public class SimpleDecompositionService implements
 	 * @param unificationService the unification service to use
 	 */
 	public SimpleDecompositionService(UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask,
-			SimpleTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
+			SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
 			SimpleCondition, SimpleVariable> unificationService) {
 		this.unificationService = unificationService;
 	}
@@ -59,13 +59,13 @@ public class SimpleDecompositionService implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTaskNetwork decompose(Substitution<SubstitutableTerm, SimpleVariable> unifier,
-			SimpleTaskNetwork taskNetwork, SubstitutableTask task, SimpleMethod method) {
+	public final SubstitutableTaskNetwork decompose(Substitution<SubstitutableTerm, SimpleVariable> unifier,
+			SubstitutableTaskNetwork taskNetwork, SubstitutableTask task, SimpleMethod method) {
 		// TODO: Ensure the original task network is never altered
 		// Apply unifier where relevant
-		SimpleTaskNetwork unifiedMethodSubTasks = unificationService.apply(unifier, method.getTaskNetwork());
+		SubstitutableTaskNetwork unifiedMethodSubTasks = unificationService.apply(unifier, method.getTaskNetwork());
 		// TODO: Confirm if unifier really needs to be applied to the rest of the task network
-		SimpleTaskNetwork updatedTaskNetwork = unificationService.apply(unifier, taskNetwork);
+		SubstitutableTaskNetwork updatedTaskNetwork = unificationService.apply(unifier, taskNetwork);
 		
 		// Replace the original task with the sub tasks provided by the method
 		updatedTaskNetwork.getTasks().remove(task);

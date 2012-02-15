@@ -30,6 +30,7 @@ import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.junit.Test;
 
 /**
@@ -188,7 +189,7 @@ public class SimpleTaskNetworkBuilderTest {
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintA = mock(ValidatableConstraint.class);
 		@SuppressWarnings("unchecked")
 		ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
-		SimpleTaskNetwork taskNetwork = new SimpleTaskNetworkBuilder(mockConstraintValidator)
+		SubstitutableTaskNetwork taskNetwork = new SimpleTaskNetworkBuilder(mockConstraintValidator)
 				.addTask(mockTaskA)
 				.addConstraint(mockConstraintA)
 				.build();

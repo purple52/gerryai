@@ -30,12 +30,14 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleActionFactory implements ActionFactory<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition> {
+public class SimpleActionFactory implements ActionFactory<SimpleOperator,
+		SubstitutableTerm, SubstitutableTask, SimpleCondition> {
 
 	/**
 	 * Helper object for doing the difficult bits.
 	 */
-	private ActionFactoryHelper<SimpleOperator, SubstitutableTerm, SubstitutableTask, SimpleCondition> actionFactoryHelper;
+	private ActionFactoryHelper<SimpleOperator, SubstitutableTerm, SubstitutableTask,
+			SimpleCondition> actionFactoryHelper;
 	
 	/**
 	 * Constructor taking all required dependencies.

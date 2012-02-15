@@ -26,7 +26,8 @@ import org.gerryai.htn.simple.logic.SubstitutableTerm;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleLogicFactory implements LogicFactory<SimpleVariable, SimpleConstant, SimplePredicate, SubstitutableTerm> {
+public class SimpleLogicFactory implements LogicFactory<SimpleVariable, SimpleConstant,
+		SimplePredicate, SubstitutableTerm> {
 
 	/**
 	 * {@inheritDoc}
