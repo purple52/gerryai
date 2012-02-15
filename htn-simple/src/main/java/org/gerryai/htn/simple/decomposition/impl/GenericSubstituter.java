@@ -24,8 +24,8 @@ import org.gerryai.htn.constraint.AfterConstraint;
 import org.gerryai.htn.constraint.BetweenConstraint;
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.constraint.PrecedenceConstraint;
-import org.gerryai.htn.simple.constraint.ConstraintFactory;
 import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
+import org.gerryai.htn.simple.constraint.SubstitutableConstraintFactory;
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableConstant;
@@ -53,7 +53,7 @@ public class GenericSubstituter implements Substituter<SubstitutableTerm> {
 	/**
 	 * Constraint factory to use.
 	 */
-	//private ConstraintFactory<T, SubstitutableTask<T>, SubstitutableCondition> constraintFactory;
+	private SubstitutableConstraintFactory constraintFactory;
 	
 	/**
 	 * Factory for building task and task networks.
@@ -71,9 +71,9 @@ public class GenericSubstituter implements Substituter<SubstitutableTerm> {
 	 * @param constraintFactory the factory for creating new tasks and task networks
 	 */
 	public GenericSubstituter(Substitution<SubstitutableTerm, SubstitutableVariable> unifier,
-			ConstraintFactory<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> constraintFactory) {
+			SubstitutableConstraintFactory constraintFactory) {
 		this.unifier = unifier;
-		//this.constraintFactory = constraintFactory;
+		this.constraintFactory = constraintFactory;
 	}
 	
 	/**

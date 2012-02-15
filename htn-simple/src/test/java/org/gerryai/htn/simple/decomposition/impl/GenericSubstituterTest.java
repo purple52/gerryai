@@ -21,6 +21,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 import org.gerryai.htn.simple.constraint.ConstraintFactory;
+import org.gerryai.htn.simple.constraint.SubstitutableConstraintFactory;
 import org.gerryai.htn.simple.constraint.impl.SimpleBeforeConstraint;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
@@ -34,7 +35,7 @@ import org.junit.Test;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleSubstituterImplTest {
+public class GenericSubstituterTest {
 
 	/**
 	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.GenericSubstituter#apply(org.gerryai.htn.simple.constraint.impl.SimpleBeforeConstraint)}.
@@ -44,11 +45,13 @@ public class SimpleSubstituterImplTest {
 		
 		@SuppressWarnings("unchecked")
 		Substitution<SubstitutableTerm, SubstitutableVariable> mockUnifier = mock(Substitution.class);
-		@SuppressWarnings("unchecked")
-		ConstraintFactory<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintFactory = mock(ConstraintFactory.class);
-		GenericSubstituter substituter = new GenericSubstituter(mockUnifier, mockConstraintFactory);
+		SubstitutableConstraintFactory mockConstraintFactory = mock(SubstitutableConstraintFactory.class);
 		
 		SimpleBeforeConstraint constraint = mock(SimpleBeforeConstraint.class);
+		
+		GenericSubstituter substituter = new GenericSubstituter(mockUnifier, mockConstraintFactory);
+		
+		
 		
 		SimpleBeforeConstraint updatedConstraint = (SimpleBeforeConstraint) substituter.apply(constraint);
 		

@@ -19,17 +19,15 @@ package org.gerryai.htn.simple.constraint.impl;
 
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.ConstraintFactory;
+import org.gerryai.htn.simple.constraint.SubstitutableConstraintFactory;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleConstraintFactory implements ConstraintFactory<SubstitutableTerm,
-		SubstitutableTask, SubstitutableCondition> {
+public class SimpleConstraintFactory implements SubstitutableConstraintFactory {
 
 	/**
 	 * {@inheritDoc}
