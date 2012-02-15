@@ -23,6 +23,7 @@ import static org.mockito.Mockito.mock;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.junit.Test;
 
@@ -46,7 +47,7 @@ public class SimpleDomainTest {
 
 	@Test
 	public void testMethods() {
-		Set<SimpleMethod> methods = new HashSet<SimpleMethod>();
+		Set<SubstitutableMethod> methods = new HashSet<SubstitutableMethod>();
 		
 		SimpleDomainBuilder mockBuilder = mock(SimpleDomainBuilder.class);
 		SimpleDomain domain = new SimpleDomain(mockBuilder);

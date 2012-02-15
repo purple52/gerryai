@@ -27,7 +27,7 @@ import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.decomposition.UnificationService;
-import org.gerryai.htn.simple.domain.impl.SimpleMethod;
+import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
@@ -47,7 +47,7 @@ public class SimpleDecompositionServiceTest {
     public void testDecompose() {
     	
     	@SuppressWarnings("unchecked")
-    	UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+    	UnificationService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
     			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition,
     			SimpleVariable> mockUnificationService = mock(UnificationService.class);
     	SimpleDecompositionService decompositionService = new SimpleDecompositionService(mockUnificationService);
@@ -76,7 +76,7 @@ public class SimpleDecompositionServiceTest {
     	when(mockUnifiedMethodSubTasks.getTasks()).thenReturn(methodSubTasks);
     	
     	// Mock method converts TaskA into TaskB and TaskC
-    	SimpleMethod mockMethod = mock(SimpleMethod.class);
+    	SubstitutableMethod mockMethod = mock(SubstitutableMethod.class);
     	when(mockMethod.getTask()).thenReturn(mockTaskA);
     	when(mockMethod.getTaskNetwork()).thenReturn(mockMethodSubTasks);
     	

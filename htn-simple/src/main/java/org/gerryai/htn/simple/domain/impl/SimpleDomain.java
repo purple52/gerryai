@@ -21,6 +21,7 @@ import java.util.Set;
 
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
@@ -32,7 +33,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  * Wraps a set of operators and a set of methods to define the domain.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleDomain implements Domain<SubstitutableOperator, SimpleMethod,
+public class SimpleDomain implements Domain<SubstitutableOperator, SubstitutableMethod,
 		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
 
@@ -44,7 +45,7 @@ public class SimpleDomain implements Domain<SubstitutableOperator, SimpleMethod,
 	/**
 	 * Methods available in this domain.
 	 */
-	private Set<SimpleMethod> methods;
+	private Set<SubstitutableMethod> methods;
 	
 	/**
 	 * Constructor for a simple domain.
@@ -72,14 +73,14 @@ public class SimpleDomain implements Domain<SubstitutableOperator, SimpleMethod,
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<SimpleMethod> getMethods() {
+	public final Set<SubstitutableMethod> getMethods() {
 		return methods;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setMethods(Set<SimpleMethod> methods) {
+	public final void setMethods(Set<SubstitutableMethod> methods) {
 		this.methods = methods;
 	}
 

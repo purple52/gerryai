@@ -20,7 +20,7 @@ package org.gerryai.htn.simple.decomposition.impl;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.UnificationService;
-import org.gerryai.htn.simple.domain.impl.SimpleMethod;
+import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
@@ -35,13 +35,13 @@ import org.gerryai.logic.unification.Substitution;
  *
  */
 public class SimpleDecompositionService implements
-		DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		DecompositionService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> {
 
 	/**
 	 * Service for performing unification actions.
 	 */
-	private UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+	private UnificationService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
 			SubstitutableCondition, SimpleVariable> unificationService;
 	
@@ -49,7 +49,7 @@ public class SimpleDecompositionService implements
 	 * Set the unification service.
 	 * @param unificationService the unification service to use
 	 */
-	public SimpleDecompositionService(UnificationService<SimpleMethod, SubstitutableTerm, SubstitutableTask,
+	public SimpleDecompositionService(UnificationService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
 			SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm,
 			SubstitutableTask, SubstitutableCondition>,
 			SubstitutableCondition, SimpleVariable> unificationService) {
@@ -60,7 +60,7 @@ public class SimpleDecompositionService implements
 	 * {@inheritDoc}
 	 */
 	public final SubstitutableTaskNetwork decompose(Substitution<SubstitutableTerm, SimpleVariable> unifier,
-			SubstitutableTaskNetwork taskNetwork, SubstitutableTask task, SimpleMethod method) {
+			SubstitutableTaskNetwork taskNetwork, SubstitutableTask task, SubstitutableMethod method) {
 		// TODO: Ensure the original task network is never altered
 		// Apply unifier where relevant
 		SubstitutableTaskNetwork unifiedMethodSubTasks = unificationService.apply(unifier, method.getTaskNetwork());

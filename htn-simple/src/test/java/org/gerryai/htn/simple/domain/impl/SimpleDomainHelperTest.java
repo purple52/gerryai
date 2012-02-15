@@ -27,6 +27,7 @@ import java.util.Set;
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
@@ -47,7 +48,7 @@ public class SimpleDomainHelperTest {
 	public void testGetDomain() {
 		
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition>
 				mockDomain = mock(Domain.class);
 		
@@ -65,7 +66,7 @@ public class SimpleDomainHelperTest {
 	public void testGetOperatorByNameEmptyList() throws OperatorNotFound {
 		
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition>
 				mockDomain = mock(Domain.class);
 		when(mockDomain.getOperators()).thenReturn(new HashSet<SubstitutableOperator>());
@@ -83,7 +84,7 @@ public class SimpleDomainHelperTest {
 	@Test(expected=OperatorNotFound.class)
 	public void testGetOperatorByNameNotFound() throws OperatorNotFound {
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition>
 				mockDomain = mock(Domain.class);
 		SubstitutableOperator mockOperatorA = mock(SubstitutableOperator.class);
@@ -108,7 +109,7 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetOperatorByNameFound() throws OperatorNotFound {
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition>
 				mockDomain = mock(Domain.class);
 		SubstitutableOperator mockOperatorA = mock(SubstitutableOperator.class);
@@ -134,10 +135,10 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetMethodByTaskEmptyList() {
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition>
 				mockDomain = mock(Domain.class);
-		when(mockDomain.getMethods()).thenReturn(new HashSet<SimpleMethod>());
+		when(mockDomain.getMethods()).thenReturn(new HashSet<SubstitutableMethod>());
 
 		SubstitutableTask mockTask = mock(SubstitutableTask.class);
 		
@@ -154,7 +155,7 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetMethodByTaskNotFound() {
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition>
 				mockDomain = mock(Domain.class);
 		
@@ -165,12 +166,12 @@ public class SimpleDomainHelperTest {
 		SubstitutableTask mockTaskC = mock(SubstitutableTask.class);
 		when(mockTaskC.getName()).thenReturn("taskC");
 		
-		SimpleMethod mockMethodA = mock(SimpleMethod.class);
+		SubstitutableMethod mockMethodA = mock(SubstitutableMethod.class);
 		when(mockMethodA.getTask()).thenReturn(mockTaskA);
-		SimpleMethod mockMethodB = mock(SimpleMethod.class);
+		SubstitutableMethod mockMethodB = mock(SubstitutableMethod.class);
 		when(mockMethodB.getTask()).thenReturn(mockTaskB);
 		
-		Set<SimpleMethod> methods = new HashSet<SimpleMethod>();
+		Set<SubstitutableMethod> methods = new HashSet<SubstitutableMethod>();
 		methods.add(mockMethodA);
 		methods.add(mockMethodB);
 		when(mockDomain.getMethods()).thenReturn(methods);
@@ -188,7 +189,7 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetMethodByTaskOneFound() {
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition>
 				mockDomain = mock(Domain.class);
 		
@@ -197,12 +198,12 @@ public class SimpleDomainHelperTest {
 		SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
 		when(mockTaskB.getName()).thenReturn("taskB");
 		
-		SimpleMethod mockMethodA = mock(SimpleMethod.class);
+		SubstitutableMethod mockMethodA = mock(SubstitutableMethod.class);
 		when(mockMethodA.getTask()).thenReturn(mockTaskA);
-		SimpleMethod mockMethodB = mock(SimpleMethod.class);
+		SubstitutableMethod mockMethodB = mock(SubstitutableMethod.class);
 		when(mockMethodB.getTask()).thenReturn(mockTaskB);
 		
-		Set<SimpleMethod> methods = new HashSet<SimpleMethod>();
+		Set<SubstitutableMethod> methods = new HashSet<SubstitutableMethod>();
 		methods.add(mockMethodA);
 		methods.add(mockMethodB);
 		when(mockDomain.getMethods()).thenReturn(methods);
@@ -223,7 +224,7 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetMethodByTaskTwoFound() {
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition>
 				mockDomain = mock(Domain.class);
 		
@@ -232,14 +233,14 @@ public class SimpleDomainHelperTest {
 		SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
 		when(mockTaskB.getName()).thenReturn("taskB");
 		
-		SimpleMethod mockMethodA = mock(SimpleMethod.class);
+		SubstitutableMethod mockMethodA = mock(SubstitutableMethod.class);
 		when(mockMethodA.getTask()).thenReturn(mockTaskA);
-		SimpleMethod mockMethodB = mock(SimpleMethod.class);
+		SubstitutableMethod mockMethodB = mock(SubstitutableMethod.class);
 		when(mockMethodB.getTask()).thenReturn(mockTaskB);
-		SimpleMethod mockMethodC = mock(SimpleMethod.class);
+		SubstitutableMethod mockMethodC = mock(SubstitutableMethod.class);
 		when(mockMethodC.getTask()).thenReturn(mockTaskB);
 		
-		Set<SimpleMethod> methods = new HashSet<SimpleMethod>();
+		Set<SubstitutableMethod> methods = new HashSet<SubstitutableMethod>();
 		methods.add(mockMethodA);
 		methods.add(mockMethodB);
 		methods.add(mockMethodC);

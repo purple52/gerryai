@@ -4,8 +4,8 @@ import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
-import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
@@ -33,7 +33,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleProblem implements Problem<SubstitutableOperator, SimpleMethod,
+public class SimpleProblem implements Problem<SubstitutableOperator, SubstitutableMethod,
 		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
 
@@ -50,8 +50,9 @@ public class SimpleProblem implements Problem<SubstitutableOperator, SimpleMetho
 	/**
 	 * The domain to operate in.
 	 */
-	private Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-	ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> domain;
+	private Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+			SubstitutableTask, SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm,
+			SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> domain;
 	
 	/**
 	 * {@inheritDoc}
@@ -84,7 +85,8 @@ public class SimpleProblem implements Problem<SubstitutableOperator, SimpleMetho
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+	public final Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+			SubstitutableTask, SubstitutableTaskNetwork,
 			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition>, SubstitutableCondition> getDomain() {
 		return domain;
@@ -93,7 +95,7 @@ public class SimpleProblem implements Problem<SubstitutableOperator, SimpleMetho
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setDomain(Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm,
+	public final void setDomain(Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 			SubstitutableTask, SubstitutableTaskNetwork,
 			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition>, SubstitutableCondition> domain) {

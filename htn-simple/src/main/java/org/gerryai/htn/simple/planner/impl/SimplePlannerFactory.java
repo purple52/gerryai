@@ -27,10 +27,9 @@ import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValida
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.impl.SimpleDecompositionService;
 import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
-import org.gerryai.htn.simple.domain.impl.SimpleMethod;
-import org.gerryai.htn.simple.domain.impl.SimpleOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
@@ -50,7 +49,7 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilderFactory;
  *
  */
 public class SimplePlannerFactory implements
-		PlannerFactory<SubstitutableOperator, SimpleMethod, SubstitutableTerm,
+		PlannerFactory<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 		SubstitutableTask, SubstitutableTaskNetwork,
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
 
@@ -58,11 +57,12 @@ public class SimplePlannerFactory implements
 	 * {@inheritDoc}
 	 */
 	public final SimplePlanner create(
-			Domain<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+			Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+			SubstitutableTask, SubstitutableTaskNetwork,
 			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition>, SubstitutableCondition> domain) {
 		
-		DomainHelper<SubstitutableOperator, SimpleMethod, SubstitutableTerm,
+		DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 				SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 				SubstitutableCondition>, SubstitutableCondition> domainHelper
@@ -84,16 +84,16 @@ public class SimplePlannerFactory implements
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>>
 				taskNetworkBuilderFactory =
 			new SimpleTaskNetworkBuilderFactory(constraintValidatorFactory);
-		AIMAUnificationService<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask,
+		AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
 				SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm,
 				SubstitutableTask, SubstitutableCondition>,
 				SubstitutableCondition, SimpleVariable> unificationService =
-			new AIMAUnificationService<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask,
+			new AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
 				SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm,
 				SubstitutableTask, SubstitutableCondition>,
 				SubstitutableCondition, SimpleVariable>(unifier, converter, domainHelper, taskNetworkBuilderFactory);
 		
-		DecompositionService<SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		DecompositionService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 				ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 				SubstitutableCondition>> decompositionService =
 				new SimpleDecompositionService(unificationService);

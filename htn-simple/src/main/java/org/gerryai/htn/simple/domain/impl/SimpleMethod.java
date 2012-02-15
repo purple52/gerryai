@@ -17,10 +17,7 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.constraint.ValidatableConstraint;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
@@ -28,8 +25,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleMethod implements Method<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> {
+public class SimpleMethod implements SubstitutableMethod {
 
 	/**
 	 * Name of this method.

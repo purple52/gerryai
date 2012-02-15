@@ -23,8 +23,8 @@ import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
-import org.gerryai.htn.simple.domain.impl.SimpleMethod;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
@@ -37,20 +37,23 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class SimplePlanner implements
-		Planner<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		Planner<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+		SubstitutableTask, SubstitutableTaskNetwork,
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
 	
 	/**
 	 * Manager the domain being worked in.
 	 */
-	private DomainHelper<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+	private DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+			SubstitutableTask, SubstitutableTaskNetwork,
 			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition>, SubstitutableCondition> domainHelper;
 	
 	/**
 	 * Helper for off-loading some of the logic.
 	 */
-	private PlannerHelper<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+	private PlannerHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+			SubstitutableTask, SubstitutableTaskNetwork,
 			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition>, SubstitutableCondition> plannerHelper;
 	
@@ -60,10 +63,12 @@ public class SimplePlanner implements
 	 * @param plannerHelper the planner helper
 	 */
 	public SimplePlanner(
-			DomainHelper<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+			DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+					SubstitutableTask, SubstitutableTaskNetwork,
 					ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
 					SubstitutableCondition> domainHelper,
-			PlannerHelper<SubstitutableOperator, SimpleMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+			PlannerHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+					SubstitutableTask, SubstitutableTaskNetwork,
 					ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
 					SubstitutableCondition> plannerHelper) {
 		this.domainHelper = domainHelper;
@@ -89,7 +94,7 @@ public class SimplePlanner implements
 				// 3. Task network is non-primitive
 				// TODO: Confirm implementation
 				// TODO: Handle state changes (and correct backtracking?)			
-				for (SimpleMethod method : domainHelper.getMethodsByTask(task)) {
+				for (SubstitutableMethod method : domainHelper.getMethodsByTask(task)) {
 					try {
 						SubstitutableTaskNetwork decomposedNetwork = plannerHelper.decompose(taskNetwork, task, method);
 						// Try recursing to further process the decomposed network

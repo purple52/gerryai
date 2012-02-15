@@ -24,14 +24,12 @@ import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
+import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
-import org.gerryai.htn.simple.domain.impl.SimpleMethod;
-import org.gerryai.htn.simple.domain.impl.SimpleOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.logic.impl.SimpleCondition;
 import org.gerryai.htn.simple.logic.impl.SimpleConstant;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.planner.impl.SimplePlannerFactory;
@@ -122,12 +120,12 @@ public class BasicIT {
 				.addTask(methodBSubTask2)
 				.build();
 		
-		SimpleMethod methodA = domainBuilderFactory.createMethodBuilder()
+		SubstitutableMethod methodA = domainBuilderFactory.createMethodBuilder()
 				.setName("swap")
 				.setTask(methodATask)
 				.setTaskNetwork(methodATaskNetwork)
 				.build();
-		SimpleMethod methodB = domainBuilderFactory.createMethodBuilder()
+		SubstitutableMethod methodB = domainBuilderFactory.createMethodBuilder()
 				.setName("swap")
 				.setTask(methodBTask)
 				.setTaskNetwork(methodBTaskNetwork)
