@@ -20,13 +20,11 @@ package org.gerryai.htn.simple.decomposition.impl;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
-import org.gerryai.htn.simple.constraint.ConstraintFactory;
 import org.gerryai.htn.simple.constraint.SubstitutableConstraintFactory;
 import org.gerryai.htn.simple.constraint.impl.SimpleBeforeConstraint;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.SubstitutableVariable;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetworkBuilderFactory;
 import org.gerryai.logic.unification.Substitution;
 
 import org.junit.Test;
@@ -46,10 +44,11 @@ public class GenericSubstituterTest {
 		@SuppressWarnings("unchecked")
 		Substitution<SubstitutableTerm, SubstitutableVariable> mockUnifier = mock(Substitution.class);
 		SubstitutableConstraintFactory mockConstraintFactory = mock(SubstitutableConstraintFactory.class);
+		SubstitutableTaskNetworkBuilderFactory mockTaskNetworkBuilderFactory = mock(SubstitutableTaskNetworkBuilderFactory.class);
 		
 		SimpleBeforeConstraint constraint = mock(SimpleBeforeConstraint.class);
 		
-		GenericSubstituter substituter = new GenericSubstituter(mockUnifier, mockConstraintFactory);
+		GenericSubstituter substituter = new GenericSubstituter(mockUnifier, mockConstraintFactory, mockTaskNetworkBuilderFactory);
 		
 		
 		

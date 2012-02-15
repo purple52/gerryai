@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.gerryai.htn.constraint.AfterConstraint;
 import org.gerryai.htn.constraint.BetweenConstraint;
-import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.constraint.PrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
 import org.gerryai.htn.simple.constraint.SubstitutableConstraintFactory;
@@ -32,9 +31,8 @@ import org.gerryai.htn.simple.logic.SubstitutableConstant;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.SubstitutableVariable;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
-import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetworkBuilderFactory;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.unification.Substitution;
 
@@ -58,12 +56,7 @@ public class GenericSubstituter implements Substituter<SubstitutableTerm> {
 	/**
 	 * Factory for building task and task networks.
 	 */
-	private TaskNetworkBuilderFactory<SubstitutableTerm,
-			SubstitutableTask,
-			TaskNetwork<SubstitutableTerm, SubstitutableTask,
-			Constraint<SubstitutableTerm>>,
-			Constraint<SubstitutableTerm>>
-			taskNetworkBuilderFactory;
+	private SubstitutableTaskNetworkBuilderFactory taskNetworkBuilderFactory;
 	
 	/**
 	 * Constructor taking a unifier.
@@ -71,9 +64,11 @@ public class GenericSubstituter implements Substituter<SubstitutableTerm> {
 	 * @param constraintFactory the factory for creating new tasks and task networks
 	 */
 	public GenericSubstituter(Substitution<SubstitutableTerm, SubstitutableVariable> unifier,
-			SubstitutableConstraintFactory constraintFactory) {
+			SubstitutableConstraintFactory constraintFactory,
+			SubstitutableTaskNetworkBuilderFactory taskNetworkBuilderFactory) {
 		this.unifier = unifier;
 		this.constraintFactory = constraintFactory;
+		this.taskNetworkBuilderFactory = taskNetworkBuilderFactory;
 	}
 	
 	/**

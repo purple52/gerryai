@@ -41,7 +41,7 @@ import org.gerryai.htn.simple.plan.impl.SimplePlanFactory;
 import org.gerryai.htn.simple.planner.PlannerFactory;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetworkBuilderFactory;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilderFactory;
 
 /**
@@ -78,9 +78,7 @@ public class SimplePlannerFactory implements
 		ConstraintValidatorFactory<SubstitutableTerm, SubstitutableTask,
 		SubstitutableCondition> constraintValidatorFactory
 				= new GenericConstraintValidatorFactory<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>();
-		TaskNetworkBuilderFactory<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-		SubstitutableValidatableConstraint>
-				taskNetworkBuilderFactory =
+		SubstitutableTaskNetworkBuilderFactory taskNetworkBuilderFactory =
 			new SimpleTaskNetworkBuilderFactory(constraintValidatorFactory);
 		AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
 				SubstitutableTaskNetwork, SubstitutableValidatableConstraint,
