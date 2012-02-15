@@ -24,7 +24,7 @@ import java.util.Map;
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.plan.TaskNotActionable;
-import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
@@ -48,8 +48,7 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<Substituta
 	 * Service for the domain that we are working in.
 	 */
 	private DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
-			SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-			SubstitutableCondition>, SubstitutableCondition> domainHelper;
+			SubstitutableTaskNetwork, SubstitutableValidatableConstraint, SubstitutableCondition> domainHelper;
 	
 	/**
 	 * Constructor requiring a domain helper.
@@ -57,8 +56,7 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<Substituta
 	 */
 	public SimpleActionFactoryHelper(DomainHelper<SubstitutableOperator, SubstitutableMethod,
 			SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-			SubstitutableCondition>, SubstitutableCondition> domainHelper) {
+			SubstitutableValidatableConstraint, SubstitutableCondition> domainHelper) {
 		this.domainHelper = domainHelper;
 	}
 	

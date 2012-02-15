@@ -21,7 +21,7 @@ import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.aima.impl.AIMAConverterImpl;
 import org.gerryai.htn.aima.unification.AIMAUnificationService;
 import org.gerryai.htn.domain.Domain;
-import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
@@ -51,7 +51,7 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilderFactory;
 public class SimplePlannerFactory implements
 		PlannerFactory<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 		SubstitutableTask, SubstitutableTaskNetwork,
-		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
+		SubstitutableValidatableConstraint, SubstitutableCondition> {
 
 	/**
 	 * {@inheritDoc}
@@ -59,13 +59,11 @@ public class SimplePlannerFactory implements
 	public final SimplePlanner create(
 			Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 			SubstitutableTask, SubstitutableTaskNetwork,
-			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-			SubstitutableCondition>, SubstitutableCondition> domain) {
+			SubstitutableValidatableConstraint, SubstitutableCondition> domain) {
 		
 		DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 				SubstitutableTask, SubstitutableTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-				SubstitutableCondition>, SubstitutableCondition> domainHelper
+				SubstitutableValidatableConstraint, SubstitutableCondition> domainHelper
 				= new SimpleDomainHelper(domain);
 		
 		ActionFactoryHelper<SubstitutableOperator, SubstitutableTerm, SubstitutableTask, SubstitutableCondition>
@@ -81,21 +79,18 @@ public class SimplePlannerFactory implements
 		SubstitutableCondition> constraintValidatorFactory
 				= new GenericConstraintValidatorFactory<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>();
 		TaskNetworkBuilderFactory<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>>
+		SubstitutableValidatableConstraint>
 				taskNetworkBuilderFactory =
 			new SimpleTaskNetworkBuilderFactory(constraintValidatorFactory);
 		AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
-				SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm,
-				SubstitutableTask, SubstitutableCondition>,
+				SubstitutableTaskNetwork, SubstitutableValidatableConstraint,
 				SubstitutableCondition, SimpleVariable> unificationService =
 			new AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
-				SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm,
-				SubstitutableTask, SubstitutableCondition>,
+				SubstitutableTaskNetwork, SubstitutableValidatableConstraint,
 				SubstitutableCondition, SimpleVariable>(unifier, converter, domainHelper, taskNetworkBuilderFactory);
 		
 		DecompositionService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-				SubstitutableCondition>> decompositionService =
+				SubstitutableValidatableConstraint> decompositionService =
 				new SimpleDecompositionService(unificationService);
 		
 		SimplePlannerHelper plannerHelper =

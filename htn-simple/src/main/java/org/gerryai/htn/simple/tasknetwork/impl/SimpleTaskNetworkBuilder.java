@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.tasknetwork.impl;
 
-import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
@@ -30,8 +30,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  *
  */
 public class SimpleTaskNetworkBuilder extends AbstractTaskNetworkBuilder<SubstitutableTerm,
-		SubstitutableTask, SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm,
-		SubstitutableTask, SubstitutableCondition>,
+		SubstitutableTask, SubstitutableTaskNetwork, SubstitutableValidatableConstraint,
 		SubstitutableCondition, SimpleTaskNetworkBuilder> {
 
 	/**

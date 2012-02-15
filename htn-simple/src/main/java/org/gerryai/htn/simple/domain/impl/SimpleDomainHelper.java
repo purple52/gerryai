@@ -22,7 +22,7 @@ import java.util.Set;
 
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.OperatorNotFound;
-import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
@@ -37,22 +37,21 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  */
 public class SimpleDomainHelper implements DomainHelper<SubstitutableOperator, SubstitutableMethod,
 		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
+		SubstitutableValidatableConstraint, SubstitutableCondition> {
 
 	/**
 	 * Domain this helper is working on.
 	 */
 	private Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
-	SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-			SubstitutableCondition>, SubstitutableCondition> domain;
+	SubstitutableTaskNetwork, SubstitutableValidatableConstraint, SubstitutableCondition> domain;
 	
 	/**
 	 * Constructor taking a domain to work on.
 	 * @param domain the domain to work on
 	 */
 	public SimpleDomainHelper(Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			SubstitutableTask, SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-			SubstitutableCondition>, SubstitutableCondition> domain) {
+			SubstitutableTask, SubstitutableTaskNetwork,
+			SubstitutableValidatableConstraint, SubstitutableCondition> domain) {
 		this.domain = domain;
 	}
 	
@@ -60,8 +59,7 @@ public class SimpleDomainHelper implements DomainHelper<SubstitutableOperator, S
 	 * {@inheritDoc}
 	 */
 	public final Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
-	SubstitutableTaskNetwork, ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-			SubstitutableCondition>, SubstitutableCondition> getDomain() {
+	SubstitutableTaskNetwork, SubstitutableValidatableConstraint, SubstitutableCondition> getDomain() {
 		return domain;
 	}
 

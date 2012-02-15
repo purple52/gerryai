@@ -19,8 +19,7 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.ValidatableConstraint;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
@@ -41,14 +40,14 @@ public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
 	/**
 	 * Set of constraints to be met.
 	 */
-	private Set<ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> constraints;
+	private Set<SubstitutableValidatableConstraint> constraints;
 	
 	/**
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
 	protected SimpleTaskNetwork(TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> builder) {
+			SubstitutableValidatableConstraint> builder) {
 		this.setTasks(builder.getTasks());
 		this.setConstraints(builder.getConstraints());
 	}
@@ -70,16 +69,14 @@ public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-			SubstitutableCondition>> getConstraints() {
+	public final Set<SubstitutableValidatableConstraint> getConstraints() {
 		return constraints;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setConstraints(Set<ValidatableConstraint<SubstitutableTerm,
-			SubstitutableTask, SubstitutableCondition>> constraints) {
+	public final void setConstraints(Set<SubstitutableValidatableConstraint> constraints) {
 		this.constraints = constraints;
 	}
 

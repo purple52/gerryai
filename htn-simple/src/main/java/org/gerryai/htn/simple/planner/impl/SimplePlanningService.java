@@ -22,7 +22,7 @@ import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.planner.PlanningService;
 import org.gerryai.htn.problem.Problem;
-import org.gerryai.htn.simple.constraint.ValidatableConstraint;
+import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
@@ -37,14 +37,14 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  */
 public class SimplePlanningService implements PlanningService<SubstitutableOperator,
 		SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>, SubstitutableCondition> {
+		SubstitutableValidatableConstraint, SubstitutableCondition> {
 
 	/**
 	 * A factory for creating planners.
 	 */
 	private PlannerFactory<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 			SubstitutableTask, SubstitutableTaskNetwork,
-			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
+			SubstitutableValidatableConstraint,
 			SubstitutableCondition> plannerFactory;
 	
 	/**
@@ -53,8 +53,7 @@ public class SimplePlanningService implements PlanningService<SubstitutableOpera
 	 */
 	public SimplePlanningService(PlannerFactory<SubstitutableOperator, SubstitutableMethod,
 			SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-			ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-			SubstitutableCondition>, SubstitutableCondition> plannerFactory) {
+			SubstitutableValidatableConstraint, SubstitutableCondition> plannerFactory) {
 		this.plannerFactory = plannerFactory;
 	}
 	
@@ -63,14 +62,13 @@ public class SimplePlanningService implements PlanningService<SubstitutableOpera
 	 */
 	public final Plan<SubstitutableOperator, SubstitutableCondition> solve(Problem<SubstitutableOperator,
 			SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-			ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
+			SubstitutableValidatableConstraint,
 			SubstitutableCondition> problem) throws PlanNotFound {
 		
 		// Create a planner that will work in the domain of the given problem
 		Planner<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 				SubstitutableTask, SubstitutableTaskNetwork,
-				ValidatableConstraint<SubstitutableTerm, SubstitutableTask,
-				SubstitutableCondition>, SubstitutableCondition>
+				SubstitutableValidatableConstraint, SubstitutableCondition>
 				planner = plannerFactory.create(problem.getDomain());
 				
 		// Find a plan of the given problem

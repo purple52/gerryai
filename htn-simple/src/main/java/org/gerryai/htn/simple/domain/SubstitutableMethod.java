@@ -18,8 +18,7 @@
 package org.gerryai.htn.simple.domain;
 
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.constraint.ValidatableConstraint;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
@@ -28,7 +27,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  * Extension of the method interface that can be visited by a substituter.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface SubstitutableMethod extends Method<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>> {
+public interface SubstitutableMethod extends
+	Method<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, SubstitutableValidatableConstraint> {
 
 }
