@@ -26,7 +26,7 @@ import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 
 import com.google.common.base.Objects;
 
@@ -35,12 +35,12 @@ import com.google.common.base.Objects;
  *
  */
 public class SimpleAfterConstraint implements ValidatableAfterConstraint<SubstitutableTerm,
-		SimpleTask, SubstitutableCondition>, SubstitutableConstraint<SubstitutableTerm> {
+		SubstitutableTask, SubstitutableCondition>, SubstitutableConstraint<SubstitutableTerm> {
 
 	/**
 	 * The set of tasks that this constraint must hold for.
 	 */
-	private Set<SimpleTask> tasks;
+	private Set<SubstitutableTask> tasks;
 	
 	/**
 	 * The condition that must be true directly after the last of these tasks.
@@ -51,7 +51,7 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<Substit
 	 * Set the set of tasks that this constraint must hold for.
 	 * @param tasks the tasks
 	 */
-	public final void setTasks(Set<SimpleTask> tasks) {
+	public final void setTasks(Set<SubstitutableTask> tasks) {
 		this.tasks = tasks;
 	}
 	
@@ -67,7 +67,7 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<Substit
 	 * Get the set of tasks that this constraint must hold for.
 	 * @return the tasks
 	 */
-	public final Set<SimpleTask> getTasks() {
+	public final Set<SubstitutableTask> getTasks() {
 		return tasks;
 	}
 
@@ -82,14 +82,15 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<Substit
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<SubstitutableTerm, SimpleTask, SubstitutableCondition> validator) {
+	public final boolean validate(ConstraintValidator<SubstitutableTerm, SubstitutableTask,
+			SubstitutableCondition> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<SubstitutableTerm, SimpleTask, SubstitutableCondition> validator)
+	public final void add(ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> validator)
 			throws InvalidConstraint {
 		validator.add(this);
 	}

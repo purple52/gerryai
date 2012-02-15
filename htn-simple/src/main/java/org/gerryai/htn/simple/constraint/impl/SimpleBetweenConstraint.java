@@ -26,7 +26,7 @@ import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 
 import com.google.common.base.Objects;
 
@@ -35,18 +35,18 @@ import com.google.common.base.Objects;
  *
  */
 public class SimpleBetweenConstraint implements
-		ValidatableBetweenConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>,
+		ValidatableBetweenConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
 		SubstitutableConstraint<SubstitutableTerm> {
 
 	/**
 	 * The set of tasks that this constraint must hold after.
 	 */
-	private Set<SimpleTask> precedingTasks;
+	private Set<SubstitutableTask> precedingTasks;
 
 	/**
 	 * The set of tasks that this constraint must hold before.
 	 */
-	private Set<SimpleTask> procedingTasks;
+	private Set<SubstitutableTask> procedingTasks;
 	
 	/**
 	 * The literal that must be true directly between the two sets of tasks.
@@ -57,7 +57,7 @@ public class SimpleBetweenConstraint implements
 	 * Set the set of tasks that this constraint must hold after.
 	 * @param precedingTasks the tasks
 	 */
-	public final void setPrecedingTasks(Set<SimpleTask> precedingTasks) {
+	public final void setPrecedingTasks(Set<SubstitutableTask> precedingTasks) {
 		this.precedingTasks = precedingTasks;
 	}
 
@@ -65,7 +65,7 @@ public class SimpleBetweenConstraint implements
 	 * Set the set of tasks that this constraint must hold before.
 	 * @param procedingTasks the tasks
 	 */
-	public final void setProcedingTasks(Set<SimpleTask> procedingTasks) {
+	public final void setProcedingTasks(Set<SubstitutableTask> procedingTasks) {
 		this.procedingTasks = procedingTasks;
 	}
 	
@@ -81,7 +81,7 @@ public class SimpleBetweenConstraint implements
 	 * Get the set of tasks that this constraint must hold after.
 	 * @return the tasks
 	 */
-	public final Set<SimpleTask> getPrecedingTasks() {
+	public final Set<SubstitutableTask> getPrecedingTasks() {
 		return precedingTasks;
 	}
 
@@ -89,7 +89,7 @@ public class SimpleBetweenConstraint implements
 	 * Get the set of tasks that this constraint must hold before.
 	 * @return the tasks
 	 */
-	public final Set<SimpleTask> getProcedingTasks() {
+	public final Set<SubstitutableTask> getProcedingTasks() {
 		return procedingTasks;
 	}
 	
@@ -104,14 +104,15 @@ public class SimpleBetweenConstraint implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<SubstitutableTerm, SimpleTask, SubstitutableCondition> validator) {
+	public final boolean validate(ConstraintValidator<SubstitutableTerm, SubstitutableTask,
+			SubstitutableCondition> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<SubstitutableTerm, SimpleTask, SubstitutableCondition> validator)
+	public final void add(ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> validator)
 			throws InvalidConstraint {
 		validator.add(this);
 	}

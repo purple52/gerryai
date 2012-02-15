@@ -22,19 +22,20 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ConstraintFactory;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleConstraintFactory implements ConstraintFactory<SubstitutableTerm, SimpleTask, SubstitutableCondition> {
+public class SimpleConstraintFactory implements ConstraintFactory<SubstitutableTerm,
+		SubstitutableTask, SubstitutableCondition> {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public final SimplePrecedenceConstraint
-			createPrecedenceConstraint(SimpleTask precedingTask, SimpleTask procedingTask) {
+			createPrecedenceConstraint(SubstitutableTask precedingTask, SubstitutableTask procedingTask) {
 		SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint();
 		constraint.setPrecedingTask(precedingTask);
 		constraint.setProcedingTask(procedingTask);
@@ -44,7 +45,7 @@ public class SimpleConstraintFactory implements ConstraintFactory<SubstitutableT
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleBeforeConstraint createBeforeConstraint(Set<SimpleTask> tasks,
+	public final SimpleBeforeConstraint createBeforeConstraint(Set<SubstitutableTask> tasks,
 			SubstitutableCondition condition) {
 		SimpleBeforeConstraint constraint = new SimpleBeforeConstraint();
 		constraint.setTasks(tasks);
@@ -55,7 +56,8 @@ public class SimpleConstraintFactory implements ConstraintFactory<SubstitutableT
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleAfterConstraint createAfterConstraint(Set<SimpleTask> tasks, SubstitutableCondition condition) {
+	public final SimpleAfterConstraint createAfterConstraint(Set<SubstitutableTask> tasks,
+			SubstitutableCondition condition) {
 		SimpleAfterConstraint constraint = new SimpleAfterConstraint();
 		constraint.setTasks(tasks);
 		constraint.setCondition(condition);
@@ -65,8 +67,8 @@ public class SimpleConstraintFactory implements ConstraintFactory<SubstitutableT
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleBetweenConstraint createBetweenConstraint(Set<SimpleTask> precedingTasks,
-			Set<SimpleTask> procedingTasks, SubstitutableCondition condition) {
+	public final SimpleBetweenConstraint createBetweenConstraint(Set<SubstitutableTask> precedingTasks,
+			Set<SubstitutableTask> procedingTasks, SubstitutableCondition condition) {
 		SimpleBetweenConstraint constraint = new SimpleBetweenConstraint();
 		constraint.setPrecedingTasks(precedingTasks);
 		constraint.setProcedingTasks(procedingTasks);

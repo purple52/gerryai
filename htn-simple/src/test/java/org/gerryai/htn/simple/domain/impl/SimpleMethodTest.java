@@ -20,7 +20,7 @@ package org.gerryai.htn.simple.domain.impl;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.junit.Test;
 
@@ -41,7 +41,7 @@ public class SimpleMethodTest {
 
 	@Test
 	public void testTask() {
-		SimpleTask task = mock(SimpleTask.class);
+		SubstitutableTask task = mock(SubstitutableTask.class);
 		SimpleMethodBuilder mockBuilder = mock(SimpleMethodBuilder.class);
 		SimpleMethod method = new SimpleMethod(mockBuilder);
 		method.setTask(task);

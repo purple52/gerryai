@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.junit.Test;
 
 /**
@@ -39,8 +39,8 @@ public class SimpleConstraintFactoryTest {
 	@Test
 	public void testCreatePrecedenceConstraint() {
 		
-		SimpleTask mockTaskA = mock(SimpleTask.class);
-		SimpleTask mockTaskB = mock(SimpleTask.class);
+		SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
+		SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
 		
 		// Create factory under test
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
@@ -57,7 +57,7 @@ public class SimpleConstraintFactoryTest {
 	 */
 	@Test
 	public void testCreateBeforeConstraint() {
-		Set<SimpleTask> mockTasks = new HashSet<SimpleTask>();
+		Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
 		SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 		
 		// Create factory under test
@@ -75,7 +75,7 @@ public class SimpleConstraintFactoryTest {
 	 */
 	@Test
 	public void testCreateAfterConstraint() {
-		Set<SimpleTask> mockTasks = new HashSet<SimpleTask>();
+		Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
 		SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 		
 		// Create factory under test
@@ -93,8 +93,8 @@ public class SimpleConstraintFactoryTest {
 	 */
 	@Test
 	public void testCreateBetweenConstraint() {
-		Set<SimpleTask> mockTasksA = new HashSet<SimpleTask>();
-		Set<SimpleTask> mockTasksB = new HashSet<SimpleTask>();
+		Set<SubstitutableTask> mockTasksA = new HashSet<SubstitutableTask>();
+		Set<SubstitutableTask> mockTasksB = new HashSet<SubstitutableTask>();
 		SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 		
 		// Create factory under test

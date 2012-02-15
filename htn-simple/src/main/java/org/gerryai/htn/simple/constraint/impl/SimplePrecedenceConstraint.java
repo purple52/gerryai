@@ -25,7 +25,7 @@ import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 
 import com.google.common.base.Objects;
 
@@ -34,24 +34,24 @@ import com.google.common.base.Objects;
  *
  */
 public class SimplePrecedenceConstraint	implements
-		ValidatablePrecedenceConstraint<SubstitutableTerm, SimpleTask, SubstitutableCondition>,
+		ValidatablePrecedenceConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
 		SubstitutableConstraint<SimpleTerm> {
 
 	/**
 	 * The task that must come first.
 	 */
-	private SimpleTask precedingTask;
+	private SubstitutableTask precedingTask;
 	
 	/**
 	 * The task that must come last.
 	 */
-	private SimpleTask procedingTask;
+	private SubstitutableTask procedingTask;
 	
 	/**
 	 * Set the task to come first.
 	 * @param precedingTask the task
 	 */
-	public final void setPrecedingTask(SimpleTask precedingTask) {
+	public final void setPrecedingTask(SubstitutableTask precedingTask) {
 		this.precedingTask = precedingTask;
 	}
 	
@@ -59,7 +59,7 @@ public class SimplePrecedenceConstraint	implements
 	 * Set the task to come last.
 	 * @param procedingTask the task
 	 */
-	public final void setProcedingTask(SimpleTask procedingTask) {
+	public final void setProcedingTask(SubstitutableTask procedingTask) {
 		this.procedingTask = procedingTask;
 	}
 	
@@ -67,28 +67,29 @@ public class SimplePrecedenceConstraint	implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTask getPrecedingTask() {
+	public final SubstitutableTask getPrecedingTask() {
 		return precedingTask;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTask getProcedingTask() {
+	public final SubstitutableTask getProcedingTask() {
 		return procedingTask;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<SubstitutableTerm, SimpleTask, SubstitutableCondition> validator) {
+	public final boolean validate(ConstraintValidator<SubstitutableTerm, SubstitutableTask,
+			SubstitutableCondition> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<SubstitutableTerm, SimpleTask,
+	public final void add(ConstraintValidator<SubstitutableTerm, SubstitutableTask,
 			SubstitutableCondition> validator) throws InvalidConstraint {
 		validator.add(this);
 	}

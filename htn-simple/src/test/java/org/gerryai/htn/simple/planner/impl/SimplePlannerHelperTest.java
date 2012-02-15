@@ -46,7 +46,6 @@ import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.PlanFactory;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTask;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetwork;
 import org.junit.Test;
 
@@ -307,7 +306,7 @@ public class SimplePlannerHelperTest {
 		
 		SimpleTaskNetwork mockTaskNetwork = mock(SimpleTaskNetwork.class);
 		SimpleTaskNetwork mockDecomposedTaskNetwork = mock(SimpleTaskNetwork.class);
-		SimpleTask mockTask = mock(SimpleTask.class);
+		SubstitutableTask mockTask = mock(SubstitutableTask.class);
 		SimpleMethod mockMethod = mock(SimpleMethod.class);
 		SimpleUnifier mockUnifier = mock(SimpleUnifier.class);
 		
