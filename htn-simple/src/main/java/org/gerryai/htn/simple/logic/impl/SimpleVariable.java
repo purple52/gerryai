@@ -45,8 +45,7 @@ public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTerm apply(Substituter<SubstitutableTerm> substituter) {
-		return substituter.apply(this);
+	public void apply(Substituter<SubstitutableTerm> substituter) {
+		// Nothing to do, since we can't replace ourselves
 	}
-
 }

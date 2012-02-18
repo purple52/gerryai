@@ -23,7 +23,6 @@ import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.logic.impl.SimpleTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 
@@ -35,7 +34,7 @@ import com.google.common.base.Objects;
  */
 public class SimplePrecedenceConstraint	implements
 		ValidatablePrecedenceConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
-		SubstitutableConstraint<SimpleTerm> {
+		SubstitutableConstraint<SubstitutableTerm> {
 
 	/**
 	 * The task that must come first.
@@ -97,8 +96,8 @@ public class SimplePrecedenceConstraint	implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableConstraint<SimpleTerm> apply(Substituter<SimpleTerm> substituter) {
-		return substituter.apply(this);
+	public final void apply(Substituter<SubstitutableTerm> substituter) {
+		// Nothing to do
 	}
 	
 	@Override

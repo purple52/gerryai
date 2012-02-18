@@ -29,8 +29,7 @@ public interface Substitutable<T extends SubstitutableTerm> {
 	/**
 	 * Apply a substitution to this object using the substituter provided.
 	 * @param substituter the substituter to use
-	 * @return a copy of the object with the substitution applied
 	 */
-	Substitutable<T> apply(Substituter<T> substituter);
+	void apply(Substituter<T> substituter);
 	
 }

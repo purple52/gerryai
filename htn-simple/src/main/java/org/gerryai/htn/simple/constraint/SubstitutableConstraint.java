@@ -17,21 +17,16 @@
  */
 package org.gerryai.htn.simple.constraint;
 
+import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.simple.decomposition.Substitutable;
-import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 
 /**
- * Extended constraint interface that supports being validated.
- * The constraint needs to identify what class of validator it needs to use.
+ * Extended constraint interface that supports having a substitution applied.
+ * The constraint needs to identify what class of substitutable logical term it needs to use.
  * @param <T> type of logical term used by this constraint
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface SubstitutableConstraint<T extends SubstitutableTerm> extends Substitutable<T> {
+public interface SubstitutableConstraint<T extends SubstitutableTerm> extends Constraint<T>, Substitutable<T> {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	SubstitutableConstraint<T> apply(Substituter<T> substituter);
-	
 }

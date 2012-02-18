@@ -98,8 +98,8 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<Substit
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableConstraint<SubstitutableTerm> apply(Substituter<SubstitutableTerm> substituter) {
-		return substituter.apply(this);
+	public final void apply(Substituter<SubstitutableTerm> substituter) {
+		condition.apply(substituter);
 	}
 	
 	@Override

@@ -15,18 +15,20 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.tasknetwork;
+package org.gerryai.htn.simple.constraint;
 
-import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
-import org.gerryai.htn.simple.decomposition.Substitutable;
+import org.gerryai.htn.constraint.BetweenConstraint;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 
 /**
- * Extension of the task network interface that only uses substitutable components.
+ * Extension of substitutable and between constraint interfaces.
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public interface SubstitutableTaskNetwork extends TaskNetwork<SubstitutableTerm, SubstitutableTask,
-		SubstitutableValidatableConstraint>, Substitutable<SubstitutableTerm> {
+public interface SubstitutableBetweenConstraint
+		extends SubstitutableConstraint<SubstitutableTerm>,
+		BetweenConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
 
 }

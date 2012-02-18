@@ -101,12 +101,8 @@ public class SimpleTask implements SubstitutableTask {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTask apply(Substituter<SubstitutableTerm> substituter) {
-		// TODO: copy and rebuild
-		for (SubstitutableTerm term : arguments) {
-			SubstitutableTerm updatedTerm = (SubstitutableTerm) term.apply(substituter);
-		}
-		return substituter.apply(this);
+	public final void apply(Substituter<SubstitutableTerm> substituter) {
+		substituter.visit(arguments);
 	}
 	
 	@Override

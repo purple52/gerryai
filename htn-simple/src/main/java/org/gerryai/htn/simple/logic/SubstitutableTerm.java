@@ -25,6 +25,6 @@ import org.gerryai.logic.Term;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface SubstitutableTerm extends Substitutable<SubstitutableTerm>, Term {
+public interface SubstitutableTerm extends Term, Substitutable<SubstitutableTerm> {
 
 }

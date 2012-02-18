@@ -17,16 +17,12 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.simple.decomposition.Substituter;
-import org.gerryai.htn.simple.logic.LogicFactory;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableConstant;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.logic.SubstitutableVariable;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
@@ -35,7 +31,7 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePredicate extends Predicate implements SubstitutableCondition, SimpleTerm {
+public class SimplePredicate extends Predicate implements SubstitutableCondition, SubstitutableTerm {
 
 	/**
 	 * List of terms belonging to this predicate.
@@ -46,12 +42,6 @@ public class SimplePredicate extends Predicate implements SubstitutableCondition
 	 * Converter to help build the underlying AIMA objects.
 	 */
 	private static AIMAConverter<SubstitutableTerm, SimpleVariable, SubstitutableTask> converter;
-	
-	/**
-	 * Factory for creating new logic objects.
-	 */
-	private LogicFactory<SubstitutableVariable, SubstitutableConstant,
-			SubstitutableCondition, SubstitutableTerm> logicFactory;
 	
 	/**
 	 * {@inheritDoc}
@@ -73,12 +63,10 @@ public class SimplePredicate extends Predicate implements SubstitutableCondition
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTerm apply(Substituter<SubstitutableTerm> substituter) {
-		List<SubstitutableTerm> updatedTerms = new ArrayList<SubstitutableTerm>();
-		for (SubstitutableTerm term : terms) {
-			updatedTerms.add((SubstitutableTerm) term.apply(substituter));
-		}
-		return logicFactory.createPredicate(this.getSymbolicName(), updatedTerms);
+	public final void apply(Substituter<SubstitutableTerm> substituter) {
+		// TODO: this only works for atomic elements!
+		substituter.visit(terms);
 	}
+
 
 }

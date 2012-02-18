@@ -17,23 +17,11 @@
  */
 package org.gerryai.htn.simple.decomposition.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.gerryai.htn.constraint.AfterConstraint;
-import org.gerryai.htn.constraint.BetweenConstraint;
-import org.gerryai.htn.constraint.PrecedenceConstraint;
-import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
-import org.gerryai.htn.simple.constraint.SubstitutableConstraintFactory;
 import org.gerryai.htn.simple.decomposition.Substituter;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableConstant;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.SubstitutableVariable;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetworkBuilderFactory;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 import org.gerryai.logic.unification.Substitution;
 
 /**
@@ -49,111 +37,26 @@ public class GenericSubstituter implements Substituter<SubstitutableTerm> {
 	private Substitution<SubstitutableTerm, SubstitutableVariable> unifier;
 	
 	/**
-	 * Constraint factory to use.
-	 */
-	private SubstitutableConstraintFactory constraintFactory;
-	
-	/**
-	 * Factory for building task and task networks.
-	 */
-	private SubstitutableTaskNetworkBuilderFactory taskNetworkBuilderFactory;
-	
-	/**
 	 * Constructor taking a unifier.
 	 * @param unifier the unifier to work with
-	 * @param constraintFactory the factory for creating new tasks and task networks
 	 */
-	public GenericSubstituter(Substitution<SubstitutableTerm, SubstitutableVariable> unifier,
-			SubstitutableConstraintFactory constraintFactory,
-			SubstitutableTaskNetworkBuilderFactory taskNetworkBuilderFactory) {
+	public GenericSubstituter(Substitution<SubstitutableTerm, SubstitutableVariable> unifier) {
 		this.unifier = unifier;
-		this.constraintFactory = constraintFactory;
-		this.taskNetworkBuilderFactory = taskNetworkBuilderFactory;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTerm apply(SubstitutableVariable variable) {
+	public final void visit(List<SubstitutableTerm> terms) {
 		
-		//TODO Copy of original?
-		
-		for (SubstitutableVariable substitutionVariable : unifier.getMap().keySet()) {
-			if (substitutionVariable.equals(variable)) {
-				return unifier.getMap().get(substitutionVariable);
+		for (SubstitutableTerm term : terms) {
+			if (!term.isCompound()) {
+				if (unifier.getMap().containsKey(term)) {
+					terms.set(terms.indexOf(term), unifier.getMap().get(term));
+				}
+			} else {
+				term.apply(this);
 			}
 		}
-
-		return variable;
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SubstitutableTerm apply(SubstitutableConstant constant) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SubstitutableTerm apply(SubstitutableTerm term) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SubstitutableConstraint<SubstitutableTerm>
-			apply(SubstitutableConstraint<SubstitutableTerm> constraint) {
-		// TODO Implement
-		//Condition updatedCondition = apply(constraint.getCondition());
-		//return constraintFactory.createBeforeConstraint(constraint.getTasks(), updatedCondition);
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final AfterConstraint<Term, Task<Term>, SubstitutableCondition>
-			apply(AfterConstraint<Term, Task<Term>, SubstitutableCondition> constraint) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final BetweenConstraint<Term, Task<Term>, SubstitutableCondition>
-			apply(BetweenConstraint<Term, Task<Term>, SubstitutableCondition> constraint) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final PrecedenceConstraint<Term, Task<Term>> apply(
-			PrecedenceConstraint<Term, Task<Term>> constraint) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SubstitutableTask apply(SubstitutableTask task) {
-		List<SubstitutableTerm> updatedTerms = new ArrayList<SubstitutableTerm>();		
-		//TODO: Implement
-
-		SubstitutableTask updatedTask = taskNetworkBuilderFactory.createTaskBuilder()
-				.setName(task.getName())
-				.addArguments(updatedTerms)
-				.build();
-		
-		return updatedTask;
-	}
-
 }

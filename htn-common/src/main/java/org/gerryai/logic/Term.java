@@ -18,8 +18,8 @@
 package org.gerryai.logic;
 
 /**
+ * Interface for a logical term.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public interface Term {
 
@@ -30,9 +30,9 @@ public interface Term {
 	String getName();
 	
 	/**
-	 * Set the name of this term.
-	 * @param name name to set
-	 *
-	void setName(String name);
-	*/
+	 * Get whether this term is compound or not.
+	 * @return if the term is compound
+	 */
+	boolean isCompound();
+
 }

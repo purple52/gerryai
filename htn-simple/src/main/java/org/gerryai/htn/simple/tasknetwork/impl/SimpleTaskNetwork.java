@@ -20,6 +20,7 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
+import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
@@ -79,6 +80,18 @@ public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
 	public final void setConstraints(Set<SubstitutableValidatableConstraint> constraints) {
 		this.constraints = constraints;
 	}
+	
+    /**
+     * {@inheritDoc}
+     */
+    public final void apply(Substituter<SubstitutableTerm> substituter) {
+        for (SubstitutableTask task : tasks) {
+            task.apply(substituter);
+        }
+        for (SubstitutableValidatableConstraint constraint : constraints) {
+            constraint.apply(substituter);
+        }
+    }
 
 	/**
 	 * {@inheritDoc}

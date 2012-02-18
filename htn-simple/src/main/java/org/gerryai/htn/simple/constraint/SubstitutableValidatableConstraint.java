@@ -26,6 +26,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface SubstitutableValidatableConstraint extends
+        SubstitutableConstraint<SubstitutableTerm>,
 		ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
 
 }

@@ -19,83 +19,149 @@ package org.gerryai.htn.simple.decomposition.impl;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import org.gerryai.htn.simple.constraint.SubstitutableConstraintFactory;
-import org.gerryai.htn.simple.constraint.impl.SimpleBeforeConstraint;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.SubstitutableVariable;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetworkBuilderFactory;
 import org.gerryai.logic.unification.Substitution;
 
 import org.junit.Test;
 
 /**
+ * Unit tests for the GenericSubstituter class.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public class GenericSubstituterTest {
 
 	/**
-	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.GenericSubstituter#apply(org.gerryai.htn.simple.constraint.impl.SimpleBeforeConstraint)}.
+	 * Empty list gets nothing added.
 	 */
 	@Test
-	public void testApplySimpleBeforeConstraint() {
+	public void testEmptyList() {
+		SubstitutableVariable mockVariable = mock(SubstitutableVariable.class);
+		SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
+		Map<SubstitutableVariable,SubstitutableTerm> map = new HashMap<SubstitutableVariable,SubstitutableTerm>();
+		map.put(mockVariable, mockTerm);
+		@SuppressWarnings("unchecked")
+		Substitution<SubstitutableTerm, SubstitutableVariable> mockSubstitution = mock(Substitution.class);
+		when(mockSubstitution.getMap()).thenReturn(map);
+		
+		List<SubstitutableTerm> mockTerms = new ArrayList<SubstitutableTerm>();
+		
+		GenericSubstituter substituter = new GenericSubstituter(mockSubstitution);
+		substituter.visit(mockTerms);
+		
+		assertEquals(0, mockTerms.size());
+	}
+	
+	/**
+	 * Empty substitution makes no changes.
+	 */
+	@Test
+	public void testEmptySubstitution() {
 		
 		@SuppressWarnings("unchecked")
-		Substitution<SubstitutableTerm, SubstitutableVariable> mockUnifier = mock(Substitution.class);
-		SubstitutableConstraintFactory mockConstraintFactory = mock(SubstitutableConstraintFactory.class);
-		SubstitutableTaskNetworkBuilderFactory mockTaskNetworkBuilderFactory = mock(SubstitutableTaskNetworkBuilderFactory.class);
+		Substitution<SubstitutableTerm, SubstitutableVariable> mockSubstitution = mock(Substitution.class);
+		Map<SubstitutableVariable,SubstitutableTerm> map = new HashMap<SubstitutableVariable,SubstitutableTerm>();
+		when(mockSubstitution.getMap()).thenReturn(map);
 		
-		SimpleBeforeConstraint constraint = mock(SimpleBeforeConstraint.class);
+		SubstitutableTerm mockTermA = mock(SubstitutableTerm.class);
+		SubstitutableTerm mockTermB = mock(SubstitutableTerm.class);
+		List<SubstitutableTerm> mockTerms = new ArrayList<SubstitutableTerm>();
+		mockTerms.add(mockTermA);
+		mockTerms.add(mockTermB);
 		
-		GenericSubstituter substituter = new GenericSubstituter(mockUnifier, mockConstraintFactory, mockTaskNetworkBuilderFactory);
+		GenericSubstituter substituter = new GenericSubstituter(mockSubstitution);
+		substituter.visit(mockTerms);
 		
-		
-		
-		SimpleBeforeConstraint updatedConstraint = (SimpleBeforeConstraint) substituter.apply(constraint);
-		
-		//assertEquals(updatedConstraint.getCondition(),constraint)
-		fail("Not yet implemented");
+		assertEquals(2, mockTerms.size());
+		assertEquals(mockTermA, mockTerms.get(0));
+		assertEquals(mockTermB, mockTerms.get(1));
 	}
 
 	/**
-	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.GenericSubstituter#apply(org.gerryai.htn.simple.constraint.impl.SimpleAfterConstraint)}.
+	 * Test a single substitution at the start.
 	 */
 	@Test
-	public void testApplySimpleAfterConstraint() {
-		fail("Not yet implemented");
+	public void testSingleSubstitutionAtStart() {
+        SubstitutableTerm mockTermA = mock(SubstitutableTerm.class);
+        SubstitutableTerm mockTermB = mock(SubstitutableTerm.class);
+        SubstitutableVariable mockVariableA = mock(SubstitutableVariable.class);
+        List<SubstitutableTerm> mockTerms = new ArrayList<SubstitutableTerm>();
+        mockTerms.add(mockVariableA);
+        mockTerms.add(mockTermB);
+        
+        @SuppressWarnings("unchecked")
+        Substitution<SubstitutableTerm, SubstitutableVariable> mockSubstitution = mock(Substitution.class);
+        Map<SubstitutableVariable,SubstitutableTerm> map = new HashMap<SubstitutableVariable,SubstitutableTerm>();
+        map.put(mockVariableA, mockTermA);
+        when(mockSubstitution.getMap()).thenReturn(map);
+       
+        GenericSubstituter substituter = new GenericSubstituter(mockSubstitution);
+        substituter.visit(mockTerms);
+        
+        assertEquals(2, mockTerms.size());
+        assertEquals(mockTermA, mockTerms.get(0));
+        assertEquals(mockTermB, mockTerms.get(1));
 	}
 
-	/**
-	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.GenericSubstituter#apply(org.gerryai.htn.simple.constraint.impl.SimpleBetweenConstraint)}.
-	 */
-	@Test
-	public void testApplySimpleBetweenConstraint() {
-		fail("Not yet implemented");
-	}
+    /**
+     * Test a single substitution at the start.
+     */
+    @Test
+    public void testSingleSubstitutionAtEnd() {
+        SubstitutableTerm mockTermA = mock(SubstitutableTerm.class);
+        SubstitutableTerm mockTermB = mock(SubstitutableTerm.class);
+        SubstitutableVariable mockVariableA = mock(SubstitutableVariable.class);
+        List<SubstitutableTerm> mockTerms = new ArrayList<SubstitutableTerm>();
+        mockTerms.add(mockTermA);
+        mockTerms.add(mockVariableA);
+        
+        @SuppressWarnings("unchecked")
+        Substitution<SubstitutableTerm, SubstitutableVariable> mockSubstitution = mock(Substitution.class);
+        Map<SubstitutableVariable,SubstitutableTerm> map = new HashMap<SubstitutableVariable,SubstitutableTerm>();
+        map.put(mockVariableA, mockTermB);
+        when(mockSubstitution.getMap()).thenReturn(map);
+       
+        GenericSubstituter substituter = new GenericSubstituter(mockSubstitution);
+        substituter.visit(mockTerms);
+        
+        assertEquals(2, mockTerms.size());
+        assertEquals(mockTermA, mockTerms.get(0));
+        assertEquals(mockTermB, mockTerms.get(1));
+    }
 
-	/**
-	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.GenericSubstituter#apply(org.gerryai.htn.simple.constraint.impl.SimplePrecedenceConstraint)}.
-	 */
-	@Test
-	public void testApplySimplePrecedenceConstraint() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.GenericSubstituter#apply(org.gerryai.htn.simple.tasknetwork.impl.SimpleNonPrimitiveTask)}.
-	 */
-	@Test
-	public void testApplySimpleNonPrimitiveTask() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link org.gerryai.htn.simple.decomposition.impl.GenericSubstituter#apply(org.gerryai.htn.simple.tasknetwork.impl.SimplePrimitiveTask)}.
-	 */
-	@Test
-	public void testApplySimplePrimitiveTask() {
-		fail("Not yet implemented");
-	}
+    /**
+     * Test double substitution.
+     */
+    @Test
+    public void testDoubleSubstitution() {
+        SubstitutableTerm mockTermA = mock(SubstitutableTerm.class);
+        SubstitutableTerm mockTermB = mock(SubstitutableTerm.class);
+        SubstitutableVariable mockVariableA = mock(SubstitutableVariable.class);
+        SubstitutableVariable mockVariableB = mock(SubstitutableVariable.class);
+        List<SubstitutableTerm> mockTerms = new ArrayList<SubstitutableTerm>();
+        mockTerms.add(mockVariableA);
+        mockTerms.add(mockVariableB);
+        
+        @SuppressWarnings("unchecked")
+        Substitution<SubstitutableTerm, SubstitutableVariable> mockSubstitution = mock(Substitution.class);
+        Map<SubstitutableVariable,SubstitutableTerm> map = new HashMap<SubstitutableVariable,SubstitutableTerm>();
+        map.put(mockVariableA, mockTermA);
+        map.put(mockVariableB, mockTermB);
+        when(mockSubstitution.getMap()).thenReturn(map);
+       
+        GenericSubstituter substituter = new GenericSubstituter(mockSubstitution);
+        substituter.visit(mockTerms);
+        
+        assertEquals(2, mockTerms.size());
+        assertEquals(mockTermA, mockTerms.get(0));
+        assertEquals(mockTermB, mockTerms.get(1));
+    }
 
 }

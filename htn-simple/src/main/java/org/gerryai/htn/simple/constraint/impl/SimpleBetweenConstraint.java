@@ -117,12 +117,12 @@ public class SimpleBetweenConstraint implements
 		validator.add(this);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SubstitutableConstraint<SubstitutableTerm> apply(Substituter<SubstitutableTerm> substituter) {
-		return substituter.apply(this);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public final void apply(Substituter<SubstitutableTerm> substituter) {
+        condition.apply(substituter);
+    }
 	
 	@Override
 	public final int hashCode() {

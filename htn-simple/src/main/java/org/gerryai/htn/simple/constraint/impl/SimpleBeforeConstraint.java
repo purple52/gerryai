@@ -19,7 +19,7 @@ package org.gerryai.htn.simple.constraint.impl;
 
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
+import org.gerryai.htn.simple.constraint.SubstitutableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
@@ -32,92 +32,101 @@ import com.google.common.base.Objects;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
- *
+ * 
  */
-public class SimpleBeforeConstraint implements
-		ValidatableBeforeConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
-		SubstitutableConstraint<SubstitutableTerm> {
+public class SimpleBeforeConstraint
+        implements
+        ValidatableBeforeConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
+        SubstitutableBeforeConstraint {
 
-	/**
-	 * The set of tasks that this constraint must hold for.
-	 */
-	private Set<SubstitutableTask> tasks;
-	
-	/**
-	 * The condition that must be true directly before the first of these tasks.
-	 */
-	private SubstitutableCondition condition;
-	
-	/**
-	 * Set the set of tasks that this constraint must hold for.
-	 * @param tasks the tasks
-	 */
-	public final void setTasks(Set<SubstitutableTask> tasks) {
-		this.tasks = tasks;
-	}
-	
-	/**
-	 * Set the condition that must be true directly before the first of these tasks.
-	 * @param condition the condition
-	 */
-	public final void setCondition(SubstitutableCondition condition) {
-		this.condition = condition;
-	}
-	
-	/**
-	 * Get the set of tasks that this constraint must hold for.
-	 * @return the tasks
-	 */
-	public final Set<SubstitutableTask> getTasks() {
-		return tasks;
-	}
+    /**
+     * The set of tasks that this constraint must hold for.
+     */
+    private Set<SubstitutableTask> tasks;
 
-	/**
-	 * Get the condition that must be true directly before the first of these tasks.
-	 * @return the condition
-	 */
-	public final SubstitutableCondition getCondition() {
-		return condition;
-	}
+    /**
+     * The condition that must be true directly before the first of these tasks.
+     */
+    private SubstitutableCondition condition;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final boolean validate(ConstraintValidator<SubstitutableTerm,
-			SubstitutableTask, SubstitutableCondition> validator) {
-		return validator.validate(this);
-	}
+    /**
+     * Set the set of tasks that this constraint must hold for.
+     * 
+     * @param tasks
+     *            the tasks
+     */
+    public final void setTasks(Set<SubstitutableTask> tasks) {
+        this.tasks = tasks;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void add(ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> validator)
-			throws InvalidConstraint {
-		validator.add(this);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SubstitutableConstraint<SubstitutableTerm> apply(Substituter<SubstitutableTerm> substituter) {
-		return substituter.apply(this);
-	}
-	
-	@Override
-	public final int hashCode() {
-		return Objects.hashCode(tasks, condition);
-	}
+    /**
+     * Set the condition that must be true directly before the first of these
+     * tasks.
+     * 
+     * @param condition
+     *            the condition
+     */
+    public final void setCondition(SubstitutableCondition condition) {
+        this.condition = condition;
+    }
 
-	@Override
-	public final boolean equals(Object obj) {
-		if (obj instanceof SimpleBeforeConstraint) {
-	        final SimpleBeforeConstraint other = (SimpleBeforeConstraint) obj;
-	        return Objects.equal(tasks, other.tasks)
-	            && Objects.equal(condition, other.condition);
-	    } else {
-	        return false;
-	    }
-	}
+    /**
+     * Get the set of tasks that this constraint must hold for.
+     * 
+     * @return the tasks
+     */
+    public final Set<SubstitutableTask> getTasks() {
+        return tasks;
+    }
 
+    /**
+     * Get the condition that must be true directly before the first of these
+     * tasks.
+     * 
+     * @return the condition
+     */
+    public final SubstitutableCondition getCondition() {
+        return condition;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public final boolean validate(
+            ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> validator) {
+        return validator.validate(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public final void add(
+            ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> validator)
+            throws InvalidConstraint {
+        validator.add(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public final void apply(Substituter<SubstitutableTerm> substituter) {
+        condition.apply(substituter);
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hashCode(tasks, condition);
+    }
+
+    @Override
+    public final boolean equals(Object obj) {
+        if (obj instanceof SimpleBeforeConstraint) {
+            final SimpleBeforeConstraint other = (SimpleBeforeConstraint) obj;
+            return Objects.equal(tasks, other.tasks)
+                    && Objects.equal(condition, other.condition);
+        } else {
+            return false;
+        }
+    }
 
 }

@@ -18,12 +18,13 @@
 package org.gerryai.htn.simple.logic;
 
 import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.simple.decomposition.Substitutable;
 
 /**
  * Extended interface for variables that support a visitor for doing substitutions.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface SubstitutableCondition extends Condition, SubstitutableTerm {
+public interface SubstitutableCondition extends Condition, Substitutable<SubstitutableTerm> {
 
 }
