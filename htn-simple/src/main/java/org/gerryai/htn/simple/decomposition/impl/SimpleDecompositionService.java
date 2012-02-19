@@ -61,6 +61,7 @@ public class SimpleDecompositionService implements
 	public final SubstitutableTaskNetwork decompose(Substitution<SubstitutableTerm, SimpleVariable> unifier,
 			SubstitutableTaskNetwork taskNetwork, SubstitutableTask task, SubstitutableMethod method) {
 		// TODO: Ensure the original task network is never altered
+	    
 		// Apply unifier where relevant
 		SubstitutableTaskNetwork unifiedMethodSubTasks = unificationService.apply(unifier, method.getTaskNetwork());
 		// TODO: Confirm if unifier really needs to be applied to the rest of the task network

@@ -20,6 +20,7 @@ package org.gerryai.htn.simple.domain;
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.tasknetwork.Task;
@@ -37,6 +38,7 @@ import org.gerryai.logic.Term;
  * @param <C> the class of constraint the builder will handle
  * @param <I> the class of condition the builder will handle
  * @param <E> the class of effect the builder will handle
+ * @param <B> the class of operator builder being used
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface DomainBuilderFactory<
@@ -48,7 +50,8 @@ public interface DomainBuilderFactory<
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
 		I extends Condition,
-		E> {
+		E extends Effect,
+		B extends OperatorBuilder<I, E, O, B>> {
 
 	/**
 	 * Create a domain builder of the required type.
@@ -60,11 +63,11 @@ public interface DomainBuilderFactory<
 	 * Create an operator builder of the required type.
 	 * @return the operator builder
 	 */
-	OperatorBuilder<I, E> createOperatorBuilder();
+	B createOperatorBuilder();
 
 	/**
 	 * Create a method builder of the required type.
 	 * @return the method builder
 	 */
-	MethodBuilder<T, K, N, C> createMethodBuilder();
+	MethodBuilder<T, K, N, C, M> createMethodBuilder();
 }

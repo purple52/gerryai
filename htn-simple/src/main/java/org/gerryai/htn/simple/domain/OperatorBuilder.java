@@ -28,63 +28,90 @@ import org.gerryai.logic.Variable;
  * Interface for a class that can build operators.
  * @param <I> class of condition the builder can handle
  * @param <E> class of effect the builder can handle
+ * @param <O> type of operator the builder creates
+ * @param <B> class of builder being advertised
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface OperatorBuilder<I extends Condition, E> {
+public interface OperatorBuilder<I extends Condition, E, O extends Operator<I>, B extends OperatorBuilder<I, E, O, B>> {
 
 	/**
 	 * Set the name of the operator.
 	 * @param name the name
 	 * @return the updated builder
 	 */
-	OperatorBuilder<I, E> setName(String name);
+	B setName(String name);
 	
 	/**
 	 * Add an argument to the operator.
 	 * @param argument the variable to add
 	 * @return the updated builder
 	 */
-	OperatorBuilder<I, E> addArgument(Variable argument);
+	B addArgument(Variable argument);
 
 	/**
 	 * Add a list of arguments to the operator.
 	 * @param arguments the variables to add
 	 * @return the updated builder
 	 */
-	OperatorBuilder<I, E> addArguments(List<Variable> arguments);
+	B addArguments(List<Variable> arguments);
 
 	/**
 	 * Add an argument to the operator.
 	 * @param condition the condition to add
 	 * @return the updated builder
 	 */
-	OperatorBuilder<I, E> addPrecondition(I condition);
+	B addPrecondition(I condition);
 	
 	/**
 	 * Add a set of preconditions to the operator.
 	 * @param conditions the conditions to add
 	 * @return the updated builder
 	 */
-	OperatorBuilder<I, E> addPreconditions(Set<I> conditions);
+	B addPreconditions(Set<I> conditions);
 
 	/**
 	 * Add an effect to the operator.
 	 * @param effect the effect to add
 	 * @return the updated builder
 	 */
-	OperatorBuilder<I, E> addEffect(E effect);
+	B addEffect(E effect);
 	
 	/**
 	 * Add a set of effects to the operator.
 	 * @param effects the effects to add
 	 * @return the updated builder
 	 */
-	OperatorBuilder<I, E> addEffects(Set<E> effects);
+	B addEffects(Set<E> effects);
 	
+    /**
+     * Get the name of the operator being built.
+     * 
+     * @return the name
+     */
+    String getName();
+    
+    /**
+     * Get the arguments for the operator being built.
+     * @return the arguments
+     */
+    List<Variable> getArguments();
+ 
+    /**
+     * Get the preconditions for the operator being built.
+     * @return the preconditions
+     */
+    Set<I> getPreconditions();
+
+    /**
+     * Get the effects for the operator being built.
+     * @return the effects
+     */
+    Set<E> getEffects();
+    
 	/**
 	 * Build the operator.
 	 * @return the operator
 	 */
-	Operator<I> build();
+	O build();
 }

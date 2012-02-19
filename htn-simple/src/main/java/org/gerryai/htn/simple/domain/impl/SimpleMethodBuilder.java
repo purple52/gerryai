@@ -17,88 +17,89 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
-import org.gerryai.htn.simple.domain.MethodBuilder;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.domain.SubstitutableMethodBuilder;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
- *
+ * 
  */
-public class SimpleMethodBuilder implements MethodBuilder<SubstitutableTerm,
-		SubstitutableTask, SubstitutableTaskNetwork, SubstitutableValidatableConstraint> {
+public class SimpleMethodBuilder implements SubstitutableMethodBuilder {
 
-	/**
-	 * Name of the method being built.
-	 */
-	private String name;
-	
-	/**
-	 * Task that the method being built will decompose.
-	 */
-	private SubstitutableTask task;
-	
-	/**
-	 * Task network that the method being built decomposes into.
-	 */
-	private SubstitutableTaskNetwork taskNetwork;
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SimpleMethodBuilder setName(String name) {
-		this.name = name;
-		return this;
-	}
+    /**
+     * Name of the method being built.
+     */
+    private String name;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SimpleMethodBuilder setTask(SubstitutableTask task) {
-		this.task = task;
-		return this;
-	}
+    /**
+     * Task that the method being built will decompose.
+     */
+    private SubstitutableTask task;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SimpleMethodBuilder setTaskNetwork(SubstitutableTaskNetwork taskNetwork) {
-		this.taskNetwork = taskNetwork;
-		return this;
-	}
+    /**
+     * Task network that the method being built decomposes into.
+     */
+    private SubstitutableTaskNetwork taskNetwork;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SubstitutableMethod build() {
-		return new SimpleMethod(this);
-	}
-	
-	/**
-	 * Get the name of the method being built.
-	 * @return the name
-	 */
-	protected final String getName() {
-		return name;
-	}
-	
-	/**
-	 * Get the task for the method being built.
-	 * @return the task
-	 */
-	protected final SubstitutableTask getTask() {
-		return task;
-	}
-	
-	/**
-	 * Get the task network for the method being built.
-	 * @return the task network
-	 */
-	protected final SubstitutableTaskNetwork getTaskNetwork() {
-		return taskNetwork;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public final SubstitutableMethodBuilder setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public final SubstitutableMethodBuilder setTask(SubstitutableTask task) {
+        this.task = task;
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public final SubstitutableMethodBuilder setTaskNetwork(
+            SubstitutableTaskNetwork taskNetwork) {
+        this.taskNetwork = taskNetwork;
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public final SubstitutableMethod build() {
+        return new SimpleMethod(this);
+    }
+
+    /**
+     * Get the name of the method being built.
+     * 
+     * @return the name
+     */
+    public final String getName() {
+        return name;
+    }
+
+    /**
+     * Get the task for the method being built.
+     * 
+     * @return the task
+     */
+    public final SubstitutableTask getTask() {
+        return task;
+    }
+
+    /**
+     * Get the task network for the method being built.
+     * 
+     * @return the task network
+     */
+    public final SubstitutableTaskNetwork getTaskNetwork() {
+        return taskNetwork;
+    }
 
 }

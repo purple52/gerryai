@@ -27,6 +27,7 @@ import java.util.Set;
 
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.SubstitutableOperatorBuilder;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.logic.Variable;
 import org.junit.Test;
@@ -43,7 +44,7 @@ public class SimpleOperatorBuilderTest {
 	@Test
 	public void testSimpleTaskNetworkBuilder() {
 		// Create the builder under test
-		SimpleOperatorBuilder builder = new SimpleOperatorBuilder();
+	    SubstitutableOperatorBuilder builder = new SimpleOperatorBuilder();
 		
 		// Check that the argument, preconditions and effects collections have been initialised
 		assertTrue(builder.getArguments().isEmpty());
@@ -57,7 +58,7 @@ public class SimpleOperatorBuilderTest {
 	@Test
 	public void testSetName() {
 		// Create the builder under test
-		SimpleOperatorBuilder builder = new SimpleOperatorBuilder()
+	    SubstitutableOperatorBuilder builder = new SimpleOperatorBuilder()
 				.setName("testname");
 		assertEquals("testname", builder.getName());
 	}
@@ -69,7 +70,7 @@ public class SimpleOperatorBuilderTest {
 	public void testAddArgument() {
 		Variable mockVariableA = mock(Variable.class);
 		Variable mockVariableB = mock(Variable.class);
-		SimpleOperatorBuilder builder = new SimpleOperatorBuilder()
+		SubstitutableOperatorBuilder builder = new SimpleOperatorBuilder()
 				.addArgument(mockVariableA)
 				.addArgument(mockVariableB);
 		assertEquals(2, builder.getArguments().size());
@@ -94,7 +95,7 @@ public class SimpleOperatorBuilderTest {
 		mockVariablesB.add(mockVariableC);
 		mockVariablesB.add(mockVariableD);
 		
-		SimpleOperatorBuilder builder = new SimpleOperatorBuilder()
+		SubstitutableOperatorBuilder builder = new SimpleOperatorBuilder()
 				.addArguments(mockVariablesA)
 				.addArguments(mockVariablesB);
 		assertEquals(4, builder.getArguments().size());
@@ -111,7 +112,7 @@ public class SimpleOperatorBuilderTest {
 	public void testAddPrecondition() {
 		SubstitutableCondition mockConditionA = mock(SubstitutableCondition.class);
 		SubstitutableCondition mockConditionB = mock(SubstitutableCondition.class);
-		SimpleOperatorBuilder builder = new SimpleOperatorBuilder()
+		SubstitutableOperatorBuilder builder = new SimpleOperatorBuilder()
 				.addPrecondition(mockConditionA)
 				.addPrecondition(mockConditionB);
 		assertEquals(2, builder.getPreconditions().size());
@@ -135,7 +136,7 @@ public class SimpleOperatorBuilderTest {
 		mockConditionsB.add(mockConditionC);
 		mockConditionsB.add(mockConditionD);
 		
-		SimpleOperatorBuilder builder = new SimpleOperatorBuilder()
+		SubstitutableOperatorBuilder builder = new SimpleOperatorBuilder()
 				.addPreconditions(mockConditionsA)
 				.addPreconditions(mockConditionsB);
 		assertEquals(4, builder.getPreconditions().size());
@@ -152,7 +153,7 @@ public class SimpleOperatorBuilderTest {
 	public void testAddEffect() {
 		Effect mockEffectA = mock(Effect.class);
 		Effect mockEffectB = mock(Effect.class);
-		SimpleOperatorBuilder builder = new SimpleOperatorBuilder()
+		SubstitutableOperatorBuilder builder = new SimpleOperatorBuilder()
 				.addEffect(mockEffectA)
 				.addEffect(mockEffectB);
 		assertEquals(2, builder.getEffects().size());
@@ -176,7 +177,7 @@ public class SimpleOperatorBuilderTest {
 		mockEffectsA.add(mockEffectC);
 		mockEffectsA.add(mockEffectD);
 		
-		SimpleOperatorBuilder builder = new SimpleOperatorBuilder()
+		SubstitutableOperatorBuilder builder = new SimpleOperatorBuilder()
 				.addEffects(mockEffectsA)
 				.addEffects(mockEffectsB);
 		assertEquals(4, builder.getEffects().size());

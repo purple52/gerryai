@@ -17,6 +17,7 @@
  */
 package org.gerryai.htn.simple.tasknetwork.impl;
 
+import java.util.Collections;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
@@ -49,37 +50,39 @@ public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
 	 */
 	protected SimpleTaskNetwork(TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
 			SubstitutableValidatableConstraint> builder) {
-		this.setTasks(builder.getTasks());
-		this.setConstraints(builder.getConstraints());
+		this.tasks = builder.getTasks();
+		this.constraints = builder.getConstraints();
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	public final Set<SubstitutableTask> getTasks() {
-		return tasks;
+		return Collections.unmodifiableSet(tasks);
 	}
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 *
 	public final void setTasks(Set<SubstitutableTask> tasks) {
 		this.tasks = tasks;
 	}
-
+    */
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	public final Set<SubstitutableValidatableConstraint> getConstraints() {
-		return constraints;
+		return Collections.unmodifiableSet(constraints);
 	}
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 *
 	public final void setConstraints(Set<SubstitutableValidatableConstraint> constraints) {
 		this.constraints = constraints;
 	}
+	*/
 	
     /**
      * {@inheritDoc}

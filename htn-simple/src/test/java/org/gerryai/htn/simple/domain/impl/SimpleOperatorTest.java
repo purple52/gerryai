@@ -19,6 +19,7 @@ package org.gerryai.htn.simple.domain.impl;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.gerryai.htn.domain.Effect;
+import org.gerryai.htn.simple.domain.SubstitutableOperatorBuilder;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.logic.Variable;
 import org.junit.Test;
@@ -40,37 +42,43 @@ public class SimpleOperatorTest {
 	public void testName() {
 		String name = "testname";
 		
-		SimpleOperatorBuilder mockBuilder = mock(SimpleOperatorBuilder.class);
+		SubstitutableOperatorBuilder mockBuilder = mock(SubstitutableOperatorBuilder.class);
+		when(mockBuilder.getName()).thenReturn(name);
 		SimpleOperator operator = new SimpleOperator(mockBuilder);
 		
-		operator.setName(name);
 		assertEquals(name, operator.getName());
 	}
 
 	@Test
 	public void testArguments() {
 		List<Variable> arguments = new ArrayList<Variable>();
-		SimpleOperatorBuilder mockBuilder = mock(SimpleOperatorBuilder.class);
+		SubstitutableOperatorBuilder mockBuilder = mock(SubstitutableOperatorBuilder.class);
+		when(mockBuilder.getArguments()).thenReturn(arguments);
+		
 		SimpleOperator operator = new SimpleOperator(mockBuilder);
-		operator.setArguments(arguments);
+
 		assertEquals(arguments, operator.getArguments());
 	}
 	
 	@Test
 	public void testPreconditions() {
 		Set<SubstitutableCondition> conditions = new HashSet<SubstitutableCondition>();
-		SimpleOperatorBuilder mockBuilder = mock(SimpleOperatorBuilder.class);
+		SubstitutableOperatorBuilder mockBuilder = mock(SubstitutableOperatorBuilder.class);
+		when(mockBuilder.getPreconditions()).thenReturn(conditions);
+		
 		SimpleOperator operator = new SimpleOperator(mockBuilder);
-		operator.setPreconditions(conditions);
+
 		assertEquals(conditions, operator.getPreconditions());
 	}
 	
 	@Test
 	public void testEffects() {
 		Set<Effect> effects = new HashSet<Effect>();
-		SimpleOperatorBuilder mockBuilder = mock(SimpleOperatorBuilder.class);
+		SubstitutableOperatorBuilder mockBuilder = mock(SubstitutableOperatorBuilder.class);
+		when(mockBuilder.getEffects()).thenReturn(effects);
+		
 		SimpleOperator operator = new SimpleOperator(mockBuilder);
-		operator.setEffects(effects);
+
 		assertEquals(effects, operator.getEffects());
 	}
 

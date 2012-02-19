@@ -22,6 +22,7 @@ import java.util.Set;
 
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.SubstitutableOperatorBuilder;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.logic.Variable;
 
@@ -55,11 +56,11 @@ public class SimpleOperator implements SubstitutableOperator {
 	 * Constructor for a simple operator.
 	 * @param builder the builder to build the operator
 	 */
-	protected SimpleOperator(SimpleOperatorBuilder builder) {
-		this.setName(builder.getName());
-		this.setArguments(builder.getArguments());
-		this.setPreconditions(builder.getPreconditions());
-		this.setEffects(builder.getEffects());
+	protected SimpleOperator(SubstitutableOperatorBuilder builder) {
+		this.name = builder.getName();
+		this.arguments = builder.getArguments();
+		this.preconditions = builder.getPreconditions();
+		this.effects = builder.getEffects();
 	}
 	
 	/**
@@ -71,10 +72,10 @@ public class SimpleOperator implements SubstitutableOperator {
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 *
 	public final void setName(String name) {
 		this.name = name;
-	}
+	}*/
 
 	/**
 	 * {@inheritDoc}
@@ -85,10 +86,10 @@ public class SimpleOperator implements SubstitutableOperator {
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 *
 	public final void setArguments(List<Variable> arguments) {
 		this.arguments = arguments;
-	}
+	}*/
 
 	/**
 	 * {@inheritDoc}
@@ -99,10 +100,10 @@ public class SimpleOperator implements SubstitutableOperator {
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 *
 	public final void setPreconditions(Set<SubstitutableCondition> preconditions) {
 		this.preconditions = preconditions;
-	}
+	}*/
 
 	/**
 	 * {@inheritDoc}
@@ -113,9 +114,9 @@ public class SimpleOperator implements SubstitutableOperator {
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 *
 	public final void setEffects(Set<Effect> effects) {
 		this.effects = effects;
-	}
+	}*/
 
 }

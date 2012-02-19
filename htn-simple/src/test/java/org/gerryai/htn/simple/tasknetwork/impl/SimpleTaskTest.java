@@ -24,6 +24,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.gerryai.htn.simple.decomposition.Substituter;
@@ -60,14 +61,20 @@ public class SimpleTaskTest {
     public void testArguments() {
         @SuppressWarnings("unchecked")
         TaskBuilder<SubstitutableTerm, SubstitutableTask> mockBuilder = mock(TaskBuilder.class);
-        when(mockBuilder.getName()).thenReturn("testname");
-        @SuppressWarnings("unchecked")
-        List<SubstitutableTerm> mockTermList = mock(List.class);
-        when(mockBuilder.getArguments()).thenReturn(mockTermList);
+        SubstitutableTerm mockTermA = mock(SubstitutableTerm.class);
+        SubstitutableTerm mockTermB = mock(SubstitutableTerm.class);
+        List<SubstitutableTerm> mockTerms = new ArrayList<SubstitutableTerm>();
+        mockTerms.add(mockTermA);
+        mockTerms.add(mockTermB);
+        when(mockBuilder.getArguments()).thenReturn(mockTerms);
 
         SimpleTask task = new SimpleTask(mockBuilder);
 
-        assertEquals(mockTermList, task.getArguments());
+        // Test the returned list contains the correct terms - note it won't be
+        // the same list instance because we get given an immutable list.
+        assertEquals(2, task.getArguments().size());
+        assertEquals(mockTermA, task.getArguments().get(0));
+        assertEquals(mockTermB, task.getArguments().get(1));
     }
 
     /**

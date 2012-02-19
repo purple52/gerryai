@@ -15,29 +15,16 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.constraint;
+package org.gerryai.htn.simple.domain;
 
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
+import org.gerryai.htn.domain.Effect;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 
 /**
- * Interface for a constraint that dictates what order two tasks must be completed in.
- * @param <T> type of logical term this constraint works with
- * @param <K> type of task this constraint works with
+ * Extended operator builder interface for creating subsitutable operators.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface PrecedenceConstraint<T extends Term, K extends Task<T>> extends Constraint<T> {
+public interface SubstitutableOperatorBuilder extends
+        OperatorBuilder<SubstitutableCondition, Effect, SubstitutableOperator, SubstitutableOperatorBuilder> {
 
-	/**
-	 * Get the task that must come first.
-	 * @return the task
-	 */
-	K getPrecedingTask();
-
-	/**
-	 * Get the task that must come last.
-	 * @return the task
-	 */
-	K getProcedingTask();
-	
 }

@@ -19,7 +19,9 @@ package org.gerryai.htn.simple.domain.impl;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import org.gerryai.htn.simple.domain.SubstitutableMethodBuilder;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.junit.Test;
@@ -33,27 +35,27 @@ public class SimpleMethodTest {
 	@Test
 	public void testName() {
 		String name = "testname";
-		SimpleMethodBuilder mockBuilder = mock(SimpleMethodBuilder.class);
+		SubstitutableMethodBuilder mockBuilder = mock(SubstitutableMethodBuilder.class);
+		when(mockBuilder.getName()).thenReturn(name);
 		SimpleMethod method = new SimpleMethod(mockBuilder);
-		method.setName(name);
 		assertEquals(name, method.getName());
 	}
 
 	@Test
 	public void testTask() {
 		SubstitutableTask task = mock(SubstitutableTask.class);
-		SimpleMethodBuilder mockBuilder = mock(SimpleMethodBuilder.class);
+		SubstitutableMethodBuilder mockBuilder = mock(SubstitutableMethodBuilder.class);
+		when(mockBuilder.getTask()).thenReturn(task);
 		SimpleMethod method = new SimpleMethod(mockBuilder);
-		method.setTask(task);
 		assertEquals(task, method.getTask());
 	}
 
 	@Test
 	public void testTaskNetwork() {
 		SubstitutableTaskNetwork taskNetwork = mock(SubstitutableTaskNetwork.class);
-		SimpleMethodBuilder mockBuilder = mock(SimpleMethodBuilder.class);
+		SubstitutableMethodBuilder mockBuilder = mock(SubstitutableMethodBuilder.class);
+		when(mockBuilder.getTaskNetwork()).thenReturn(taskNetwork);
 		SimpleMethod method = new SimpleMethod(mockBuilder);
-		method.setTaskNetwork(taskNetwork);
 		assertEquals(taskNetwork, method.getTaskNetwork());
 	}
 

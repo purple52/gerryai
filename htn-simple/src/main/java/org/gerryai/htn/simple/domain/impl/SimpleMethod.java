@@ -18,6 +18,7 @@
 package org.gerryai.htn.simple.domain.impl;
 
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.SubstitutableMethodBuilder;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
@@ -46,7 +47,7 @@ public class SimpleMethod implements SubstitutableMethod {
 	 * Constructor using a builder.
 	 * @param builder the builder to use
 	 */
-	protected SimpleMethod(SimpleMethodBuilder builder) {
+	protected SimpleMethod(SubstitutableMethodBuilder builder) {
 		name = builder.getName();
 		task = builder.getTask();
 		taskNetwork = builder.getTaskNetwork();
@@ -60,10 +61,11 @@ public class SimpleMethod implements SubstitutableMethod {
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 *
 	public final void setName(String name) {
 		this.name = name;
 	}
+	*/
 
 	/**
 	 * {@inheritDoc}
@@ -74,11 +76,12 @@ public class SimpleMethod implements SubstitutableMethod {
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 *
 	public final void setTask(SubstitutableTask task) {
 		this.task = task;
 	}
-
+    */
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -88,9 +91,10 @@ public class SimpleMethod implements SubstitutableMethod {
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 *
 	public final void setTaskNetwork(SubstitutableTaskNetwork taskNetwork) {
 		this.taskNetwork = taskNetwork;
 	}
+	*/
 
 }

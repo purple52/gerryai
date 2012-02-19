@@ -54,27 +54,16 @@ public class SimpleBetweenConstraint implements
 	private SubstitutableCondition condition;
 	
 	/**
-	 * Set the set of tasks that this constraint must hold after.
-	 * @param precedingTasks the tasks
+	 * Constructor.
+	 * @param precedingTasks tasks that this constraint must hold after
+	 * @param procedingTasks tasks that this constraint must hold before
+	 * @param condition condition that must be true between the two sets of tasks
 	 */
-	public final void setPrecedingTasks(Set<SubstitutableTask> precedingTasks) {
-		this.precedingTasks = precedingTasks;
-	}
-
-	/**
-	 * Set the set of tasks that this constraint must hold before.
-	 * @param procedingTasks the tasks
-	 */
-	public final void setProcedingTasks(Set<SubstitutableTask> procedingTasks) {
-		this.procedingTasks = procedingTasks;
-	}
-	
-	/**
-	 * Set the condition that must be true directly after the last of these tasks.
-	 * @param condition the condition
-	 */
-	public final void setCondition(SubstitutableCondition condition) {
-		this.condition = condition;
+	protected SimpleBetweenConstraint(Set<SubstitutableTask> precedingTasks,
+	        Set<SubstitutableTask> procedingTasks, SubstitutableCondition condition) {
+	    this.precedingTasks = precedingTasks;
+	    this.procedingTasks = procedingTasks;
+	    this.condition = condition;
 	}
 	
 	/**

@@ -39,7 +39,7 @@ public interface Operator<I extends Condition> {
 	 * Set the name of this operator.
 	 * @param name name to set
 	 */
-	void setName(String name);
+	//void setName(String name);
 	
 	/**
 	 * Get the list of arguments for this operator.
@@ -51,7 +51,7 @@ public interface Operator<I extends Condition> {
 	 * Set the list of arguments for this operator.
 	 * @param arguments list of arguments to set
 	 */
-	void setArguments(List<Variable> arguments);
+	//void setArguments(List<Variable> arguments);
 	
 	/**
 	 * Get the preconditions for this operator.
@@ -63,7 +63,7 @@ public interface Operator<I extends Condition> {
 	 * Set the preconditions for this operator.
 	 * @param preconditions preconditions to set
 	 */
-	void setPreconditions(Set<I> preconditions);
+	//void setPreconditions(Set<I> preconditions);
 	
 	/**
 	 * Get the effects of this operator.
@@ -75,6 +75,6 @@ public interface Operator<I extends Condition> {
 	 * Set the effects of this operator.
 	 * @param effects effects to set
 	 */
-	void setEffects(Set<Effect> effects);
+	//void setEffects(Set<Effect> effects);
 
 }

@@ -35,22 +35,10 @@ public interface Task<T extends Term> {
 	String getName();
 
 	/**
-	 * Set this task's name.
-	 * @param name the name to set
-	 */
-	void setName(String name);
-	
-	/**
 	 * Get this task's arguments.
 	 * @return the list of arguments
 	 */
 	List<T> getArguments();
-	
-	/**
-	 * Set this task's arguments.
-	 * @param arguments arguments to set
-	 */
-	void setArguments(List<T> arguments);
 	
 	/**
 	 * Determine whether this task is a primitive.

@@ -41,26 +41,14 @@ public class SimpleBeforeConstraintTest {
      * Test get/set tasks.
      */
     @Test
-    public void testTasks() {
+    public void testConstructor() {
         @SuppressWarnings("unchecked")
         Set<SubstitutableTask> mockTasks = mock(Set.class);
-
-        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint();
-        constraint.setTasks(mockTasks);
-
-        assertEquals(mockTasks, constraint.getTasks());
-    }
-
-    /**
-     * Test get/set condition.
-     */
-    @Test
-    public void testGetCondition() {
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 
-        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint();
-        constraint.setCondition(mockCondition);
+        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint(mockTasks, mockCondition);
 
+        assertEquals(mockTasks, constraint.getTasks());
         assertEquals(mockCondition, constraint.getCondition());
     }
 
@@ -70,8 +58,12 @@ public class SimpleBeforeConstraintTest {
     @Test
     public void testValidate() {
         @SuppressWarnings("unchecked")
+        Set<SubstitutableTask> mockTasks = mock(Set.class);
+        SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
+
+        @SuppressWarnings("unchecked")
         ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
-        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint();
+        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint(mockTasks, mockCondition);
         constraint.validate(mockValidator);
 
         verify(mockValidator).validate(constraint);
@@ -88,8 +80,12 @@ public class SimpleBeforeConstraintTest {
     @Test
     public void testAdd() throws InvalidConstraint {
         @SuppressWarnings("unchecked")
+        Set<SubstitutableTask> mockTasks = mock(Set.class);
+        SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
+
+        @SuppressWarnings("unchecked")
         ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
-        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint();
+        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint(mockTasks, mockCondition);
         constraint.add(mockValidator);
 
         verify(mockValidator).add(constraint);
@@ -101,11 +97,13 @@ public class SimpleBeforeConstraintTest {
     @Test
     public void testApply() {
         @SuppressWarnings("unchecked")
-        Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
+        Set<SubstitutableTask> mockTasks = mock(Set.class);
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 
-        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint();
-        constraint.setCondition(mockCondition);
+        @SuppressWarnings("unchecked")
+        Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
+
+        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint(mockTasks, mockCondition);
         constraint.apply(mockSubstituter);
 
         verify(mockCondition).apply(mockSubstituter);

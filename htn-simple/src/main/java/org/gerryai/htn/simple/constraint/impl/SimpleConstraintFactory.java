@@ -34,10 +34,7 @@ public class SimpleConstraintFactory implements SubstitutableConstraintFactory {
 	 */
 	public final SimplePrecedenceConstraint
 			createPrecedenceConstraint(SubstitutableTask precedingTask, SubstitutableTask procedingTask) {
-		SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint();
-		constraint.setPrecedingTask(precedingTask);
-		constraint.setProcedingTask(procedingTask);
-		return constraint;
+		return new SimplePrecedenceConstraint(precedingTask, procedingTask);
 	}
 
 	/**
@@ -45,10 +42,7 @@ public class SimpleConstraintFactory implements SubstitutableConstraintFactory {
 	 */
 	public final SimpleBeforeConstraint createBeforeConstraint(Set<SubstitutableTask> tasks,
 			SubstitutableCondition condition) {
-		SimpleBeforeConstraint constraint = new SimpleBeforeConstraint();
-		constraint.setTasks(tasks);
-		constraint.setCondition(condition);
-		return constraint;
+		return new SimpleBeforeConstraint(tasks, condition);
 	}
 
 	/**
@@ -56,10 +50,7 @@ public class SimpleConstraintFactory implements SubstitutableConstraintFactory {
 	 */
 	public final SimpleAfterConstraint createAfterConstraint(Set<SubstitutableTask> tasks,
 			SubstitutableCondition condition) {
-		SimpleAfterConstraint constraint = new SimpleAfterConstraint();
-		constraint.setTasks(tasks);
-		constraint.setCondition(condition);
-		return constraint;
+		return new SimpleAfterConstraint(tasks, condition);
 	}
 
 	/**
@@ -67,11 +58,7 @@ public class SimpleConstraintFactory implements SubstitutableConstraintFactory {
 	 */
 	public final SimpleBetweenConstraint createBetweenConstraint(Set<SubstitutableTask> precedingTasks,
 			Set<SubstitutableTask> procedingTasks, SubstitutableCondition condition) {
-		SimpleBetweenConstraint constraint = new SimpleBetweenConstraint();
-		constraint.setPrecedingTasks(precedingTasks);
-		constraint.setProcedingTasks(procedingTasks);
-		constraint.setCondition(condition);
-		return constraint;
+		return new SimpleBetweenConstraint(precedingTasks, procedingTasks, condition);
 	}
 
 }

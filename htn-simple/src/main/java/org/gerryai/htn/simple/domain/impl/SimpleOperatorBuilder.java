@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.gerryai.htn.domain.Effect;
-import org.gerryai.htn.simple.domain.OperatorBuilder;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.SubstitutableOperatorBuilder;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.logic.Variable;
 
@@ -32,7 +32,7 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleOperatorBuilder implements OperatorBuilder<SubstitutableCondition, Effect> {
+public class SimpleOperatorBuilder implements SubstitutableOperatorBuilder {
 
 	/**
 	 * Name of the operator.
@@ -66,7 +66,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<SubstitutableCondi
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperatorBuilder setName(String name) {
+	public final SubstitutableOperatorBuilder setName(String name) {
 		this.name = name;
 		return this;
 	}
@@ -74,7 +74,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<SubstitutableCondi
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperatorBuilder addArgument(Variable argument) {
+	public final SubstitutableOperatorBuilder addArgument(Variable argument) {
 		arguments.add(argument);
 		return this;
 	}
@@ -82,7 +82,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<SubstitutableCondi
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperatorBuilder addArguments(List<Variable> argument) {
+	public final SubstitutableOperatorBuilder addArguments(List<Variable> argument) {
 		arguments.addAll(argument);
 		return this;
 	}
@@ -90,7 +90,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<SubstitutableCondi
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperatorBuilder addPrecondition(SubstitutableCondition condition) {
+	public final SubstitutableOperatorBuilder addPrecondition(SubstitutableCondition condition) {
 		preconditions.add(condition);
 		return this;
 	}
@@ -98,7 +98,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<SubstitutableCondi
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperatorBuilder addPreconditions(Set<SubstitutableCondition> conditions) {
+	public final SubstitutableOperatorBuilder addPreconditions(Set<SubstitutableCondition> conditions) {
 		preconditions.addAll(conditions);
 		return this;
 	}
@@ -106,7 +106,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<SubstitutableCondi
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperatorBuilder addEffect(Effect effect) {
+	public final SubstitutableOperatorBuilder addEffect(Effect effect) {
 		effects.add(effect);
 		return this;
 	}
@@ -114,7 +114,7 @@ public class SimpleOperatorBuilder implements OperatorBuilder<SubstitutableCondi
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperatorBuilder addEffects(Set<Effect> effects) {
+	public final SubstitutableOperatorBuilder addEffects(Set<Effect> effects) {
 		this.effects.addAll(effects);
 		return this;
 	}
@@ -129,28 +129,28 @@ public class SimpleOperatorBuilder implements OperatorBuilder<SubstitutableCondi
 	/**
 	 * @return the name
 	 */
-	protected final String getName() {
+	public final String getName() {
 		return name;
 	}
 
 	/**
 	 * @return the arguments
 	 */
-	protected final List<Variable> getArguments() {
+	public final List<Variable> getArguments() {
 		return arguments;
 	}
 
 	/**
 	 * @return the preconditions
 	 */
-	protected final Set<SubstitutableCondition> getPreconditions() {
+	public final Set<SubstitutableCondition> getPreconditions() {
 		return preconditions;
 	}
 
 	/**
 	 * @return the effects
 	 */
-	protected final Set<Effect> getEffects() {
+	public final Set<Effect> getEffects() {
 		return effects;
 	}
 

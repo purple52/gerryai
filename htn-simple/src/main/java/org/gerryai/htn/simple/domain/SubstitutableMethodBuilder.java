@@ -15,29 +15,23 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.constraint;
+package org.gerryai.htn.simple.domain;
 
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
+import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
 /**
- * Interface for a constraint that dictates what order two tasks must be completed in.
- * @param <T> type of logical term this constraint works with
- * @param <K> type of task this constraint works with
+ * Interface for a method builder that uses the correct set of classes for
+ * substitutaion and validation.
+ * 
  * @author David Edwards <david@more.fool.me.uk>
+ * 
  */
-public interface PrecedenceConstraint<T extends Term, K extends Task<T>> extends Constraint<T> {
+public interface SubstitutableMethodBuilder
+        extends
+        MethodBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, 
+        SubstitutableValidatableConstraint, SubstitutableMethod> {
 
-	/**
-	 * Get the task that must come first.
-	 * @return the task
-	 */
-	K getPrecedingTask();
-
-	/**
-	 * Get the task that must come last.
-	 * @return the task
-	 */
-	K getProcedingTask();
-	
 }

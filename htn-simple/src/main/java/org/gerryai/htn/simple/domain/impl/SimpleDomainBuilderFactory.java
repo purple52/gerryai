@@ -22,7 +22,9 @@ import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
 import org.gerryai.htn.simple.domain.DomainBuilder;
 import org.gerryai.htn.simple.domain.DomainBuilderFactory;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.SubstitutableMethodBuilder;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.SubstitutableOperatorBuilder;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
@@ -35,7 +37,8 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 public class SimpleDomainBuilderFactory implements
 		DomainBuilderFactory<SimpleDomain, SubstitutableOperator, SubstitutableMethod,
 				SubstitutableTerm, SubstitutableTask,
-				SubstitutableTaskNetwork, SubstitutableValidatableConstraint, SubstitutableCondition, Effect> {
+				SubstitutableTaskNetwork, SubstitutableValidatableConstraint,
+				SubstitutableCondition, Effect, SubstitutableOperatorBuilder> {
 
 	/**
 	 * {@inheritDoc}
@@ -49,15 +52,14 @@ public class SimpleDomainBuilderFactory implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleOperatorBuilder createOperatorBuilder() {
+	public final SubstitutableOperatorBuilder createOperatorBuilder() {
 		return new SimpleOperatorBuilder();	
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleMethodBuilder createMethodBuilder() {
-		// TODO Auto-generated method stub
+	public final SubstitutableMethodBuilder createMethodBuilder() {
 		return new SimpleMethodBuilder();
 	}
 

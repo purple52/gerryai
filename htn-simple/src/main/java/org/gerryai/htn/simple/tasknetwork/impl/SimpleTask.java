@@ -17,6 +17,7 @@
  */ 	
 package org.gerryai.htn.simple.tasknetwork.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.gerryai.htn.simple.decomposition.Substituter;
@@ -51,9 +52,9 @@ public class SimpleTask implements SubstitutableTask {
 	 * @param builder the builder to build the task
 	 */
 	protected SimpleTask(TaskBuilder<SubstitutableTerm, SubstitutableTask> builder) {
-		this.setName(builder.getName());
-		this.setArguments(builder.getArguments());
-		this.setIsPrimitive(builder.getIsPrimitive());
+		this.name = builder.getName();
+		this.arguments = builder.getArguments();
+		this.isPrimitive = builder.getIsPrimitive();
 	}
 	
 	/**
@@ -66,13 +67,6 @@ public class SimpleTask implements SubstitutableTask {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setName(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public final boolean isPrimitive() {
 		return isPrimitive;
 	}
@@ -80,22 +74,8 @@ public class SimpleTask implements SubstitutableTask {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setIsPrimitive(boolean isPrimitive) {
-		this.isPrimitive = isPrimitive;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
 	public final List<SubstitutableTerm> getArguments() {
-		return arguments;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setArguments(List<SubstitutableTerm> arguments) {
-		this.arguments = arguments;
+		return Collections.unmodifiableList(arguments);
 	}
 	
 	/**

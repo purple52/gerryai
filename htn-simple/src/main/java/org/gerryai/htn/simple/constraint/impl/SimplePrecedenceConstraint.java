@@ -47,21 +47,14 @@ public class SimplePrecedenceConstraint	implements
 	private SubstitutableTask procedingTask;
 	
 	/**
-	 * Set the task to come first.
-	 * @param precedingTask the task
+	 * Constructor.
+	 * @param precedingTask task that must come first
+	 * @param procedingTask task that must come last
 	 */
-	public final void setPrecedingTask(SubstitutableTask precedingTask) {
-		this.precedingTask = precedingTask;
+	protected SimplePrecedenceConstraint(SubstitutableTask precedingTask, SubstitutableTask procedingTask) {
+	    this.precedingTask = precedingTask;
+	    this.procedingTask = procedingTask;
 	}
-	
-	/**
-	 * Set the task to come last.
-	 * @param procedingTask the task
-	 */
-	public final void setProcedingTask(SubstitutableTask procedingTask) {
-		this.procedingTask = procedingTask;
-	}
-	
 	
 	/**
 	 * {@inheritDoc}

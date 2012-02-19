@@ -50,23 +50,12 @@ public class SimpleBeforeConstraint
     private SubstitutableCondition condition;
 
     /**
-     * Set the set of tasks that this constraint must hold for.
-     * 
-     * @param tasks
-     *            the tasks
+     * Constructor.
+     * @param tasks the tasks this constraint must hold for
+     * @param condition the condition this constraint enforces
      */
-    public final void setTasks(Set<SubstitutableTask> tasks) {
+    protected SimpleBeforeConstraint(Set<SubstitutableTask> tasks, SubstitutableCondition condition) {
         this.tasks = tasks;
-    }
-
-    /**
-     * Set the condition that must be true directly before the first of these
-     * tasks.
-     * 
-     * @param condition
-     *            the condition
-     */
-    public final void setCondition(SubstitutableCondition condition) {
         this.condition = condition;
     }
 

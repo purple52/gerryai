@@ -48,19 +48,13 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<Substit
 	private SubstitutableCondition condition;
 	
 	/**
-	 * Set the set of tasks that this constraint must hold for.
-	 * @param tasks the tasks
+	 * Constructor.
+	 * @param tasks the tasks this constraint must hold for
+	 * @param condition the condition this constraint enforces
 	 */
-	public final void setTasks(Set<SubstitutableTask> tasks) {
-		this.tasks = tasks;
-	}
-	
-	/**
-	 * Set the condition that must be true directly after the last of these tasks.
-	 * @param condition the literal
-	 */
-	public final void setCondition(SubstitutableCondition condition) {
-		this.condition = condition;
+	protected SimpleAfterConstraint(Set<SubstitutableTask> tasks, SubstitutableCondition condition) {
+	    this.tasks = tasks;
+	    this.condition = condition;
 	}
 	
 	/**

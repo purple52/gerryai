@@ -46,7 +46,7 @@ public interface Method<
 	 * Set the name of this method.
 	 * @param name name to set
 	 */
-	void setName(String name);
+	//void setName(String name);
 	
 	/**
 	 * Get the task for this method.
@@ -58,7 +58,7 @@ public interface Method<
 	 * Set the task for this method.
 	 * @param task task to set
 	 */
-	void setTask(K task);
+	//void setTask(K task);
 	
 	/**
 	 * Get the task network for this method.
@@ -70,6 +70,6 @@ public interface Method<
 	 * Set the task network for this method.
 	 * @param taskNetwork task network to set
 	 */
-	void setTaskNetwork(N taskNetwork);
+	//void setTaskNetwork(N taskNetwork);
 	
 }
