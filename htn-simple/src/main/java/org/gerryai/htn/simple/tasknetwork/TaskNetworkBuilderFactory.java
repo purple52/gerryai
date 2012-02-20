@@ -18,9 +18,9 @@
 package org.gerryai.htn.simple.tasknetwork;
 
 import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.Term;
 
 /**
  * Interface for a factory that creates task network builders.
@@ -31,7 +31,7 @@ import org.gerryai.logic.Term;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface TaskNetworkBuilderFactory<
-		T extends Term,
+		T extends SubstitutableTerm,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>> {

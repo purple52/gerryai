@@ -19,11 +19,13 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gerryai.htn.domain.OperatorNotFound;
+import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 
@@ -59,7 +61,7 @@ public class SimpleTaskBuilderTest {
 				.setName("testname");
 		
 		// Check that the name has been set
-		assertEquals("testname",builder.getName());
+		assertEquals("testname", builder.getName());
 	}
 
 	/**
@@ -116,11 +118,41 @@ public class SimpleTaskBuilderTest {
 	}
 
 	/**
+     * Test setting an existing task.
+     */
+    @Test
+    public void testSetBaseTask() {
+
+        SubstitutableTask mockTask = mock(SubstitutableTask.class);
+        
+        // Create the builder under test
+        SimpleTaskBuilder builder = new SimpleTaskBuilder()
+                .setBaseTask(mockTask);
+        
+        assertEquals(mockTask, builder.getBaseTask());
+    }
+    
+    /**
+     * Test setting a substituter.
+     */
+    @Test
+    public void testSetSubstituter() {
+     
+        @SuppressWarnings("unchecked")
+        Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
+        
+        // Create the builder under test
+        SimpleTaskBuilder builder = new SimpleTaskBuilder()
+                .setSubstituter(mockSubstituter);
+        
+        assertEquals(mockSubstituter, builder.getSubstituter());
+    }
+    
+	/**
 	 * Test building a primitive task.
-	 * @throws OperatorNotFound only if test fails
 	 */
 	@Test
-	public void testBuildPrimitive() throws OperatorNotFound {
+	public void testBuildPrimitive() {
 
 		SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
 		
@@ -138,10 +170,9 @@ public class SimpleTaskBuilderTest {
 
 	/**
 	 * Test building a non-primitive task.
-	 * @throws OperatorNotFound only if test fails
 	 */
 	@Test
-	public void testBuildNonPrimitive() throws OperatorNotFound {
+	public void testBuildNonPrimitive() {
 
 		SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
 		
@@ -156,4 +187,58 @@ public class SimpleTaskBuilderTest {
 		assertTrue(primitiveTask.getArguments().contains(mockTerm));
 		assertFalse(primitiveTask.isPrimitive());
 	}
+	
+	/**
+	 * Test a simple build just copying a base task.
+	 */
+	@Test
+	public void testBuildFromBaseTask() {
+	    String name = "testname";
+	    SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
+	    List<SubstitutableTerm> terms = new ArrayList<SubstitutableTerm>();
+	    terms.add(mockTerm);
+        SubstitutableTask mockTask = mock(SubstitutableTask.class);
+        when(mockTask.getName()).thenReturn(name);
+        when(mockTask.getArguments()).thenReturn(terms);
+        when(mockTask.isPrimitive()).thenReturn(true);
+        
+        // Create the builder under test
+        SubstitutableTask newTask = new SimpleTaskBuilder()
+                .setBaseTask(mockTask)
+                .build();
+        
+        assertEquals(name, newTask.getName());
+        assertEquals(terms, newTask.getArguments());
+        assertTrue(newTask.isPrimitive());
+	}
+	
+	  /**
+     * Test a copying a base task and applying a substituter.
+     */
+    @Test
+    public void testBuildFromBaseTaskWithSubstituter() {
+        String name = "testname";
+        SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
+        List<SubstitutableTerm> terms = new ArrayList<SubstitutableTerm>();
+        terms.add(mockTerm);
+        SubstitutableTask mockTask = mock(SubstitutableTask.class);
+        when(mockTask.getName()).thenReturn(name);
+        when(mockTask.getArguments()).thenReturn(terms);
+        when(mockTask.isPrimitive()).thenReturn(true);
+        
+        @SuppressWarnings("unchecked")
+        Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
+        
+        // Create the builder under test
+        SubstitutableTask newTask = new SimpleTaskBuilder()
+                .setBaseTask(mockTask)
+                .setSubstituter(mockSubstituter)
+                .build();
+        
+        assertEquals(name, newTask.getName());
+        assertEquals(terms, newTask.getArguments());
+        assertTrue(newTask.isPrimitive());
+        
+        verify(mockSubstituter).visit(terms);
+    }
 }

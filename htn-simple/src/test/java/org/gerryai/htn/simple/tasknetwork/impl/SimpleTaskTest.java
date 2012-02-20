@@ -85,12 +85,12 @@ public class SimpleTaskTest {
         @SuppressWarnings("unchecked")
         TaskBuilder<SubstitutableTerm, SubstitutableTask> mockBuilder = mock(TaskBuilder.class);
 
-        when(mockBuilder.getIsPrimitive()).thenReturn(true);
+        when(mockBuilder.isPrimitive()).thenReturn(true);
         SimpleTask taskA = new SimpleTask(mockBuilder);
 
         assertTrue(taskA.isPrimitive());
 
-        when(mockBuilder.getIsPrimitive()).thenReturn(false);
+        when(mockBuilder.isPrimitive()).thenReturn(false);
         SimpleTask taskB = new SimpleTask(mockBuilder);
 
         assertFalse(taskB.isPrimitive());

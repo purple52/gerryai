@@ -20,19 +20,19 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.TaskBuilder;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 /**
  * Generic builder for tasks.
- * @param <T> type of logical terms these tasks will use
  * @param <K> type of task this builder will create
  * @param <B> type of task builder extending this base class
  * @author David Edwards <david@more.fool.me.uk>
  */
-public abstract class AbstractTaskBuilder< T extends Term, K extends Task<T>,
-		B extends AbstractTaskBuilder<T, K, B>> implements TaskBuilder<T, K> {
+public abstract class AbstractTaskBuilder<K extends Task<SubstitutableTerm>,
+		B extends AbstractTaskBuilder<K, B>> implements TaskBuilder<SubstitutableTerm, K> {
 
 	/**
 	 * Name of the task being built.
@@ -42,18 +42,28 @@ public abstract class AbstractTaskBuilder< T extends Term, K extends Task<T>,
 	/**
 	 * Whether the task is primitive.
 	 */
-	private boolean isPrimitive;
+	private Boolean isPrimitive;
 	
 	/**
 	 * List of arguments for the task.
 	 */
-	private List<T> arguments;
+	private List<SubstitutableTerm> arguments;
+	
+	/**
+	 * Base task to build from.
+	 */
+	private K baseTask;
+	
+	/**
+	 * Substituter to apply during building.
+	 */
+	private Substituter<SubstitutableTerm> substituter;
 	
 	/**
 	 * Default constructor.
 	 */
 	protected AbstractTaskBuilder() {
-		arguments = new ArrayList<T>();
+		arguments = new ArrayList<SubstitutableTerm>();
 	}
 	
 	/**
@@ -75,7 +85,7 @@ public abstract class AbstractTaskBuilder< T extends Term, K extends Task<T>,
 	/**
 	 * {@inheritDoc}
 	 */
-	public final B addArgument(T term) {
+	public final B addArgument(SubstitutableTerm term) {
 		arguments.add(term);
 		return me();
 	}
@@ -83,11 +93,27 @@ public abstract class AbstractTaskBuilder< T extends Term, K extends Task<T>,
 	/**
 	 * {@inheritDoc}
 	 */
-	public final B addArguments(List<T> terms) {
+	public final B addArguments(List<SubstitutableTerm> terms) {
 		arguments.addAll(terms);
 		return me();
 	}
 
+	/**
+     * {@inheritDoc}
+     */
+	public final B setBaseTask(K task) {
+	    baseTask = task;
+	    return me();
+	}
+
+	   /**
+     * {@inheritDoc}
+     */
+	public final B setSubstituter(Substituter<SubstitutableTerm> substituter) {
+	    this.substituter = substituter;
+	    return me();
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -97,23 +123,63 @@ public abstract class AbstractTaskBuilder< T extends Term, K extends Task<T>,
 	 * {@inheritDoc}
 	 */
 	public final String getName() {
-		return name;
+		if (name == null && baseTask != null) {
+            return baseTask.getName();		    
+		} else {
+		    return name;
+		}
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean getIsPrimitive() {
-		return isPrimitive;
+	public final boolean isPrimitive() {
+	    if (isPrimitive == null && baseTask != null) {
+	        return baseTask.isPrimitive();
+	    } else {
+	        return isPrimitive;
+	    }
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<T> getArguments() {
-		return arguments;
+	public final List<SubstitutableTerm> getArguments() {
+	    
+	    int arraySize = 0;
+	    if (baseTask != null) {
+	        arraySize = arraySize + baseTask.getArguments().size();
+	    }
+	    arraySize = arraySize + arguments.size();
+	    List<SubstitutableTerm> outputArguments = new ArrayList<SubstitutableTerm>(arraySize);
+
+	    if (baseTask != null) {
+	        outputArguments.addAll(baseTask.getArguments());
+	    }
+	    outputArguments.addAll(arguments);
+
+	    // Apply the substituter if there is one
+	    if (substituter != null) {
+	        substituter.visit(outputArguments);
+	    }
+	    
+		return outputArguments;
 	}
-	
+
+	/**
+     * {@inheritDoc}
+     */
+    public final K getBaseTask() {
+        return baseTask;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public final Substituter<SubstitutableTerm> getSubstituter() {
+        return substituter;
+    }
+    
 	/**
 	 * Return this.
 	 * @return this

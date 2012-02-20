@@ -30,10 +30,10 @@ import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 import org.gerryai.logic.unification.Substitution;
 
@@ -54,7 +54,7 @@ import aima.core.logic.fol.parsing.ast.Predicate;
 public class AIMAUnificationService<
 		O extends Operator<I>,
 		M extends Method<T, K, N, C>,
-		T extends Term,
+		T extends SubstitutableTerm,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,

@@ -3,7 +3,7 @@
  *  Copyright (C) 2012  David Edwards
  *
  *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Affero General Public License as
+ *  it under the SubstitutableTerms of the GNU Affero General Public License as
  *  published by the Free Software Foundation, either version 3 of the
  *  License, or (at your option) any later version.
  *
@@ -30,10 +30,10 @@ import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 import org.gerryai.logic.unification.Substitution;
 import org.junit.Test;
@@ -53,35 +53,35 @@ public class AIMAUnificationServiceTest {
 	public void testFindUnifier() {
 		aima.core.logic.fol.Unifier aimaUnifier = mock(aima.core.logic.fol.Unifier.class);
 		@SuppressWarnings("unchecked")
-		AIMAConverter<Term, Variable, Task<Term>> aimaConverter
+		AIMAConverter<SubstitutableTerm, Variable, Task<SubstitutableTerm>> aimaConverter
 				= mock(AIMAConverter.class);
 		@SuppressWarnings("unchecked")
-		DomainHelper<Operator<Condition>, Method<Term, Task<Term>,
-				TaskNetwork<Term, Task<Term>, Constraint<Term>>,
-				Constraint<Term>>, Term, Task<Term>, TaskNetwork<Term, Task<Term>,
-				Constraint<Term>>, Constraint<Term>, Condition> mockDomainHelper
+		DomainHelper<Operator<Condition>, Method<SubstitutableTerm, Task<SubstitutableTerm>,
+				TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>, Constraint<SubstitutableTerm>>,
+				Constraint<SubstitutableTerm>>, SubstitutableTerm, Task<SubstitutableTerm>, TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>,
+				Constraint<SubstitutableTerm>>, Constraint<SubstitutableTerm>, Condition> mockDomainHelper
 					= mock(DomainHelper.class);
 		@SuppressWarnings("unchecked")
-		TaskNetworkBuilderFactory<Term, Task<Term>, TaskNetwork<Term, Task<Term>,
-				Constraint<Term>>, Constraint<Term>> mockTaskNetworkBuilderFactory
+		TaskNetworkBuilderFactory<SubstitutableTerm, Task<SubstitutableTerm>, TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>,
+				Constraint<SubstitutableTerm>>, Constraint<SubstitutableTerm>> mockTaskNetworkBuilderFactory
 					= mock(TaskNetworkBuilderFactory.class);
-		AIMAUnificationService<Operator<Condition>, Method<Term, Task<Term>,
-				TaskNetwork<Term, Task<Term>, Constraint<Term>>, Constraint<Term>>,
-				Term, Task<Term>, TaskNetwork<Term, Task<Term>, Constraint<Term>>,
-				Constraint<Term>, Condition, Variable> unificationService
-					= new AIMAUnificationService<Operator<Condition>, Method<Term,
-				Task<Term>, TaskNetwork<Term, Task<Term>, Constraint<Term>>,
-				Constraint<Term>>, Term, Task<Term>, TaskNetwork<Term, Task<Term>,
-				Constraint<Term>>, Constraint<Term>, Condition, Variable>(
+		AIMAUnificationService<Operator<Condition>, Method<SubstitutableTerm, Task<SubstitutableTerm>,
+				TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>, Constraint<SubstitutableTerm>>, Constraint<SubstitutableTerm>>,
+				SubstitutableTerm, Task<SubstitutableTerm>, TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>, Constraint<SubstitutableTerm>>,
+				Constraint<SubstitutableTerm>, Condition, Variable> unificationService
+					= new AIMAUnificationService<Operator<Condition>, Method<SubstitutableTerm,
+				Task<SubstitutableTerm>, TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>, Constraint<SubstitutableTerm>>,
+				Constraint<SubstitutableTerm>>, SubstitutableTerm, Task<SubstitutableTerm>, TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>,
+				Constraint<SubstitutableTerm>>, Constraint<SubstitutableTerm>, Condition, Variable>(
 					aimaUnifier, aimaConverter, mockDomainHelper, 
 					mockTaskNetworkBuilderFactory);
 		
 		@SuppressWarnings("unchecked")
-		Task<Term> mockTaskA = mock(Task.class);
+		Task<SubstitutableTerm> mockTaskA = mock(Task.class);
 		@SuppressWarnings("unchecked")
-		Task<Term> mockTaskB = mock(Task.class);
+		Task<SubstitutableTerm> mockTaskB = mock(Task.class);
 		@SuppressWarnings("unchecked")
-		Method<Term, Task<Term>, TaskNetwork<Term, Task<Term>, Constraint<Term>>, Constraint<Term>> mockMethod = mock(Method.class);
+		Method<SubstitutableTerm, Task<SubstitutableTerm>, TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>, Constraint<SubstitutableTerm>>, Constraint<SubstitutableTerm>> mockMethod = mock(Method.class);
 		when(mockMethod.getTask()).thenReturn(mockTaskB);
 		Predicate mockPredicateA = mock(Predicate.class);
 		Predicate mockPredicateB = mock(Predicate.class);
@@ -92,9 +92,9 @@ public class AIMAUnificationServiceTest {
 		when(aimaUnifier.unify(mockPredicateA, mockPredicateB)).thenReturn(mockMap);
 		
 		@SuppressWarnings("unchecked")
-		Substitution<Term, Variable> mockUnifier = mock(Substitution.class);
+		Substitution<SubstitutableTerm, Variable> mockUnifier = mock(Substitution.class);
 		when(aimaConverter.convert(mockMap)).thenReturn(mockUnifier);
-		Substitution<Term, Variable> unifier = unificationService.findUnifier(mockTaskA, mockMethod);
+		Substitution<SubstitutableTerm, Variable> unifier = unificationService.findUnifier(mockTaskA, mockMethod);
 		assertEquals(mockUnifier,unifier);
 	}
 

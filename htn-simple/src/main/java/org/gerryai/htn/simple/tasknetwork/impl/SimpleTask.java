@@ -54,7 +54,7 @@ public class SimpleTask implements SubstitutableTask {
 	protected SimpleTask(TaskBuilder<SubstitutableTerm, SubstitutableTask> builder) {
 		this.name = builder.getName();
 		this.arguments = builder.getArguments();
-		this.isPrimitive = builder.getIsPrimitive();
+		this.isPrimitive = builder.isPrimitive();
 	}
 	
 	/**
