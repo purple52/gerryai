@@ -43,18 +43,18 @@ public interface TaskBuilder<T extends SubstitutableTerm, K extends Task<T>> {
 	TaskBuilder<T, K> addArguments(List<T> terms);
 	
 	/**
-	 * Use the provided task as a base to create a new task.
+	 * Copy from the provided task, overwriting any values already set.
 	 * @param task the task to copy
 	 * @return the updated builder
 	 */
-	TaskBuilder<T, K> setBaseTask(K task);
+	TaskBuilder<T, K> copy(K task);
 	
 	/**
 	 * Apply the provided substituter to the task when building.
 	 * @param substituter the substituter to apply
 	 * @return the updated builder
 	 */
-	TaskBuilder<T, K> setSubstituter(Substituter<T> substituter);
+	TaskBuilder<T, K> apply(Substituter<T> substituter);
 	
 	/**
 	 * Get the name of the task to be built.
@@ -73,18 +73,6 @@ public interface TaskBuilder<T extends SubstitutableTerm, K extends Task<T>> {
 	 * @return the arguments
 	 */
 	List<T> getArguments();
-	
-	/**
-	 * Get the base task to build from.
-	 * @return the base task
-	 */
-	K getBaseTask();
-	
-	/**
-	 * Get the substituter to apply during building.
-	 * @return the substituter
-	 */
-	Substituter<T> getSubstituter();
 	
 	/**
 	 * Build the task.

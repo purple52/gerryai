@@ -50,16 +50,6 @@ public abstract class AbstractTaskBuilder<K extends Task<SubstitutableTerm>,
 	private List<SubstitutableTerm> arguments;
 	
 	/**
-	 * Base task to build from.
-	 */
-	private K baseTask;
-	
-	/**
-	 * Substituter to apply during building.
-	 */
-	private Substituter<SubstitutableTerm> substituter;
-	
-	/**
 	 * Default constructor.
 	 */
 	protected AbstractTaskBuilder() {
@@ -101,16 +91,18 @@ public abstract class AbstractTaskBuilder<K extends Task<SubstitutableTerm>,
 	/**
      * {@inheritDoc}
      */
-	public final B setBaseTask(K task) {
-	    baseTask = task;
+	public final B copy(K task) {
+	    name = task.getName();
+	    arguments = new ArrayList<SubstitutableTerm>(task.getArguments());
+	    isPrimitive = task.isPrimitive();
 	    return me();
 	}
 
 	   /**
      * {@inheritDoc}
      */
-	public final B setSubstituter(Substituter<SubstitutableTerm> substituter) {
-	    this.substituter = substituter;
+	public final B apply(Substituter<SubstitutableTerm> substituter) {
+	    substituter.visit(arguments);
 	    return me();
 	}
 	
@@ -123,62 +115,22 @@ public abstract class AbstractTaskBuilder<K extends Task<SubstitutableTerm>,
 	 * {@inheritDoc}
 	 */
 	public final String getName() {
-		if (name == null && baseTask != null) {
-            return baseTask.getName();		    
-		} else {
-		    return name;
-		}
+		return name;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	public final boolean isPrimitive() {
-	    if (isPrimitive == null && baseTask != null) {
-	        return baseTask.isPrimitive();
-	    } else {
-	        return isPrimitive;
-	    }
+	    return isPrimitive;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<SubstitutableTerm> getArguments() {
-	    
-	    int arraySize = 0;
-	    if (baseTask != null) {
-	        arraySize = arraySize + baseTask.getArguments().size();
-	    }
-	    arraySize = arraySize + arguments.size();
-	    List<SubstitutableTerm> outputArguments = new ArrayList<SubstitutableTerm>(arraySize);
-
-	    if (baseTask != null) {
-	        outputArguments.addAll(baseTask.getArguments());
-	    }
-	    outputArguments.addAll(arguments);
-
-	    // Apply the substituter if there is one
-	    if (substituter != null) {
-	        substituter.visit(outputArguments);
-	    }
-	    
-		return outputArguments;
+	public final List<SubstitutableTerm> getArguments() {	    
+		return arguments;
 	}
-
-	/**
-     * {@inheritDoc}
-     */
-    public final K getBaseTask() {
-        return baseTask;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public final Substituter<SubstitutableTerm> getSubstituter() {
-        return substituter;
-    }
     
 	/**
 	 * Return this.

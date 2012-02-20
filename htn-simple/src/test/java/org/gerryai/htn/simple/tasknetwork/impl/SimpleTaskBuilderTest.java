@@ -118,37 +118,6 @@ public class SimpleTaskBuilderTest {
 	}
 
 	/**
-     * Test setting an existing task.
-     */
-    @Test
-    public void testSetBaseTask() {
-
-        SubstitutableTask mockTask = mock(SubstitutableTask.class);
-        
-        // Create the builder under test
-        SimpleTaskBuilder builder = new SimpleTaskBuilder()
-                .setBaseTask(mockTask);
-        
-        assertEquals(mockTask, builder.getBaseTask());
-    }
-    
-    /**
-     * Test setting a substituter.
-     */
-    @Test
-    public void testSetSubstituter() {
-     
-        @SuppressWarnings("unchecked")
-        Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
-        
-        // Create the builder under test
-        SimpleTaskBuilder builder = new SimpleTaskBuilder()
-                .setSubstituter(mockSubstituter);
-        
-        assertEquals(mockSubstituter, builder.getSubstituter());
-    }
-    
-	/**
 	 * Test building a primitive task.
 	 */
 	@Test
@@ -192,7 +161,7 @@ public class SimpleTaskBuilderTest {
 	 * Test a simple build just copying a base task.
 	 */
 	@Test
-	public void testBuildFromBaseTask() {
+	public void testBuildByCopying() {
 	    String name = "testname";
 	    SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
 	    List<SubstitutableTerm> terms = new ArrayList<SubstitutableTerm>();
@@ -204,7 +173,7 @@ public class SimpleTaskBuilderTest {
         
         // Create the builder under test
         SubstitutableTask newTask = new SimpleTaskBuilder()
-                .setBaseTask(mockTask)
+                .copy(mockTask)
                 .build();
         
         assertEquals(name, newTask.getName());
@@ -216,7 +185,7 @@ public class SimpleTaskBuilderTest {
      * Test a copying a base task and applying a substituter.
      */
     @Test
-    public void testBuildFromBaseTaskWithSubstituter() {
+    public void testBuildByCopyingWithSubstituter() {
         String name = "testname";
         SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
         List<SubstitutableTerm> terms = new ArrayList<SubstitutableTerm>();
@@ -231,8 +200,8 @@ public class SimpleTaskBuilderTest {
         
         // Create the builder under test
         SubstitutableTask newTask = new SimpleTaskBuilder()
-                .setBaseTask(mockTask)
-                .setSubstituter(mockSubstituter)
+                .copy(mockTask)
+                .apply(mockSubstituter)
                 .build();
         
         assertEquals(name, newTask.getName());

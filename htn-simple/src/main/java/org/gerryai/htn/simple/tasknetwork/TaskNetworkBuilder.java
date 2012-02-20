@@ -68,9 +68,17 @@ public interface TaskNetworkBuilder<
 	 * Checks if the constraints are valid for this network as per setConstraint.
 	 * @param constraints the constraints
 	 * @return the updated builder
-	 * @throws InvalidConstraint if the constraint could not be added
+	 * @throws InvalidConstraint if any of the constraints could not be added
 	 */
 	TaskNetworkBuilder<T, K, N, C> addConstraints(Set<C> constraints) throws InvalidConstraint;
+	
+	/**
+	 * Adds all the tasks and constraints from the given network, replacing any existing.
+	 * @param taskNetwork the network to copy from
+	 * @return the updated builder
+	 * @throws InvalidConstraint if any of the network's constraints could not be added
+	 */
+	TaskNetworkBuilder<T, K, N, C> copy(N taskNetwork)  throws InvalidConstraint;
 	
 	/**
 	 * Get the set of tasks for the task network to be built.

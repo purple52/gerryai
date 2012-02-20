@@ -122,6 +122,15 @@ public abstract class AbstractTaskNetworkBuilder<
 	}
 
 	/**
+     * {@inheritDoc}
+     */
+	public final B copy(N taskNetwork) throws InvalidConstraint {
+	    tasks = new HashSet<K>(taskNetwork.getTasks());
+	    // Assume original task network is valid
+	    constraints = new HashSet<C>(taskNetwork.getConstraints());
+	    return me();
+	}
+	/**
 	 * {@inheritDoc}
 	 */
 	public abstract N build();

@@ -176,12 +176,15 @@ public class SimpleTaskNetworkBuilderTest {
 	 * Test build.
 	 * @throws InvalidConstraint only if the test fails
 	 */
+	@Test
 	public void testBuild() throws InvalidConstraint {
+	    
 		SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
-		
 		SubstitutableValidatableConstraint mockConstraintA = mock(SubstitutableValidatableConstraint.class);
 		@SuppressWarnings("unchecked")
 		ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
+		
 		SubstitutableTaskNetwork taskNetwork = new SimpleTaskNetworkBuilder(mockConstraintValidator)
 				.addTask(mockTaskA)
 				.addConstraint(mockConstraintA)
@@ -192,4 +195,6 @@ public class SimpleTaskNetworkBuilderTest {
 		assertEquals(1, taskNetwork.getConstraints().size());
 		assertTrue(taskNetwork.getConstraints().contains(mockConstraintA));
 	}
+	
+	
 }
