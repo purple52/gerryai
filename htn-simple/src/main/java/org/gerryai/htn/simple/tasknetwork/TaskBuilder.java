@@ -50,7 +50,7 @@ public interface TaskBuilder<T extends SubstitutableTerm, K extends Task<T>> {
 	TaskBuilder<T, K> copy(K task);
 	
 	/**
-	 * Apply the provided substituter to the task when building.
+	 * Apply the provided substituter to the arguments provided so far.
 	 * @param substituter the substituter to apply
 	 * @return the updated builder
 	 */

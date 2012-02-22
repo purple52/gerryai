@@ -57,7 +57,7 @@ public class SimpleTaskBuilderTest {
 	@Test
 	public void testSetName() {
 		// Create the builder under test
-		SimpleTaskBuilder builder = new SimpleTaskBuilder()
+	    SimpleTaskBuilder builder = new SimpleTaskBuilder()
 				.setName("testname");
 		
 		// Check that the name has been set
@@ -161,7 +161,7 @@ public class SimpleTaskBuilderTest {
 	 * Test a simple build just copying a base task.
 	 */
 	@Test
-	public void testBuildByCopying() {
+	public void testCopy() {
 	    String name = "testname";
 	    SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
 	    List<SubstitutableTerm> terms = new ArrayList<SubstitutableTerm>();
@@ -185,7 +185,7 @@ public class SimpleTaskBuilderTest {
      * Test a copying a base task and applying a substituter.
      */
     @Test
-    public void testBuildByCopyingWithSubstituter() {
+    public void testApply() {
         String name = "testname";
         SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
         List<SubstitutableTerm> terms = new ArrayList<SubstitutableTerm>();

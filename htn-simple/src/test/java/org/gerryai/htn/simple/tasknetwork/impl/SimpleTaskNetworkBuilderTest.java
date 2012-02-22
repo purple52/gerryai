@@ -26,6 +26,7 @@ import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
+import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -196,5 +197,77 @@ public class SimpleTaskNetworkBuilderTest {
 		assertTrue(taskNetwork.getConstraints().contains(mockConstraintA));
 	}
 	
+	/**
+	 * Test building by copying.
+	 * @throws InvalidConstraint only if test fails
+	 */
+	@Test
+	public void testCopy() throws InvalidConstraint {
+	    
+	    SubstitutableTaskNetwork mockTaskNetwork = mock(SubstitutableTaskNetwork.class);
+	    SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
+        SubstitutableValidatableConstraint mockConstraintA = mock(SubstitutableValidatableConstraint.class);
+        Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
+        mockTasks.add(mockTaskA);
+        Set<SubstitutableValidatableConstraint> mockConstraints = new HashSet<SubstitutableValidatableConstraint>();
+        mockConstraints.add(mockConstraintA);
+        when(mockTaskNetwork.getTasks()).thenReturn(mockTasks);
+        when(mockTaskNetwork.getConstraints()).thenReturn(mockConstraints);
+        
+        @SuppressWarnings("unchecked")
+        ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
+        
+	    SubstitutableTaskNetwork taskNetwork = new SimpleTaskNetworkBuilder(mockConstraintValidator)
+                .copy(mockTaskNetwork)
+                .build();
+	    
+	    assertEquals(1, taskNetwork.getTasks().size());
+	    assertTrue(taskNetwork.getTasks().contains(mockTaskA));
+	    assertEquals(1, taskNetwork.getConstraints().size());
+	    assertTrue(taskNetwork.getConstraints().contains(mockConstraintA));
+	}
+	
+	 /**
+     * Test apply.
+     * @throws InvalidConstraint only if the test fails
+     */
+    @Test
+    public void testApply() throws InvalidConstraint {
+        
+        SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
+        SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
+        mockTasks.add(mockTaskA);
+        mockTasks.add(mockTaskB);
+        SubstitutableValidatableConstraint mockConstraintA = mock(SubstitutableValidatableConstraint.class);
+        SubstitutableValidatableConstraint mockConstraintB = mock(SubstitutableValidatableConstraint.class);
+        Set<SubstitutableValidatableConstraint> mockConstraints = new HashSet<SubstitutableValidatableConstraint>();
+        mockConstraints.add(mockConstraintA);
+        mockConstraints.add(mockConstraintB);
+        
+        @SuppressWarnings("unchecked")
+        ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
+        when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
+        when(mockConstraintB.validate(mockConstraintValidator)).thenReturn(true);
+        
+        @SuppressWarnings("unchecked")
+        Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
+        
+        SubstitutableTaskNetwork mockTaskNetwork = mock(SubstitutableTaskNetwork.class);
+        when(mockTaskNetwork.getTasks()).thenReturn(mockTasks);
+        when(mockTaskNetwork.getConstraints()).thenReturn(mockConstraints);
+        
+        SubstitutableTaskNetwork taskNetwork = new SimpleTaskNetworkBuilder(mockConstraintValidator)
+                .copy(mockTaskNetwork)
+                .apply(mockSubstituter)
+                .build();
+        
+        assertEquals(2, taskNetwork.getTasks().size());
+        assertTrue(taskNetwork.getTasks().contains(mockTaskA));
+        assertTrue(taskNetwork.getTasks().contains(mockTaskB));
+        assertEquals(2, taskNetwork.getConstraints().size());
+        assertTrue(taskNetwork.getConstraints().contains(mockConstraintA));
+        assertTrue(taskNetwork.getConstraints().contains(mockConstraintB));
+    }
 	
 }

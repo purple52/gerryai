@@ -20,9 +20,10 @@ package org.gerryai.htn.simple.tasknetwork;
 import java.util.Set;
 
 import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.Term;
 
 /**
  * Interface for a task network builder.
@@ -33,7 +34,7 @@ import org.gerryai.logic.Term;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface TaskNetworkBuilder<
-		T extends Term,
+		T extends SubstitutableTerm,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>> {
@@ -79,6 +80,13 @@ public interface TaskNetworkBuilder<
 	 * @throws InvalidConstraint if any of the network's constraints could not be added
 	 */
 	TaskNetworkBuilder<T, K, N, C> copy(N taskNetwork)  throws InvalidConstraint;
+	
+    /**
+     * Apply the provided substituter to the arguments provided so far.
+     * @param substituter the substituter to apply
+     * @return the updated builder
+     */
+	TaskNetworkBuilder<T, K, N, C> apply(Substituter<T> substituter);
 	
 	/**
 	 * Get the set of tasks for the task network to be built.
