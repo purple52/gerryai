@@ -46,15 +46,14 @@ public class SimplePrecedenceConstraint	implements
 	 */
 	private SubstitutableTask procedingTask;
 	
-	/**
-	 * Constructor.
-	 * @param precedingTask task that must come first
-	 * @param procedingTask task that must come last
-	 */
-	protected SimplePrecedenceConstraint(SubstitutableTask precedingTask, SubstitutableTask procedingTask) {
-	    this.precedingTask = precedingTask;
-	    this.procedingTask = procedingTask;
-	}
+    /**
+     * Constructor.
+     * @param builder the builder to build from
+     */
+    protected SimplePrecedenceConstraint(Builder builder) {
+        precedingTask = builder.getPrecedingTask();
+        procedingTask = builder.getProcedingTask();
+    }
 	
 	/**
 	 * {@inheritDoc}
@@ -108,4 +107,61 @@ public class SimplePrecedenceConstraint	implements
 	        return false;
 	    }
 	}
+	
+	   /**
+     * Builder class for SimpleBetweenConstraint.
+     * @author David Edwards <david@more.fool.me.uk>
+     */
+    public static class Builder {
+        
+        /**
+         * The task that must come first.
+         */
+        private SubstitutableTask precedingTask;
+
+        /**
+         * The task that must come last.
+         */
+        private SubstitutableTask procedingTask;
+        
+        /**
+         * @param task the task to set
+         * @return the updated builder
+         */
+        public final Builder setPrecedingTask(SubstitutableTask task) {
+            this.precedingTask = task;
+            return this;
+        }
+
+        /**
+         * @param task the task to set
+         * @return the updated builder
+         */
+        public final Builder setProcedingTask(SubstitutableTask task) {
+            this.procedingTask = task;
+            return this;
+        }
+        
+        /**
+         * @return the task
+         */
+        protected final SubstitutableTask getPrecedingTask() {
+            return precedingTask;
+        }
+
+        /**
+         * @return the task
+         */
+        protected final SubstitutableTask getProcedingTask() {
+            return procedingTask;
+        }
+        
+        /**
+         * Build the constraint.
+         * @return the finished constraint
+         */
+        public final SimplePrecedenceConstraint build() {
+            return new SimplePrecedenceConstraint(this);
+        }
+    }
 }

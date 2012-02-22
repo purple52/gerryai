@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
@@ -42,12 +43,16 @@ public class SimpleBeforeConstraintTest {
      */
     @Test
     public void testConstructor() {
-        @SuppressWarnings("unchecked")
-        Set<SubstitutableTask> mockTasks = mock(Set.class);
+        SubstitutableTask mockTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
+        mockTasks.add(mockTask);
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 
-        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint(mockTasks, mockCondition);
-
+        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint.Builder()
+                .addTasks(mockTasks)
+                .setCondition(mockCondition)
+                .build();
+        
         assertEquals(mockTasks, constraint.getTasks());
         assertEquals(mockCondition, constraint.getCondition());
     }
@@ -57,13 +62,17 @@ public class SimpleBeforeConstraintTest {
      */
     @Test
     public void testValidate() {
-        @SuppressWarnings("unchecked")
-        Set<SubstitutableTask> mockTasks = mock(Set.class);
+        SubstitutableTask mockTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
+        mockTasks.add(mockTask);
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 
         @SuppressWarnings("unchecked")
         ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
-        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint(mockTasks, mockCondition);
+        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint.Builder()
+                .addTasks(mockTasks)
+                .setCondition(mockCondition)
+                .build();
         constraint.validate(mockValidator);
 
         verify(mockValidator).validate(constraint);
@@ -79,13 +88,17 @@ public class SimpleBeforeConstraintTest {
      */
     @Test
     public void testAdd() throws InvalidConstraint {
-        @SuppressWarnings("unchecked")
-        Set<SubstitutableTask> mockTasks = mock(Set.class);
+        SubstitutableTask mockTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
+        mockTasks.add(mockTask);
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 
         @SuppressWarnings("unchecked")
         ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
-        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint(mockTasks, mockCondition);
+        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint.Builder()
+                .addTasks(mockTasks)
+                .setCondition(mockCondition)
+                .build();
         constraint.add(mockValidator);
 
         verify(mockValidator).add(constraint);
@@ -96,14 +109,18 @@ public class SimpleBeforeConstraintTest {
      */
     @Test
     public void testApply() {
-        @SuppressWarnings("unchecked")
-        Set<SubstitutableTask> mockTasks = mock(Set.class);
+        SubstitutableTask mockTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
+        mockTasks.add(mockTask);
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 
         @SuppressWarnings("unchecked")
         Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
 
-        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint(mockTasks, mockCondition);
+        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint.Builder()
+        .addTasks(mockTasks)
+        .setCondition(mockCondition)
+        .build();
         constraint.apply(mockSubstituter);
 
         verify(mockCondition).apply(mockSubstituter);

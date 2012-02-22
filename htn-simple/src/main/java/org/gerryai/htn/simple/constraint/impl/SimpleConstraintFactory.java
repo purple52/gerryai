@@ -34,7 +34,10 @@ public class SimpleConstraintFactory implements SubstitutableConstraintFactory {
 	 */
 	public final SimplePrecedenceConstraint
 			createPrecedenceConstraint(SubstitutableTask precedingTask, SubstitutableTask procedingTask) {
-		return new SimplePrecedenceConstraint(precedingTask, procedingTask);
+		return new SimplePrecedenceConstraint.Builder()
+		        .setPrecedingTask(precedingTask)
+		        .setProcedingTask(procedingTask)
+		        .build();
 	}
 
 	/**
@@ -42,7 +45,10 @@ public class SimpleConstraintFactory implements SubstitutableConstraintFactory {
 	 */
 	public final SimpleBeforeConstraint createBeforeConstraint(Set<SubstitutableTask> tasks,
 			SubstitutableCondition condition) {
-		return new SimpleBeforeConstraint(tasks, condition);
+        return new SimpleBeforeConstraint.Builder()
+                .addTasks(tasks)
+                .setCondition(condition)
+                .build();
 	}
 
 	/**
@@ -50,7 +56,10 @@ public class SimpleConstraintFactory implements SubstitutableConstraintFactory {
 	 */
 	public final SimpleAfterConstraint createAfterConstraint(Set<SubstitutableTask> tasks,
 			SubstitutableCondition condition) {
-		return new SimpleAfterConstraint(tasks, condition);
+		return new SimpleAfterConstraint.Builder()
+		        .addTasks(tasks)
+		        .setCondition(condition)
+		        .build();
 	}
 
 	/**
@@ -58,7 +67,11 @@ public class SimpleConstraintFactory implements SubstitutableConstraintFactory {
 	 */
 	public final SimpleBetweenConstraint createBetweenConstraint(Set<SubstitutableTask> precedingTasks,
 			Set<SubstitutableTask> procedingTasks, SubstitutableCondition condition) {
-		return new SimpleBetweenConstraint(precedingTasks, procedingTasks, condition);
-	}
+        return new SimpleBetweenConstraint.Builder()
+                .addPrecedingTasks(precedingTasks)
+                .addProcedingTasks(procedingTasks)
+                .setCondition(condition)
+                .build();
+    }
 
 }

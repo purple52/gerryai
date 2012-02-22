@@ -17,6 +17,7 @@
  */
 package org.gerryai.htn.simple.constraint.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
@@ -53,18 +54,15 @@ public class SimpleBetweenConstraint implements
 	 */
 	private SubstitutableCondition condition;
 	
-	/**
-	 * Constructor.
-	 * @param precedingTasks tasks that this constraint must hold after
-	 * @param procedingTasks tasks that this constraint must hold before
-	 * @param condition condition that must be true between the two sets of tasks
-	 */
-	protected SimpleBetweenConstraint(Set<SubstitutableTask> precedingTasks,
-	        Set<SubstitutableTask> procedingTasks, SubstitutableCondition condition) {
-	    this.precedingTasks = precedingTasks;
-	    this.procedingTasks = procedingTasks;
-	    this.condition = condition;
-	}
+    /**
+     * Constructor.
+     * @param builder the builder to build from
+     */
+    protected SimpleBetweenConstraint(Builder builder) {
+        precedingTasks = builder.getPrecedingTasks();
+        procedingTasks = builder.getProcedingTasks();
+        condition = builder.getCondition();
+    }
 	
 	/**
 	 * Get the set of tasks that this constraint must hold after.
@@ -129,4 +127,90 @@ public class SimpleBetweenConstraint implements
 	        return false;
 	    }
 	}
+	
+	/**
+     * Builder class for SimpleBetweenConstraint.
+     * @author David Edwards <david@more.fool.me.uk>
+     */
+    public static class Builder {
+        
+        /**
+         * The set of tasks that this constraint must hold after.
+         */
+        private Set<SubstitutableTask> precedingTasks;
+
+        /**
+         * The set of tasks that this constraint must hold before.
+         */
+        private Set<SubstitutableTask> procedingTasks;
+        
+        /**
+         * The condition that must be true directly after the last of these tasks.
+         */
+        private SubstitutableCondition condition;
+        
+        /**
+         * Default constructor.
+         */
+        public Builder() {
+            precedingTasks = new HashSet<SubstitutableTask>();
+            procedingTasks = new HashSet<SubstitutableTask>();
+        }
+
+        /**
+         * @param tasks the tasks to add
+         * @return the updated builder
+         */
+        public final Builder addPrecedingTasks(Set<SubstitutableTask> tasks) {
+            this.precedingTasks.addAll(tasks);
+            return this;
+        }
+
+        /**
+         * @param tasks the tasks to add
+         * @return the updated builder
+         */
+        public final Builder addProcedingTasks(Set<SubstitutableTask> tasks) {
+            this.procedingTasks.addAll(tasks);
+            return this;
+        }
+        
+        /**
+         * @param condition the condition to set
+         * @return the updated builder
+         */
+        public final Builder setCondition(SubstitutableCondition condition) {
+            this.condition = condition;
+            return this;
+        }
+
+        /**
+         * @return the tasks
+         */
+        protected final Set<SubstitutableTask> getPrecedingTasks() {
+            return precedingTasks;
+        }
+
+        /**
+         * @return the tasks
+         */
+        protected final Set<SubstitutableTask> getProcedingTasks() {
+            return procedingTasks;
+        }
+        
+        /**
+         * @return the condition
+         */
+        protected final SubstitutableCondition getCondition() {
+            return condition;
+        }
+        
+        /**
+         * Build the constraint.
+         * @return the finished constraint
+         */
+        public final SimpleBetweenConstraint build() {
+            return new SimpleBetweenConstraint(this);
+        }
+    }
 }

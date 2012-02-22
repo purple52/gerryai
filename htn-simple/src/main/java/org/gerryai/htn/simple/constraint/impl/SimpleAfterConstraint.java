@@ -17,6 +17,7 @@
  */
 package org.gerryai.htn.simple.constraint.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
@@ -46,17 +47,16 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<Substit
 	 * The condition that must be true directly after the last of these tasks.
 	 */
 	private SubstitutableCondition condition;
-	
+
 	/**
-	 * Constructor.
-	 * @param tasks the tasks this constraint must hold for
-	 * @param condition the condition this constraint enforces
-	 */
-	protected SimpleAfterConstraint(Set<SubstitutableTask> tasks, SubstitutableCondition condition) {
-	    this.tasks = tasks;
-	    this.condition = condition;
-	}
-	
+     * Constructor.
+     * @param builder the builder to build from
+     */
+    protected SimpleAfterConstraint(Builder builder) {
+        tasks = builder.getTasks();
+        condition = builder.getCondition();
+    }
+    
 	/**
 	 * Get the set of tasks that this constraint must hold for.
 	 * @return the tasks
@@ -109,6 +109,70 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<Substit
 	            && Objects.equal(condition, other.condition);
 	    } else {
 	        return false;
+	    }
+	}
+	
+	/**
+	 * Builder class for SimpleAfterConstraint.
+	 * @author David Edwards <david@more.fool.me.uk>
+	 */
+	public static class Builder {
+	    
+	    /**
+	     * The set of tasks that this constraint must hold for.
+	     */
+	    private Set<SubstitutableTask> tasks;
+	    
+        /**
+         * The condition that must be true directly after the last of these tasks.
+         */
+        private SubstitutableCondition condition;
+        
+        /**
+         * Default constructor.
+         */
+        public Builder() {
+            tasks = new HashSet<SubstitutableTask>();
+        }
+
+        /**
+         * @param tasks the tasks to add
+         * @return the updated builder
+         */
+        public final Builder addTasks(Set<SubstitutableTask> tasks) {
+            this.tasks.addAll(tasks);
+            return this;
+        }
+
+        /**
+         * @param condition the condition to set
+         * @return the updated builder
+         */
+        public final Builder setCondition(SubstitutableCondition condition) {
+            this.condition = condition;
+            return this;
+        }
+
+        /**
+         * @return the tasks
+         */
+        protected final Set<SubstitutableTask> getTasks() {
+            return tasks;
+        }
+        
+        /**
+         * @return the condition
+         */
+        protected final SubstitutableCondition getCondition() {
+            return condition;
+        }
+        
+        /**
+         * Build the constraint.
+         * @return the finished constraint
+         */
+	    public final SimpleAfterConstraint build() {
+	        return new SimpleAfterConstraint(this);
 	    }
 	}
 }

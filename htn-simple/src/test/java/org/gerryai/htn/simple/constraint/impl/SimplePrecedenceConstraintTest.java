@@ -46,7 +46,10 @@ public class SimplePrecedenceConstraintTest {
     public void testConstructor() {
         SubstitutableTask mockPrecedingTask = mock(SubstitutableTask.class);
         SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
-        SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint(mockPrecedingTask, mockProcedingTask);
+        SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
+                .setPrecedingTask(mockPrecedingTask)
+                .setProcedingTask(mockProcedingTask)
+                .build();
 
         assertEquals(mockPrecedingTask, constraint.getPrecedingTask());
         assertEquals(mockProcedingTask, constraint.getProcedingTask());
@@ -62,7 +65,10 @@ public class SimplePrecedenceConstraintTest {
         SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
         @SuppressWarnings("unchecked")
         ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
-        SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint(mockPrecedingTask, mockProcedingTask);
+        SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
+                .setPrecedingTask(mockPrecedingTask)
+                .setProcedingTask(mockProcedingTask)
+                .build();
         constraint.validate(mockValidator);
 
         verify(mockValidator).validate(constraint);
@@ -80,7 +86,10 @@ public class SimplePrecedenceConstraintTest {
         SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
         @SuppressWarnings("unchecked")
         ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
-        SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint(mockPrecedingTask, mockProcedingTask);
+        SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
+                .setPrecedingTask(mockPrecedingTask)
+                .setProcedingTask(mockProcedingTask)
+                .build();
         constraint.add(mockValidator);
 
         verify(mockValidator).add(constraint);
@@ -96,7 +105,11 @@ public class SimplePrecedenceConstraintTest {
         SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
         Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
 
-        SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint(mockPrecedingTask, mockProcedingTask);
+        SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
+                .setPrecedingTask(mockPrecedingTask)
+                .setProcedingTask(mockProcedingTask)
+                .build();
+        
         constraint.apply(mockSubstituter);
 
         verify(mockSubstituter,never()).visit(any(List.class));

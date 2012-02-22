@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
@@ -42,14 +43,20 @@ public class SimpleBetweenConstraintTest {
      */
     @Test
     public void testConstructor() {
-        @SuppressWarnings("unchecked")
-        Set<SubstitutableTask> mockPrecedingTasks = mock(Set.class);
-        @SuppressWarnings("unchecked")
-        Set<SubstitutableTask> mockProcedingTasks = mock(Set.class);
+        SubstitutableTask mockPrecedingTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockPrecedingTasks = new HashSet<SubstitutableTask>();
+        mockPrecedingTasks.add(mockPrecedingTask);
+        SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockProcedingTasks = new HashSet<SubstitutableTask>();
+        mockProcedingTasks.add(mockProcedingTask);
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
         
-        SimpleBetweenConstraint constraint = new SimpleBetweenConstraint(mockPrecedingTasks, mockProcedingTasks, mockCondition);
-
+        SimpleBetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
+                .addPrecedingTasks(mockPrecedingTasks)
+                .addProcedingTasks(mockProcedingTasks)
+                .setCondition(mockCondition)
+                .build();
+        
         assertEquals(mockPrecedingTasks, constraint.getPrecedingTasks());
         assertEquals(mockProcedingTasks, constraint.getProcedingTasks());
         assertEquals(mockCondition, constraint.getCondition());
@@ -61,14 +68,21 @@ public class SimpleBetweenConstraintTest {
      */
     @Test
     public void testValidate() {
-        @SuppressWarnings("unchecked")
-        Set<SubstitutableTask> mockPrecedingTasks = mock(Set.class);
-        @SuppressWarnings("unchecked")
-        Set<SubstitutableTask> mockProcedingTasks = mock(Set.class);
+        SubstitutableTask mockPrecedingTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockPrecedingTasks = new HashSet<SubstitutableTask>();
+        mockPrecedingTasks.add(mockPrecedingTask);
+        SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockProcedingTasks = new HashSet<SubstitutableTask>();
+        mockProcedingTasks.add(mockProcedingTask);
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
         @SuppressWarnings("unchecked")
         ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
-        SimpleBetweenConstraint constraint = new SimpleBetweenConstraint(mockPrecedingTasks, mockProcedingTasks, mockCondition);
+ 
+        SimpleBetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
+                .addPrecedingTasks(mockPrecedingTasks)
+                .addProcedingTasks(mockProcedingTasks)
+                .setCondition(mockCondition)
+                .build();
         constraint.validate(mockValidator);
 
         verify(mockValidator).validate(constraint);
@@ -84,15 +98,22 @@ public class SimpleBetweenConstraintTest {
      */
     @Test
     public void testAdd() throws InvalidConstraint {
-        @SuppressWarnings("unchecked")
-        Set<SubstitutableTask> mockPrecedingTasks = mock(Set.class);
-        @SuppressWarnings("unchecked")
-        Set<SubstitutableTask> mockProcedingTasks = mock(Set.class);
+        SubstitutableTask mockPrecedingTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockPrecedingTasks = new HashSet<SubstitutableTask>();
+        mockPrecedingTasks.add(mockPrecedingTask);
+        SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockProcedingTasks = new HashSet<SubstitutableTask>();
+        mockProcedingTasks.add(mockProcedingTask);
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
         @SuppressWarnings("unchecked")
         ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
-        SimpleBetweenConstraint constraint = new SimpleBetweenConstraint(mockPrecedingTasks, mockProcedingTasks, mockCondition);
-
+ 
+        SimpleBetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
+                .addPrecedingTasks(mockPrecedingTasks)
+                .addProcedingTasks(mockProcedingTasks)
+                .setCondition(mockCondition)
+                .build();
+        
         constraint.add(mockValidator);
 
         verify(mockValidator).add(constraint);
@@ -103,17 +124,23 @@ public class SimpleBetweenConstraintTest {
      */
     @Test
     public void testApply() {
-        @SuppressWarnings("unchecked")
-        Set<SubstitutableTask> mockPrecedingTasks = mock(Set.class);
-        @SuppressWarnings("unchecked")
-        Set<SubstitutableTask> mockProcedingTasks = mock(Set.class);
+        SubstitutableTask mockPrecedingTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockPrecedingTasks = new HashSet<SubstitutableTask>();
+        mockPrecedingTasks.add(mockPrecedingTask);
+        SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockProcedingTasks = new HashSet<SubstitutableTask>();
+        mockProcedingTasks.add(mockProcedingTask);
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 
         @SuppressWarnings("unchecked")
         Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
 
-        SimpleBetweenConstraint constraint = new SimpleBetweenConstraint(mockPrecedingTasks, mockProcedingTasks, mockCondition);
-
+        SimpleBetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
+                .addPrecedingTasks(mockPrecedingTasks)
+                .addProcedingTasks(mockProcedingTasks)
+                .setCondition(mockCondition)
+                .build();
+        
         constraint.apply(mockSubstituter);
 
         verify(mockCondition).apply(mockSubstituter);

@@ -17,6 +17,7 @@
  */
 package org.gerryai.htn.simple.constraint.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.SubstitutableBeforeConstraint;
@@ -51,12 +52,11 @@ public class SimpleBeforeConstraint
 
     /**
      * Constructor.
-     * @param tasks the tasks this constraint must hold for
-     * @param condition the condition this constraint enforces
+     * @param builder the builder to build from
      */
-    protected SimpleBeforeConstraint(Set<SubstitutableTask> tasks, SubstitutableCondition condition) {
-        this.tasks = tasks;
-        this.condition = condition;
+    protected SimpleBeforeConstraint(Builder builder) {
+        tasks = builder.getTasks();
+        condition = builder.getCondition();
     }
 
     /**
@@ -118,4 +118,67 @@ public class SimpleBeforeConstraint
         }
     }
 
+    /**
+     * Builder class for SimpleBeforeConstraint.
+     * @author David Edwards <david@more.fool.me.uk>
+     */
+    public static class Builder {
+        
+        /**
+         * The set of tasks that this constraint must hold for.
+         */
+        private Set<SubstitutableTask> tasks;
+        
+        /**
+         * The condition that must be true directly after the last of these tasks.
+         */
+        private SubstitutableCondition condition;
+        
+        /**
+         * Default constructor.
+         */
+        public Builder() {
+            tasks = new HashSet<SubstitutableTask>();
+        }
+
+        /**
+         * @param tasks the tasks to add
+         * @return the updated builder
+         */
+        public final Builder addTasks(Set<SubstitutableTask> tasks) {
+            this.tasks.addAll(tasks);
+            return this;
+        }
+
+        /**
+         * @param condition the condition to set
+         * @return the updated builder
+         */
+        public final Builder setCondition(SubstitutableCondition condition) {
+            this.condition = condition;
+            return this;
+        }
+
+        /**
+         * @return the tasks
+         */
+        protected final Set<SubstitutableTask> getTasks() {
+            return tasks;
+        }
+        
+        /**
+         * @return the condition
+         */
+        protected final SubstitutableCondition getCondition() {
+            return condition;
+        }
+        
+        /**
+         * Build the constraint.
+         * @return the finished constraint
+         */
+        public final SimpleBeforeConstraint build() {
+            return new SimpleBeforeConstraint(this);
+        }
+    }
 }
