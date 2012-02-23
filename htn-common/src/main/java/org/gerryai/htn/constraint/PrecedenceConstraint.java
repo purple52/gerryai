@@ -17,6 +17,8 @@
  */
 package org.gerryai.htn.constraint;
 
+import java.util.Set;
+
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
@@ -32,12 +34,12 @@ public interface PrecedenceConstraint<T extends Term, K extends Task<T>> extends
 	 * Get the task that must come first.
 	 * @return the task
 	 */
-	K getPrecedingTask();
+	Set<K> getPrecedingTasks();
 
 	/**
 	 * Get the task that must come last.
 	 * @return the task
 	 */
-	K getProcedingTask();
+	Set<K> getProcedingTasks();
 	
 }

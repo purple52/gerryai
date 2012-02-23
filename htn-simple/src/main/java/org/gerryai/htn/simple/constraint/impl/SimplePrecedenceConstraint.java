@@ -17,6 +17,8 @@
  */
 package org.gerryai.htn.simple.constraint.impl;
 
+import java.util.Set;
+
 import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
 import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
@@ -39,34 +41,34 @@ public class SimplePrecedenceConstraint	implements
 	/**
 	 * The task that must come first.
 	 */
-	private SubstitutableTask precedingTask;
+	private Set<SubstitutableTask> precedingTasks;
 	
 	/**
 	 * The task that must come last.
 	 */
-	private SubstitutableTask procedingTask;
+	private Set<SubstitutableTask> procedingTasks;
 	
     /**
      * Constructor.
      * @param builder the builder to build from
      */
     protected SimplePrecedenceConstraint(Builder builder) {
-        precedingTask = builder.getPrecedingTask();
-        procedingTask = builder.getProcedingTask();
+        precedingTasks = builder.getPrecedingTasks();
+        procedingTasks = builder.getProcedingTasks();
     }
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTask getPrecedingTask() {
-		return precedingTask;
+	public final Set<SubstitutableTask> getPrecedingTasks() {
+		return precedingTasks;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTask getProcedingTask() {
-		return procedingTask;
+	public final Set<SubstitutableTask> getProcedingTasks() {
+		return procedingTasks;
 	}
 
 	/**
@@ -94,21 +96,21 @@ public class SimplePrecedenceConstraint	implements
 	
 	@Override
 	public final int hashCode() {
-		return Objects.hashCode(precedingTask, procedingTask);
+		return Objects.hashCode(precedingTasks, procedingTasks);
 	}
 
 	@Override
 	public final boolean equals(Object obj) {
 		if (obj instanceof SimplePrecedenceConstraint) {
 	        final SimplePrecedenceConstraint other = (SimplePrecedenceConstraint) obj;
-	        return Objects.equal(precedingTask, other.precedingTask)
-	            && Objects.equal(procedingTask, other.procedingTask);
+	        return Objects.equal(precedingTasks, other.precedingTasks)
+	            && Objects.equal(procedingTasks, other.procedingTasks);
 	    } else {
 	        return false;
 	    }
 	}
 	
-	   /**
+	  /**
      * Builder class for SimpleBetweenConstraint.
      * @author David Edwards <david@more.fool.me.uk>
      */
@@ -117,43 +119,43 @@ public class SimplePrecedenceConstraint	implements
         /**
          * The task that must come first.
          */
-        private SubstitutableTask precedingTask;
+        private Set<SubstitutableTask> precedingTasks;
 
         /**
          * The task that must come last.
          */
-        private SubstitutableTask procedingTask;
+        private Set<SubstitutableTask> procedingTasks;
         
         /**
-         * @param task the task to set
+         * @param tasks the tasks to set
          * @return the updated builder
          */
-        public final Builder setPrecedingTask(SubstitutableTask task) {
-            this.precedingTask = task;
+        public final Builder setPrecedingTasks(Set<SubstitutableTask> tasks) {
+            this.precedingTasks = tasks;
             return this;
         }
 
         /**
-         * @param task the task to set
+         * @param tasks the tasks to set
          * @return the updated builder
          */
-        public final Builder setProcedingTask(SubstitutableTask task) {
-            this.procedingTask = task;
+        public final Builder setProcedingTasks(Set<SubstitutableTask> tasks) {
+            this.procedingTasks = tasks;
             return this;
         }
         
         /**
          * @return the task
          */
-        protected final SubstitutableTask getPrecedingTask() {
-            return precedingTask;
+        protected final Set<SubstitutableTask> getPrecedingTasks() {
+            return precedingTasks;
         }
 
         /**
          * @return the task
          */
-        protected final SubstitutableTask getProcedingTask() {
-            return procedingTask;
+        protected final Set<SubstitutableTask> getProcedingTasks() {
+            return procedingTasks;
         }
         
         /**

@@ -92,10 +92,17 @@ public class GenericConstraintValidator<T extends Term, K extends Task<T>, I ext
 	public final boolean validate(ValidatablePrecedenceConstraint<T, K, I> constraint) {
 		
 		// Check tasks have already been added
-		if (!tasks.contains(constraint.getPrecedingTask()) || !tasks.contains(constraint.getProcedingTask())) {
-			return false;
-		}
-		
+	    for (K task : constraint.getPrecedingTasks()) {
+	        if (!tasks.contains(task)) {
+	            return false;
+	        }
+	    }
+        for (K task : constraint.getProcedingTasks()) {
+            if (!tasks.contains(task)) {
+                return false;
+            }
+        }
+        
 		// Check if an existing identical constraint exists
 		for (ValidatablePrecedenceConstraint<T, K, I> existingConstraint : precedenceConstraints) {	
 			if (existingConstraint.equals(constraint)) {
@@ -104,9 +111,12 @@ public class GenericConstraintValidator<T extends Term, K extends Task<T>, I ext
 		}
 		
 		//Check for cycles
-		if (checkForPrecedenceConstraintCycle(constraint.getPrecedingTask(),
-				constraint.getProcedingTask())) {
-			return false;
+		for (K precedingTask : constraint.getPrecedingTasks()) {
+		    for (K procedingTask : constraint.getProcedingTasks()) {
+		        if (checkForPrecedenceConstraintCycle(precedingTask, procedingTask)) {
+		            return false;
+		        }
+		    }
 		}
 		
 		return true;
@@ -181,7 +191,9 @@ public class GenericConstraintValidator<T extends Term, K extends Task<T>, I ext
 			throws InvalidConstraint {
 		if (validate(constraint)) {
 			precedenceConstraints.add(constraint);
-			precedingTasks.get(constraint.getPrecedingTask()).add(constraint);
+			for (K task : constraint.getPrecedingTasks()) {
+			    precedingTasks.get(task).add(constraint);
+			}
 		} else {
 			throw new InvalidConstraint();
 		}
@@ -244,8 +256,10 @@ public class GenericConstraintValidator<T extends Term, K extends Task<T>, I ext
 			return false;
 		} else {
 			for (ValidatablePrecedenceConstraint<T, K, I> constraint : precedingTasks.get(nextTask)) {
-				if (checkForPrecedenceConstraintCycle(initialTask, constraint.getProcedingTask())) {
-					return true;
+				for (K task : constraint.getProcedingTasks()) {
+				    if (checkForPrecedenceConstraintCycle(initialTask, task)) {
+				        return true;
+				    }
 				}
 			}
 			return false;

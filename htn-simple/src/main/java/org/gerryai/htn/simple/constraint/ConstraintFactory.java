@@ -38,11 +38,11 @@ public interface ConstraintFactory<T extends Term, K extends Task<T>, I extends 
 
 	/**
 	 * Create a precedence constraint.
-	 * @param precedingTask the task that must come first
-	 * @param procedingTask the task that must come last
+	 * @param precedingTasks the tasks that must come first
+	 * @param procedingTasks the tasks that must come last
 	 * @return the constraint
 	 */
-	PrecedenceConstraint<T, K> createPrecedenceConstraint(K precedingTask, K procedingTask);
+	PrecedenceConstraint<T, K> createPrecedenceConstraint(Set<K> precedingTasks, Set<K> procedingTasks);
 	
 	/**
 	 * Create a before constraint.

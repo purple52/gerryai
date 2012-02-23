@@ -33,10 +33,10 @@ public class SimpleConstraintFactory implements SubstitutableConstraintFactory {
 	 * {@inheritDoc}
 	 */
 	public final SimplePrecedenceConstraint
-			createPrecedenceConstraint(SubstitutableTask precedingTask, SubstitutableTask procedingTask) {
+			createPrecedenceConstraint(Set<SubstitutableTask> precedingTasks, Set<SubstitutableTask> procedingTasks) {
 		return new SimplePrecedenceConstraint.Builder()
-		        .setPrecedingTask(precedingTask)
-		        .setProcedingTask(procedingTask)
+		        .setPrecedingTasks(precedingTasks)
+		        .setProcedingTasks(procedingTasks)
 		        .build();
 	}
 

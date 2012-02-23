@@ -41,15 +41,19 @@ public class SimpleConstraintFactoryTest {
 		
 		SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
 		SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
-		
+        Set<SubstitutableTask> mockTasksOne = new HashSet<SubstitutableTask>();
+        mockTasksOne.add(mockTaskA);
+        Set<SubstitutableTask> mockTasksTwo = new HashSet<SubstitutableTask>();
+        mockTasksOne.add(mockTaskB);
+        
 		// Create factory under test
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
 		
 		//Try and create the constraint
-		SimplePrecedenceConstraint constraint = factory.createPrecedenceConstraint(mockTaskA, mockTaskB);
+		SimplePrecedenceConstraint constraint = factory.createPrecedenceConstraint(mockTasksOne, mockTasksTwo);
 		
-		assertEquals(mockTaskA,constraint.getPrecedingTask());
-		assertEquals(mockTaskB,constraint.getProcedingTask());
+		assertEquals(mockTasksOne, constraint.getPrecedingTasks());
+		assertEquals(mockTasksTwo, constraint.getProcedingTasks());
 	}
 
 	/**
