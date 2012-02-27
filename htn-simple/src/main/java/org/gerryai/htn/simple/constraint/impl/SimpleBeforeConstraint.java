@@ -20,7 +20,6 @@ package org.gerryai.htn.simple.constraint.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.SubstitutableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
@@ -35,10 +34,8 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  * 
  */
-public class SimpleBeforeConstraint
-        implements
-        ValidatableBeforeConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
-        SubstitutableBeforeConstraint {
+public class SimpleBeforeConstraint implements SimpleConstraint<SimpleBeforeConstraint>,
+        ValidatableBeforeConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
 
     /**
      * The set of tasks that this constraint must hold for.
@@ -122,7 +119,7 @@ public class SimpleBeforeConstraint
      * Builder class for SimpleBeforeConstraint.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder {
+    public static class Builder implements SimpleConstraintBuilder<SimpleBeforeConstraint> {
         
         /**
          * The set of tasks that this constraint must hold for.
@@ -174,11 +171,44 @@ public class SimpleBeforeConstraint
         }
         
         /**
+         * {@inheritDoc}
+         */
+        public final Builder copy(SimpleBeforeConstraint constraint) {
+            this.tasks = new HashSet<SubstitutableTask>(constraint.getTasks());
+            this.condition = constraint.getCondition();
+            return this;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder replace(SubstitutableTask oldTask, Set<SubstitutableTask> newTasks) {
+            this.tasks.remove(oldTask);
+            this.tasks.addAll(newTasks);
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder apply(Substituter<SubstitutableTerm> substituter) {
+            this.condition.apply(substituter);
+            return this;
+        }  
+        
+        /**
          * Build the constraint.
          * @return the finished constraint
          */
         public final SimpleBeforeConstraint build() {
             return new SimpleBeforeConstraint(this);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public final SimpleConstraintBuilder<SimpleBeforeConstraint> createBuilder() {
+        return new Builder();
     }
 }

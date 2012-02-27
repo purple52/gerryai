@@ -133,4 +133,72 @@ public class SimplePrecedenceConstraintTest {
         verify(mockSubstituter,never()).visit(any(List.class));
     }
 
+    /**
+     * Test construction using copy and apply
+     */
+    @Test
+    public void testCopyApply() {
+        SubstitutableTask mockPrecedingTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockPrecedingTasks = new HashSet<SubstitutableTask>();
+        mockPrecedingTasks.add(mockPrecedingTask);
+        SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockProcedingTasks = new HashSet<SubstitutableTask>();
+        mockProcedingTasks.add(mockProcedingTask);
+
+        @SuppressWarnings("unchecked")
+        Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
+
+        SimplePrecedenceConstraint initialConstraint = new SimplePrecedenceConstraint.Builder()
+                .setPrecedingTasks(mockPrecedingTasks)
+                .setProcedingTasks(mockProcedingTasks)
+                .build();
+        
+        SimplePrecedenceConstraint constraint = initialConstraint.createBuilder()
+                .copy(initialConstraint)
+                .apply(mockSubstituter)
+                .build();
+
+        assertEquals(mockPrecedingTasks, constraint.getPrecedingTasks());
+        assertEquals(mockProcedingTasks, constraint.getProcedingTasks());
+        
+        //NB: Apply does nothing
+    }
+
+    /**
+     * Test construction using copy and replace
+     */
+    @Test
+    public void testCopyReplace() {
+        SubstitutableTask mockPrecedingTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockPrecedingTasks = new HashSet<SubstitutableTask>();
+        mockPrecedingTasks.add(mockPrecedingTask);
+        SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockProcedingTasks = new HashSet<SubstitutableTask>();
+        mockProcedingTasks.add(mockProcedingTask);
+        
+        SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
+        SubstitutableTask mockTaskC = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockNewPrecedingTasks = new HashSet<SubstitutableTask>();
+        mockNewPrecedingTasks.add(mockTaskB);
+        mockNewPrecedingTasks.add(mockTaskC);
+        SubstitutableTask mockTaskD = mock(SubstitutableTask.class);
+        SubstitutableTask mockTaskE = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockNewProcedingTasks = new HashSet<SubstitutableTask>();
+        mockNewProcedingTasks.add(mockTaskD);
+        mockNewProcedingTasks.add(mockTaskE);
+
+        SimplePrecedenceConstraint initialConstraint = new SimplePrecedenceConstraint.Builder()
+                .setPrecedingTasks(mockPrecedingTasks)
+                .setProcedingTasks(mockProcedingTasks)
+                .build();
+        
+        SimplePrecedenceConstraint constraint = initialConstraint.createBuilder()
+                .copy(initialConstraint)
+                .replace(mockPrecedingTask, mockNewPrecedingTasks)
+                .replace(mockProcedingTask, mockNewProcedingTasks)
+                .build();
+
+        assertEquals(mockNewPrecedingTasks, constraint.getPrecedingTasks());
+        assertEquals(mockNewProcedingTasks, constraint.getProcedingTasks());
+    }
 }

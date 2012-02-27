@@ -20,7 +20,6 @@ package org.gerryai.htn.simple.constraint.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
 import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
@@ -35,8 +34,8 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleAfterConstraint implements ValidatableAfterConstraint<SubstitutableTerm,
-		SubstitutableTask, SubstitutableCondition>, SubstitutableConstraint<SubstitutableTerm> {
+public class SimpleAfterConstraint implements SimpleConstraint<SimpleAfterConstraint>,
+        ValidatableAfterConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
 
 	/**
 	 * The set of tasks that this constraint must hold for.
@@ -96,6 +95,13 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<Substit
 		condition.apply(substituter);
 	}
 	
+    /**
+     * {@inheritDoc}
+     */
+    public final SimpleConstraintBuilder<SimpleAfterConstraint> createBuilder() {
+        return new Builder();
+    }
+    
 	@Override
 	public final int hashCode() {
 		return Objects.hashCode(tasks, condition);
@@ -116,7 +122,7 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<Substit
 	 * Builder class for SimpleAfterConstraint.
 	 * @author David Edwards <david@more.fool.me.uk>
 	 */
-	public static class Builder {
+	public static class Builder implements SimpleConstraintBuilder<SimpleAfterConstraint> {
 	    
 	    /**
 	     * The set of tasks that this constraint must hold for.
@@ -152,7 +158,34 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<Substit
             this.condition = condition;
             return this;
         }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder copy(SimpleAfterConstraint constraint) {
+            this.tasks = new HashSet<SubstitutableTask>(constraint.getTasks());
+            //TODO: this should copy the condition
+            this.condition = constraint.getCondition();
+            return this;
+        }
 
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder replace(SubstitutableTask oldTask, Set<SubstitutableTask> newTasks) {
+            this.tasks.remove(oldTask);
+            this.tasks.addAll(newTasks);
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder apply(Substituter<SubstitutableTerm> substituter) {
+            this.condition.apply(substituter);
+            return this;
+        }        
+        
         /**
          * @return the tasks
          */
@@ -168,11 +201,10 @@ public class SimpleAfterConstraint implements ValidatableAfterConstraint<Substit
         }
         
         /**
-         * Build the constraint.
-         * @return the finished constraint
+         * {@inheritDoc}
          */
 	    public final SimpleAfterConstraint build() {
 	        return new SimpleAfterConstraint(this);
 	    }
-	}
+	}	
 }

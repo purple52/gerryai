@@ -20,7 +20,6 @@ package org.gerryai.htn.simple.constraint.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
 import org.gerryai.htn.simple.constraint.ValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
@@ -35,9 +34,8 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleBetweenConstraint implements
-		ValidatableBetweenConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
-		SubstitutableConstraint<SubstitutableTerm> {
+public class SimpleBetweenConstraint implements SimpleConstraint<SimpleBetweenConstraint>,
+		ValidatableBetweenConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
 
 	/**
 	 * The set of tasks that this constraint must hold after.
@@ -110,6 +108,13 @@ public class SimpleBetweenConstraint implements
     public final void apply(Substituter<SubstitutableTerm> substituter) {
         condition.apply(substituter);
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public final SimpleConstraintBuilder<SimpleBetweenConstraint> createBuilder() {
+        return new Builder();
+    }
 	
 	@Override
 	public final int hashCode() {
@@ -132,7 +137,7 @@ public class SimpleBetweenConstraint implements
      * Builder class for SimpleBetweenConstraint.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder {
+    public static class Builder implements SimpleConstraintBuilder<SimpleBetweenConstraint> {
         
         /**
          * The set of tasks that this constraint must hold after.
@@ -184,6 +189,39 @@ public class SimpleBetweenConstraint implements
             return this;
         }
 
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder copy(SimpleBetweenConstraint constraint) {
+            this.precedingTasks = new HashSet<SubstitutableTask>(constraint.getPrecedingTasks());
+            this.procedingTasks = new HashSet<SubstitutableTask>(constraint.getProcedingTasks());
+            this.condition = constraint.getCondition();
+            return this;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder replace(SubstitutableTask oldTask, Set<SubstitutableTask> newTasks) {
+            if (this.precedingTasks.contains(oldTask)) {
+                this.precedingTasks.remove(oldTask);
+                this.precedingTasks.addAll(newTasks);
+            }
+            if (this.procedingTasks.contains(oldTask)) {
+                this.procedingTasks.remove(oldTask);
+                this.procedingTasks.addAll(newTasks);
+            }
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder apply(Substituter<SubstitutableTerm> substituter) {
+            this.condition.apply(substituter);
+            return this;
+        }    
+        
         /**
          * @return the tasks
          */

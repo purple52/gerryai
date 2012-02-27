@@ -17,9 +17,9 @@
  */
 package org.gerryai.htn.simple.constraint.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
 import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
@@ -34,9 +34,8 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePrecedenceConstraint	implements
-		ValidatablePrecedenceConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
-		SubstitutableConstraint<SubstitutableTerm> {
+public class SimplePrecedenceConstraint	implements SimpleConstraint<SimplePrecedenceConstraint>,
+		ValidatablePrecedenceConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
 
 	/**
 	 * The task that must come first.
@@ -94,6 +93,13 @@ public class SimplePrecedenceConstraint	implements
 		// Nothing to do
 	}
 	
+    /**
+     * {@inheritDoc}
+     */
+    public final SimpleConstraintBuilder<SimplePrecedenceConstraint> createBuilder() {
+        return new Builder();
+    }
+    
 	@Override
 	public final int hashCode() {
 		return Objects.hashCode(precedingTasks, procedingTasks);
@@ -114,7 +120,7 @@ public class SimplePrecedenceConstraint	implements
      * Builder class for SimpleBetweenConstraint.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder {
+    public static class Builder implements SimpleConstraintBuilder<SimplePrecedenceConstraint> {
         
         /**
          * The task that must come first.
@@ -143,6 +149,38 @@ public class SimplePrecedenceConstraint	implements
             this.procedingTasks = tasks;
             return this;
         }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder copy(SimplePrecedenceConstraint constraint) {
+            this.precedingTasks = new HashSet<SubstitutableTask>(constraint.getPrecedingTasks());
+            this.procedingTasks = new HashSet<SubstitutableTask>(constraint.getProcedingTasks());
+            return this;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder replace(SubstitutableTask oldTask, Set<SubstitutableTask> newTasks) {
+            if (this.precedingTasks.contains(oldTask)) {
+                this.precedingTasks.remove(oldTask);
+                this.precedingTasks.addAll(newTasks);
+            }
+            if (this.procedingTasks.contains(oldTask)) {
+                this.procedingTasks.remove(oldTask);
+                this.procedingTasks.addAll(newTasks);
+            }
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder apply(Substituter<SubstitutableTerm> substituter) {
+            // Do nothing; precedence constraints do not have conditions
+            return this;
+        }  
         
         /**
          * @return the task

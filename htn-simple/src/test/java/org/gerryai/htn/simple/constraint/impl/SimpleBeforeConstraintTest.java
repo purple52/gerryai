@@ -105,10 +105,10 @@ public class SimpleBeforeConstraintTest {
     }
 
     /**
-     * Test substituter is called
+     * Test construction using copy and apply
      */
     @Test
-    public void testApply() {
+    public void testCopyApply() {
         SubstitutableTask mockTask = mock(SubstitutableTask.class);
         Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
         mockTasks.add(mockTask);
@@ -117,13 +117,46 @@ public class SimpleBeforeConstraintTest {
         @SuppressWarnings("unchecked")
         Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
 
-        SimpleBeforeConstraint constraint = new SimpleBeforeConstraint.Builder()
-        .addTasks(mockTasks)
-        .setCondition(mockCondition)
-        .build();
-        constraint.apply(mockSubstituter);
+        SimpleBeforeConstraint initialConstraint = new SimpleBeforeConstraint.Builder()
+                .addTasks(mockTasks)
+                .setCondition(mockCondition)
+                .build();
+        
+        SimpleBeforeConstraint constraint = initialConstraint.createBuilder()
+                .copy(initialConstraint)
+                .apply(mockSubstituter)
+                .build();
 
+        assertEquals(mockTasks, constraint.getTasks());
         verify(mockCondition).apply(mockSubstituter);
+    }
+
+    /**
+     * Test construction using copy and replace
+     */
+    @Test
+    public void testCopyReplace() {
+        SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
+        mockTasks.add(mockTaskA);
+        SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
+        SubstitutableTask mockTaskC = mock(SubstitutableTask.class);
+        Set<SubstitutableTask> mockNewTasks = new HashSet<SubstitutableTask>();
+        mockNewTasks.add(mockTaskB);
+        mockNewTasks.add(mockTaskC);
+        SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
+
+        SimpleBeforeConstraint initialConstraint = new SimpleBeforeConstraint.Builder()
+                .addTasks(mockTasks)
+                .setCondition(mockCondition)
+                .build();
+        
+        SimpleBeforeConstraint constraint = initialConstraint.createBuilder()
+                .copy(initialConstraint)
+                .replace(mockTaskA, mockNewTasks)
+                .build();
+
+        assertEquals(mockNewTasks, constraint.getTasks());
     }
 
 }
