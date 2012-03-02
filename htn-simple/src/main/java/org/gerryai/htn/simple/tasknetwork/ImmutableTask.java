@@ -17,7 +17,6 @@
  */
 package org.gerryai.htn.simple.tasknetwork;
 
-import org.gerryai.htn.simple.decomposition.Substitutable;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.tasknetwork.Task;
 

@@ -29,28 +29,28 @@ import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public class SimpleDomainHelper implements DomainHelper<SubstitutableOperator, SubstitutableMethod,
-		SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
+		SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, SubstitutableCondition> {
 
 	/**
 	 * Domain this helper is working on.
 	 */
 	private Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask,
-	SubstitutableTaskNetwork, ImmutableConstraint<?>, SubstitutableCondition> domain;
+	ImmutableTaskNetwork, ImmutableConstraint<?>, SubstitutableCondition> domain;
 	
 	/**
 	 * Constructor taking a domain to work on.
 	 * @param domain the domain to work on
 	 */
 	public SimpleDomainHelper(Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			ImmutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> domain) {
 		this.domain = domain;
 	}
@@ -59,7 +59,7 @@ public class SimpleDomainHelper implements DomainHelper<SubstitutableOperator, S
 	 * {@inheritDoc}
 	 */
 	public final Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask,
-	SubstitutableTaskNetwork, ImmutableConstraint<?>, SubstitutableCondition> getDomain() {
+	ImmutableTaskNetwork, ImmutableConstraint<?>, SubstitutableCondition> getDomain() {
 		return domain;
 	}
 

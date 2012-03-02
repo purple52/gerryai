@@ -19,39 +19,29 @@ package org.gerryai.htn.simple.tasknetwork;
 
 import java.util.Set;
 
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Interface for a task network builder.
- * @param <T> type of term used by the task network
- * @param <K> class of tasks
- * @param <N> type of task network being built
- * @param <C> class of constraints
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface TaskNetworkBuilder<
-		T extends SubstitutableTerm,
-		K extends Task<T>,
-		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>> {
+public interface ImmutableTaskNetworkBuilder {
 
 	/**
 	 * Add a task.
 	 * @param task the task
 	 * @return the updated builder
 	 */
-	TaskNetworkBuilder<T, K, N, C> addTask(K task);
+	ImmutableTaskNetworkBuilder addTask(ImmutableTask task);
 
 	/**
 	 * Add a set of tasks.
 	 * @param tasks the tasks
 	 * @return the updated builder
 	 */
-	TaskNetworkBuilder<T, K, N, C> addTasks(Set<K> tasks);
+	ImmutableTaskNetworkBuilder addTasks(Set<ImmutableTask> tasks);
 	
 	/**
 	 * Add a constraint.
@@ -62,7 +52,7 @@ public interface TaskNetworkBuilder<
 	 * @return the updated builder
 	 * @throws InvalidConstraint if the constraint could not be added
 	 */
-	TaskNetworkBuilder<T, K, N, C> addConstraint(C constraint) throws InvalidConstraint;
+	ImmutableTaskNetworkBuilder addConstraint(ImmutableConstraint<?> constraint) throws InvalidConstraint;
 	
 	/**
 	 * Add a set of constraints.
@@ -71,7 +61,7 @@ public interface TaskNetworkBuilder<
 	 * @return the updated builder
 	 * @throws InvalidConstraint if any of the constraints could not be added
 	 */
-	TaskNetworkBuilder<T, K, N, C> addConstraints(Set<C> constraints) throws InvalidConstraint;
+	ImmutableTaskNetworkBuilder addConstraints(Set<ImmutableConstraint<?>> constraints) throws InvalidConstraint;
 	
 	/**
 	 * Adds all the tasks and constraints from the given network, replacing any existing.
@@ -79,30 +69,30 @@ public interface TaskNetworkBuilder<
 	 * @return the updated builder
 	 * @throws InvalidConstraint if any of the network's constraints could not be added
 	 */
-	TaskNetworkBuilder<T, K, N, C> copy(N taskNetwork)  throws InvalidConstraint;
+	ImmutableTaskNetworkBuilder copy(ImmutableTaskNetwork taskNetwork)  throws InvalidConstraint;
 	
     /**
      * Apply the provided substituter to the arguments provided so far.
      * @param substituter the substituter to apply
      * @return the updated builder
      */
-	TaskNetworkBuilder<T, K, N, C> apply(Substituter<T> substituter);
+	ImmutableTaskNetworkBuilder apply(Substituter<SubstitutableTerm> substituter);
 	
 	/**
 	 * Get the set of tasks for the task network to be built.
 	 * @return the tasks
 	 */
-	Set<K> getTasks();
+	Set<ImmutableTask> getTasks();
 	
 	/**
 	 * Get the set of constraints for the task network to be built.
 	 * @return the constraints
 	 */
-	Set<C> getConstraints();
+	Set<ImmutableConstraint<?>> getConstraints();
 	
 	/**
 	 * Build the task network.
 	 * @return the task network
 	 */
-	N build();
+	ImmutableTaskNetwork build();
 }

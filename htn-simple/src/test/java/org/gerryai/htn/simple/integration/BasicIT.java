@@ -36,7 +36,7 @@ import org.gerryai.htn.simple.planner.impl.SimplePlannerFactory;
 import org.gerryai.htn.simple.planner.impl.SimplePlanningService;
 import org.gerryai.htn.simple.problem.impl.SimpleProblem;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilderFactory;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -111,11 +111,11 @@ public class BasicIT {
 				.addArgument(variableX)
 				.setIsPrimitive(true)
 				.build();
-		SubstitutableTaskNetwork methodATaskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
+		ImmutableTaskNetwork methodATaskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
 				.addTask(methodASubTask1)
 				.addTask(methodASubTask2)
 				.build();
-		SubstitutableTaskNetwork methodBTaskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
+		ImmutableTaskNetwork methodBTaskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
 				.addTask(methodBSubTask1)
 				.addTask(methodBSubTask2)
 				.build();
@@ -143,7 +143,7 @@ public class BasicIT {
 				.setIsPrimitive(false)
 				.build();
 		
-		SubstitutableTaskNetwork taskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
+		ImmutableTaskNetwork taskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
 				.addTask(task)
 				.build();
 		

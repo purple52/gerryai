@@ -30,7 +30,7 @@ import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  * Implementation of a planner.
@@ -38,21 +38,21 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  */
 public class SimplePlanner implements
 		Planner<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-		ImmutableTask, SubstitutableTaskNetwork,
+		ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, SubstitutableCondition> {
 	
 	/**
 	 * Manager the domain being worked in.
 	 */
 	private DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			ImmutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> domainHelper;
 	
 	/**
 	 * Helper for off-loading some of the logic.
 	 */
 	private PlannerHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			ImmutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> plannerHelper;
 	
 	/**
@@ -62,11 +62,11 @@ public class SimplePlanner implements
 	 */
 	public SimplePlanner(
 			DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-					ImmutableTask, SubstitutableTaskNetwork,
+					ImmutableTask, ImmutableTaskNetwork,
 					ImmutableConstraint<?>,
 					SubstitutableCondition> domainHelper,
 			PlannerHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-					ImmutableTask, SubstitutableTaskNetwork,
+					ImmutableTask, ImmutableTaskNetwork,
 					ImmutableConstraint<?>,
 					SubstitutableCondition> plannerHelper) {
 		this.domainHelper = domainHelper;
@@ -77,7 +77,7 @@ public class SimplePlanner implements
 	 * {@inheritDoc}
 	 */
 	public final Plan<SubstitutableOperator, SubstitutableCondition>
-			findPlan(State state, SubstitutableTaskNetwork taskNetwork) throws PlanNotFound {
+			findPlan(State state, ImmutableTaskNetwork taskNetwork) throws PlanNotFound {
 		
 		if (plannerHelper.isUnsolvable(taskNetwork)) {
 			// 1. No solution
@@ -94,7 +94,7 @@ public class SimplePlanner implements
 				// TODO: Handle state changes (and correct backtracking?)			
 				for (SubstitutableMethod method : domainHelper.getMethodsByTask(task)) {
 					try {
-						SubstitutableTaskNetwork decomposedNetwork = plannerHelper.decompose(taskNetwork, task, method);
+						ImmutableTaskNetwork decomposedNetwork = plannerHelper.decompose(taskNetwork, task, method);
 						// Try recursing to further process the decomposed network
 						return findPlan(state, decomposedNetwork);
 					} catch (DecompositionNotFound e) {

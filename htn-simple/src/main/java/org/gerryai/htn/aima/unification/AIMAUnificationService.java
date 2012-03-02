@@ -24,16 +24,16 @@ import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.aima.AIMAConverter;
-import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Variable;
 import org.gerryai.logic.unification.Substitution;
 
@@ -43,24 +43,17 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  * Unification service that use an AIMA unifier underneath.
  * @param <O> the type of operator this service works with
  * @param <M> the type of method this service works with
- * @param <T> the type of logical term this service works with
- * @param <K> the type of task this service works with
- * @param <N> the type of task network this service works with
- * @param <C> the type of constraint this service works with
  * @param <I> the class of condition the builder will handle
  * @param <V> the type of variable this service works with
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class AIMAUnificationService<
 		O extends Operator<I>,
-		M extends Method<T, K, N, C>,
-		T extends SubstitutableTerm,
-		K extends Task<T>,
-		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>,
+		M extends Method<SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
 		I extends Condition,
 		V extends Variable>
-				implements UnificationService<M, T, K, N, C, I, V> {
+				implements UnificationService<M, SubstitutableTerm, ImmutableTask,
+				ImmutableTaskNetwork, ImmutableConstraint<?>, I, V> {
 
 	/**
 	 * AIMA Unifier object to do the underlying expression unification.
@@ -70,12 +63,13 @@ public class AIMAUnificationService<
 	/**
 	 * Converter to convert between our classes and the AIMA FOL classes.
 	 */
-	private AIMAConverter<T, V, K> converter;
+	private AIMAConverter<SubstitutableTerm, V, ImmutableTask> converter;
 	
 	/**
 	 * Factory for creating task network builders.
 	 */
-	private TaskNetworkBuilderFactory<T, K, N, C> taskNetworkBuilderFactory;
+	private TaskNetworkBuilderFactory<SubstitutableTerm, ImmutableTask,
+	        ImmutableTaskNetwork, ImmutableConstraint<?>> taskNetworkBuilderFactory;
 	
 	/**
 	 * Constructor taking all required dependencies.
@@ -85,9 +79,11 @@ public class AIMAUnificationService<
 	 * @param taskNetworkBuilderFactory factory for creating task network builders
 	 */
 	public AIMAUnificationService(aima.core.logic.fol.Unifier unifier,
-			AIMAConverter<T, V, K> converter,
-			DomainHelper<O, M, T, K, N, C, I> domainHelper,
-			TaskNetworkBuilderFactory<T, K, N, C> taskNetworkBuilderFactory) {
+			AIMAConverter<SubstitutableTerm, V, ImmutableTask> converter,
+			DomainHelper<O, M, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
+			        ImmutableConstraint<?>, I> domainHelper,
+			TaskNetworkBuilderFactory<SubstitutableTerm, ImmutableTask,
+			        ImmutableTaskNetwork, ImmutableConstraint<?>> taskNetworkBuilderFactory) {
 		this.unifier = unifier;
 		this.converter = converter;
 		this.taskNetworkBuilderFactory = taskNetworkBuilderFactory;
@@ -95,7 +91,7 @@ public class AIMAUnificationService<
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Substitution<T, V>	findUnifier(K task, M method) {
+	public final Substitution<SubstitutableTerm, V>	findUnifier(ImmutableTask task, M method) {
 
 		Predicate taskPredicate = converter.convert(task);
 		Predicate methodTaskPredicate = converter.convert(method.getTask());
@@ -108,18 +104,18 @@ public class AIMAUnificationService<
 	/**
 	 * {@inheritDoc}
 	 */
-	public final N apply(
-			Substitution<T, V> unifier, 
-			N taskNetwork) {
+	public final ImmutableTaskNetwork apply(
+			Substitution<SubstitutableTerm, V> unifier, 
+			ImmutableTaskNetwork taskNetwork) {
 		
 		// TODO Add support constraints
-		Set<K> updatedTasks = new HashSet<K>();
-		for (K task : taskNetwork.getTasks()) {
-			K updatedTask = apply(unifier, task);
+		Set<ImmutableTask> updatedTasks = new HashSet<ImmutableTask>();
+		for (ImmutableTask task : taskNetwork.getTasks()) {
+		    ImmutableTask updatedTask = apply(unifier, task);
 			updatedTasks.add(updatedTask);
 		}
 
-		N updatedTaskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
+		ImmutableTaskNetwork updatedTaskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
 				.addTasks(updatedTasks)
 				.build();
 		
@@ -129,10 +125,10 @@ public class AIMAUnificationService<
 	/**
 	 * {@inheritDoc}
 	 */
-	public final K apply(Substitution<T, V> unifier, K task) {
+	public final ImmutableTask apply(Substitution<SubstitutableTerm, V> unifier, ImmutableTask task) {
 		
-		List<T> updatedTerms = new ArrayList<T>();		
-		for (T term : task.getArguments()) {
+		List<SubstitutableTerm> updatedTerms = new ArrayList<SubstitutableTerm>();		
+		for (SubstitutableTerm term : task.getArguments()) {
 			if (unifier.getMap().containsKey(term)) {
 				updatedTerms.add(unifier.getMap().get(term));
 			} else {
@@ -140,7 +136,7 @@ public class AIMAUnificationService<
 			}
 		}
 
-		K updatedTask = taskNetworkBuilderFactory.createTaskBuilder()
+		ImmutableTask updatedTask = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName(task.getName())
 				.addArguments(updatedTerms)
 				.build();

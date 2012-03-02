@@ -22,18 +22,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
+import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
 import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
+public class SimpleTaskNetwork implements ImmutableTaskNetwork {
 
 	/**
 	 * Set of tasks to be solved in this network.
@@ -49,8 +52,7 @@ public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
-	protected SimpleTaskNetwork(TaskNetworkBuilder<SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
-	        ImmutableConstraint<?>> builder) {
+	protected SimpleTaskNetwork(ImmutableTaskNetworkBuilder builder) {
 		this.tasks = builder.getTasks();
 		this.constraints = builder.getConstraints();
 	}
@@ -123,4 +125,142 @@ public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
 		return true;
 	}
 
+	public static class Builder implements ImmutableTaskNetworkBuilder {
+
+        /**
+         * Set of tasks we are building up.
+         */
+        private Set<ImmutableTask> tasks;
+        
+        /**
+         * Set of constraints we are building up.
+         */
+        private Set<ImmutableConstraint<?>> constraints;
+        
+        /**
+         * Constraint validator.
+         */
+        private ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> constraintValidator;
+        
+        /**
+         * Constructor, taking a constraint validator to use.
+         * @param constraintValidator the constraint validator
+         */
+        public Builder(ConstraintValidator<SubstitutableTerm, ImmutableTask,
+                SubstitutableCondition> constraintValidator) {
+            this.constraintValidator = constraintValidator;
+            tasks = new HashSet<ImmutableTask>();
+            constraints = new HashSet<ImmutableConstraint<?>>();
+        }
+        
+        /**
+         * @return the constraintValidator
+         */
+        protected final ConstraintValidator<SubstitutableTerm, ImmutableTask,
+                SubstitutableCondition> getConstraintValidator() {
+            return constraintValidator;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder addTask(ImmutableTask task) {
+            tasks.add(task);
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder addTasks(Set<ImmutableTask> tasks) {
+            this.tasks.addAll(tasks);
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder addConstraint(
+                ImmutableConstraint<?> constraint) throws InvalidConstraint {
+            addConstraintInternal(constraint);
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder addConstraints(
+                Set<ImmutableConstraint<?>> constraints) throws InvalidConstraint {
+            for (ImmutableConstraint<?> constraint : constraints) {
+                addConstraintInternal(constraint);
+            }
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder copy(ImmutableTaskNetwork taskNetwork) throws InvalidConstraint {
+            tasks = new HashSet<ImmutableTask>(taskNetwork.getTasks());
+            // Assume original task network is valid
+            constraints = new HashSet<ImmutableConstraint<?>>(taskNetwork.getConstraints());
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder apply(Substituter<SubstitutableTerm> substituter) {
+        
+            //TODO: Implement
+            for (ImmutableTask task : tasks) {
+                // Update every task
+                for (ImmutableConstraint<?> constraint : constraints) {
+                    // Update every constraint that refers to the original task
+                }
+            }
+            
+            for (ImmutableConstraint<?> constraint : constraints) {
+                // Update the condition in every constraint
+            }
+        
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final ImmutableTaskNetwork build() {
+            return new SimpleTaskNetwork(this);
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Set<ImmutableTask> getTasks() {
+            return tasks;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Set<ImmutableConstraint<?>> getConstraints() {
+            return constraints;
+        }
+        
+        /**
+         * Internal helper method to add a single constraint.
+         * Checks the validity of the constraint and updates the validator
+         * @param constraint the constraint
+         * @throws InvalidConstraint if the constraint was invalid
+         */
+        private void addConstraintInternal(ImmutableConstraint<?> constraint) throws InvalidConstraint {
+            if (constraint.validate(getConstraintValidator())) { 
+                constraints.add(constraint);
+                constraint.add(getConstraintValidator());
+            } else {
+                throw new InvalidConstraint();
+            }
+        }
+	}
 }

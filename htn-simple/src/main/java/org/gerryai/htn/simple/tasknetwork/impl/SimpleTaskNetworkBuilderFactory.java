@@ -24,6 +24,7 @@ import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetworkBuilderFactory;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
 
 /**
  * Factory for SimpleTask and SimpleTaskNetwork objects.
@@ -48,10 +49,10 @@ public class SimpleTaskNetworkBuilderFactory implements SubstitutableTaskNetwork
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTaskNetworkBuilder createTaskNetworkBuilder() {
+	public final ImmutableTaskNetworkBuilder createTaskNetworkBuilder() {
 		ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition>
 				constraintValidator = constraintValidatorFactory.create();
-		return new SimpleTaskNetworkBuilder(constraintValidator);	
+		return new SimpleTaskNetwork.Builder(constraintValidator);	
 	}
 
 	/**

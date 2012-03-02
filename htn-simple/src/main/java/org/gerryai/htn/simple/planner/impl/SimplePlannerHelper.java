@@ -37,7 +37,7 @@ import org.gerryai.htn.simple.plan.PlanFactory;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.unification.Substitution;
 
@@ -46,7 +46,7 @@ import org.gerryai.logic.unification.Substitution;
  *
  */
 public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator, SubstitutableMethod,
-		SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
+		SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, SubstitutableCondition> {
 
 	/**
@@ -63,14 +63,14 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 	/**
 	 * Service for decomposing tasks.
 	 */
-	private DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
+	private DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
 	        ImmutableConstraint<?>> decompositionService;
 	
 	/**
 	 * Service for finding unifiers.
 	 */
 	private UnificationService<SubstitutableMethod, SubstitutableTerm, ImmutableTask,
-			SubstitutableTaskNetwork, ImmutableConstraint<?>,
+			ImmutableTaskNetwork, ImmutableConstraint<?>,
 			SubstitutableCondition, SimpleVariable>  unificationService;
 	
 	/**
@@ -84,9 +84,9 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 			ActionFactory<SubstitutableOperator, SubstitutableTerm, ImmutableTask,
 					SubstitutableCondition> actionFactory,
 			PlanFactory<SubstitutableOperator, SubstitutableCondition> planFactory,
-			DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
+			DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>> decompositionservice,
-			UnificationService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
+			UnificationService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>,
 				SubstitutableCondition, SimpleVariable>  unificationService) {
 		this.actionFactory = actionFactory;
@@ -98,7 +98,7 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean isUnsolvable(SubstitutableTaskNetwork taskNetwork) {
+	public final boolean isUnsolvable(ImmutableTaskNetwork taskNetwork) {
 		//TODO: Implement
 		return false;
 	}
@@ -107,7 +107,7 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 	 * {@inheritDoc}
 	 */
 	public final Plan<SubstitutableOperator, SubstitutableCondition>
-		findPlanForPrimitive(State state, SubstitutableTaskNetwork taskNetwork) throws PlanNotFound {
+		findPlanForPrimitive(State state, ImmutableTaskNetwork taskNetwork) throws PlanNotFound {
 		// TODO: Confirm implementation
 		// TODO: Enforce constraints
 		
@@ -129,8 +129,8 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTaskNetwork applySubstitution(SimpleUnifier substitution,
-			SubstitutableTaskNetwork taskNetwork, Task<SubstitutableTerm> task, SubstitutableMethod method) {
+	public final ImmutableTaskNetwork applySubstitution(SimpleUnifier substitution,
+			ImmutableTaskNetwork taskNetwork, Task<SubstitutableTerm> task, SubstitutableMethod method) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -138,7 +138,7 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableTask getNonPrimitiveTask(SubstitutableTaskNetwork
+	public final ImmutableTask getNonPrimitiveTask(ImmutableTaskNetwork
 			taskNetwork) throws NonPrimitiveTaskNotFound {
 		for (ImmutableTask task : taskNetwork.getTasks()) {
 			if (!task.isPrimitive()) {
@@ -151,7 +151,7 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTaskNetwork decompose(SubstitutableTaskNetwork taskNetwork,
+	public final ImmutableTaskNetwork decompose(ImmutableTaskNetwork taskNetwork,
 			ImmutableTask task, SubstitutableMethod method) throws DecompositionNotFound {
 		Substitution<SubstitutableTerm, SimpleVariable> unifier;
 		try {

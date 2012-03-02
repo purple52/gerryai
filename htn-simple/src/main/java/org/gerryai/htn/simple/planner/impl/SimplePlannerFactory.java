@@ -40,7 +40,7 @@ import org.gerryai.htn.simple.plan.impl.SimpleActionFactoryHelper;
 import org.gerryai.htn.simple.plan.impl.SimplePlanFactory;
 import org.gerryai.htn.simple.planner.PlannerFactory;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetworkBuilderFactory;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilderFactory;
 
@@ -50,7 +50,7 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilderFactory;
  */
 public class SimplePlannerFactory implements
 		PlannerFactory<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-		ImmutableTask, SubstitutableTaskNetwork,
+		ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, SubstitutableCondition> {
 
 	/**
@@ -58,11 +58,11 @@ public class SimplePlannerFactory implements
 	 */
 	public final SimplePlanner create(
 			Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			ImmutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> domain) {
 		
 		DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-				ImmutableTask, SubstitutableTaskNetwork,
+				ImmutableTask, ImmutableTaskNetwork,
 				ImmutableConstraint<?>, SubstitutableCondition> domainHelper
 				= new SimpleDomainHelper(domain);
 		
@@ -80,14 +80,12 @@ public class SimplePlannerFactory implements
 				= new GenericConstraintValidatorFactory<SubstitutableTerm, ImmutableTask, SubstitutableCondition>();
 		SubstitutableTaskNetworkBuilderFactory taskNetworkBuilderFactory =
 			new SimpleTaskNetworkBuilderFactory(constraintValidatorFactory);
-		AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask,
-				SubstitutableTaskNetwork, ImmutableConstraint<?>,
+		AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, 
 				SubstitutableCondition, SimpleVariable> unificationService =
-			new AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask,
-				SubstitutableTaskNetwork, ImmutableConstraint<?>,
+			new AIMAUnificationService<SubstitutableOperator, SubstitutableMethod,
 				SubstitutableCondition, SimpleVariable>(unifier, converter, domainHelper, taskNetworkBuilderFactory);
 		
-		DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
+		DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>> decompositionService =
 				new SimpleDecompositionService(unificationService);
 		

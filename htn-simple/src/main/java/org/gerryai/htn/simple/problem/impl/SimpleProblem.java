@@ -9,7 +9,7 @@ import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  *  Gerry AI - Open framework for automated planning algorithms
@@ -34,7 +34,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  *
  */
 public class SimpleProblem implements Problem<SubstitutableOperator, SubstitutableMethod,
-		SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
+		SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, SubstitutableCondition> {
 
 	/**
@@ -45,13 +45,13 @@ public class SimpleProblem implements Problem<SubstitutableOperator, Substitutab
 	/**
 	 * The task network to acheive.
 	 */
-	private SubstitutableTaskNetwork taskNetwork;
+	private ImmutableTaskNetwork taskNetwork;
 	
 	/**
 	 * The domain to operate in.
 	 */
 	private Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			ImmutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> domain;
 	
 	/**
@@ -71,14 +71,14 @@ public class SimpleProblem implements Problem<SubstitutableOperator, Substitutab
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTaskNetwork getTaskNetwork() {
+	public final ImmutableTaskNetwork getTaskNetwork() {
 		return taskNetwork;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setTaskNetwork(SubstitutableTaskNetwork taskNetwork) {
+	public final void setTaskNetwork(ImmutableTaskNetwork taskNetwork) {
 		this.taskNetwork = taskNetwork;
 	}
 
@@ -86,7 +86,7 @@ public class SimpleProblem implements Problem<SubstitutableOperator, Substitutab
 	 * {@inheritDoc}
 	 */
 	public final Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			ImmutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> getDomain() {
 		return domain;
 	}
@@ -95,7 +95,7 @@ public class SimpleProblem implements Problem<SubstitutableOperator, Substitutab
 	 * {@inheritDoc}
 	 */
 	public final void setDomain(Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			ImmutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> domain) {
 		this.domain = domain;
 	}

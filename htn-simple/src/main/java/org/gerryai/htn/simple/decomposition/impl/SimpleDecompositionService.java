@@ -25,7 +25,7 @@ import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.logic.unification.Substitution;
 
 /**
@@ -35,13 +35,13 @@ import org.gerryai.logic.unification.Substitution;
  *
  */
 public class SimpleDecompositionService implements
-		DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
+		DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>> {
 
 	/**
 	 * Service for performing unification actions.
 	 */
-	private UnificationService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
+	private UnificationService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
 	ImmutableConstraint<?>,
 			SubstitutableCondition, SimpleVariable> unificationService;
 	
@@ -50,7 +50,7 @@ public class SimpleDecompositionService implements
 	 * @param unificationService the unification service to use
 	 */
 	public SimpleDecompositionService(UnificationService<SubstitutableMethod, SubstitutableTerm, ImmutableTask,
-			SubstitutableTaskNetwork, ImmutableConstraint<?>,
+			ImmutableTaskNetwork, ImmutableConstraint<?>,
 			SubstitutableCondition, SimpleVariable> unificationService) {
 		this.unificationService = unificationService;
 	}
@@ -58,14 +58,14 @@ public class SimpleDecompositionService implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTaskNetwork decompose(Substitution<SubstitutableTerm, SimpleVariable> unifier,
-			SubstitutableTaskNetwork taskNetwork, ImmutableTask task, SubstitutableMethod method) {
+	public final ImmutableTaskNetwork decompose(Substitution<SubstitutableTerm, SimpleVariable> unifier,
+			ImmutableTaskNetwork taskNetwork, ImmutableTask task, SubstitutableMethod method) {
 		// TODO: Ensure the original task network is never altered
 	    
 		// Apply unifier where relevant
-		SubstitutableTaskNetwork unifiedMethodSubTasks = unificationService.apply(unifier, method.getTaskNetwork());
+		ImmutableTaskNetwork unifiedMethodSubTasks = unificationService.apply(unifier, method.getTaskNetwork());
 		// TODO: Confirm if unifier really needs to be applied to the rest of the task network
-		SubstitutableTaskNetwork updatedTaskNetwork = unificationService.apply(unifier, taskNetwork);
+		ImmutableTaskNetwork updatedTaskNetwork = unificationService.apply(unifier, taskNetwork);
 		
 		// Replace the original task with the sub tasks provided by the method
 		updatedTaskNetwork.getTasks().remove(task);

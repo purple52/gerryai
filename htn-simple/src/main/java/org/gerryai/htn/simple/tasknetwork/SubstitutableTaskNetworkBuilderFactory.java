@@ -26,6 +26,6 @@ import org.gerryai.htn.simple.logic.SubstitutableTerm;
  */
 public interface SubstitutableTaskNetworkBuilderFactory extends
 		TaskNetworkBuilderFactory<SubstitutableTerm, ImmutableTask,
-		SubstitutableTaskNetwork, ImmutableConstraint<?>> {
+		ImmutableTaskNetwork, ImmutableConstraint<?>> {
 
 }

@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 import org.gerryai.htn.simple.domain.SubstitutableMethodBuilder;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.junit.Test;
 
 /**
@@ -52,7 +52,7 @@ public class SimpleMethodTest {
 
 	@Test
 	public void testTaskNetwork() {
-		SubstitutableTaskNetwork taskNetwork = mock(SubstitutableTaskNetwork.class);
+		ImmutableTaskNetwork taskNetwork = mock(ImmutableTaskNetwork.class);
 		SubstitutableMethodBuilder mockBuilder = mock(SubstitutableMethodBuilder.class);
 		when(mockBuilder.getTaskNetwork()).thenReturn(taskNetwork);
 		SimpleMethod method = new SimpleMethod(mockBuilder);

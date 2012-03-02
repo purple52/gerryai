@@ -26,7 +26,7 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * Extension of the task network interface that only uses substitutable components.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface SubstitutableTaskNetwork extends TaskNetwork<SubstitutableTerm, ImmutableTask,
+public interface ImmutableTaskNetwork extends TaskNetwork<SubstitutableTerm, ImmutableTask,
         ImmutableConstraint<?>>, Substitutable<SubstitutableTerm> {
 
 }

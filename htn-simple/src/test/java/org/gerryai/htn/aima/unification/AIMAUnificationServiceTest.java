@@ -25,15 +25,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.gerryai.htn.aima.AIMAConverter;
-import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Variable;
 import org.gerryai.logic.unification.Substitution;
 import org.junit.Test;
@@ -53,35 +53,28 @@ public class AIMAUnificationServiceTest {
 	public void testFindUnifier() {
 		aima.core.logic.fol.Unifier aimaUnifier = mock(aima.core.logic.fol.Unifier.class);
 		@SuppressWarnings("unchecked")
-		AIMAConverter<SubstitutableTerm, Variable, Task<SubstitutableTerm>> aimaConverter
+		AIMAConverter<SubstitutableTerm, Variable, ImmutableTask> aimaConverter
 				= mock(AIMAConverter.class);
 		@SuppressWarnings("unchecked")
-		DomainHelper<Operator<Condition>, Method<SubstitutableTerm, Task<SubstitutableTerm>,
-				TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>, Constraint<SubstitutableTerm>>,
-				Constraint<SubstitutableTerm>>, SubstitutableTerm, Task<SubstitutableTerm>, TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>,
-				Constraint<SubstitutableTerm>>, Constraint<SubstitutableTerm>, Condition> mockDomainHelper
+		DomainHelper<Operator<Condition>, Method<SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
+		        SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>, Condition> mockDomainHelper
 					= mock(DomainHelper.class);
 		@SuppressWarnings("unchecked")
-		TaskNetworkBuilderFactory<SubstitutableTerm, Task<SubstitutableTerm>, TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>,
-				Constraint<SubstitutableTerm>>, Constraint<SubstitutableTerm>> mockTaskNetworkBuilderFactory
+		TaskNetworkBuilderFactory<SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>> mockTaskNetworkBuilderFactory
 					= mock(TaskNetworkBuilderFactory.class);
-		AIMAUnificationService<Operator<Condition>, Method<SubstitutableTerm, Task<SubstitutableTerm>,
-				TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>, Constraint<SubstitutableTerm>>, Constraint<SubstitutableTerm>>,
-				SubstitutableTerm, Task<SubstitutableTerm>, TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>, Constraint<SubstitutableTerm>>,
-				Constraint<SubstitutableTerm>, Condition, Variable> unificationService
-					= new AIMAUnificationService<Operator<Condition>, Method<SubstitutableTerm,
-				Task<SubstitutableTerm>, TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>, Constraint<SubstitutableTerm>>,
-				Constraint<SubstitutableTerm>>, SubstitutableTerm, Task<SubstitutableTerm>, TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>,
-				Constraint<SubstitutableTerm>>, Constraint<SubstitutableTerm>, Condition, Variable>(
+		AIMAUnificationService<Operator<Condition>, Method<SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
+		            Condition, Variable> unificationService
+					= new AIMAUnificationService<
+					        Operator<Condition>,
+					        Method<SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
+					        Condition, Variable>(
 					aimaUnifier, aimaConverter, mockDomainHelper, 
 					mockTaskNetworkBuilderFactory);
 		
+		ImmutableTask mockTaskA = mock(ImmutableTask.class);
+		ImmutableTask mockTaskB = mock(ImmutableTask.class);
 		@SuppressWarnings("unchecked")
-		Task<SubstitutableTerm> mockTaskA = mock(Task.class);
-		@SuppressWarnings("unchecked")
-		Task<SubstitutableTerm> mockTaskB = mock(Task.class);
-		@SuppressWarnings("unchecked")
-		Method<SubstitutableTerm, Task<SubstitutableTerm>, TaskNetwork<SubstitutableTerm, Task<SubstitutableTerm>, Constraint<SubstitutableTerm>>, Constraint<SubstitutableTerm>> mockMethod = mock(Method.class);
+		Method<SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>> mockMethod = mock(Method.class);
 		when(mockMethod.getTask()).thenReturn(mockTaskB);
 		Predicate mockPredicateA = mock(Predicate.class);
 		Predicate mockPredicateB = mock(Predicate.class);

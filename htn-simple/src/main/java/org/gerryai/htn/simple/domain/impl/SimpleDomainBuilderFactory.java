@@ -28,7 +28,7 @@ import org.gerryai.htn.simple.domain.SubstitutableOperatorBuilder;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -37,14 +37,14 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 public class SimpleDomainBuilderFactory implements
 		DomainBuilderFactory<SimpleDomain, SubstitutableOperator, SubstitutableMethod,
 				SubstitutableTerm, ImmutableTask,
-				SubstitutableTaskNetwork, ImmutableConstraint<?>,
+				ImmutableTaskNetwork, ImmutableConstraint<?>,
 				SubstitutableCondition, Effect, SubstitutableOperatorBuilder> {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public final DomainBuilder<SimpleDomain, SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			ImmutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> createDomainBuilder() {
 		return new SimpleDomainBuilder();	
 	}
