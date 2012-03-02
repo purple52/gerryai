@@ -20,6 +20,8 @@ package org.gerryai.htn.simple.constraint.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
@@ -34,7 +36,7 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleAfterConstraint implements SimpleConstraint<SimpleAfterConstraint>,
+public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterConstraint>,
         ValidatableAfterConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
 
 	/**
@@ -91,7 +93,7 @@ public class SimpleAfterConstraint implements SimpleConstraint<SimpleAfterConstr
     /**
      * {@inheritDoc}
      */
-    public final SimpleConstraintBuilder<SimpleAfterConstraint> createCopyBuilder() {
+    public final ImmutableConstraintBuilder<SimpleAfterConstraint> createCopyBuilder() {
         return new Builder()
             .copy(this);
     }
@@ -116,7 +118,7 @@ public class SimpleAfterConstraint implements SimpleConstraint<SimpleAfterConstr
 	 * Builder class for SimpleAfterConstraint.
 	 * @author David Edwards <david@more.fool.me.uk>
 	 */
-	public static class Builder implements SimpleConstraintBuilder<SimpleAfterConstraint> {
+	public static class Builder implements ImmutableConstraintBuilder<SimpleAfterConstraint> {
 	    
 	    /**
 	     * The set of tasks that this constraint must hold for.

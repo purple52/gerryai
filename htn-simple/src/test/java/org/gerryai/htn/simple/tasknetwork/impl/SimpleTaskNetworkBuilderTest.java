@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.impl.SimpleConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
@@ -117,9 +117,9 @@ public class SimpleTaskNetworkBuilderTest {
 		@SuppressWarnings("unchecked")
 		ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
 		
-		SimpleConstraint<?> mockConstraintA = mock(SimpleConstraint.class);
+		ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
 		when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
-		SimpleConstraint<?> mockConstraintB = mock(SimpleConstraint.class);
+		ImmutableConstraint<?> mockConstraintB = mock(ImmutableConstraint.class);
 		when(mockConstraintB.validate(mockConstraintValidator)).thenReturn(true);
 		
 		// Create the builder under test
@@ -142,21 +142,21 @@ public class SimpleTaskNetworkBuilderTest {
 		@SuppressWarnings("unchecked")
 		ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
 		
-		SimpleConstraint<?> mockConstraintA = mock(SimpleConstraint.class);
+		ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
 		when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
-		SimpleConstraint<?> mockConstraintB = mock(SimpleConstraint.class);
+		ImmutableConstraint<?> mockConstraintB = mock(ImmutableConstraint.class);
 		when(mockConstraintB.validate(mockConstraintValidator)).thenReturn(true);
 		
-		Set<SimpleConstraint<?>> mockConstraintsOne = new HashSet<SimpleConstraint<?>>();
+		Set<ImmutableConstraint<?>> mockConstraintsOne = new HashSet<ImmutableConstraint<?>>();
 		mockConstraintsOne.add(mockConstraintA);
 		mockConstraintsOne.add(mockConstraintB);
 
-		SimpleConstraint<?> mockConstraintC = mock(SimpleConstraint.class);
+		ImmutableConstraint<?> mockConstraintC = mock(ImmutableConstraint.class);
 		when(mockConstraintC.validate(mockConstraintValidator)).thenReturn(true);
-		SimpleConstraint<?> mockConstraintD = mock(SimpleConstraint.class);
+		ImmutableConstraint<?> mockConstraintD = mock(ImmutableConstraint.class);
 		when(mockConstraintD.validate(mockConstraintValidator)).thenReturn(true);
 	
-		Set<SimpleConstraint<?>> mockConstraintsTwo = new HashSet<SimpleConstraint<?>>();
+		Set<ImmutableConstraint<?>> mockConstraintsTwo = new HashSet<ImmutableConstraint<?>>();
 		mockConstraintsTwo.add(mockConstraintC);
 		mockConstraintsTwo.add(mockConstraintD);
 		
@@ -181,7 +181,7 @@ public class SimpleTaskNetworkBuilderTest {
 	public void testBuild() throws InvalidConstraint {
 	    
 		SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
-		SimpleConstraint<?> mockConstraintA = mock(SimpleConstraint.class);
+		ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
 		@SuppressWarnings("unchecked")
 		ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
 		when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
@@ -206,10 +206,10 @@ public class SimpleTaskNetworkBuilderTest {
 	    
 	    SubstitutableTaskNetwork mockTaskNetwork = mock(SubstitutableTaskNetwork.class);
 	    SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
-	    SimpleConstraint<?> mockConstraintA = mock(SimpleConstraint.class);
+	    ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
         Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
         mockTasks.add(mockTaskA);
-        Set<SimpleConstraint<?>> mockConstraints = new HashSet<SimpleConstraint<?>>();
+        Set<ImmutableConstraint<?>> mockConstraints = new HashSet<ImmutableConstraint<?>>();
         mockConstraints.add(mockConstraintA);
         when(mockTaskNetwork.getTasks()).thenReturn(mockTasks);
         when(mockTaskNetwork.getConstraints()).thenReturn(mockConstraints);
@@ -239,9 +239,9 @@ public class SimpleTaskNetworkBuilderTest {
         Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
         mockTasks.add(mockTaskA);
         mockTasks.add(mockTaskB);
-        SimpleConstraint<?> mockConstraintA = mock(SimpleConstraint.class);
-        SimpleConstraint<?> mockConstraintB = mock(SimpleConstraint.class);
-        Set<SimpleConstraint<?>> mockConstraints = new HashSet<SimpleConstraint<?>>();
+        ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
+        ImmutableConstraint<?> mockConstraintB = mock(ImmutableConstraint.class);
+        Set<ImmutableConstraint<?>> mockConstraints = new HashSet<ImmutableConstraint<?>>();
         mockConstraints.add(mockConstraintA);
         mockConstraints.add(mockConstraintB);
         

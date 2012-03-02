@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.constraint.impl;
+package org.gerryai.htn.simple.constraint;
 
 import java.util.Set;
 
@@ -30,28 +30,28 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
  * @param <C> type of constraint this builder generates
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface SimpleConstraintBuilder<C extends SimpleConstraint<C>> {
+public interface ImmutableConstraintBuilder<C extends ImmutableConstraint<C>> {
 
     /**
      * Copy the provided constraint as a basis for a new one.
      * @param constraint the constraint to copy
      * @return the updated builder
      */
-    SimpleConstraintBuilder<C> copy(C constraint);
+    ImmutableConstraintBuilder<C> copy(C constraint);
     
     /**
      * @param oldTask the task to replace
      * @param newTasks the tasks to replace with
      * @return the updated builder
      */
-    SimpleConstraintBuilder<C> replace(SubstitutableTask oldTask, Set<SubstitutableTask> newTasks);
+    ImmutableConstraintBuilder<C> replace(SubstitutableTask oldTask, Set<SubstitutableTask> newTasks);
     
     /**
      * Apply the substituter provided to the conditions of the constraint.
      * @param substituter the substituter to apply
      * @return the updated builder
      */
-    SimpleConstraintBuilder<C> apply(Substituter<SubstitutableTerm> substituter);
+    ImmutableConstraintBuilder<C> apply(Substituter<SubstitutableTerm> substituter);
     
     /**
      * Build the constraint.

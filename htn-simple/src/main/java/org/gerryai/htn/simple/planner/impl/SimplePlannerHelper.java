@@ -22,7 +22,7 @@ import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.State;
-import org.gerryai.htn.simple.constraint.impl.SimpleConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.decomposition.UnifierNotFound;
@@ -47,7 +47,7 @@ import org.gerryai.logic.unification.Substitution;
  */
 public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator, SubstitutableMethod,
 		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-		SimpleConstraint<?>, SubstitutableCondition> {
+		ImmutableConstraint<?>, SubstitutableCondition> {
 
 	/**
 	 * Factory for creating actions.
@@ -64,13 +64,13 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 	 * Service for decomposing tasks.
 	 */
 	private DecompositionService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-	        SimpleConstraint<?>> decompositionService;
+	        ImmutableConstraint<?>> decompositionService;
 	
 	/**
 	 * Service for finding unifiers.
 	 */
 	private UnificationService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
-			SubstitutableTaskNetwork, SimpleConstraint<?>,
+			SubstitutableTaskNetwork, ImmutableConstraint<?>,
 			SubstitutableCondition, SimpleVariable>  unificationService;
 	
 	/**
@@ -85,9 +85,9 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 					SubstitutableCondition> actionFactory,
 			PlanFactory<SubstitutableOperator, SubstitutableCondition> planFactory,
 			DecompositionService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-			SimpleConstraint<?>> decompositionservice,
+			ImmutableConstraint<?>> decompositionservice,
 			UnificationService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-			SimpleConstraint<?>,
+			ImmutableConstraint<?>,
 				SubstitutableCondition, SimpleVariable>  unificationService) {
 		this.actionFactory = actionFactory;
 		this.planFactory = planFactory;

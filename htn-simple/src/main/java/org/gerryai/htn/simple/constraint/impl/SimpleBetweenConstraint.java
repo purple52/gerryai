@@ -20,6 +20,8 @@ package org.gerryai.htn.simple.constraint.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.ValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
@@ -34,7 +36,7 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleBetweenConstraint implements SimpleConstraint<SimpleBetweenConstraint>,
+public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetweenConstraint>,
 		ValidatableBetweenConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
 
 	/**
@@ -105,7 +107,7 @@ public class SimpleBetweenConstraint implements SimpleConstraint<SimpleBetweenCo
     /**
      * {@inheritDoc}
      */
-    public final SimpleConstraintBuilder<SimpleBetweenConstraint> createCopyBuilder() {
+    public final ImmutableConstraintBuilder<SimpleBetweenConstraint> createCopyBuilder() {
         return new Builder()
             .copy(this);
     }
@@ -131,7 +133,7 @@ public class SimpleBetweenConstraint implements SimpleConstraint<SimpleBetweenCo
      * Builder class for SimpleBetweenConstraint.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder implements SimpleConstraintBuilder<SimpleBetweenConstraint> {
+    public static class Builder implements ImmutableConstraintBuilder<SimpleBetweenConstraint> {
         
         /**
          * The set of tasks that this constraint must hold after.

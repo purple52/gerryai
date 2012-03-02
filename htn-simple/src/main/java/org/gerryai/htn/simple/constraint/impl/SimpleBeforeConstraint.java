@@ -20,6 +20,8 @@ package org.gerryai.htn.simple.constraint.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
@@ -34,7 +36,7 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  * 
  */
-public class SimpleBeforeConstraint implements SimpleConstraint<SimpleBeforeConstraint>,
+public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeConstraint>,
         ValidatableBeforeConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
 
     /**
@@ -112,7 +114,7 @@ public class SimpleBeforeConstraint implements SimpleConstraint<SimpleBeforeCons
      * Builder class for SimpleBeforeConstraint.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder implements SimpleConstraintBuilder<SimpleBeforeConstraint> {
+    public static class Builder implements ImmutableConstraintBuilder<SimpleBeforeConstraint> {
         
         /**
          * The set of tasks that this constraint must hold for.
@@ -201,7 +203,7 @@ public class SimpleBeforeConstraint implements SimpleConstraint<SimpleBeforeCons
     /**
      * {@inheritDoc}
      */
-    public final SimpleConstraintBuilder<SimpleBeforeConstraint> createCopyBuilder() {
+    public final ImmutableConstraintBuilder<SimpleBeforeConstraint> createCopyBuilder() {
         return new Builder()
             .copy(this);
     }

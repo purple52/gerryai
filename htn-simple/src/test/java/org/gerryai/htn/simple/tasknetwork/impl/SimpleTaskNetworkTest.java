@@ -26,8 +26,8 @@ import static org.mockito.Mockito.when;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.impl.SimpleConstraint;
-import org.gerryai.htn.simple.constraint.impl.SimpleConstraintBuilder;
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
@@ -51,7 +51,7 @@ public class SimpleTaskNetworkTest {
 
         Set<SubstitutableTask> tasks = new HashSet<SubstitutableTask>();
         @SuppressWarnings("unchecked")
-        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, SimpleConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
+        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
         when(mockBuilder.getTasks()).thenReturn(tasks);
         
         SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
@@ -72,7 +72,7 @@ public class SimpleTaskNetworkTest {
         when(mockPrimitiveTask.isPrimitive()).thenReturn(true);
         tasks.add(mockPrimitiveTask);
         @SuppressWarnings("unchecked")
-        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, SimpleConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
+        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
         when(mockBuilder.getTasks()).thenReturn(tasks);
         
         SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
@@ -93,7 +93,7 @@ public class SimpleTaskNetworkTest {
         when(mockNonPrimitiveTask.isPrimitive()).thenReturn(false);
         tasks.add(mockNonPrimitiveTask);
         @SuppressWarnings("unchecked")
-        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, SimpleConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
+        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
         when(mockBuilder.getTasks()).thenReturn(tasks);
 
         SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
@@ -120,7 +120,7 @@ public class SimpleTaskNetworkTest {
         tasks.add(mockPrimitiveTaskTwo);
         tasks.add(mockPrimitiveTaskThree);
         @SuppressWarnings("unchecked")
-        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, SimpleConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
+        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
         when(mockBuilder.getTasks()).thenReturn(tasks);
         
         SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
@@ -147,7 +147,7 @@ public class SimpleTaskNetworkTest {
         tasks.add(mockPrimitiveTaskTwo);
         tasks.add(mockPrimitiveTaskThree);
         @SuppressWarnings("unchecked")
-        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, SimpleConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
+        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
         when(mockBuilder.getTasks()).thenReturn(tasks);
 
         SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
@@ -163,7 +163,7 @@ public class SimpleTaskNetworkTest {
         @SuppressWarnings("unchecked")
         Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
         @SuppressWarnings("unchecked")
-        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, SimpleConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
+        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
         Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
         SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
         SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
@@ -171,16 +171,16 @@ public class SimpleTaskNetworkTest {
         mockTasks.add(mockTaskB);
         when(mockBuilder.getTasks()).thenReturn(mockTasks);
         
-        SimpleConstraint mockConstraintA = mock(SimpleConstraint.class);
-        SimpleConstraint mockConstraintB = mock(SimpleConstraint.class);
-        SimpleConstraintBuilder mockConstraintBuilderA = mock(SimpleConstraintBuilder.class);
-        SimpleConstraintBuilder mockConstraintBuilderB = mock(SimpleConstraintBuilder.class);
+        ImmutableConstraint mockConstraintA = mock(ImmutableConstraint.class);
+        ImmutableConstraint mockConstraintB = mock(ImmutableConstraint.class);
+        ImmutableConstraintBuilder mockConstraintBuilderA = mock(ImmutableConstraintBuilder.class);
+        ImmutableConstraintBuilder mockConstraintBuilderB = mock(ImmutableConstraintBuilder.class);
         when(mockConstraintA.createCopyBuilder()).thenReturn(mockConstraintBuilderA);
         when(mockConstraintB.createCopyBuilder()).thenReturn(mockConstraintBuilderB);
         when(mockConstraintBuilderA.apply(mockSubstituter)).thenReturn(mockConstraintBuilderA);
         when(mockConstraintBuilderB.apply(mockSubstituter)).thenReturn(mockConstraintBuilderB);
         
-        Set<SimpleConstraint<?>> mockConstraints = new HashSet<SimpleConstraint<?>>();
+        Set<ImmutableConstraint<?>> mockConstraints = new HashSet<ImmutableConstraint<?>>();
         mockConstraints.add(mockConstraintA);
         mockConstraints.add(mockConstraintB);
         when(mockBuilder.getConstraints()).thenReturn(mockConstraints);

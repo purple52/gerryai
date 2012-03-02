@@ -20,7 +20,7 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.impl.SimpleConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
@@ -36,7 +36,7 @@ import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
  */
 public class SimpleTaskNetworkBuilder
 		implements TaskNetworkBuilder<SubstitutableTerm,
-        SubstitutableTask, SubstitutableTaskNetwork, SimpleConstraint<?>> {
+        SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> {
 
 	/**
 	 * Set of tasks we are building up.
@@ -46,7 +46,7 @@ public class SimpleTaskNetworkBuilder
 	/**
 	 * Set of constraints we are building up.
 	 */
-	private Set<SimpleConstraint<?>> constraints;
+	private Set<ImmutableConstraint<?>> constraints;
 	
 	/**
 	 * Constraint validator.
@@ -61,7 +61,7 @@ public class SimpleTaskNetworkBuilder
             SubstitutableCondition> constraintValidator) {
         this.constraintValidator = constraintValidator;
         tasks = new HashSet<SubstitutableTask>();
-        constraints = new HashSet<SimpleConstraint<?>>();
+        constraints = new HashSet<ImmutableConstraint<?>>();
     }
 	
 	/**
@@ -92,7 +92,7 @@ public class SimpleTaskNetworkBuilder
 	 * {@inheritDoc}
 	 */
 	public final SimpleTaskNetworkBuilder addConstraint(
-	        SimpleConstraint<?> constraint) throws InvalidConstraint {
+	        ImmutableConstraint<?> constraint) throws InvalidConstraint {
 		addConstraintInternal(constraint);
 		return this;
 	}
@@ -101,8 +101,8 @@ public class SimpleTaskNetworkBuilder
 	 * {@inheritDoc}
 	 */
 	public final SimpleTaskNetworkBuilder addConstraints(
-			Set<SimpleConstraint<?>> constraints) throws InvalidConstraint {
-		for (SimpleConstraint<?> constraint : constraints) {
+			Set<ImmutableConstraint<?>> constraints) throws InvalidConstraint {
+		for (ImmutableConstraint<?> constraint : constraints) {
 			addConstraintInternal(constraint);
 		}
 		return this;
@@ -114,7 +114,7 @@ public class SimpleTaskNetworkBuilder
 	public final SimpleTaskNetworkBuilder copy(SubstitutableTaskNetwork taskNetwork) throws InvalidConstraint {
 	    tasks = new HashSet<SubstitutableTask>(taskNetwork.getTasks());
 	    // Assume original task network is valid
-	    constraints = new HashSet<SimpleConstraint<?>>(taskNetwork.getConstraints());
+	    constraints = new HashSet<ImmutableConstraint<?>>(taskNetwork.getConstraints());
 	    return this;
 	}
 	
@@ -126,12 +126,12 @@ public class SimpleTaskNetworkBuilder
         //TODO: Implement
         for (SubstitutableTask task : tasks) {
             // Update every task
-            for (SimpleConstraint<?> constraint : constraints) {
+            for (ImmutableConstraint<?> constraint : constraints) {
                 // Update every constraint that refers to the original task
             }
         }
         
-        for (SimpleConstraint<?> constraint : constraints) {
+        for (ImmutableConstraint<?> constraint : constraints) {
             // Update the condition in every constraint
         }
 
@@ -155,7 +155,7 @@ public class SimpleTaskNetworkBuilder
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<SimpleConstraint<?>> getConstraints() {
+	public final Set<ImmutableConstraint<?>> getConstraints() {
 		return constraints;
 	}
 	
@@ -165,7 +165,7 @@ public class SimpleTaskNetworkBuilder
 	 * @param constraint the constraint
 	 * @throws InvalidConstraint if the constraint was invalid
 	 */
-	private void addConstraintInternal(SimpleConstraint<?> constraint) throws InvalidConstraint {
+	private void addConstraintInternal(ImmutableConstraint<?> constraint) throws InvalidConstraint {
 		if (constraint.validate(getConstraintValidator())) { 
 			constraints.add(constraint);
 			constraint.add(getConstraintValidator());

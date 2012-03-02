@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.tasknetwork;
 
-import org.gerryai.htn.simple.constraint.impl.SimpleConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 
 /**
@@ -26,6 +26,6 @@ import org.gerryai.htn.simple.logic.SubstitutableTerm;
  */
 public interface SubstitutableTaskNetworkBuilderFactory extends
 		TaskNetworkBuilderFactory<SubstitutableTerm, SubstitutableTask,
-		SubstitutableTaskNetwork, SimpleConstraint<?>> {
+		SubstitutableTaskNetwork, ImmutableConstraint<?>> {
 
 }

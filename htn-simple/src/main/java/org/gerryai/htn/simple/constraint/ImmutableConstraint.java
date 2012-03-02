@@ -15,10 +15,9 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.constraint.impl;
+package org.gerryai.htn.simple.constraint;
 
 import org.gerryai.htn.constraint.Constraint;
-import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
@@ -29,7 +28,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface SimpleConstraint<C extends SimpleConstraint<C>>
+public interface ImmutableConstraint<C extends ImmutableConstraint<C>>
         extends
         Constraint<SubstitutableTerm>,
         ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
@@ -40,5 +39,5 @@ public interface SimpleConstraint<C extends SimpleConstraint<C>>
      * the build mechanisms that are general to all SimpleConstraint classes.
      * @return the builder
      */
-    SimpleConstraintBuilder<C> createCopyBuilder();
+    ImmutableConstraintBuilder<C> createCopyBuilder();
 }

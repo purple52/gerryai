@@ -20,7 +20,7 @@ package org.gerryai.htn.simple.domain.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.impl.SimpleConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainBuilder;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
@@ -35,7 +35,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  */
 public class SimpleDomainBuilder implements	DomainBuilder<SimpleDomain, SubstitutableOperator,
 		SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-		SimpleConstraint<?>, SubstitutableCondition> {
+		ImmutableConstraint<?>, SubstitutableCondition> {
 
 	/**
 	 * Set of operators the domain uses.

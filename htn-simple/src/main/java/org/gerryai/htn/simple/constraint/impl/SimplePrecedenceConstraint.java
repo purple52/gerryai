@@ -20,6 +20,8 @@ package org.gerryai.htn.simple.constraint.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
@@ -34,7 +36,7 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePrecedenceConstraint	implements SimpleConstraint<SimplePrecedenceConstraint>,
+public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePrecedenceConstraint>,
 		ValidatablePrecedenceConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
 
 	/**
@@ -89,7 +91,7 @@ public class SimplePrecedenceConstraint	implements SimpleConstraint<SimplePreced
     /**
      * {@inheritDoc}
      */
-    public final SimpleConstraintBuilder<SimplePrecedenceConstraint> createCopyBuilder() {
+    public final ImmutableConstraintBuilder<SimplePrecedenceConstraint> createCopyBuilder() {
         return new Builder()
             .copy(this);
     }
@@ -114,7 +116,7 @@ public class SimplePrecedenceConstraint	implements SimpleConstraint<SimplePreced
      * Builder class for SimpleBetweenConstraint.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder implements SimpleConstraintBuilder<SimplePrecedenceConstraint> {
+    public static class Builder implements ImmutableConstraintBuilder<SimplePrecedenceConstraint> {
         
         /**
          * The task that must come first.

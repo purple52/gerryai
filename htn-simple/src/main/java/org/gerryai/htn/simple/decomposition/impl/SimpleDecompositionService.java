@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.decomposition.impl;
 
-import org.gerryai.htn.simple.constraint.impl.SimpleConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
@@ -36,13 +36,13 @@ import org.gerryai.logic.unification.Substitution;
  */
 public class SimpleDecompositionService implements
 		DecompositionService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-		SimpleConstraint<?>> {
+		ImmutableConstraint<?>> {
 
 	/**
 	 * Service for performing unification actions.
 	 */
 	private UnificationService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-	SimpleConstraint<?>,
+	ImmutableConstraint<?>,
 			SubstitutableCondition, SimpleVariable> unificationService;
 	
 	/**
@@ -50,7 +50,7 @@ public class SimpleDecompositionService implements
 	 * @param unificationService the unification service to use
 	 */
 	public SimpleDecompositionService(UnificationService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
-			SubstitutableTaskNetwork, SimpleConstraint<?>,
+			SubstitutableTaskNetwork, ImmutableConstraint<?>,
 			SubstitutableCondition, SimpleVariable> unificationService) {
 		this.unificationService = unificationService;
 	}
