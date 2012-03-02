@@ -28,7 +28,7 @@ import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 import com.google.common.base.Objects;
 
@@ -37,12 +37,12 @@ import com.google.common.base.Objects;
  * 
  */
 public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeConstraint>,
-        ValidatableBeforeConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
+        ValidatableBeforeConstraint<SubstitutableTerm, ImmutableTask, SubstitutableCondition> {
 
     /**
      * The set of tasks that this constraint must hold for.
      */
-    private Set<SubstitutableTask> tasks;
+    private Set<ImmutableTask> tasks;
 
     /**
      * The condition that must be true directly before the first of these tasks.
@@ -63,7 +63,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
      * 
      * @return the tasks
      */
-    public final Set<SubstitutableTask> getTasks() {
+    public final Set<ImmutableTask> getTasks() {
         return tasks;
     }
 
@@ -81,7 +81,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
      * {@inheritDoc}
      */
     public final boolean validate(
-            ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> validator) {
+            ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> validator) {
         return validator.validate(this);
     }
 
@@ -89,7 +89,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
      * {@inheritDoc}
      */
     public final void add(
-            ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> validator)
+            ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> validator)
             throws InvalidConstraint {
         validator.add(this);
     }
@@ -119,7 +119,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
         /**
          * The set of tasks that this constraint must hold for.
          */
-        private Set<SubstitutableTask> tasks;
+        private Set<ImmutableTask> tasks;
         
         /**
          * The condition that must be true directly after the last of these tasks.
@@ -130,14 +130,14 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
          * Default constructor.
          */
         public Builder() {
-            tasks = new HashSet<SubstitutableTask>();
+            tasks = new HashSet<ImmutableTask>();
         }
 
         /**
          * @param tasks the tasks to add
          * @return the updated builder
          */
-        public final Builder addTasks(Set<SubstitutableTask> tasks) {
+        public final Builder addTasks(Set<ImmutableTask> tasks) {
             this.tasks.addAll(tasks);
             return this;
         }
@@ -154,7 +154,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
         /**
          * @return the tasks
          */
-        protected final Set<SubstitutableTask> getTasks() {
+        protected final Set<ImmutableTask> getTasks() {
             return tasks;
         }
         
@@ -169,7 +169,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
          * {@inheritDoc}
          */
         public final Builder copy(SimpleBeforeConstraint constraint) {
-            this.tasks = new HashSet<SubstitutableTask>(constraint.getTasks());
+            this.tasks = new HashSet<ImmutableTask>(constraint.getTasks());
             this.condition = constraint.getCondition();
             return this;
         }
@@ -177,7 +177,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
         /**
          * {@inheritDoc}
          */
-        public final Builder replace(SubstitutableTask oldTask, Set<SubstitutableTask> newTasks) {
+        public final Builder replace(ImmutableTask oldTask, Set<ImmutableTask> newTasks) {
             this.tasks.remove(oldTask);
             this.tasks.addAll(newTasks);
             return this;

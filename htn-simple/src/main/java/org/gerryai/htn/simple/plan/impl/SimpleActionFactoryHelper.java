@@ -31,7 +31,7 @@ import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
@@ -42,12 +42,12 @@ import org.gerryai.logic.Variable;
  *
  */
 public class SimpleActionFactoryHelper implements ActionFactoryHelper<SubstitutableOperator,
-		SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
+		SubstitutableTerm, ImmutableTask, SubstitutableCondition> {
 
 	/**
 	 * Service for the domain that we are working in.
 	 */
-	private DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
+	private DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask,
 			SubstitutableTaskNetwork, ImmutableConstraint<?>, SubstitutableCondition> domainHelper;
 	
 	/**
@@ -55,7 +55,7 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<Substituta
 	 * @param domainHelper helper to use
 	 */
 	public SimpleActionFactoryHelper(DomainHelper<SubstitutableOperator, SubstitutableMethod,
-			SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+			SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> domainHelper) {
 		this.domainHelper = domainHelper;
 	}
@@ -63,7 +63,7 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<Substituta
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableOperator getOperator(SubstitutableTask task) throws TaskNotActionable {
+	public final SubstitutableOperator getOperator(ImmutableTask task) throws TaskNotActionable {
 		
 		SubstitutableOperator operator;
 		
@@ -79,7 +79,7 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<Substituta
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Bindings getBindings(SubstitutableTask task, SubstitutableOperator operator) throws TaskNotActionable {
+	public final Bindings getBindings(ImmutableTask task, SubstitutableOperator operator) throws TaskNotActionable {
 
 		Bindings bindings = new Bindings();
 		Map<Variable, Constant> bindingsMap = new HashMap<Variable, Constant>();

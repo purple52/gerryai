@@ -29,7 +29,7 @@ import java.util.List;
 
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
 import org.junit.Test;
 
@@ -46,7 +46,7 @@ public class SimpleTaskTest {
     @Test
     public void testName() {
         @SuppressWarnings("unchecked")
-        ImmutableTaskBuilder<SubstitutableTerm, SubstitutableTask> mockBuilder = mock(ImmutableTaskBuilder.class);
+        ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> mockBuilder = mock(ImmutableTaskBuilder.class);
         when(mockBuilder.getName()).thenReturn("testname");
 
         SimpleTask task = new SimpleTask(mockBuilder);
@@ -60,7 +60,7 @@ public class SimpleTaskTest {
     @Test
     public void testArguments() {
         @SuppressWarnings("unchecked")
-        ImmutableTaskBuilder<SubstitutableTerm, SubstitutableTask> mockBuilder = mock(ImmutableTaskBuilder.class);
+        ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> mockBuilder = mock(ImmutableTaskBuilder.class);
         SubstitutableTerm mockTermA = mock(SubstitutableTerm.class);
         SubstitutableTerm mockTermB = mock(SubstitutableTerm.class);
         List<SubstitutableTerm> mockTerms = new ArrayList<SubstitutableTerm>();
@@ -83,7 +83,7 @@ public class SimpleTaskTest {
     @Test
     public void testIsPrimitive() {
         @SuppressWarnings("unchecked")
-        ImmutableTaskBuilder<SubstitutableTerm, SubstitutableTask> mockBuilder = mock(ImmutableTaskBuilder.class);
+        ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> mockBuilder = mock(ImmutableTaskBuilder.class);
 
         when(mockBuilder.isPrimitive()).thenReturn(true);
         SimpleTask taskA = new SimpleTask(mockBuilder);
@@ -94,25 +94,6 @@ public class SimpleTaskTest {
         SimpleTask taskB = new SimpleTask(mockBuilder);
 
         assertFalse(taskB.isPrimitive());
-    }
-
-    /**
-     * Test substitution is applied.
-     */
-    @Test
-    public void testApply() {
-        @SuppressWarnings("unchecked")
-        Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
-        @SuppressWarnings("unchecked")
-        ImmutableTaskBuilder<SubstitutableTerm, SubstitutableTask> mockBuilder = mock(ImmutableTaskBuilder.class);
-        @SuppressWarnings("unchecked")
-        List<SubstitutableTerm> mockTermList = mock(List.class);
-        when(mockBuilder.getArguments()).thenReturn(mockTermList);
-
-        SimpleTask task = new SimpleTask(mockBuilder);
-        task.apply(mockSubstituter);
-
-        verify(mockSubstituter).visit(mockTermList);
     }
 
     /**
@@ -203,7 +184,7 @@ public class SimpleTaskTest {
         SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
         
         // Create the builder under test
-        SubstitutableTask primitiveTask = new SimpleTask.Builder()
+        ImmutableTask primitiveTask = new SimpleTask.Builder()
                 .setName("testname")
                 .addArgument(mockTerm)
                 .setIsPrimitive(true)
@@ -223,7 +204,7 @@ public class SimpleTaskTest {
         SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
         
         // Create the builder under test
-        SubstitutableTask primitiveTask = new SimpleTask.Builder()
+        ImmutableTask primitiveTask = new SimpleTask.Builder()
                 .setName("testname")
                 .addArgument(mockTerm)
                 .setIsPrimitive(false)
@@ -243,14 +224,13 @@ public class SimpleTaskTest {
         SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
         List<SubstitutableTerm> terms = new ArrayList<SubstitutableTerm>();
         terms.add(mockTerm);
-        SubstitutableTask mockTask = mock(SubstitutableTask.class);
-        when(mockTask.getName()).thenReturn(name);
-        when(mockTask.getArguments()).thenReturn(terms);
-        when(mockTask.isPrimitive()).thenReturn(true);
+        ImmutableTask initialTask = new SimpleTask.Builder()
+                .setName(name)
+                .addArguments(terms)
+                .setIsPrimitive(true)
+                .build();
         
-        // Create the builder under test
-        SubstitutableTask newTask = new SimpleTask.Builder()
-                .copy(mockTask)
+        ImmutableTask newTask = initialTask.createCopyBuilder()
                 .build();
         
         assertEquals(name, newTask.getName());
@@ -267,17 +247,17 @@ public class SimpleTaskTest {
         SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
         List<SubstitutableTerm> terms = new ArrayList<SubstitutableTerm>();
         terms.add(mockTerm);
-        SubstitutableTask mockTask = mock(SubstitutableTask.class);
-        when(mockTask.getName()).thenReturn(name);
-        when(mockTask.getArguments()).thenReturn(terms);
-        when(mockTask.isPrimitive()).thenReturn(true);
+        ImmutableTask initialTask = new SimpleTask.Builder()
+        .setName(name)
+        .addArguments(terms)
+        .setIsPrimitive(true)
+        .build();
         
         @SuppressWarnings("unchecked")
         Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
         
         // Create the builder under test
-        SubstitutableTask newTask = new SimpleTask.Builder()
-                .copy(mockTask)
+        ImmutableTask newTask = initialTask.createCopyBuilder()
                 .apply(mockSubstituter)
                 .build();
         

@@ -24,7 +24,7 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
 import org.gerryai.htn.tasknetwork.Task;
@@ -38,7 +38,7 @@ public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
 	/**
 	 * Set of tasks to be solved in this network.
 	 */
-	private Set<SubstitutableTask> tasks;
+	private Set<ImmutableTask> tasks;
 	
 	/**
 	 * Set of constraints to be met.
@@ -49,7 +49,7 @@ public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
-	protected SimpleTaskNetwork(TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+	protected SimpleTaskNetwork(TaskNetworkBuilder<SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 	        ImmutableConstraint<?>> builder) {
 		this.tasks = builder.getTasks();
 		this.constraints = builder.getConstraints();
@@ -58,7 +58,7 @@ public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<SubstitutableTask> getTasks() {
+	public final Set<ImmutableTask> getTasks() {
 		return Collections.unmodifiableSet(tasks);
 	}
 
@@ -89,9 +89,14 @@ public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
      * {@inheritDoc}
      */
     public final void apply(Substituter<SubstitutableTerm> substituter) {
-        for (SubstitutableTask task : tasks) {
-            task.apply(substituter);
+        Set<ImmutableTask> newTasks = new HashSet<ImmutableTask>(tasks.size());
+        for (ImmutableTask task : tasks) {
+            ImmutableTask newTask = task.createCopyBuilder()
+                    .apply(substituter)
+                    .build();
+            newTasks.add(newTask);
         }
+        tasks = newTasks;
         Set<ImmutableConstraint<?>> newConstraints = new HashSet<ImmutableConstraint<?>>(constraints.size());
         for (ImmutableConstraint<?> constraint : constraints) {
             ImmutableConstraint<?> replacementConstraint = constraint.createCopyBuilder()
@@ -99,6 +104,7 @@ public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
                     .build();
             newConstraints.add(replacementConstraint);
         }
+        constraints = newConstraints;
     }
 
 	/**

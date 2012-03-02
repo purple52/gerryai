@@ -28,7 +28,7 @@ import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 import com.google.common.base.Objects;
 
@@ -37,17 +37,17 @@ import com.google.common.base.Objects;
  *
  */
 public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetweenConstraint>,
-		ValidatableBetweenConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
+		ValidatableBetweenConstraint<SubstitutableTerm, ImmutableTask, SubstitutableCondition> {
 
 	/**
 	 * The set of tasks that this constraint must hold after.
 	 */
-	private Set<SubstitutableTask> precedingTasks;
+	private Set<ImmutableTask> precedingTasks;
 
 	/**
 	 * The set of tasks that this constraint must hold before.
 	 */
-	private Set<SubstitutableTask> procedingTasks;
+	private Set<ImmutableTask> procedingTasks;
 	
 	/**
 	 * The literal that must be true directly between the two sets of tasks.
@@ -68,7 +68,7 @@ public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetwee
 	 * Get the set of tasks that this constraint must hold after.
 	 * @return the tasks
 	 */
-	public final Set<SubstitutableTask> getPrecedingTasks() {
+	public final Set<ImmutableTask> getPrecedingTasks() {
 		return precedingTasks;
 	}
 
@@ -76,7 +76,7 @@ public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetwee
 	 * Get the set of tasks that this constraint must hold before.
 	 * @return the tasks
 	 */
-	public final Set<SubstitutableTask> getProcedingTasks() {
+	public final Set<ImmutableTask> getProcedingTasks() {
 		return procedingTasks;
 	}
 	
@@ -91,7 +91,7 @@ public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetwee
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<SubstitutableTerm, SubstitutableTask,
+	public final boolean validate(ConstraintValidator<SubstitutableTerm, ImmutableTask,
 			SubstitutableCondition> validator) {
 		return validator.validate(this);
 	}
@@ -99,7 +99,7 @@ public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetwee
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> validator)
+	public final void add(ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> validator)
 			throws InvalidConstraint {
 		validator.add(this);
 	}
@@ -138,12 +138,12 @@ public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetwee
         /**
          * The set of tasks that this constraint must hold after.
          */
-        private Set<SubstitutableTask> precedingTasks;
+        private Set<ImmutableTask> precedingTasks;
 
         /**
          * The set of tasks that this constraint must hold before.
          */
-        private Set<SubstitutableTask> procedingTasks;
+        private Set<ImmutableTask> procedingTasks;
         
         /**
          * The condition that must be true directly after the last of these tasks.
@@ -154,15 +154,15 @@ public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetwee
          * Default constructor.
          */
         public Builder() {
-            precedingTasks = new HashSet<SubstitutableTask>();
-            procedingTasks = new HashSet<SubstitutableTask>();
+            precedingTasks = new HashSet<ImmutableTask>();
+            procedingTasks = new HashSet<ImmutableTask>();
         }
 
         /**
          * @param tasks the tasks to add
          * @return the updated builder
          */
-        public final Builder addPrecedingTasks(Set<SubstitutableTask> tasks) {
+        public final Builder addPrecedingTasks(Set<ImmutableTask> tasks) {
             this.precedingTasks.addAll(tasks);
             return this;
         }
@@ -171,7 +171,7 @@ public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetwee
          * @param tasks the tasks to add
          * @return the updated builder
          */
-        public final Builder addProcedingTasks(Set<SubstitutableTask> tasks) {
+        public final Builder addProcedingTasks(Set<ImmutableTask> tasks) {
             this.procedingTasks.addAll(tasks);
             return this;
         }
@@ -189,8 +189,8 @@ public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetwee
          * {@inheritDoc}
          */
         public final Builder copy(SimpleBetweenConstraint constraint) {
-            this.precedingTasks = new HashSet<SubstitutableTask>(constraint.getPrecedingTasks());
-            this.procedingTasks = new HashSet<SubstitutableTask>(constraint.getProcedingTasks());
+            this.precedingTasks = new HashSet<ImmutableTask>(constraint.getPrecedingTasks());
+            this.procedingTasks = new HashSet<ImmutableTask>(constraint.getProcedingTasks());
             this.condition = constraint.getCondition();
             return this;
         }
@@ -198,7 +198,7 @@ public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetwee
         /**
          * {@inheritDoc}
          */
-        public final Builder replace(SubstitutableTask oldTask, Set<SubstitutableTask> newTasks) {
+        public final Builder replace(ImmutableTask oldTask, Set<ImmutableTask> newTasks) {
             if (this.precedingTasks.contains(oldTask)) {
                 this.precedingTasks.remove(oldTask);
                 this.precedingTasks.addAll(newTasks);
@@ -221,14 +221,14 @@ public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetwee
         /**
          * @return the tasks
          */
-        protected final Set<SubstitutableTask> getPrecedingTasks() {
+        protected final Set<ImmutableTask> getPrecedingTasks() {
             return precedingTasks;
         }
 
         /**
          * @return the tasks
          */
-        protected final Set<SubstitutableTask> getProcedingTasks() {
+        protected final Set<ImmutableTask> getProcedingTasks() {
             return procedingTasks;
         }
         

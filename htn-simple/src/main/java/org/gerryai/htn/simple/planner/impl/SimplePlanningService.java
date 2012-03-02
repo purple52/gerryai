@@ -28,7 +28,7 @@ import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.planner.PlannerFactory;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
 /**
@@ -36,14 +36,14 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class SimplePlanningService implements PlanningService<SubstitutableOperator,
-		SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 		ImmutableConstraint<?>, SubstitutableCondition> {
 
 	/**
 	 * A factory for creating planners.
 	 */
 	private PlannerFactory<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			SubstitutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, SubstitutableTaskNetwork,
 			ImmutableConstraint<?>,
 			SubstitutableCondition> plannerFactory;
 	
@@ -52,7 +52,7 @@ public class SimplePlanningService implements PlanningService<SubstitutableOpera
 	 * @param plannerFactory the factory
 	 */
 	public SimplePlanningService(PlannerFactory<SubstitutableOperator, SubstitutableMethod,
-			SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+			SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> plannerFactory) {
 		this.plannerFactory = plannerFactory;
 	}
@@ -61,13 +61,13 @@ public class SimplePlanningService implements PlanningService<SubstitutableOpera
 	 * {@inheritDoc}
 	 */
 	public final Plan<SubstitutableOperator, SubstitutableCondition> solve(Problem<SubstitutableOperator,
-			SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+			SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 			ImmutableConstraint<?>,
 			SubstitutableCondition> problem) throws PlanNotFound {
 		
 		// Create a planner that will work in the domain of the given problem
 		Planner<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-				SubstitutableTask, SubstitutableTaskNetwork,
+				ImmutableTask, SubstitutableTaskNetwork,
 				ImmutableConstraint<?>, SubstitutableCondition>
 				planner = plannerFactory.create(problem.getDomain());
 				

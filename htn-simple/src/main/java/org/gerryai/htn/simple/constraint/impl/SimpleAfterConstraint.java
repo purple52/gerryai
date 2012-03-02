@@ -28,7 +28,7 @@ import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 import com.google.common.base.Objects;
 
@@ -37,12 +37,12 @@ import com.google.common.base.Objects;
  *
  */
 public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterConstraint>,
-        ValidatableAfterConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
+        ValidatableAfterConstraint<SubstitutableTerm, ImmutableTask, SubstitutableCondition> {
 
 	/**
 	 * The set of tasks that this constraint must hold for.
 	 */
-	private Set<SubstitutableTask> tasks;
+	private Set<ImmutableTask> tasks;
 	
 	/**
 	 * The condition that must be true directly after the last of these tasks.
@@ -62,7 +62,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
 	 * Get the set of tasks that this constraint must hold for.
 	 * @return the tasks
 	 */
-	public final Set<SubstitutableTask> getTasks() {
+	public final Set<ImmutableTask> getTasks() {
 		return tasks;
 	}
 
@@ -77,7 +77,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<SubstitutableTerm, SubstitutableTask,
+	public final boolean validate(ConstraintValidator<SubstitutableTerm, ImmutableTask,
 			SubstitutableCondition> validator) {
 		return validator.validate(this);
 	}
@@ -85,7 +85,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> validator)
+	public final void add(ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> validator)
 			throws InvalidConstraint {
 		validator.add(this);
 	}
@@ -123,7 +123,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
 	    /**
 	     * The set of tasks that this constraint must hold for.
 	     */
-	    private Set<SubstitutableTask> tasks;
+	    private Set<ImmutableTask> tasks;
 	    
         /**
          * The condition that must be true directly after the last of these tasks.
@@ -134,14 +134,14 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
          * Default constructor.
          */
         public Builder() {
-            tasks = new HashSet<SubstitutableTask>();
+            tasks = new HashSet<ImmutableTask>();
         }
 
         /**
          * @param tasks the tasks to add
          * @return the updated builder
          */
-        public final Builder addTasks(Set<SubstitutableTask> tasks) {
+        public final Builder addTasks(Set<ImmutableTask> tasks) {
             this.tasks.addAll(tasks);
             return this;
         }
@@ -159,7 +159,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
          * {@inheritDoc}
          */
         public final Builder copy(SimpleAfterConstraint constraint) {
-            this.tasks = new HashSet<SubstitutableTask>(constraint.getTasks());
+            this.tasks = new HashSet<ImmutableTask>(constraint.getTasks());
             //TODO: this should copy the condition
             this.condition = constraint.getCondition();
             return this;
@@ -168,7 +168,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
         /**
          * {@inheritDoc}
          */
-        public final Builder replace(SubstitutableTask oldTask, Set<SubstitutableTask> newTasks) {
+        public final Builder replace(ImmutableTask oldTask, Set<ImmutableTask> newTasks) {
             this.tasks.remove(oldTask);
             this.tasks.addAll(newTasks);
             return this;
@@ -185,7 +185,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
         /**
          * @return the tasks
          */
-        protected final Set<SubstitutableTask> getTasks() {
+        protected final Set<ImmutableTask> getTasks() {
             return tasks;
         }
         

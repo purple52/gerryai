@@ -25,7 +25,7 @@ import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
 /**
@@ -34,7 +34,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class SimpleDomain implements Domain<SubstitutableOperator, SubstitutableMethod,
-		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 		ImmutableConstraint<?>, SubstitutableCondition> {
 
 	/**

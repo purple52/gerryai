@@ -29,7 +29,7 @@ import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
 /**
@@ -38,21 +38,21 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  */
 public class SimplePlanner implements
 		Planner<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-		SubstitutableTask, SubstitutableTaskNetwork,
+		ImmutableTask, SubstitutableTaskNetwork,
 		ImmutableConstraint<?>, SubstitutableCondition> {
 	
 	/**
 	 * Manager the domain being worked in.
 	 */
 	private DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			SubstitutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, SubstitutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> domainHelper;
 	
 	/**
 	 * Helper for off-loading some of the logic.
 	 */
 	private PlannerHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			SubstitutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, SubstitutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> plannerHelper;
 	
 	/**
@@ -62,11 +62,11 @@ public class SimplePlanner implements
 	 */
 	public SimplePlanner(
 			DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-					SubstitutableTask, SubstitutableTaskNetwork,
+					ImmutableTask, SubstitutableTaskNetwork,
 					ImmutableConstraint<?>,
 					SubstitutableCondition> domainHelper,
 			PlannerHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-					SubstitutableTask, SubstitutableTaskNetwork,
+					ImmutableTask, SubstitutableTaskNetwork,
 					ImmutableConstraint<?>,
 					SubstitutableCondition> plannerHelper) {
 		this.domainHelper = domainHelper;
@@ -87,7 +87,7 @@ public class SimplePlanner implements
 
 			try {
 				// Try and find a non-primitive task to deal with
-				SubstitutableTask task = plannerHelper.getNonPrimitiveTask(taskNetwork);
+				ImmutableTask task = plannerHelper.getNonPrimitiveTask(taskNetwork);
 
 				// 3. Task network is non-primitive
 				// TODO: Confirm implementation

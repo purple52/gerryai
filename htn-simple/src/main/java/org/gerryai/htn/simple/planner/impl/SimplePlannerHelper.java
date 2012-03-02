@@ -36,7 +36,7 @@ import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.PlanFactory;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.unification.Substitution;
@@ -46,13 +46,13 @@ import org.gerryai.logic.unification.Substitution;
  *
  */
 public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator, SubstitutableMethod,
-		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 		ImmutableConstraint<?>, SubstitutableCondition> {
 
 	/**
 	 * Factory for creating actions.
 	 */
-	private ActionFactory<SubstitutableOperator, SubstitutableTerm, SubstitutableTask,
+	private ActionFactory<SubstitutableOperator, SubstitutableTerm, ImmutableTask,
 			SubstitutableCondition> actionFactory;
 	
 	/**
@@ -63,13 +63,13 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 	/**
 	 * Service for decomposing tasks.
 	 */
-	private DecompositionService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+	private DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 	        ImmutableConstraint<?>> decompositionService;
 	
 	/**
 	 * Service for finding unifiers.
 	 */
-	private UnificationService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
+	private UnificationService<SubstitutableMethod, SubstitutableTerm, ImmutableTask,
 			SubstitutableTaskNetwork, ImmutableConstraint<?>,
 			SubstitutableCondition, SimpleVariable>  unificationService;
 	
@@ -81,12 +81,12 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 	 * @param unificationService the unification service
 	 */
 	public SimplePlannerHelper(
-			ActionFactory<SubstitutableOperator, SubstitutableTerm, SubstitutableTask,
+			ActionFactory<SubstitutableOperator, SubstitutableTerm, ImmutableTask,
 					SubstitutableCondition> actionFactory,
 			PlanFactory<SubstitutableOperator, SubstitutableCondition> planFactory,
-			DecompositionService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+			DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 			ImmutableConstraint<?>> decompositionservice,
-			UnificationService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+			UnificationService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 			ImmutableConstraint<?>,
 				SubstitutableCondition, SimpleVariable>  unificationService) {
 		this.actionFactory = actionFactory;
@@ -113,7 +113,7 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 		
 		Plan<SubstitutableOperator, SubstitutableCondition> plan = planFactory.create();
 		
-		for (SubstitutableTask task : taskNetwork.getTasks()) {
+		for (ImmutableTask task : taskNetwork.getTasks()) {
 			Action<SubstitutableOperator, SubstitutableCondition> action;
 			try {
 				action = actionFactory.create(task);
@@ -138,9 +138,9 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTask getNonPrimitiveTask(SubstitutableTaskNetwork
+	public final ImmutableTask getNonPrimitiveTask(SubstitutableTaskNetwork
 			taskNetwork) throws NonPrimitiveTaskNotFound {
-		for (SubstitutableTask task : taskNetwork.getTasks()) {
+		for (ImmutableTask task : taskNetwork.getTasks()) {
 			if (!task.isPrimitive()) {
 				return task;
 			}
@@ -152,7 +152,7 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 	 * {@inheritDoc}
 	 */
 	public final SubstitutableTaskNetwork decompose(SubstitutableTaskNetwork taskNetwork,
-			SubstitutableTask task, SubstitutableMethod method) throws DecompositionNotFound {
+			ImmutableTask task, SubstitutableMethod method) throws DecompositionNotFound {
 		Substitution<SubstitutableTerm, SimpleVariable> unifier;
 		try {
 			unifier = unificationService.findUnifier(task, method);

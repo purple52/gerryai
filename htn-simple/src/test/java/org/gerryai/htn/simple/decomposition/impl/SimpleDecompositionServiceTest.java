@@ -31,7 +31,7 @@ import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.gerryai.logic.unification.Substitution;
 import org.junit.Test;
@@ -47,19 +47,19 @@ public class SimpleDecompositionServiceTest {
     public void testDecompose() {
     	
     	@SuppressWarnings("unchecked")
-    	UnificationService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+    	UnificationService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
     			ImmutableConstraint<?>, SubstitutableCondition,
     			SimpleVariable> mockUnificationService = mock(UnificationService.class);
     	SimpleDecompositionService decompositionService = new SimpleDecompositionService(mockUnificationService);
     	
     	// TaskA will be decomposed into TaskB and TaskC
-    	SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
-    	SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
-    	SubstitutableTask mockTaskC = mock(SubstitutableTask.class);
+    	ImmutableTask mockTaskA = mock(ImmutableTask.class);
+    	ImmutableTask mockTaskB = mock(ImmutableTask.class);
+    	ImmutableTask mockTaskC = mock(ImmutableTask.class);
     	
-    	Set<SubstitutableTask> taskNetworkTasks = new HashSet<SubstitutableTask>();
+    	Set<ImmutableTask> taskNetworkTasks = new HashSet<ImmutableTask>();
     	taskNetworkTasks.add(mockTaskA);
-    	Set<SubstitutableTask> methodSubTasks = new HashSet<SubstitutableTask>();
+    	Set<ImmutableTask> methodSubTasks = new HashSet<ImmutableTask>();
     	methodSubTasks.add(mockTaskB);
     	methodSubTasks.add(mockTaskC);
     	

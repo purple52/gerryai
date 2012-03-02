@@ -22,20 +22,20 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ConstraintFactory;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public class SimpleConstraintFactory implements
-        ConstraintFactory<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
+        ConstraintFactory<SubstitutableTerm, ImmutableTask, SubstitutableCondition> {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public final SimplePrecedenceConstraint
-			createPrecedenceConstraint(Set<SubstitutableTask> precedingTasks, Set<SubstitutableTask> procedingTasks) {
+			createPrecedenceConstraint(Set<ImmutableTask> precedingTasks, Set<ImmutableTask> procedingTasks) {
 		return new SimplePrecedenceConstraint.Builder()
 		        .setPrecedingTasks(precedingTasks)
 		        .setProcedingTasks(procedingTasks)
@@ -45,7 +45,7 @@ public class SimpleConstraintFactory implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleBeforeConstraint createBeforeConstraint(Set<SubstitutableTask> tasks,
+	public final SimpleBeforeConstraint createBeforeConstraint(Set<ImmutableTask> tasks,
 			SubstitutableCondition condition) {
         return new SimpleBeforeConstraint.Builder()
                 .addTasks(tasks)
@@ -56,7 +56,7 @@ public class SimpleConstraintFactory implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleAfterConstraint createAfterConstraint(Set<SubstitutableTask> tasks,
+	public final SimpleAfterConstraint createAfterConstraint(Set<ImmutableTask> tasks,
 			SubstitutableCondition condition) {
 		return new SimpleAfterConstraint.Builder()
 		        .addTasks(tasks)
@@ -67,8 +67,8 @@ public class SimpleConstraintFactory implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleBetweenConstraint createBetweenConstraint(Set<SubstitutableTask> precedingTasks,
-			Set<SubstitutableTask> procedingTasks, SubstitutableCondition condition) {
+	public final SimpleBetweenConstraint createBetweenConstraint(Set<ImmutableTask> precedingTasks,
+			Set<ImmutableTask> procedingTasks, SubstitutableCondition condition) {
         return new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(precedingTasks)
                 .addProcedingTasks(procedingTasks)

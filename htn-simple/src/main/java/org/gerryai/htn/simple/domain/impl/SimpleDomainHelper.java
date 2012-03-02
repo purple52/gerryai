@@ -28,7 +28,7 @@ import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
 /**
@@ -36,13 +36,13 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  *
  */
 public class SimpleDomainHelper implements DomainHelper<SubstitutableOperator, SubstitutableMethod,
-		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 		ImmutableConstraint<?>, SubstitutableCondition> {
 
 	/**
 	 * Domain this helper is working on.
 	 */
-	private Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
+	private Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask,
 	SubstitutableTaskNetwork, ImmutableConstraint<?>, SubstitutableCondition> domain;
 	
 	/**
@@ -50,7 +50,7 @@ public class SimpleDomainHelper implements DomainHelper<SubstitutableOperator, S
 	 * @param domain the domain to work on
 	 */
 	public SimpleDomainHelper(Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			SubstitutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, SubstitutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> domain) {
 		this.domain = domain;
 	}
@@ -58,7 +58,7 @@ public class SimpleDomainHelper implements DomainHelper<SubstitutableOperator, S
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
+	public final Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask,
 	SubstitutableTaskNetwork, ImmutableConstraint<?>, SubstitutableCondition> getDomain() {
 		return domain;
 	}
@@ -79,7 +79,7 @@ public class SimpleDomainHelper implements DomainHelper<SubstitutableOperator, S
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<SubstitutableMethod> getMethodsByTask(SubstitutableTask task) {
+	public final Set<SubstitutableMethod> getMethodsByTask(ImmutableTask task) {
 		// TODO Check task arguments match
 		Set<SubstitutableMethod> methods = new HashSet<SubstitutableMethod>();
 		for (SubstitutableMethod method : domain.getMethods()) {

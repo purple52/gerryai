@@ -28,7 +28,7 @@ import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 import com.google.common.base.Objects;
 
@@ -37,17 +37,17 @@ import com.google.common.base.Objects;
  *
  */
 public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePrecedenceConstraint>,
-		ValidatablePrecedenceConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
+		ValidatablePrecedenceConstraint<SubstitutableTerm, ImmutableTask, SubstitutableCondition> {
 
 	/**
 	 * The task that must come first.
 	 */
-	private Set<SubstitutableTask> precedingTasks;
+	private Set<ImmutableTask> precedingTasks;
 	
 	/**
 	 * The task that must come last.
 	 */
-	private Set<SubstitutableTask> procedingTasks;
+	private Set<ImmutableTask> procedingTasks;
 	
     /**
      * Constructor.
@@ -61,21 +61,21 @@ public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePre
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<SubstitutableTask> getPrecedingTasks() {
+	public final Set<ImmutableTask> getPrecedingTasks() {
 		return precedingTasks;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<SubstitutableTask> getProcedingTasks() {
+	public final Set<ImmutableTask> getProcedingTasks() {
 		return procedingTasks;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<SubstitutableTerm, SubstitutableTask,
+	public final boolean validate(ConstraintValidator<SubstitutableTerm, ImmutableTask,
 			SubstitutableCondition> validator) {
 		return validator.validate(this);
 	}
@@ -83,7 +83,7 @@ public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePre
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<SubstitutableTerm, SubstitutableTask,
+	public final void add(ConstraintValidator<SubstitutableTerm, ImmutableTask,
 			SubstitutableCondition> validator) throws InvalidConstraint {
 		validator.add(this);
 	}
@@ -121,18 +121,18 @@ public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePre
         /**
          * The task that must come first.
          */
-        private Set<SubstitutableTask> precedingTasks;
+        private Set<ImmutableTask> precedingTasks;
 
         /**
          * The task that must come last.
          */
-        private Set<SubstitutableTask> procedingTasks;
+        private Set<ImmutableTask> procedingTasks;
         
         /**
          * @param tasks the tasks to set
          * @return the updated builder
          */
-        public final Builder setPrecedingTasks(Set<SubstitutableTask> tasks) {
+        public final Builder setPrecedingTasks(Set<ImmutableTask> tasks) {
             this.precedingTasks = tasks;
             return this;
         }
@@ -141,7 +141,7 @@ public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePre
          * @param tasks the tasks to set
          * @return the updated builder
          */
-        public final Builder setProcedingTasks(Set<SubstitutableTask> tasks) {
+        public final Builder setProcedingTasks(Set<ImmutableTask> tasks) {
             this.procedingTasks = tasks;
             return this;
         }
@@ -150,15 +150,15 @@ public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePre
          * {@inheritDoc}
          */
         public final Builder copy(SimplePrecedenceConstraint constraint) {
-            this.precedingTasks = new HashSet<SubstitutableTask>(constraint.getPrecedingTasks());
-            this.procedingTasks = new HashSet<SubstitutableTask>(constraint.getProcedingTasks());
+            this.precedingTasks = new HashSet<ImmutableTask>(constraint.getPrecedingTasks());
+            this.procedingTasks = new HashSet<ImmutableTask>(constraint.getProcedingTasks());
             return this;
         }
 
         /**
          * {@inheritDoc}
          */
-        public final Builder replace(SubstitutableTask oldTask, Set<SubstitutableTask> newTasks) {
+        public final Builder replace(ImmutableTask oldTask, Set<ImmutableTask> newTasks) {
             if (this.precedingTasks.contains(oldTask)) {
                 this.precedingTasks.remove(oldTask);
                 this.precedingTasks.addAll(newTasks);
@@ -181,14 +181,14 @@ public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePre
         /**
          * @return the task
          */
-        protected final Set<SubstitutableTask> getPrecedingTasks() {
+        protected final Set<ImmutableTask> getPrecedingTasks() {
             return precedingTasks;
         }
 
         /**
          * @return the task
          */
-        protected final Set<SubstitutableTask> getProcedingTasks() {
+        protected final Set<ImmutableTask> getProcedingTasks() {
             return procedingTasks;
         }
         

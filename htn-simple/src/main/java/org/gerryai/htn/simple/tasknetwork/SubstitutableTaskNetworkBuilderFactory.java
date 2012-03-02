@@ -25,7 +25,7 @@ import org.gerryai.htn.simple.logic.SubstitutableTerm;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface SubstitutableTaskNetworkBuilderFactory extends
-		TaskNetworkBuilderFactory<SubstitutableTerm, SubstitutableTask,
+		TaskNetworkBuilderFactory<SubstitutableTerm, ImmutableTask,
 		SubstitutableTaskNetwork, ImmutableConstraint<?>> {
 
 }

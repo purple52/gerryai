@@ -23,7 +23,7 @@ import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
 
@@ -41,7 +41,7 @@ public class SimplePredicate extends Predicate implements SubstitutableCondition
 	/**
 	 * Converter to help build the underlying AIMA objects.
 	 */
-	private static AIMAConverter<SubstitutableTerm, SimpleVariable, SubstitutableTask> converter;
+	private static AIMAConverter<SubstitutableTerm, SimpleVariable, ImmutableTask> converter;
 	
 	/**
 	 * {@inheritDoc}

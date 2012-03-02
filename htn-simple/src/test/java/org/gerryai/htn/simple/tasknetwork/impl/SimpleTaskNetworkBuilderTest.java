@@ -30,7 +30,7 @@ import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.junit.Test;
 
@@ -47,7 +47,7 @@ public class SimpleTaskNetworkBuilderTest {
 	public void testSimpleTaskNetworkBuilder() {
 		// Create the builder under test
 		@SuppressWarnings("unchecked")
-		ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
+		ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
 		SimpleTaskNetworkBuilder builder = new SimpleTaskNetworkBuilder(mockConstraintValidator);
 		
 		// Check that the argument and constraint lists have been initialised
@@ -60,12 +60,12 @@ public class SimpleTaskNetworkBuilderTest {
 	 */
 	@Test
 	public void testAddTask() {
-		SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
-		SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
+		ImmutableTask mockTaskA = mock(ImmutableTask.class);
+		ImmutableTask mockTaskB = mock(ImmutableTask.class);
 		
 		// Create the builder under test
 		@SuppressWarnings("unchecked")
-		ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
+		ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
 		SimpleTaskNetworkBuilder builder = new SimpleTaskNetworkBuilder(mockConstraintValidator)
 				.addTask(mockTaskA)
 				.addTask(mockTaskB);
@@ -81,21 +81,21 @@ public class SimpleTaskNetworkBuilderTest {
 	 */
 	@Test
 	public void testAddTasks() {
-		SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
-		SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
-		Set<SubstitutableTask> mockTasksOne = new HashSet<SubstitutableTask>();
+		ImmutableTask mockTaskA = mock(ImmutableTask.class);
+		ImmutableTask mockTaskB = mock(ImmutableTask.class);
+		Set<ImmutableTask> mockTasksOne = new HashSet<ImmutableTask>();
 		mockTasksOne.add(mockTaskA);
 		mockTasksOne.add(mockTaskB);
 
-		SubstitutableTask mockTaskC = mock(SubstitutableTask.class);
-		SubstitutableTask mockTaskD = mock(SubstitutableTask.class);
-		Set<SubstitutableTask> mockTasksTwo = new HashSet<SubstitutableTask>();
+		ImmutableTask mockTaskC = mock(ImmutableTask.class);
+		ImmutableTask mockTaskD = mock(ImmutableTask.class);
+		Set<ImmutableTask> mockTasksTwo = new HashSet<ImmutableTask>();
 		mockTasksTwo.add(mockTaskC);
 		mockTasksTwo.add(mockTaskD);
 		
 		// Create the builder under test
 		@SuppressWarnings("unchecked")
-		ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
+		ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
 		SimpleTaskNetworkBuilder builder = new SimpleTaskNetworkBuilder(mockConstraintValidator)
 				.addTasks(mockTasksOne)
 				.addTasks(mockTasksTwo);
@@ -115,7 +115,7 @@ public class SimpleTaskNetworkBuilderTest {
 	@Test
 	public void testAddConstraint() throws InvalidConstraint {
 		@SuppressWarnings("unchecked")
-		ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
+		ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
 		
 		ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
 		when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
@@ -140,7 +140,7 @@ public class SimpleTaskNetworkBuilderTest {
 	@Test
 	public void testAddConstraints() throws InvalidConstraint {
 		@SuppressWarnings("unchecked")
-		ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
+		ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
 		
 		ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
 		when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
@@ -180,10 +180,10 @@ public class SimpleTaskNetworkBuilderTest {
 	@Test
 	public void testBuild() throws InvalidConstraint {
 	    
-		SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
+		ImmutableTask mockTaskA = mock(ImmutableTask.class);
 		ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
 		@SuppressWarnings("unchecked")
-		ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
+		ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
 		when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
 		
 		SubstitutableTaskNetwork taskNetwork = new SimpleTaskNetworkBuilder(mockConstraintValidator)
@@ -205,9 +205,9 @@ public class SimpleTaskNetworkBuilderTest {
 	public void testCopy() throws InvalidConstraint {
 	    
 	    SubstitutableTaskNetwork mockTaskNetwork = mock(SubstitutableTaskNetwork.class);
-	    SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
+	    ImmutableTask mockTaskA = mock(ImmutableTask.class);
 	    ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
-        Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
+        Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
         mockTasks.add(mockTaskA);
         Set<ImmutableConstraint<?>> mockConstraints = new HashSet<ImmutableConstraint<?>>();
         mockConstraints.add(mockConstraintA);
@@ -215,7 +215,7 @@ public class SimpleTaskNetworkBuilderTest {
         when(mockTaskNetwork.getConstraints()).thenReturn(mockConstraints);
         
         @SuppressWarnings("unchecked")
-        ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
         
 	    SubstitutableTaskNetwork taskNetwork = new SimpleTaskNetworkBuilder(mockConstraintValidator)
                 .copy(mockTaskNetwork)
@@ -234,9 +234,9 @@ public class SimpleTaskNetworkBuilderTest {
     @Test
     public void testApply() throws InvalidConstraint {
         
-        SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
-        SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
+        ImmutableTask mockTaskA = mock(ImmutableTask.class);
+        ImmutableTask mockTaskB = mock(ImmutableTask.class);
+        Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
         mockTasks.add(mockTaskA);
         mockTasks.add(mockTaskB);
         ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
@@ -246,7 +246,7 @@ public class SimpleTaskNetworkBuilderTest {
         mockConstraints.add(mockConstraintB);
         
         @SuppressWarnings("unchecked")
-        ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockConstraintValidator = mock(ConstraintValidator.class);
         when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
         when(mockConstraintB.validate(mockConstraintValidator)).thenReturn(true);
         

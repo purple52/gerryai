@@ -39,7 +39,7 @@ import org.gerryai.htn.simple.plan.impl.SimpleActionFactory;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactoryHelper;
 import org.gerryai.htn.simple.plan.impl.SimplePlanFactory;
 import org.gerryai.htn.simple.planner.PlannerFactory;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetworkBuilderFactory;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilderFactory;
@@ -50,7 +50,7 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilderFactory;
  */
 public class SimplePlannerFactory implements
 		PlannerFactory<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-		SubstitutableTask, SubstitutableTaskNetwork,
+		ImmutableTask, SubstitutableTaskNetwork,
 		ImmutableConstraint<?>, SubstitutableCondition> {
 
 	/**
@@ -58,36 +58,36 @@ public class SimplePlannerFactory implements
 	 */
 	public final SimplePlanner create(
 			Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			SubstitutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, SubstitutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> domain) {
 		
 		DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-				SubstitutableTask, SubstitutableTaskNetwork,
+				ImmutableTask, SubstitutableTaskNetwork,
 				ImmutableConstraint<?>, SubstitutableCondition> domainHelper
 				= new SimpleDomainHelper(domain);
 		
-		ActionFactoryHelper<SubstitutableOperator, SubstitutableTerm, SubstitutableTask, SubstitutableCondition>
+		ActionFactoryHelper<SubstitutableOperator, SubstitutableTerm, ImmutableTask, SubstitutableCondition>
 				actionFactoryHelper = new SimpleActionFactoryHelper(domainHelper);
-		ActionFactory<SubstitutableOperator, SubstitutableTerm, SubstitutableTask, SubstitutableCondition>
+		ActionFactory<SubstitutableOperator, SubstitutableTerm, ImmutableTask, SubstitutableCondition>
 				actionFactory = new SimpleActionFactory(actionFactoryHelper);
 		
 		SimplePlanFactory planFactory = new SimplePlanFactory();
 		
 		aima.core.logic.fol.Unifier unifier = new aima.core.logic.fol.Unifier();
-		AIMAConverter<SubstitutableTerm, SimpleVariable, SubstitutableTask> converter = new AIMAConverterImpl();
-		ConstraintValidatorFactory<SubstitutableTerm, SubstitutableTask,
+		AIMAConverter<SubstitutableTerm, SimpleVariable, ImmutableTask> converter = new AIMAConverterImpl();
+		ConstraintValidatorFactory<SubstitutableTerm, ImmutableTask,
 		SubstitutableCondition> constraintValidatorFactory
-				= new GenericConstraintValidatorFactory<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>();
+				= new GenericConstraintValidatorFactory<SubstitutableTerm, ImmutableTask, SubstitutableCondition>();
 		SubstitutableTaskNetworkBuilderFactory taskNetworkBuilderFactory =
 			new SimpleTaskNetworkBuilderFactory(constraintValidatorFactory);
-		AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
+		AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask,
 				SubstitutableTaskNetwork, ImmutableConstraint<?>,
 				SubstitutableCondition, SimpleVariable> unificationService =
-			new AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
+			new AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask,
 				SubstitutableTaskNetwork, ImmutableConstraint<?>,
 				SubstitutableCondition, SimpleVariable>(unifier, converter, domainHelper, taskNetworkBuilderFactory);
 		
-		DecompositionService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 		        ImmutableConstraint<?>> decompositionService =
 				new SimpleDecompositionService(unificationService);
 		

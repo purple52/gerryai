@@ -20,7 +20,7 @@ package org.gerryai.htn.simple.constraint;
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
  * Interface for constraints that support the operations required by this HTN implementation.
@@ -31,12 +31,12 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 public interface ImmutableConstraint<C extends ImmutableConstraint<C>>
         extends
         Constraint<SubstitutableTerm>,
-        ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
+        ValidatableConstraint<SubstitutableTerm, ImmutableTask, SubstitutableCondition> {
 
     /**
      * Create a new builder object that can build this type of constraint.
-     * The builder returned is a simple constraint builder, so only supports
-     * the build mechanisms that are general to all SimpleConstraint classes.
+     * The builder returned is an immutable constraint builder, so only supports
+     * the build mechanisms that are general to all ImmutableConstraint classes.
      * @return the builder
      */
     ImmutableConstraintBuilder<C> createCopyBuilder();

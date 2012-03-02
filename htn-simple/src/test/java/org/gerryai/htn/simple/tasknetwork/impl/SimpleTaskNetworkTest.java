@@ -20,7 +20,6 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
@@ -30,7 +29,8 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
 import org.junit.Test;
@@ -49,9 +49,9 @@ public class SimpleTaskNetworkTest {
     @Test
     public void testIsPrimitiveNoTasks() {
 
-        Set<SubstitutableTask> tasks = new HashSet<SubstitutableTask>();
+        Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
         @SuppressWarnings("unchecked")
-        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
+        TaskNetworkBuilder<SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
         when(mockBuilder.getTasks()).thenReturn(tasks);
         
         SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
@@ -67,12 +67,12 @@ public class SimpleTaskNetworkTest {
     @Test
     public void testIsPrimitiveOnePrimitiveTask() {
         
-        Set<SubstitutableTask> tasks = new HashSet<SubstitutableTask>();
-        SubstitutableTask mockPrimitiveTask = mock(SubstitutableTask.class);
+        Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
+        ImmutableTask mockPrimitiveTask = mock(ImmutableTask.class);
         when(mockPrimitiveTask.isPrimitive()).thenReturn(true);
         tasks.add(mockPrimitiveTask);
         @SuppressWarnings("unchecked")
-        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
+        TaskNetworkBuilder<SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
         when(mockBuilder.getTasks()).thenReturn(tasks);
         
         SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
@@ -88,12 +88,12 @@ public class SimpleTaskNetworkTest {
     @Test
     public void testIsPrimitiveOneNonPrimitiveTask() {
         
-        Set<SubstitutableTask> tasks = new HashSet<SubstitutableTask>();
-        SubstitutableTask mockNonPrimitiveTask = mock(SubstitutableTask.class);
+        Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
+        ImmutableTask mockNonPrimitiveTask = mock(ImmutableTask.class);
         when(mockNonPrimitiveTask.isPrimitive()).thenReturn(false);
         tasks.add(mockNonPrimitiveTask);
         @SuppressWarnings("unchecked")
-        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
+        TaskNetworkBuilder<SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
         when(mockBuilder.getTasks()).thenReturn(tasks);
 
         SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
@@ -109,18 +109,18 @@ public class SimpleTaskNetworkTest {
     @Test
     public void testIsPrimitiveManyTasksAllPrimitive() {
 
-        Set<SubstitutableTask> tasks = new HashSet<SubstitutableTask>();
-        SubstitutableTask mockPrimitiveTaskOne = mock(SubstitutableTask.class);
+        Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
+        ImmutableTask mockPrimitiveTaskOne = mock(ImmutableTask.class);
         when(mockPrimitiveTaskOne.isPrimitive()).thenReturn(true);
-        SubstitutableTask mockPrimitiveTaskTwo = mock(SubstitutableTask.class);
+        ImmutableTask mockPrimitiveTaskTwo = mock(ImmutableTask.class);
         when(mockPrimitiveTaskTwo.isPrimitive()).thenReturn(true);
-        SubstitutableTask mockPrimitiveTaskThree = mock(SubstitutableTask.class);
+        ImmutableTask mockPrimitiveTaskThree = mock(ImmutableTask.class);
         when(mockPrimitiveTaskThree.isPrimitive()).thenReturn(true);
         tasks.add(mockPrimitiveTaskOne);
         tasks.add(mockPrimitiveTaskTwo);
         tasks.add(mockPrimitiveTaskThree);
         @SuppressWarnings("unchecked")
-        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
+        TaskNetworkBuilder<SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
         when(mockBuilder.getTasks()).thenReturn(tasks);
         
         SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
@@ -136,18 +136,18 @@ public class SimpleTaskNetworkTest {
     @Test
     public void testIsPrimitiveManyTasksOneNonPrimitive() {
 
-        Set<SubstitutableTask> tasks = new HashSet<SubstitutableTask>();
-        SubstitutableTask mockPrimitiveTaskOne = mock(SubstitutableTask.class);
+        Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
+        ImmutableTask mockPrimitiveTaskOne = mock(ImmutableTask.class);
         when(mockPrimitiveTaskOne.isPrimitive()).thenReturn(true);
-        SubstitutableTask mockPrimitiveTaskTwo = mock(SubstitutableTask.class);
+        ImmutableTask mockPrimitiveTaskTwo = mock(ImmutableTask.class);
         when(mockPrimitiveTaskTwo.isPrimitive()).thenReturn(false);
-        SubstitutableTask mockPrimitiveTaskThree = mock(SubstitutableTask.class);
+        ImmutableTask mockPrimitiveTaskThree = mock(ImmutableTask.class);
         when(mockPrimitiveTaskThree.isPrimitive()).thenReturn(true);
         tasks.add(mockPrimitiveTaskOne);
         tasks.add(mockPrimitiveTaskTwo);
         tasks.add(mockPrimitiveTaskThree);
         @SuppressWarnings("unchecked")
-        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
+        TaskNetworkBuilder<SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
         when(mockBuilder.getTasks()).thenReturn(tasks);
 
         SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
@@ -163,28 +163,42 @@ public class SimpleTaskNetworkTest {
     @Test
     public void testApply() {
         Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
-        TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
-        Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
-        SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
-        SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
+        TaskNetworkBuilder<SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
+        Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
+        ImmutableTask mockTaskA = mock(ImmutableTask.class);
+        ImmutableTask mockTaskB = mock(ImmutableTask.class);
+        ImmutableTask mockTaskC = mock(ImmutableTask.class);
+        ImmutableTask mockTaskD = mock(ImmutableTask.class);
         mockTasks.add(mockTaskA);
         mockTasks.add(mockTaskB);
         when(mockBuilder.getTasks()).thenReturn(mockTasks);
+        ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> mockTaskBuilderA = mock(ImmutableTaskBuilder.class);
+        ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> mockTaskBuilderB = mock(ImmutableTaskBuilder.class);
+        when(mockTaskBuilderA.apply(mockSubstituter)).thenReturn(mockTaskBuilderA);
+        when(mockTaskBuilderB.apply(mockSubstituter)).thenReturn(mockTaskBuilderB);
+        when(mockTaskBuilderA.build()).thenReturn(mockTaskC);
+        when(mockTaskBuilderB.build()).thenReturn(mockTaskD);
+        when(mockTaskA.createCopyBuilder()).thenReturn(mockTaskBuilderA);
+        when(mockTaskB.createCopyBuilder()).thenReturn(mockTaskBuilderB);
         
         @SuppressWarnings("rawtypes")
         ImmutableConstraint mockConstraintA = mock(ImmutableConstraint.class);
         @SuppressWarnings("rawtypes")
         ImmutableConstraint mockConstraintB = mock(ImmutableConstraint.class);
         @SuppressWarnings("rawtypes")
+        ImmutableConstraint mockConstraintC = mock(ImmutableConstraint.class);
+        @SuppressWarnings("rawtypes")
+        ImmutableConstraint mockConstraintD = mock(ImmutableConstraint.class);
+        @SuppressWarnings("rawtypes")
         ImmutableConstraintBuilder mockConstraintBuilderA = mock(ImmutableConstraintBuilder.class);
         @SuppressWarnings("rawtypes")
         ImmutableConstraintBuilder mockConstraintBuilderB = mock(ImmutableConstraintBuilder.class);
         when(mockConstraintA.createCopyBuilder()).thenReturn(mockConstraintBuilderA);
         when(mockConstraintB.createCopyBuilder()).thenReturn(mockConstraintBuilderB);
-        
         when(mockConstraintBuilderA.apply(mockSubstituter)).thenReturn(mockConstraintBuilderA);
         when(mockConstraintBuilderB.apply(mockSubstituter)).thenReturn(mockConstraintBuilderB);
-        
+        when(mockConstraintBuilderA.build()).thenReturn(mockConstraintC);
+        when(mockConstraintBuilderB.build()).thenReturn(mockConstraintD);
         Set<ImmutableConstraint<?>> mockConstraints = new HashSet<ImmutableConstraint<?>>();
         mockConstraints.add(mockConstraintA);
         mockConstraints.add(mockConstraintB);
@@ -194,9 +208,9 @@ public class SimpleTaskNetworkTest {
 
         taskNetwork.apply(mockSubstituter);
 
-        verify(mockTaskA).apply(mockSubstituter);
-        verify(mockTaskB).apply(mockSubstituter);
-        //verify(mockConstraintA).apply(mockSubstituter);
-        //verify(mockConstraintB).apply(mockSubstituter);
+        assertTrue(taskNetwork.getTasks().contains(mockTaskC));
+        assertTrue(taskNetwork.getTasks().contains(mockTaskD));
+        assertTrue(taskNetwork.getConstraints().contains(mockConstraintC));
+        assertTrue(taskNetwork.getConstraints().contains(mockConstraintD));
     }
 }

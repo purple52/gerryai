@@ -19,7 +19,7 @@ package org.gerryai.htn.simple.domain;
 
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
@@ -86,7 +86,7 @@ public interface MethodBuilder<
      * 
      * @return the task
      */
-    SubstitutableTask getTask();
+    ImmutableTask getTask();
 
     /**
      * Get the task network for the method being built.

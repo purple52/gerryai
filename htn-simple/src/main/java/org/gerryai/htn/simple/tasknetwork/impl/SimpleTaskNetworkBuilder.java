@@ -26,7 +26,7 @@ import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
 
@@ -36,12 +36,12 @@ import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
  */
 public class SimpleTaskNetworkBuilder
 		implements TaskNetworkBuilder<SubstitutableTerm,
-        SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> {
+        ImmutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> {
 
 	/**
 	 * Set of tasks we are building up.
 	 */
-	private Set<SubstitutableTask> tasks;
+	private Set<ImmutableTask> tasks;
 	
 	/**
 	 * Set of constraints we are building up.
@@ -51,23 +51,23 @@ public class SimpleTaskNetworkBuilder
 	/**
 	 * Constraint validator.
 	 */
-	private ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> constraintValidator;
+	private ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> constraintValidator;
 	
 	/**
      * Constructor, taking a constraint validator to use.
      * @param constraintValidator the constraint validator
      */
-    SimpleTaskNetworkBuilder(ConstraintValidator<SubstitutableTerm, SubstitutableTask,
+    SimpleTaskNetworkBuilder(ConstraintValidator<SubstitutableTerm, ImmutableTask,
             SubstitutableCondition> constraintValidator) {
         this.constraintValidator = constraintValidator;
-        tasks = new HashSet<SubstitutableTask>();
+        tasks = new HashSet<ImmutableTask>();
         constraints = new HashSet<ImmutableConstraint<?>>();
     }
 	
 	/**
 	 * @return the constraintValidator
 	 */
-	protected final ConstraintValidator<SubstitutableTerm, SubstitutableTask,
+	protected final ConstraintValidator<SubstitutableTerm, ImmutableTask,
 	        SubstitutableCondition> getConstraintValidator() {
 		return constraintValidator;
 	}
@@ -75,7 +75,7 @@ public class SimpleTaskNetworkBuilder
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTaskNetworkBuilder addTask(SubstitutableTask task) {
+	public final SimpleTaskNetworkBuilder addTask(ImmutableTask task) {
 		tasks.add(task);
 		return this;
 	}
@@ -83,7 +83,7 @@ public class SimpleTaskNetworkBuilder
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTaskNetworkBuilder addTasks(Set<SubstitutableTask> tasks) {
+	public final SimpleTaskNetworkBuilder addTasks(Set<ImmutableTask> tasks) {
 		this.tasks.addAll(tasks);
 		return this;
 	}
@@ -112,7 +112,7 @@ public class SimpleTaskNetworkBuilder
      * {@inheritDoc}
      */
 	public final SimpleTaskNetworkBuilder copy(SubstitutableTaskNetwork taskNetwork) throws InvalidConstraint {
-	    tasks = new HashSet<SubstitutableTask>(taskNetwork.getTasks());
+	    tasks = new HashSet<ImmutableTask>(taskNetwork.getTasks());
 	    // Assume original task network is valid
 	    constraints = new HashSet<ImmutableConstraint<?>>(taskNetwork.getConstraints());
 	    return this;
@@ -124,7 +124,7 @@ public class SimpleTaskNetworkBuilder
     public final SimpleTaskNetworkBuilder apply(Substituter<SubstitutableTerm> substituter) {
 
         //TODO: Implement
-        for (SubstitutableTask task : tasks) {
+        for (ImmutableTask task : tasks) {
             // Update every task
             for (ImmutableConstraint<?> constraint : constraints) {
                 // Update every constraint that refers to the original task
@@ -148,7 +148,7 @@ public class SimpleTaskNetworkBuilder
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<SubstitutableTask> getTasks() {
+	public final Set<ImmutableTask> getTasks() {
 		return tasks;
 	}
 	

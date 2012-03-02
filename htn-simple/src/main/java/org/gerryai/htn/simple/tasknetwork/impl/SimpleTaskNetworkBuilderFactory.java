@@ -21,7 +21,7 @@ import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetworkBuilderFactory;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
 
@@ -34,7 +34,7 @@ public class SimpleTaskNetworkBuilderFactory implements SubstitutableTaskNetwork
 	/**
 	 * Factory for creating constraint validators, as used by the task network builders.
 	 */
-	private ConstraintValidatorFactory<SubstitutableTerm, SubstitutableTask,
+	private ConstraintValidatorFactory<SubstitutableTerm, ImmutableTask,
 			SubstitutableCondition> constraintValidatorFactory;
 	
 	/**
@@ -42,14 +42,14 @@ public class SimpleTaskNetworkBuilderFactory implements SubstitutableTaskNetwork
 	 * @param constraintValidatorFactory the constraint validator factory
 	 */
 	public SimpleTaskNetworkBuilderFactory(ConstraintValidatorFactory<SubstitutableTerm,
-			SubstitutableTask, SubstitutableCondition> constraintValidatorFactory) {
+			ImmutableTask, SubstitutableCondition> constraintValidatorFactory) {
 		this.constraintValidatorFactory = constraintValidatorFactory;
 	}
 	/**
 	 * {@inheritDoc}
 	 */
 	public final SimpleTaskNetworkBuilder createTaskNetworkBuilder() {
-		ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>
+		ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition>
 				constraintValidator = constraintValidatorFactory.create();
 		return new SimpleTaskNetworkBuilder(constraintValidator);	
 	}
@@ -57,7 +57,7 @@ public class SimpleTaskNetworkBuilderFactory implements SubstitutableTaskNetwork
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableTaskBuilder<SubstitutableTerm, SubstitutableTask> createTaskBuilder() {
+	public final ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> createTaskBuilder() {
 		return new SimpleTask.Builder();	
 	}
 }

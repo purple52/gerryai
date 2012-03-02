@@ -24,19 +24,19 @@ import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public class SimpleActionFactory implements ActionFactory<SubstitutableOperator,
-		SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
+		SubstitutableTerm, ImmutableTask, SubstitutableCondition> {
 
 	/**
 	 * Helper object for doing the difficult bits.
 	 */
-	private ActionFactoryHelper<SubstitutableOperator, SubstitutableTerm, SubstitutableTask,
+	private ActionFactoryHelper<SubstitutableOperator, SubstitutableTerm, ImmutableTask,
 			SubstitutableCondition> actionFactoryHelper;
 	
 	/**
@@ -44,14 +44,14 @@ public class SimpleActionFactory implements ActionFactory<SubstitutableOperator,
 	 * @param actionFactoryHelper the action factory
 	 */
 	public SimpleActionFactory(ActionFactoryHelper<SubstitutableOperator, SubstitutableTerm,
-			SubstitutableTask, SubstitutableCondition> actionFactoryHelper) {
+			ImmutableTask, SubstitutableCondition> actionFactoryHelper) {
 		this.actionFactoryHelper = actionFactoryHelper;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleAction create(SubstitutableTask task) throws TaskNotActionable {
+	public final SimpleAction create(ImmutableTask task) throws TaskNotActionable {
 
 		// Try and get the operator
 		SubstitutableOperator operator = actionFactoryHelper.getOperator(task);

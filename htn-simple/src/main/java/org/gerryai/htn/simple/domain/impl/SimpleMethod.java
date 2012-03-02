@@ -19,7 +19,7 @@ package org.gerryai.htn.simple.domain.impl;
 
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableMethodBuilder;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
 /**
@@ -36,7 +36,7 @@ public class SimpleMethod implements SubstitutableMethod {
 	/**
 	 * Task that this method decomposes.
 	 */
-	private SubstitutableTask task;
+	private ImmutableTask task;
 	
 	/**
 	 * Sub tasks that this method decomposes its task into.
@@ -70,7 +70,7 @@ public class SimpleMethod implements SubstitutableMethod {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableTask getTask() {
+	public final ImmutableTask getTask() {
 		return task;
 	}
 

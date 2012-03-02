@@ -24,7 +24,7 @@ import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 import org.gerryai.logic.unification.Substitution;
 
@@ -35,13 +35,13 @@ import org.gerryai.logic.unification.Substitution;
  *
  */
 public class SimpleDecompositionService implements
-		DecompositionService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 		ImmutableConstraint<?>> {
 
 	/**
 	 * Service for performing unification actions.
 	 */
-	private UnificationService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+	private UnificationService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 	ImmutableConstraint<?>,
 			SubstitutableCondition, SimpleVariable> unificationService;
 	
@@ -49,7 +49,7 @@ public class SimpleDecompositionService implements
 	 * Set the unification service.
 	 * @param unificationService the unification service to use
 	 */
-	public SimpleDecompositionService(UnificationService<SubstitutableMethod, SubstitutableTerm, SubstitutableTask,
+	public SimpleDecompositionService(UnificationService<SubstitutableMethod, SubstitutableTerm, ImmutableTask,
 			SubstitutableTaskNetwork, ImmutableConstraint<?>,
 			SubstitutableCondition, SimpleVariable> unificationService) {
 		this.unificationService = unificationService;
@@ -59,7 +59,7 @@ public class SimpleDecompositionService implements
 	 * {@inheritDoc}
 	 */
 	public final SubstitutableTaskNetwork decompose(Substitution<SubstitutableTerm, SimpleVariable> unifier,
-			SubstitutableTaskNetwork taskNetwork, SubstitutableTask task, SubstitutableMethod method) {
+			SubstitutableTaskNetwork taskNetwork, ImmutableTask task, SubstitutableMethod method) {
 		// TODO: Ensure the original task network is never altered
 	    
 		// Apply unifier where relevant

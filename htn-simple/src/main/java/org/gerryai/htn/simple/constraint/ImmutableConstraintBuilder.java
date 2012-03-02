@@ -21,7 +21,7 @@ import java.util.Set;
 
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
  * Interface for constraint builders used by this HTN implementation.
@@ -44,7 +44,7 @@ public interface ImmutableConstraintBuilder<C extends ImmutableConstraint<C>> {
      * @param newTasks the tasks to replace with
      * @return the updated builder
      */
-    ImmutableConstraintBuilder<C> replace(SubstitutableTask oldTask, Set<SubstitutableTask> newTasks);
+    ImmutableConstraintBuilder<C> replace(ImmutableTask oldTask, Set<ImmutableTask> newTasks);
     
     /**
      * Apply the substituter provided to the conditions of the constraint.

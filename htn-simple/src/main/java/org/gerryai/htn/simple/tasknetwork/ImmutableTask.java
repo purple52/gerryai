@@ -22,10 +22,16 @@ import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.tasknetwork.Task;
 
 /**
- * Extension of the task interface for tasks that can be visited by a substituter.
+ * Extension of the task interface for tasks that are immutable and can only be altered via a builder.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface SubstitutableTask
-		extends Task<SubstitutableTerm>, Substitutable<SubstitutableTerm> {
+public interface ImmutableTask extends Task<SubstitutableTerm> {
 
+    /**
+     * Create a new builder object that can build this type of constraint.
+     * The builder returned is an immutable constraint builder, so only supports
+     * the build mechanisms that are general to all ImmutableConstraint classes.
+     * @return the builder
+     */
+    ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> createCopyBuilder();
 }

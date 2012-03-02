@@ -8,7 +8,7 @@ import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 
 /**
@@ -34,7 +34,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  *
  */
 public class SimpleProblem implements Problem<SubstitutableOperator, SubstitutableMethod,
-		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
+		SubstitutableTerm, ImmutableTask, SubstitutableTaskNetwork,
 		ImmutableConstraint<?>, SubstitutableCondition> {
 
 	/**
@@ -51,7 +51,7 @@ public class SimpleProblem implements Problem<SubstitutableOperator, Substitutab
 	 * The domain to operate in.
 	 */
 	private Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			SubstitutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, SubstitutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> domain;
 	
 	/**
@@ -86,7 +86,7 @@ public class SimpleProblem implements Problem<SubstitutableOperator, Substitutab
 	 * {@inheritDoc}
 	 */
 	public final Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			SubstitutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, SubstitutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> getDomain() {
 		return domain;
 	}
@@ -95,7 +95,7 @@ public class SimpleProblem implements Problem<SubstitutableOperator, Substitutab
 	 * {@inheritDoc}
 	 */
 	public final void setDomain(Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
-			SubstitutableTask, SubstitutableTaskNetwork,
+			ImmutableTask, SubstitutableTaskNetwork,
 			ImmutableConstraint<?>, SubstitutableCondition> domain) {
 		this.domain = domain;
 	}

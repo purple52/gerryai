@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
 
 import com.google.common.base.Objects;
@@ -31,7 +31,7 @@ import com.google.common.base.Objects;
 /**
  * Basic implementation of the Task interface.
  */
-public class SimpleTask implements SubstitutableTask {
+public class SimpleTask implements ImmutableTask {
 	
 	/**
 	 * Name for this task.
@@ -52,7 +52,7 @@ public class SimpleTask implements SubstitutableTask {
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
-	protected SimpleTask(ImmutableTaskBuilder<SubstitutableTerm, SubstitutableTask> builder) {
+	protected SimpleTask(ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> builder) {
 		this.name = builder.getName();
 		this.arguments = builder.getArguments();
 		this.isPrimitive = builder.isPrimitive();
@@ -80,10 +80,11 @@ public class SimpleTask implements SubstitutableTask {
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 */
-	public final void apply(Substituter<SubstitutableTerm> substituter) {
-		substituter.visit(arguments);
+     * {@inheritDoc}
+     */
+	public final Builder createCopyBuilder() {
+        return new Builder()
+	        .copy(this);
 	}
 	
 	@Override
@@ -105,7 +106,7 @@ public class SimpleTask implements SubstitutableTask {
 	/**
 	 * Builder for SimpleTask.
 	 */
-	public static class Builder implements ImmutableTaskBuilder<SubstitutableTerm, SubstitutableTask> {
+	public static class Builder implements ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> {
 
 	    /**
 	     * Name of the task being built.
@@ -164,7 +165,7 @@ public class SimpleTask implements SubstitutableTask {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final Builder copy(SubstitutableTask task) {
+	    public final Builder copy(ImmutableTask task) {
 	        name = task.getName();
 	        arguments = new ArrayList<SubstitutableTerm>(task.getArguments());
 	        isPrimitive = task.isPrimitive();
@@ -182,7 +183,7 @@ public class SimpleTask implements SubstitutableTask {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final SubstitutableTask build() {
+	    public final ImmutableTask build() {
 	        return new SimpleTask(this);
 	    }
 	    

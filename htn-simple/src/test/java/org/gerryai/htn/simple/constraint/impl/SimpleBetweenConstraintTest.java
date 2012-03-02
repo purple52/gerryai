@@ -29,7 +29,7 @@ import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.junit.Test;
 
 /**
@@ -43,11 +43,11 @@ public class SimpleBetweenConstraintTest {
      */
     @Test
     public void testConstructor() {
-        SubstitutableTask mockPrecedingTask = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockPrecedingTasks = new HashSet<SubstitutableTask>();
+        ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
+        Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);
-        SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockProcedingTasks = new HashSet<SubstitutableTask>();
+        ImmutableTask mockProcedingTask = mock(ImmutableTask.class);
+        Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
         
@@ -68,15 +68,15 @@ public class SimpleBetweenConstraintTest {
      */
     @Test
     public void testValidate() {
-        SubstitutableTask mockPrecedingTask = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockPrecedingTasks = new HashSet<SubstitutableTask>();
+        ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
+        Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);
-        SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockProcedingTasks = new HashSet<SubstitutableTask>();
+        ImmutableTask mockProcedingTask = mock(ImmutableTask.class);
+        Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
         @SuppressWarnings("unchecked")
-        ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
  
         SimpleBetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(mockPrecedingTasks)
@@ -98,15 +98,15 @@ public class SimpleBetweenConstraintTest {
      */
     @Test
     public void testAdd() throws InvalidConstraint {
-        SubstitutableTask mockPrecedingTask = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockPrecedingTasks = new HashSet<SubstitutableTask>();
+        ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
+        Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);
-        SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockProcedingTasks = new HashSet<SubstitutableTask>();
+        ImmutableTask mockProcedingTask = mock(ImmutableTask.class);
+        Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
         @SuppressWarnings("unchecked")
-        ConstraintValidator<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
  
         SimpleBetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(mockPrecedingTasks)
@@ -124,11 +124,11 @@ public class SimpleBetweenConstraintTest {
      */
     @Test
     public void testCopyApply() {
-        SubstitutableTask mockPrecedingTask = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockPrecedingTasks = new HashSet<SubstitutableTask>();
+        ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
+        Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);
-        SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockProcedingTasks = new HashSet<SubstitutableTask>();
+        ImmutableTask mockProcedingTask = mock(ImmutableTask.class);
+        Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 
@@ -155,21 +155,21 @@ public class SimpleBetweenConstraintTest {
      */
     @Test
     public void testCopyReplace() {
-        SubstitutableTask mockPrecedingTask = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockPrecedingTasks = new HashSet<SubstitutableTask>();
+        ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
+        Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);
-        SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockProcedingTasks = new HashSet<SubstitutableTask>();
+        ImmutableTask mockProcedingTask = mock(ImmutableTask.class);
+        Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
         
-        SubstitutableTask mockTaskB = mock(SubstitutableTask.class);
-        SubstitutableTask mockTaskC = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockNewPrecedingTasks = new HashSet<SubstitutableTask>();
+        ImmutableTask mockTaskB = mock(ImmutableTask.class);
+        ImmutableTask mockTaskC = mock(ImmutableTask.class);
+        Set<ImmutableTask> mockNewPrecedingTasks = new HashSet<ImmutableTask>();
         mockNewPrecedingTasks.add(mockTaskB);
         mockNewPrecedingTasks.add(mockTaskC);
-        SubstitutableTask mockTaskD = mock(SubstitutableTask.class);
-        SubstitutableTask mockTaskE = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockNewProcedingTasks = new HashSet<SubstitutableTask>();
+        ImmutableTask mockTaskD = mock(ImmutableTask.class);
+        ImmutableTask mockTaskE = mock(ImmutableTask.class);
+        Set<ImmutableTask> mockNewProcedingTasks = new HashSet<ImmutableTask>();
         mockNewProcedingTasks.add(mockTaskD);
         mockNewProcedingTasks.add(mockTaskE);
         
