@@ -88,18 +88,12 @@ public class SimpleAfterConstraint implements SimpleConstraint<SimpleAfterConstr
 		validator.add(this);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void apply(Substituter<SubstitutableTerm> substituter) {
-		condition.apply(substituter);
-	}
-	
     /**
      * {@inheritDoc}
      */
-    public final SimpleConstraintBuilder<SimpleAfterConstraint> createBuilder() {
-        return new Builder();
+    public final SimpleConstraintBuilder<SimpleAfterConstraint> createCopyBuilder() {
+        return new Builder()
+            .copy(this);
     }
     
 	@Override

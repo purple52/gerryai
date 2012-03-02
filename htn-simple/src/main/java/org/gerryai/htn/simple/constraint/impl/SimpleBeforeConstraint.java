@@ -92,13 +92,6 @@ public class SimpleBeforeConstraint implements SimpleConstraint<SimpleBeforeCons
         validator.add(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final void apply(Substituter<SubstitutableTerm> substituter) {
-        condition.apply(substituter);
-    }
-
     @Override
     public final int hashCode() {
         return Objects.hashCode(tasks, condition);
@@ -208,7 +201,8 @@ public class SimpleBeforeConstraint implements SimpleConstraint<SimpleBeforeCons
     /**
      * {@inheritDoc}
      */
-    public final SimpleConstraintBuilder<SimpleBeforeConstraint> createBuilder() {
-        return new Builder();
+    public final SimpleConstraintBuilder<SimpleBeforeConstraint> createCopyBuilder() {
+        return new Builder()
+            .copy(this);
     }
 }

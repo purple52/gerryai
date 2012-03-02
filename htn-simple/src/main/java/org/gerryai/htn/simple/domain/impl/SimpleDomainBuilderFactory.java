@@ -18,7 +18,7 @@
 package org.gerryai.htn.simple.domain.impl;
 
 import org.gerryai.htn.domain.Effect;
-import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
+import org.gerryai.htn.simple.constraint.impl.SimpleConstraint;
 import org.gerryai.htn.simple.domain.DomainBuilder;
 import org.gerryai.htn.simple.domain.DomainBuilderFactory;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
@@ -37,7 +37,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 public class SimpleDomainBuilderFactory implements
 		DomainBuilderFactory<SimpleDomain, SubstitutableOperator, SubstitutableMethod,
 				SubstitutableTerm, SubstitutableTask,
-				SubstitutableTaskNetwork, SubstitutableValidatableConstraint,
+				SubstitutableTaskNetwork, SimpleConstraint<?>,
 				SubstitutableCondition, Effect, SubstitutableOperatorBuilder> {
 
 	/**
@@ -45,7 +45,7 @@ public class SimpleDomainBuilderFactory implements
 	 */
 	public final DomainBuilder<SimpleDomain, SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 			SubstitutableTask, SubstitutableTaskNetwork,
-			SubstitutableValidatableConstraint, SubstitutableCondition> createDomainBuilder() {
+			SimpleConstraint<?>, SubstitutableCondition> createDomainBuilder() {
 		return new SimpleDomainBuilder();	
 	}
 	

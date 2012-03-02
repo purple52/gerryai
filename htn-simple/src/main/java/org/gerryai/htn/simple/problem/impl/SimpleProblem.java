@@ -3,7 +3,7 @@ package org.gerryai.htn.simple.problem.impl;
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.problem.State;
-import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
+import org.gerryai.htn.simple.constraint.impl.SimpleConstraint;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
@@ -35,7 +35,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
  */
 public class SimpleProblem implements Problem<SubstitutableOperator, SubstitutableMethod,
 		SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-		SubstitutableValidatableConstraint, SubstitutableCondition> {
+		SimpleConstraint<?>, SubstitutableCondition> {
 
 	/**
 	 * The initial state for this problem.
@@ -52,7 +52,7 @@ public class SimpleProblem implements Problem<SubstitutableOperator, Substitutab
 	 */
 	private Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 			SubstitutableTask, SubstitutableTaskNetwork,
-			SubstitutableValidatableConstraint, SubstitutableCondition> domain;
+			SimpleConstraint<?>, SubstitutableCondition> domain;
 	
 	/**
 	 * {@inheritDoc}
@@ -87,7 +87,7 @@ public class SimpleProblem implements Problem<SubstitutableOperator, Substitutab
 	 */
 	public final Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 			SubstitutableTask, SubstitutableTaskNetwork,
-			SubstitutableValidatableConstraint, SubstitutableCondition> getDomain() {
+			SimpleConstraint<?>, SubstitutableCondition> getDomain() {
 		return domain;
 	}
 
@@ -96,7 +96,7 @@ public class SimpleProblem implements Problem<SubstitutableOperator, Substitutab
 	 */
 	public final void setDomain(Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 			SubstitutableTask, SubstitutableTaskNetwork,
-			SubstitutableValidatableConstraint, SubstitutableCondition> domain) {
+			SimpleConstraint<?>, SubstitutableCondition> domain) {
 		this.domain = domain;
 	}
 

@@ -18,9 +18,10 @@
 package org.gerryai.htn.simple.tasknetwork.impl;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
+import org.gerryai.htn.simple.constraint.impl.SimpleConstraint;
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
@@ -42,14 +43,14 @@ public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
 	/**
 	 * Set of constraints to be met.
 	 */
-	private Set<SubstitutableValidatableConstraint> constraints;
+	private Set<SimpleConstraint<?>> constraints;
 	
 	/**
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
 	protected SimpleTaskNetwork(TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork,
-			SubstitutableValidatableConstraint> builder) {
+	        SimpleConstraint<?>> builder) {
 		this.tasks = builder.getTasks();
 		this.constraints = builder.getConstraints();
 	}
@@ -72,7 +73,7 @@ public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<SubstitutableValidatableConstraint> getConstraints() {
+	public final Set<SimpleConstraint<?>> getConstraints() {
 		return Collections.unmodifiableSet(constraints);
 	}
 
@@ -91,8 +92,12 @@ public class SimpleTaskNetwork implements SubstitutableTaskNetwork {
         for (SubstitutableTask task : tasks) {
             task.apply(substituter);
         }
-        for (SubstitutableValidatableConstraint constraint : constraints) {
-            constraint.apply(substituter);
+        Set<SimpleConstraint<?>> newConstraints = new HashSet<SimpleConstraint<?>>(constraints.size());
+        for (SimpleConstraint<?> constraint : constraints) {
+            SimpleConstraint<?> replacementConstraint = constraint.createCopyBuilder()
+                    .apply(substituter)
+                    .build();
+            newConstraints.add(replacementConstraint);
         }
     }
 

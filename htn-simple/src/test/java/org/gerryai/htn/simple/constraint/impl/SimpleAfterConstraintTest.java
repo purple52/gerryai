@@ -124,8 +124,7 @@ public class SimpleAfterConstraintTest {
                 .setCondition(mockCondition)
                 .build();
         
-        SimpleAfterConstraint constraint = initialConstraint.createBuilder()
-                .copy(initialConstraint)
+        SimpleAfterConstraint constraint = initialConstraint.createCopyBuilder()
                 .apply(mockSubstituter)
                 .build();
 
@@ -153,8 +152,7 @@ public class SimpleAfterConstraintTest {
                 .setCondition(mockCondition)
                 .build();
         
-        SimpleAfterConstraint constraint = initialConstraint.createBuilder()
-                .copy(initialConstraint)
+        SimpleAfterConstraint constraint = initialConstraint.createCopyBuilder()
                 .replace(mockTaskA, mockNewTasks)
                 .build();
 

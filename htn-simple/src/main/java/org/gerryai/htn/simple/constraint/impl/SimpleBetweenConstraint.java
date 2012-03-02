@@ -105,15 +105,9 @@ public class SimpleBetweenConstraint implements SimpleConstraint<SimpleBetweenCo
     /**
      * {@inheritDoc}
      */
-    public final void apply(Substituter<SubstitutableTerm> substituter) {
-        condition.apply(substituter);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public final SimpleConstraintBuilder<SimpleBetweenConstraint> createBuilder() {
-        return new Builder();
+    public final SimpleConstraintBuilder<SimpleBetweenConstraint> createCopyBuilder() {
+        return new Builder()
+            .copy(this);
     }
 	
 	@Override

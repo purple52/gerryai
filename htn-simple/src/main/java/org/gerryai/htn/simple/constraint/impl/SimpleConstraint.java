@@ -18,7 +18,6 @@
 package org.gerryai.htn.simple.constraint.impl;
 
 import org.gerryai.htn.constraint.Constraint;
-import org.gerryai.htn.simple.constraint.SubstitutableConstraint;
 import org.gerryai.htn.simple.constraint.ValidatableConstraint;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
@@ -33,8 +32,7 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 public interface SimpleConstraint<C extends SimpleConstraint<C>>
         extends
         Constraint<SubstitutableTerm>,
-        ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition>,
-        SubstitutableConstraint<SubstitutableTerm> {
+        ValidatableConstraint<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> {
 
     /**
      * Create a new builder object that can build this type of constraint.
@@ -42,5 +40,5 @@ public interface SimpleConstraint<C extends SimpleConstraint<C>>
      * the build mechanisms that are general to all SimpleConstraint classes.
      * @return the builder
      */
-    SimpleConstraintBuilder<C> createBuilder();
+    SimpleConstraintBuilder<C> createCopyBuilder();
 }

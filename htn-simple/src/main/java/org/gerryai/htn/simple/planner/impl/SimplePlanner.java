@@ -21,7 +21,7 @@ import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.problem.State;
-import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
+import org.gerryai.htn.simple.constraint.impl.SimpleConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
@@ -39,21 +39,21 @@ import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetwork;
 public class SimplePlanner implements
 		Planner<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 		SubstitutableTask, SubstitutableTaskNetwork,
-		SubstitutableValidatableConstraint, SubstitutableCondition> {
+		SimpleConstraint<?>, SubstitutableCondition> {
 	
 	/**
 	 * Manager the domain being worked in.
 	 */
 	private DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 			SubstitutableTask, SubstitutableTaskNetwork,
-			SubstitutableValidatableConstraint, SubstitutableCondition> domainHelper;
+			SimpleConstraint<?>, SubstitutableCondition> domainHelper;
 	
 	/**
 	 * Helper for off-loading some of the logic.
 	 */
 	private PlannerHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 			SubstitutableTask, SubstitutableTaskNetwork,
-			SubstitutableValidatableConstraint, SubstitutableCondition> plannerHelper;
+			SimpleConstraint<?>, SubstitutableCondition> plannerHelper;
 	
 	/**
 	 * Constructor taking the domain manager and planner helper to use.
@@ -63,11 +63,11 @@ public class SimplePlanner implements
 	public SimplePlanner(
 			DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 					SubstitutableTask, SubstitutableTaskNetwork,
-					SubstitutableValidatableConstraint,
+					SimpleConstraint<?>,
 					SubstitutableCondition> domainHelper,
 			PlannerHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
 					SubstitutableTask, SubstitutableTaskNetwork,
-					SubstitutableValidatableConstraint,
+					SimpleConstraint<?>,
 					SubstitutableCondition> plannerHelper) {
 		this.domainHelper = domainHelper;
 		this.plannerHelper = plannerHelper;

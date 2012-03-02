@@ -141,8 +141,7 @@ public class SimpleBetweenConstraintTest {
                 .setCondition(mockCondition)
                 .build();
         
-        SimpleBetweenConstraint constraint = initialConstraint.createBuilder()
-                .copy(initialConstraint)
+        SimpleBetweenConstraint constraint = initialConstraint.createCopyBuilder()
                 .apply(mockSubstituter)
                 .build();
 
@@ -182,8 +181,7 @@ public class SimpleBetweenConstraintTest {
                 .setCondition(mockCondition)
                 .build();
         
-        SimpleBetweenConstraint constraint = initialConstraint.createBuilder()
-                .copy(initialConstraint)
+        SimpleBetweenConstraint constraint = initialConstraint.createCopyBuilder()
                 .replace(mockPrecedingTask, mockNewPrecedingTasks)
                 .replace(mockProcedingTask, mockNewProcedingTasks)
                 .build();

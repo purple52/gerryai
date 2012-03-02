@@ -20,11 +20,8 @@ package org.gerryai.htn.simple.constraint.impl;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.never;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
@@ -110,30 +107,6 @@ public class SimplePrecedenceConstraintTest {
     }
 
     /**
-     * Test substituter is not called/
-     */
-    @SuppressWarnings("unchecked")
-    @Test
-    public void testApply() {
-        SubstitutableTask mockPrecedingTask = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockPrecedingTasks = new HashSet<SubstitutableTask>();
-        mockPrecedingTasks.add(mockPrecedingTask);
-        SubstitutableTask mockProcedingTask = mock(SubstitutableTask.class);
-        Set<SubstitutableTask> mockProcedingTasks = new HashSet<SubstitutableTask>();
-        mockProcedingTasks.add(mockProcedingTask);
-        Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
-
-        SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
-                .setPrecedingTasks(mockPrecedingTasks)
-                .setProcedingTasks(mockProcedingTasks)
-                .build();
-        
-        constraint.apply(mockSubstituter);
-
-        verify(mockSubstituter,never()).visit(any(List.class));
-    }
-
-    /**
      * Test construction using copy and apply
      */
     @Test
@@ -153,8 +126,7 @@ public class SimplePrecedenceConstraintTest {
                 .setProcedingTasks(mockProcedingTasks)
                 .build();
         
-        SimplePrecedenceConstraint constraint = initialConstraint.createBuilder()
-                .copy(initialConstraint)
+        SimplePrecedenceConstraint constraint = initialConstraint.createCopyBuilder()
                 .apply(mockSubstituter)
                 .build();
 
@@ -192,8 +164,7 @@ public class SimplePrecedenceConstraintTest {
                 .setProcedingTasks(mockProcedingTasks)
                 .build();
         
-        SimplePrecedenceConstraint constraint = initialConstraint.createBuilder()
-                .copy(initialConstraint)
+        SimplePrecedenceConstraint constraint = initialConstraint.createCopyBuilder()
                 .replace(mockPrecedingTask, mockNewPrecedingTasks)
                 .replace(mockProcedingTask, mockNewProcedingTasks)
                 .build();

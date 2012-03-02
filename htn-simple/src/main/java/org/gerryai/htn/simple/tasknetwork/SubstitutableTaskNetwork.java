@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.tasknetwork;
 
-import org.gerryai.htn.simple.constraint.SubstitutableValidatableConstraint;
+import org.gerryai.htn.simple.constraint.impl.SimpleConstraint;
 import org.gerryai.htn.simple.decomposition.Substitutable;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
@@ -27,6 +27,6 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface SubstitutableTaskNetwork extends TaskNetwork<SubstitutableTerm, SubstitutableTask,
-		SubstitutableValidatableConstraint>, Substitutable<SubstitutableTerm> {
+        SimpleConstraint<?>>, Substitutable<SubstitutableTerm> {
 
 }

@@ -86,18 +86,12 @@ public class SimplePrecedenceConstraint	implements SimpleConstraint<SimplePreced
 		validator.add(this);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void apply(Substituter<SubstitutableTerm> substituter) {
-		// Nothing to do
-	}
-	
     /**
      * {@inheritDoc}
      */
-    public final SimpleConstraintBuilder<SimplePrecedenceConstraint> createBuilder() {
-        return new Builder();
+    public final SimpleConstraintBuilder<SimplePrecedenceConstraint> createCopyBuilder() {
+        return new Builder()
+            .copy(this);
     }
     
 	@Override
