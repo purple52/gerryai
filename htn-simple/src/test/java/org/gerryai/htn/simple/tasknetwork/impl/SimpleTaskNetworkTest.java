@@ -158,11 +158,11 @@ public class SimpleTaskNetworkTest {
     /**
      * Test substitution is applied.
      */
+    //TODO: Remove this warning supression
+    @SuppressWarnings("unchecked")
     @Test
     public void testApply() {
-        @SuppressWarnings("unchecked")
         Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
-        @SuppressWarnings("unchecked")
         TaskNetworkBuilder<SubstitutableTerm, SubstitutableTask, SubstitutableTaskNetwork, ImmutableConstraint<?>> mockBuilder = mock(TaskNetworkBuilder.class);
         Set<SubstitutableTask> mockTasks = new HashSet<SubstitutableTask>();
         SubstitutableTask mockTaskA = mock(SubstitutableTask.class);
@@ -171,12 +171,17 @@ public class SimpleTaskNetworkTest {
         mockTasks.add(mockTaskB);
         when(mockBuilder.getTasks()).thenReturn(mockTasks);
         
+        @SuppressWarnings("rawtypes")
         ImmutableConstraint mockConstraintA = mock(ImmutableConstraint.class);
+        @SuppressWarnings("rawtypes")
         ImmutableConstraint mockConstraintB = mock(ImmutableConstraint.class);
+        @SuppressWarnings("rawtypes")
         ImmutableConstraintBuilder mockConstraintBuilderA = mock(ImmutableConstraintBuilder.class);
+        @SuppressWarnings("rawtypes")
         ImmutableConstraintBuilder mockConstraintBuilderB = mock(ImmutableConstraintBuilder.class);
         when(mockConstraintA.createCopyBuilder()).thenReturn(mockConstraintBuilderA);
         when(mockConstraintB.createCopyBuilder()).thenReturn(mockConstraintBuilderB);
+        
         when(mockConstraintBuilderA.apply(mockSubstituter)).thenReturn(mockConstraintBuilderA);
         when(mockConstraintBuilderB.apply(mockSubstituter)).thenReturn(mockConstraintBuilderB);
         

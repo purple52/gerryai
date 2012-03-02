@@ -23,6 +23,7 @@ import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTask;
 import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetworkBuilderFactory;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
 
 /**
  * Factory for SimpleTask and SimpleTaskNetwork objects.
@@ -56,7 +57,7 @@ public class SimpleTaskNetworkBuilderFactory implements SubstitutableTaskNetwork
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleTaskBuilder createTaskBuilder() {
-		return new SimpleTaskBuilder();	
+	public final ImmutableTaskBuilder<SubstitutableTerm, SubstitutableTask> createTaskBuilder() {
+		return new SimpleTask.Builder();	
 	}
 }

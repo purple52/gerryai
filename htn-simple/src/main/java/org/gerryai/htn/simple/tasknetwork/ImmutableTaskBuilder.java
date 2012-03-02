@@ -12,49 +12,49 @@ import org.gerryai.htn.tasknetwork.Task;
  * @param <K> type of task this builder produces
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface TaskBuilder<T extends SubstitutableTerm, K extends Task<T>> {
+public interface ImmutableTaskBuilder<T extends SubstitutableTerm, K extends Task<T>> {
 
 	/**
 	 * Set the name of the task.
 	 * @param name the name
 	 * @return the updated builder
 	 */
-	TaskBuilder<T, K> setName(String name);
+	ImmutableTaskBuilder<T, K> setName(String name);
 
 	/**
 	 * Set whether the task is primitive.
 	 * @param isPrimitive true if the task is primitive
 	 * @return the updated builder
 	 */
-	TaskBuilder<T, K> setIsPrimitive(boolean isPrimitive);
+	ImmutableTaskBuilder<T, K> setIsPrimitive(boolean isPrimitive);
 	
 	/**
 	 * Add an argument to the task.
 	 * @param term the term to add
 	 * @return the updated builder
 	 */
-	TaskBuilder<T, K> addArgument(T term);
+	ImmutableTaskBuilder<T, K> addArgument(T term);
 	
 	/**
 	 * Add a list of arguments to the task.
 	 * @param terms the terms to add
 	 * @return the updated builder
 	 */
-	TaskBuilder<T, K> addArguments(List<T> terms);
+	ImmutableTaskBuilder<T, K> addArguments(List<T> terms);
 	
 	/**
 	 * Copy from the provided task, overwriting any values already set.
 	 * @param task the task to copy
 	 * @return the updated builder
 	 */
-	TaskBuilder<T, K> copy(K task);
+	ImmutableTaskBuilder<T, K> copy(K task);
 	
 	/**
 	 * Apply the provided substituter to the arguments provided so far.
 	 * @param substituter the substituter to apply
 	 * @return the updated builder
 	 */
-	TaskBuilder<T, K> apply(Substituter<T> substituter);
+	ImmutableTaskBuilder<T, K> apply(Substituter<T> substituter);
 	
 	/**
 	 * Get the name of the task to be built.

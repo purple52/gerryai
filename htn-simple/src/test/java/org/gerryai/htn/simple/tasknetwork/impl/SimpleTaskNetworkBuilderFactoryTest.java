@@ -40,7 +40,7 @@ public class SimpleTaskNetworkBuilderFactoryTest {
 		@SuppressWarnings("unchecked")
 		ConstraintValidatorFactory<SubstitutableTerm, SubstitutableTask, SubstitutableCondition> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
 		SimpleTaskNetworkBuilderFactory factory = new SimpleTaskNetworkBuilderFactory(mockConstraintValidatorFactory);
-		assertTrue(factory.createTaskBuilder() instanceof SimpleTaskBuilder);
+		assertTrue(factory.createTaskBuilder() instanceof SimpleTask.Builder);
 	}
 	
 	/**
