@@ -18,10 +18,13 @@
 package org.gerryai.htn.simple.tasknetwork.impl;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
@@ -81,36 +84,6 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
 
 	/**
 	 * {@inheritDoc}
-	 *
-	public final void setConstraints(Set<SubstitutableValidatableConstraint> constraints) {
-		this.constraints = constraints;
-	}
-	*/
-	
-    /**
-     * {@inheritDoc}
-     */
-    public final void apply(Substituter<SubstitutableTerm> substituter) {
-        Set<ImmutableTask> newTasks = new HashSet<ImmutableTask>(tasks.size());
-        for (ImmutableTask task : tasks) {
-            ImmutableTask newTask = task.createCopyBuilder()
-                    .apply(substituter)
-                    .build();
-            newTasks.add(newTask);
-        }
-        tasks = newTasks;
-        Set<ImmutableConstraint<?>> newConstraints = new HashSet<ImmutableConstraint<?>>(constraints.size());
-        for (ImmutableConstraint<?> constraint : constraints) {
-            ImmutableConstraint<?> replacementConstraint = constraint.createCopyBuilder()
-                    .apply(substituter)
-                    .build();
-            newConstraints.add(replacementConstraint);
-        }
-        constraints = newConstraints;
-    }
-
-	/**
-	 * {@inheritDoc}
 	 */
 	public final boolean isPrimitive() {
 		
@@ -124,7 +97,20 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
 		// None of our tasks were non-primitive, so the whole network is primitive
 		return true;
 	}
+	
+	/**
+     * {@inheritDoc}
+     */
+    public final Builder createCopyBuilder(ConstraintValidator<SubstitutableTerm, ImmutableTask,
+            SubstitutableCondition> constraintValidator) throws InvalidConstraint {
+        return new Builder(constraintValidator)
+            .copy(this);
+    }
 
+	/**
+	 * Builder for simple task networks.
+	 * @author David Edwards <david@more.fool.me.uk>
+	 */
 	public static class Builder implements ImmutableTaskNetworkBuilder {
 
         /**
@@ -212,17 +198,30 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
          */
         public final Builder apply(Substituter<SubstitutableTerm> substituter) {
         
-            //TODO: Implement
+            // Build a map of tasks to their replacements
+            Map<ImmutableTask, ImmutableTask> taskReplacementMap =
+                    new HashMap<ImmutableTask, ImmutableTask>(tasks.size());
             for (ImmutableTask task : tasks) {
-                // Update every task
-                for (ImmutableConstraint<?> constraint : constraints) {
-                    // Update every constraint that refers to the original task
-                }
+                ImmutableTask newTask = task.createCopyBuilder()
+                        .apply(substituter)
+                        .build();
+                taskReplacementMap.put(task, newTask);
             }
+            // Replace the existing tasks in this builder
+            tasks = new HashSet<ImmutableTask>(taskReplacementMap.values());
             
+            // Build a set of replacement constraints
+            Set<ImmutableConstraint<?>> newConstraints = new HashSet<ImmutableConstraint<?>>(constraints.size());
             for (ImmutableConstraint<?> constraint : constraints) {
-                // Update the condition in every constraint
+                ImmutableConstraintBuilder<?> builder = constraint.createCopyBuilder()
+                        .apply(substituter);
+                // Replace the tasks in the constraint with the new ones
+                for (ImmutableTask task : taskReplacementMap.keySet()) {
+                    builder = builder.replace(task, taskReplacementMap.get(task));
+                }
+                newConstraints.add(builder.build());
             }
+            constraints = newConstraints;
         
             return this;
         }

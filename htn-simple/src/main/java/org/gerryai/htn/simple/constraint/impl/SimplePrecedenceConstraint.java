@@ -173,6 +173,21 @@ public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePre
         /**
          * {@inheritDoc}
          */
+        public final Builder replace(ImmutableTask oldTask, ImmutableTask newTask) {
+            if (this.precedingTasks.contains(oldTask)) {
+                this.precedingTasks.remove(oldTask);
+                this.precedingTasks.add(newTask);
+            }
+            if (this.procedingTasks.contains(oldTask)) {
+                this.procedingTasks.remove(oldTask);
+                this.procedingTasks.add(newTask);
+            }
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
         public final Builder apply(Substituter<SubstitutableTerm> substituter) {
             // Do nothing; precedence constraints do not have conditions
             return this;

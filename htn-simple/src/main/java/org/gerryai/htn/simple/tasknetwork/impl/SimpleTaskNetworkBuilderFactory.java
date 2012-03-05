@@ -17,20 +17,23 @@
  */
 package org.gerryai.htn.simple.tasknetwork.impl;
 
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.SubstitutableTaskNetworkBuilderFactory;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
+import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
 
 /**
  * Factory for SimpleTask and SimpleTaskNetwork objects.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleTaskNetworkBuilderFactory implements SubstitutableTaskNetworkBuilderFactory {
+public class SimpleTaskNetworkBuilderFactory implements TaskNetworkBuilderFactory<SubstitutableTerm, ImmutableTask,
+        ImmutableTaskNetwork, ImmutableConstraint<?>> {
 
 	/**
 	 * Factory for creating constraint validators, as used by the task network builders.
@@ -58,7 +61,7 @@ public class SimpleTaskNetworkBuilderFactory implements SubstitutableTaskNetwork
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> createTaskBuilder() {
+	public final ImmutableTaskBuilder createTaskBuilder() {
 		return new SimpleTask.Builder();	
 	}
 }

@@ -178,8 +178,21 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
          * {@inheritDoc}
          */
         public final Builder replace(ImmutableTask oldTask, Set<ImmutableTask> newTasks) {
-            this.tasks.remove(oldTask);
-            this.tasks.addAll(newTasks);
+            if (this.tasks.contains(oldTask)) {
+                this.tasks.remove(oldTask);
+                this.tasks.addAll(newTasks);
+            }
+            return this;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder replace(ImmutableTask oldTask, ImmutableTask newTask) {
+            if (this.tasks.contains(oldTask)) {
+                this.tasks.remove(oldTask);
+                this.tasks.add(newTask);
+            }
             return this;
         }
         

@@ -18,7 +18,8 @@
 package org.gerryai.htn.simple.tasknetwork;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.decomposition.Substitutable;
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
+import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
@@ -27,6 +28,14 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutableTaskNetwork extends TaskNetwork<SubstitutableTerm, ImmutableTask,
-        ImmutableConstraint<?>>, Substitutable<SubstitutableTerm> {
+        ImmutableConstraint<?>> {
 
+    /**
+     * Create a new builder object that will build a copy of this immutable task network.
+     * @param constraintValidator validator to use while building
+     * @return the builder
+     * @throws InvalidConstraint if one of the constraints is invalid
+     */
+    ImmutableTaskNetworkBuilder createCopyBuilder(ConstraintValidator<SubstitutableTerm, ImmutableTask,
+            SubstitutableCondition> constraintValidator) throws InvalidConstraint;
 }

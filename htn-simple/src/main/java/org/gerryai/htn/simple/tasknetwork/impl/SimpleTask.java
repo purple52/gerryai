@@ -52,7 +52,7 @@ public class SimpleTask implements ImmutableTask {
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
-	protected SimpleTask(ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> builder) {
+	protected SimpleTask(ImmutableTaskBuilder builder) {
 		this.name = builder.getName();
 		this.arguments = builder.getArguments();
 		this.isPrimitive = builder.isPrimitive();
@@ -106,7 +106,7 @@ public class SimpleTask implements ImmutableTask {
 	/**
 	 * Builder for SimpleTask.
 	 */
-	public static class Builder implements ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> {
+	public static class Builder implements ImmutableTaskBuilder {
 
 	    /**
 	     * Name of the task being built.

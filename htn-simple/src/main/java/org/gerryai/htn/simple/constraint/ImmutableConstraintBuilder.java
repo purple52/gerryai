@@ -45,7 +45,14 @@ public interface ImmutableConstraintBuilder<C extends ImmutableConstraint<C>> {
      * @return the updated builder
      */
     ImmutableConstraintBuilder<C> replace(ImmutableTask oldTask, Set<ImmutableTask> newTasks);
-    
+ 
+    /**
+     * @param oldTask the task to replace
+     * @param newTasks the task to replace with
+     * @return the updated builder
+     */
+    ImmutableConstraintBuilder<C> replace(ImmutableTask oldTask, ImmutableTask newTasks);
+ 
     /**
      * Apply the substituter provided to the conditions of the constraint.
      * @param substituter the substituter to apply

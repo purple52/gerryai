@@ -45,8 +45,7 @@ public class SimpleTaskTest {
      */
     @Test
     public void testName() {
-        @SuppressWarnings("unchecked")
-        ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> mockBuilder = mock(ImmutableTaskBuilder.class);
+        ImmutableTaskBuilder mockBuilder = mock(ImmutableTaskBuilder.class);
         when(mockBuilder.getName()).thenReturn("testname");
 
         SimpleTask task = new SimpleTask(mockBuilder);
@@ -59,8 +58,7 @@ public class SimpleTaskTest {
      */
     @Test
     public void testArguments() {
-        @SuppressWarnings("unchecked")
-        ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> mockBuilder = mock(ImmutableTaskBuilder.class);
+        ImmutableTaskBuilder mockBuilder = mock(ImmutableTaskBuilder.class);
         SubstitutableTerm mockTermA = mock(SubstitutableTerm.class);
         SubstitutableTerm mockTermB = mock(SubstitutableTerm.class);
         List<SubstitutableTerm> mockTerms = new ArrayList<SubstitutableTerm>();
@@ -82,8 +80,7 @@ public class SimpleTaskTest {
      */
     @Test
     public void testIsPrimitive() {
-        @SuppressWarnings("unchecked")
-        ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> mockBuilder = mock(ImmutableTaskBuilder.class);
+        ImmutableTaskBuilder mockBuilder = mock(ImmutableTaskBuilder.class);
 
         when(mockBuilder.isPrimitive()).thenReturn(true);
         SimpleTask taskA = new SimpleTask(mockBuilder);
@@ -102,7 +99,7 @@ public class SimpleTaskTest {
     @Test
     public void testSimpleTaskBuilder() {
         // Create the builder under test
-        ImmutableTaskBuilder<?,?> builder = new SimpleTask.Builder();
+        ImmutableTaskBuilder builder = new SimpleTask.Builder();
         
         // Check that the arguments list has been initialised
         assertTrue(builder.getArguments().isEmpty());
@@ -115,7 +112,7 @@ public class SimpleTaskTest {
     @Test
     public void testSetName() {
         // Create the builder under test
-        ImmutableTaskBuilder<?,?> builder = new SimpleTask.Builder()
+        ImmutableTaskBuilder builder = new SimpleTask.Builder()
                 .setName("testname");
         
         // Check that the name has been set
@@ -133,7 +130,7 @@ public class SimpleTaskTest {
         SubstitutableTerm mockTermB = mock(SubstitutableTerm.class);
         
         // Create the builder under test
-        ImmutableTaskBuilder<?,?> builder = new SimpleTask.Builder()
+        ImmutableTaskBuilder builder = new SimpleTask.Builder()
                 .addArgument(mockTermA)
                 .addArgument(mockTermB);
         
@@ -163,7 +160,7 @@ public class SimpleTaskTest {
         mockTermsTwo.add(mockTermD);
         
         // Create the builder under test
-        ImmutableTaskBuilder<?,?> builder = new SimpleTask.Builder()
+        ImmutableTaskBuilder builder = new SimpleTask.Builder()
                 .addArguments(mockTermsOne)
                 .addArguments(mockTermsTwo);
         

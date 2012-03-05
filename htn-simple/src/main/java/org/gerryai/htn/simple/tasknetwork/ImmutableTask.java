@@ -27,10 +27,8 @@ import org.gerryai.htn.tasknetwork.Task;
 public interface ImmutableTask extends Task<SubstitutableTerm> {
 
     /**
-     * Create a new builder object that can build this type of constraint.
-     * The builder returned is an immutable constraint builder, so only supports
-     * the build mechanisms that are general to all ImmutableConstraint classes.
+     * Create a new builder object that can build a copy of this immutable task.
      * @return the builder
      */
-    ImmutableTaskBuilder<SubstitutableTerm, ImmutableTask> createCopyBuilder();
+    ImmutableTaskBuilder createCopyBuilder();
 }

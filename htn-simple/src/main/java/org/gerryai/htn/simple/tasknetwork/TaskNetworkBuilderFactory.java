@@ -46,5 +46,5 @@ public interface TaskNetworkBuilderFactory<
 	 * Create a task builder of the required type.
 	 * @return the task builder
 	 */
-	ImmutableTaskBuilder<T, K> createTaskBuilder();
+	ImmutableTaskBuilder createTaskBuilder();
 }
