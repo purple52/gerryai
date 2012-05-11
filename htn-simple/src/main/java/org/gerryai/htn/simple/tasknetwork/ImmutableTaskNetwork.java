@@ -24,7 +24,7 @@ import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
- * Extension of the task network interface that only uses substitutable components.
+ * Extension of the task network interface that is immutable and only uses immutable components.
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutableTaskNetwork extends TaskNetwork<SubstitutableTerm, ImmutableTask,

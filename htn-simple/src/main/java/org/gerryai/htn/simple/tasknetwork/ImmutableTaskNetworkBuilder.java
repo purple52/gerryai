@@ -23,7 +23,7 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 
 /**
- * Interface for a task network builder.
+ * Interface for a builder that creates immutable task networks.
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutableTaskNetworkBuilder {

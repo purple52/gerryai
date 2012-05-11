@@ -7,7 +7,7 @@ import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 
 /**
- * Interface for a factory for creating task networks.
+ * Interface for a builder for creating immutable tasks.
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutableTaskBuilder {
