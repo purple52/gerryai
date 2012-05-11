@@ -24,7 +24,8 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
+import org.gerryai.htn.simple.decomposition.impl.GenericSubstituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -190,7 +191,9 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
         /**
          * {@inheritDoc}
          */
-        public final Builder apply(Substituter<SubstitutableTerm> substituter) {
+        public final Builder apply(ImmutableSubstitution substitution) {
+            //TODO: Replace with immutable condition
+            GenericSubstituter substituter = new GenericSubstituter(substitution);
             this.condition.apply(substituter);
             return this;
         }        

@@ -24,7 +24,7 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -188,7 +188,7 @@ public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePre
         /**
          * {@inheritDoc}
          */
-        public final Builder apply(Substituter<SubstitutableTerm> substituter) {
+        public final Builder apply(ImmutableSubstitution substitution) {
             // Do nothing; precedence constraints do not have conditions
             return this;
         }  

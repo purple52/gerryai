@@ -20,11 +20,10 @@ package org.gerryai.htn.simple.decomposition;
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
-import org.gerryai.logic.Variable;
-import org.gerryai.logic.unification.Substitution;
 
 /**
  * Interface for a service that can find a unifier for a task and method.
@@ -33,7 +32,6 @@ import org.gerryai.logic.unification.Substitution;
  * @param <K> the type of task this service works with
  * @param <N> the type of task network this service works with
  * @param <C> the type of constraint this service works with
- * @param <V> the type of variable this service works with
  * @param <I> the class of condition the service will handle
  * @author David Edwards <david@more.fool.me.uk>
  */
@@ -43,8 +41,7 @@ public interface UnificationService<
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition,
-		V extends Variable> {
+		I extends Condition> {
 	
 	/**
 	 * Given a task and a method, try and find the most general unifier (MGU).
@@ -53,15 +50,16 @@ public interface UnificationService<
 	 * @return the most general unifier
 	 * @throws UnifierNotFound if no unifier could be found for this task and method
 	 */
-	Substitution<T, V> findUnifier(K task, M method) throws UnifierNotFound;
+    ImmutableSubstitution findUnifier(K task, M method) throws UnifierNotFound;
 	
 	/**
 	 * Create a new task network cloning the given task network and applying the given unifier.
 	 * @param unifier the unifier to apply
 	 * @param taskNetwork the task network to apply the unifier to
 	 * @return the revised task network
+	 * @throws InvalidConstraint 
 	 */
-	N apply(Substitution<T, V> unifier, N taskNetwork);
+	N apply(ImmutableSubstitution unifier, N taskNetwork) throws InvalidConstraint;
 	
 	/**
 	 * Create a new task by cloning the given task and applying the given unifier.
@@ -69,5 +67,5 @@ public interface UnificationService<
 	 * @param task the task to apply the unifier to
 	 * @return the revised task
 	 */
-	K apply(Substitution<T, V> unifier, K task);
+	K apply(ImmutableSubstitution unifier, K task);
 }

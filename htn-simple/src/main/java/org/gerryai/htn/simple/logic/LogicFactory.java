@@ -25,10 +25,11 @@ import java.util.List;
  * @param <C> type of constant this factory produces
  * @param <P> type of predicate this factory produces
  * @param <T> type of term this factory uses
+ * @param <S> type of substitution this factory handles
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface LogicFactory<V, C, P, T> {
+public interface LogicFactory<V, C, P, T, S> {
 
 	/**
 	 * Create a variable.
@@ -51,5 +52,13 @@ public interface LogicFactory<V, C, P, T> {
 	 * @return the variable
 	 */
 	P createPredicate(String name, List<T> terms);
+	
+	/**
+	 * Copy the supplied terms and apply the substitution provided.
+	 * @param oldTerms terms to copy
+	 * @param substitution substitution to apply
+	 * @return the new terms
+	 */
+	List<T> copyApply(List<T> oldTerms, S substitution);
 	
 }

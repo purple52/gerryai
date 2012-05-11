@@ -28,16 +28,18 @@ import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
+import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleConstant;
+import org.gerryai.htn.simple.logic.impl.SimpleLogicFactory;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.planner.impl.SimplePlannerFactory;
 import org.gerryai.htn.simple.planner.impl.SimplePlanningService;
 import org.gerryai.htn.simple.problem.impl.SimpleProblem;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilderFactory;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkFactory;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -51,12 +53,13 @@ public class BasicIT {
 	@Test
 	public void test() throws PlanNotFound {
 		
+	    ImmutableLogicFactory logicFactory = new SimpleLogicFactory();
 		SimpleDomainBuilderFactory domainBuilderFactory
 				= new SimpleDomainBuilderFactory();
 		GenericConstraintValidatorFactory<SubstitutableTerm, ImmutableTask, SubstitutableCondition> constraintValidatorFactory
 				= new GenericConstraintValidatorFactory<SubstitutableTerm, ImmutableTask, SubstitutableCondition>();
-		SimpleTaskNetworkBuilderFactory taskNetworkBuilderFactory
-				= new SimpleTaskNetworkBuilderFactory(constraintValidatorFactory);
+		SimpleTaskNetworkFactory taskNetworkBuilderFactory
+				= new SimpleTaskNetworkFactory(constraintValidatorFactory, logicFactory);
 		
 		SimplePlannerFactory plannerFactory = new SimplePlannerFactory();
 		SimplePlanningService planningService = new SimplePlanningService(plannerFactory);
@@ -79,7 +82,7 @@ public class BasicIT {
 		
 		SimpleVariable variableX = new SimpleVariable("x");
 		SimpleVariable variableY = new SimpleVariable("y");
-		ImmutableTask methodATask  = taskNetworkBuilderFactory.createTaskBuilder()
+		ImmutableTask methodATask = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("swap")
 				.addArgument(variableX)
 				.addArgument(variableY)

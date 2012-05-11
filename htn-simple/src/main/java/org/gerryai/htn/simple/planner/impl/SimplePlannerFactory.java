@@ -25,13 +25,16 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.decomposition.impl.SimpleDecompositionService;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
+import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.impl.SimpleLogicFactory;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
@@ -41,7 +44,7 @@ import org.gerryai.htn.simple.plan.impl.SimplePlanFactory;
 import org.gerryai.htn.simple.planner.PlannerFactory;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkBuilderFactory;
+import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkFactory;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -77,16 +80,17 @@ public class SimplePlannerFactory implements
 		ConstraintValidatorFactory<SubstitutableTerm, ImmutableTask,
 		SubstitutableCondition> constraintValidatorFactory
 				= new GenericConstraintValidatorFactory<SubstitutableTerm, ImmutableTask, SubstitutableCondition>();
-		SimpleTaskNetworkBuilderFactory taskNetworkBuilderFactory =
-			new SimpleTaskNetworkBuilderFactory(constraintValidatorFactory);
+		ImmutableLogicFactory logicFactory = new SimpleLogicFactory();
+		SimpleTaskNetworkFactory taskNetworkBuilderFactory =
+			new SimpleTaskNetworkFactory(constraintValidatorFactory, logicFactory);
 		AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, 
 				SubstitutableCondition, SimpleVariable> unificationService =
 			new AIMAUnificationService<SubstitutableOperator, SubstitutableMethod,
 				SubstitutableCondition, SimpleVariable>(unifier, converter, domainHelper, taskNetworkBuilderFactory);
 		
 		DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>> decompositionService =
-				new SimpleDecompositionService(unificationService);
+		        ImmutableConstraint<?>, ImmutableSubstitution> decompositionService =
+				new SimpleDecompositionService(constraintValidatorFactory);
 		
 		SimplePlannerHelper plannerHelper =
 				new SimplePlannerHelper(actionFactory, planFactory,	decompositionService, unificationService);

@@ -19,15 +19,16 @@ package org.gerryai.htn.simple.logic.impl;
 
 import java.util.List;
 
-import org.gerryai.htn.simple.logic.LogicFactory;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
+import org.gerryai.htn.simple.decomposition.impl.GenericSubstituter;
+import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleLogicFactory implements LogicFactory<SimpleVariable, SimpleConstant,
-		SimplePredicate, SubstitutableTerm> {
+public class SimpleLogicFactory implements ImmutableLogicFactory {
 
 	/**
 	 * {@inheritDoc}
@@ -50,5 +51,14 @@ public class SimpleLogicFactory implements LogicFactory<SimpleVariable, SimpleCo
 		return new SimplePredicate(name, terms);
 	}
 	
-
+    /**
+     * {@inheritDoc}
+     */
+	public final List<SubstitutableTerm> copyApply(List<SubstitutableTerm> oldTerms,
+	        ImmutableSubstitution substitution) {
+        //TODO: Ensure immutable
+	    GenericSubstituter substituter = new GenericSubstituter(substitution);
+        substituter.visit(oldTerms);	
+        return oldTerms;
+	}
 }

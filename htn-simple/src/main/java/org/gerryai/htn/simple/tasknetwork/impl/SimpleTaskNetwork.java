@@ -26,7 +26,7 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -196,14 +196,14 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
         /**
          * {@inheritDoc}
          */
-        public final Builder apply(Substituter<SubstitutableTerm> substituter) {
+        public final Builder apply(ImmutableSubstitution substitution) {
         
             // Build a map of tasks to their replacements
             Map<ImmutableTask, ImmutableTask> taskReplacementMap =
                     new HashMap<ImmutableTask, ImmutableTask>(tasks.size());
             for (ImmutableTask task : tasks) {
                 ImmutableTask newTask = task.createCopyBuilder()
-                        .apply(substituter)
+                        .apply(substitution)
                         .build();
                 taskReplacementMap.put(task, newTask);
             }
@@ -214,7 +214,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
             Set<ImmutableConstraint<?>> newConstraints = new HashSet<ImmutableConstraint<?>>(constraints.size());
             for (ImmutableConstraint<?> constraint : constraints) {
                 ImmutableConstraintBuilder<?> builder = constraint.createCopyBuilder()
-                        .apply(substituter);
+                        .apply(substitution);
                 // Replace the tasks in the constraint with the new ones
                 for (ImmutableTask task : taskReplacementMap.keySet()) {
                     builder = builder.replace(task, taskReplacementMap.get(task));
@@ -223,6 +223,14 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
             }
             constraints = newConstraints;
         
+            return this;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder replace(ImmutableTask oldTask, ImmutableTaskNetwork newTaskNetwork) {
+            //TODO: Implement!
             return this;
         }
         

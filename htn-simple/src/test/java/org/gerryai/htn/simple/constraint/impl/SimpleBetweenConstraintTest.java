@@ -25,12 +25,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
+import org.gerryai.htn.simple.decomposition.impl.GenericSubstituter;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -132,8 +134,7 @@ public class SimpleBetweenConstraintTest {
         mockProcedingTasks.add(mockProcedingTask);
         SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
 
-        @SuppressWarnings("unchecked")
-        Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
+        ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
 
         SimpleBetweenConstraint initialConstraint = new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(mockPrecedingTasks)
@@ -142,12 +143,14 @@ public class SimpleBetweenConstraintTest {
                 .build();
         
         SimpleBetweenConstraint constraint = initialConstraint.createCopyBuilder()
-                .apply(mockSubstituter)
+                .apply(mockSubstitution)
                 .build();
 
         assertEquals(mockPrecedingTasks, constraint.getPrecedingTasks());
         assertEquals(mockProcedingTasks, constraint.getProcedingTasks());
-        verify(mockCondition).apply(mockSubstituter);
+        ArgumentCaptor<GenericSubstituter> substituter = ArgumentCaptor.forClass(GenericSubstituter.class);
+        verify(mockCondition).apply(substituter.capture());
+        assertEquals(mockSubstitution, substituter.getValue().getSubstitution());
     }
 
     /**

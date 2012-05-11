@@ -28,14 +28,15 @@ import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilderFactory;
+import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.simple.tasknetwork.TaskNetworkFactory;
 import org.gerryai.logic.Variable;
-import org.gerryai.logic.unification.Substitution;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
 
@@ -53,7 +54,7 @@ public class AIMAUnificationService<
 		I extends Condition,
 		V extends Variable>
 				implements UnificationService<M, SubstitutableTerm, ImmutableTask,
-				ImmutableTaskNetwork, ImmutableConstraint<?>, I, V> {
+				ImmutableTaskNetwork, ImmutableConstraint<?>, I> {
 
 	/**
 	 * AIMA Unifier object to do the underlying expression unification.
@@ -68,8 +69,8 @@ public class AIMAUnificationService<
 	/**
 	 * Factory for creating task network builders.
 	 */
-	private TaskNetworkBuilderFactory<SubstitutableTerm, ImmutableTask,
-	        ImmutableTaskNetwork, ImmutableConstraint<?>> taskNetworkBuilderFactory;
+	private TaskNetworkFactory<SubstitutableTerm, ImmutableTask,
+	        ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableSubstitution> taskNetworkBuilderFactory;
 	
 	/**
 	 * Constructor taking all required dependencies.
@@ -82,8 +83,8 @@ public class AIMAUnificationService<
 			AIMAConverter<SubstitutableTerm, V, ImmutableTask> converter,
 			DomainHelper<O, M, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
 			        ImmutableConstraint<?>, I> domainHelper,
-			TaskNetworkBuilderFactory<SubstitutableTerm, ImmutableTask,
-			        ImmutableTaskNetwork, ImmutableConstraint<?>> taskNetworkBuilderFactory) {
+			TaskNetworkFactory<SubstitutableTerm, ImmutableTask,  ImmutableTaskNetwork,
+			        ImmutableConstraint<?>, ImmutableSubstitution> taskNetworkBuilderFactory) {
 		this.unifier = unifier;
 		this.converter = converter;
 		this.taskNetworkBuilderFactory = taskNetworkBuilderFactory;
@@ -91,7 +92,7 @@ public class AIMAUnificationService<
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Substitution<SubstitutableTerm, V>	findUnifier(ImmutableTask task, M method) {
+	public final ImmutableSubstitution findUnifier(ImmutableTask task, M method) {
 
 		Predicate taskPredicate = converter.convert(task);
 		Predicate methodTaskPredicate = converter.convert(method.getTask());
@@ -103,10 +104,10 @@ public class AIMAUnificationService<
 
 	/**
 	 * {@inheritDoc}
+	 * @throws InvalidConstraint 
 	 */
-	public final ImmutableTaskNetwork apply(
-			Substitution<SubstitutableTerm, V> unifier, 
-			ImmutableTaskNetwork taskNetwork) {
+	public final ImmutableTaskNetwork apply(ImmutableSubstitution unifier, 
+			ImmutableTaskNetwork taskNetwork) throws InvalidConstraint {
 		
 		// TODO Add support constraints
 		Set<ImmutableTask> updatedTasks = new HashSet<ImmutableTask>();
@@ -115,9 +116,8 @@ public class AIMAUnificationService<
 			updatedTasks.add(updatedTask);
 		}
 
-		ImmutableTaskNetwork updatedTaskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
-				.addTasks(updatedTasks)
-				.build();
+		ImmutableTaskNetwork updatedTaskNetwork = taskNetworkBuilderFactory.createTaskNetwork(
+		        updatedTasks, taskNetwork.getConstraints());
 		
 		return updatedTaskNetwork;
 	}
@@ -125,7 +125,7 @@ public class AIMAUnificationService<
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableTask apply(Substitution<SubstitutableTerm, V> unifier, ImmutableTask task) {
+	public final ImmutableTask apply(ImmutableSubstitution unifier, ImmutableTask task) {
 		
 		List<SubstitutableTerm> updatedTerms = new ArrayList<SubstitutableTerm>();		
 		for (SubstitutableTerm term : task.getArguments()) {
@@ -136,10 +136,8 @@ public class AIMAUnificationService<
 			}
 		}
 
-		ImmutableTask updatedTask = taskNetworkBuilderFactory.createTaskBuilder()
-				.setName(task.getName())
-				.addArguments(updatedTerms)
-				.build();
+		ImmutableTask updatedTask = taskNetworkBuilderFactory.createTask(
+		        task.getName(), updatedTerms, task.isPrimitive());
 		
 		return updatedTask;
 	}

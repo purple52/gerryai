@@ -21,7 +21,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
+import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
@@ -47,7 +48,12 @@ public class SimpleTask implements ImmutableTask {
 	 * Arguments for this task.
 	 */
 	private List<SubstitutableTerm> arguments;
-
+	
+    /**
+     * Logic factory used to apply substitutions to arguments.
+     */
+    private ImmutableLogicFactory logicFactory;
+    
 	/**
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
@@ -56,6 +62,7 @@ public class SimpleTask implements ImmutableTask {
 		this.name = builder.getName();
 		this.arguments = builder.getArguments();
 		this.isPrimitive = builder.isPrimitive();
+		this.logicFactory = builder.getLogicFactory();
 	}
 	
 	/**
@@ -83,7 +90,7 @@ public class SimpleTask implements ImmutableTask {
      * {@inheritDoc}
      */
 	public final Builder createCopyBuilder() {
-        return new Builder()
+        return new Builder(logicFactory)
 	        .copy(this);
 	}
 	
@@ -124,9 +131,16 @@ public class SimpleTask implements ImmutableTask {
 	    private List<SubstitutableTerm> arguments;
 	    
 	    /**
-	     * Default constructor.
+	     * Logic factory used to apply substitutions to arguments.
 	     */
-	    protected Builder() {
+	    private ImmutableLogicFactory logicFactory;
+
+	    /**
+	     * Constructor.
+	     * @param logicFactory the logic factory this builder will use
+	     */
+	    protected Builder(ImmutableLogicFactory logicFactory) {
+	        this.logicFactory = logicFactory;
 	        arguments = new ArrayList<SubstitutableTerm>();
 	    }
 	    
@@ -175,8 +189,8 @@ public class SimpleTask implements ImmutableTask {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final Builder apply(Substituter<SubstitutableTerm> substituter) {
-	        substituter.visit(arguments);
+	    public final Builder apply(ImmutableSubstitution substitution) {
+	        arguments = logicFactory.copyApply(arguments, substitution);
 	        return this;
 	    }
 	    
@@ -206,6 +220,13 @@ public class SimpleTask implements ImmutableTask {
 	     */
 	    public final List<SubstitutableTerm> getArguments() {       
 	        return arguments;
+	    }
+
+	    /**
+         * {@inheritDoc}
+         */
+	    public final ImmutableLogicFactory getLogicFactory() {
+	        return logicFactory;
 	    }
 	}
 }

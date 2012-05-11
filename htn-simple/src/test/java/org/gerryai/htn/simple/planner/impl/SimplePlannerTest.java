@@ -40,6 +40,7 @@ import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.junit.Test;
 
 /**
@@ -166,7 +167,7 @@ public class SimplePlannerTest {
 	 * @throws DecompositionNotFound 
 	 */
 	@Test(expected=PlanNotFound.class)
-	public void testOneUndecomposableNonPrimitiveTaskMethodsFailed() throws NonPrimitiveTaskNotFound, PlanNotFound, DecompositionNotFound {
+	public void testOneUndecomposableNonPrimitiveTaskMethodsFailed() throws NonPrimitiveTaskNotFound, PlanNotFound, DecompositionNotFound, InvalidConstraint  {
 		
 		State mockState = mock(State.class);
 		
@@ -259,7 +260,7 @@ public class SimplePlannerTest {
 	 * @throws DecompositionNotFound
 	 */
 	@Test
-	public void testOneNonPrimitiveTask() throws NonPrimitiveTaskNotFound, PlanNotFound, DecompositionNotFound {
+	public void testOneNonPrimitiveTask() throws NonPrimitiveTaskNotFound, PlanNotFound, DecompositionNotFound, InvalidConstraint {
 		
 		State mockState = mock(State.class);
 		

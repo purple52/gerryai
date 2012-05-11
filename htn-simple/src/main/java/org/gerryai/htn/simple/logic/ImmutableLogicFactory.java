@@ -15,37 +15,18 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.logic.impl;
-
-import java.util.Map;
+package org.gerryai.htn.simple.logic;
 
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.impl.SimpleConstant;
+import org.gerryai.htn.simple.logic.impl.SimplePredicate;
+import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 
 /**
- * Class representing a unifier of two expressions as a set of substitutions.
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleUnifier implements ImmutableSubstitution {
-	
-	/**
-	 * The map of variables to terms.
-	 */
-	private Map<SubstitutableTerm, SubstitutableTerm> map;
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final Map<SubstitutableTerm, SubstitutableTerm> getMap() {
-		return map;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setMap(Map<SubstitutableTerm, SubstitutableTerm> map) {
-		this.map = map;
-	}
+public interface ImmutableLogicFactory extends LogicFactory<SimpleVariable, SimpleConstant,
+		SimplePredicate, SubstitutableTerm, ImmutableSubstitution> {
 
 }

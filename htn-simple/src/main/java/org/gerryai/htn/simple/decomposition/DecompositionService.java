@@ -19,7 +19,7 @@ package org.gerryai.htn.simple.decomposition;
 
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.logic.impl.SimpleVariable;
+import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
@@ -31,6 +31,7 @@ import org.gerryai.logic.unification.Substitution;
  * @param <K> type of task this service works with
  * @param <N> type of task network this service works with
  * @param <C> type of constraint this service works with
+ * @param <S> type of substitution the service works with
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
@@ -39,16 +40,18 @@ public interface DecompositionService<
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>> {
+		C extends Constraint<T>,
+		S extends Substitution<T, T>> {
 
 	/**
 	 * Decomposes a task within a task network using the given method and unifier.
-	 * @param unifier the unifier to unify the task and method
+	 * @param substitution the substitution to unify the task and method
 	 * @param taskNetwork the task network to decompose
 	 * @param task the task within the network to decompose
 	 * @param method the method with which to decompose the task
 	 * @return the decomposed task network
+	 * @throws InvalidConstraint 
 	 */
-	N decompose(Substitution<T, SimpleVariable> unifier, N taskNetwork, K task, M method);
+	N decompose(S substitution, N taskNetwork, K task, M method)  throws InvalidConstraint;
 	
 }

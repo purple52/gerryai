@@ -19,10 +19,9 @@ package org.gerryai.htn.simple.decomposition.impl;
 
 import java.util.List;
 
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.decomposition.Substituter;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.logic.SubstitutableVariable;
-import org.gerryai.logic.unification.Substitution;
 
 /**
  * Generic class for doing substitutions using the visitor pattern.
@@ -34,13 +33,13 @@ public class GenericSubstituter implements Substituter<SubstitutableTerm> {
 	/**
 	 * The unifier containing the substitution to use.
 	 */
-	private Substitution<SubstitutableTerm, SubstitutableVariable> unifier;
+	private ImmutableSubstitution unifier;
 	
 	/**
 	 * Constructor taking a unifier.
 	 * @param unifier the unifier to work with
 	 */
-	public GenericSubstituter(Substitution<SubstitutableTerm, SubstitutableVariable> unifier) {
+	public GenericSubstituter(ImmutableSubstitution unifier) {
 		this.unifier = unifier;
 	}
 
@@ -58,5 +57,13 @@ public class GenericSubstituter implements Substituter<SubstitutableTerm> {
 				term.apply(this);
 			}
 		}
+	}
+	
+	/**
+	 * Temporary method until this class is removed.
+	 * @return the substitution
+	 */
+	public final ImmutableSubstitution getSubstitution() {
+	    return unifier;
 	}
 }

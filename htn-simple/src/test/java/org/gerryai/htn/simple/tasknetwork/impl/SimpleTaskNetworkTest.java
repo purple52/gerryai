@@ -29,7 +29,7 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -378,7 +378,7 @@ public class SimpleTaskNetworkTest {
         when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
         when(mockConstraintB.validate(mockConstraintValidator)).thenReturn(true);
         
-        Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
+        ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
  
         ImmutableTaskNetwork initialTaskNetwork = new SimpleTaskNetwork.Builder(mockConstraintValidator)
                 .addTasks(mockTasks)
@@ -388,13 +388,13 @@ public class SimpleTaskNetworkTest {
         ImmutableTaskBuilder mockTaskBuilderA = mock(ImmutableTaskBuilder.class);
         ImmutableTaskBuilder mockTaskBuilderA1 = mock(ImmutableTaskBuilder.class);
         when(mockTaskA.createCopyBuilder()).thenReturn(mockTaskBuilderA);
-        when(mockTaskBuilderA.apply(mockSubstituter)).thenReturn(mockTaskBuilderA1);
+        when(mockTaskBuilderA.apply(mockSubstitution)).thenReturn(mockTaskBuilderA1);
         when(mockTaskBuilderA1.build()).thenReturn(mockTaskC);
         
         ImmutableTaskBuilder mockTaskBuilderB = mock(ImmutableTaskBuilder.class);
         ImmutableTaskBuilder mockTaskBuilderB1 = mock(ImmutableTaskBuilder.class);
         when(mockTaskB.createCopyBuilder()).thenReturn(mockTaskBuilderB);
-        when(mockTaskBuilderB.apply(mockSubstituter)).thenReturn(mockTaskBuilderB1);
+        when(mockTaskBuilderB.apply(mockSubstitution)).thenReturn(mockTaskBuilderB1);
         when(mockTaskBuilderB1.build()).thenReturn(mockTaskD);
         
         @SuppressWarnings("rawtypes")
@@ -406,7 +406,7 @@ public class SimpleTaskNetworkTest {
         @SuppressWarnings("rawtypes")
         ImmutableConstraintBuilder mockConstraintBuilderA3 = mock(ImmutableConstraintBuilder.class);
         when(mockConstraintA.createCopyBuilder()).thenReturn(mockConstraintBuilderA);
-        when(mockConstraintBuilderA.apply(mockSubstituter)).thenReturn(mockConstraintBuilderA1);
+        when(mockConstraintBuilderA.apply(mockSubstitution)).thenReturn(mockConstraintBuilderA1);
         when(mockConstraintBuilderA1.replace(mockTaskA, mockTaskC)).thenReturn(mockConstraintBuilderA2);
         when(mockConstraintBuilderA2.replace(mockTaskB, mockTaskD)).thenReturn(mockConstraintBuilderA3);
         when(mockConstraintBuilderA2.replace(mockTaskA, mockTaskC)).thenReturn(mockConstraintBuilderA3);
@@ -422,7 +422,7 @@ public class SimpleTaskNetworkTest {
         @SuppressWarnings("rawtypes")
         ImmutableConstraintBuilder mockConstraintBuilderB3 = mock(ImmutableConstraintBuilder.class);
         when(mockConstraintB.createCopyBuilder()).thenReturn(mockConstraintBuilderB);
-        when(mockConstraintBuilderB.apply(mockSubstituter)).thenReturn(mockConstraintBuilderB1);
+        when(mockConstraintBuilderB.apply(mockSubstitution)).thenReturn(mockConstraintBuilderB1);
         when(mockConstraintBuilderB1.replace(mockTaskA, mockTaskC)).thenReturn(mockConstraintBuilderB2);
         when(mockConstraintBuilderB2.replace(mockTaskB, mockTaskD)).thenReturn(mockConstraintBuilderB3);
         when(mockConstraintBuilderB2.replace(mockTaskA, mockTaskC)).thenReturn(mockConstraintBuilderB3);
@@ -430,7 +430,7 @@ public class SimpleTaskNetworkTest {
         when(mockConstraintBuilderB3.build()).thenReturn(mockConstraintD);
         
         ImmutableTaskNetwork taskNetwork = initialTaskNetwork.createCopyBuilder(mockConstraintValidator)
-                .apply(mockSubstituter)
+                .apply(mockSubstitution)
                 .build();
         
         assertEquals(2, taskNetwork.getTasks().size());

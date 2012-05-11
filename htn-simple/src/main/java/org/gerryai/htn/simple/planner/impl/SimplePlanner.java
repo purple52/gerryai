@@ -31,6 +31,7 @@ import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
+import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 
 /**
  * Implementation of a planner.
@@ -97,6 +98,9 @@ public class SimplePlanner implements
 						ImmutableTaskNetwork decomposedNetwork = plannerHelper.decompose(taskNetwork, task, method);
 						// Try recursing to further process the decomposed network
 						return findPlan(state, decomposedNetwork);
+					} catch (InvalidConstraint e) {
+					    //TODO: Is this necessary and the correct way to handle this?
+					    continue;
 					} catch (DecompositionNotFound e) {
 						// This method was no good, so continue and try the next one
 						continue;

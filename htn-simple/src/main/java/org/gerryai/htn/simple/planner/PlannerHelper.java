@@ -25,6 +25,7 @@ import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.planner.impl.NonPrimitiveTaskNotFound;
+import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
@@ -81,6 +82,7 @@ public interface PlannerHelper<
 	 * @param method the method to use to decompose the task
 	 * @return the decomposed task network
 	 * @throws DecompositionNotFound if the method could not be used to decompose the given task
+     * @throws InvalidConstraint if the decomposition restulted in an invalid constraint
 	 */
-	N decompose(N taskNetwork, K task, M method) throws DecompositionNotFound;
+	N decompose(N taskNetwork, K task, M method) throws DecompositionNotFound, InvalidConstraint;
 }

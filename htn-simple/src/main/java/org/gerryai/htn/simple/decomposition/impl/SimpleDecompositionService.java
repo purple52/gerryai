@@ -18,15 +18,15 @@
 package org.gerryai.htn.simple.decomposition.impl;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
-import org.gerryai.htn.simple.decomposition.UnificationService;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.logic.unification.Substitution;
+import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 
 /**
  * Simple implementation of a decomposition service, for decomposing a task
@@ -36,44 +36,42 @@ import org.gerryai.logic.unification.Substitution;
  */
 public class SimpleDecompositionService implements
 		DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>> {
+		ImmutableConstraint<?>, ImmutableSubstitution> {
 
-	/**
-	 * Service for performing unification actions.
-	 */
-	private UnificationService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-	ImmutableConstraint<?>,
-			SubstitutableCondition, SimpleVariable> unificationService;
+    /**
+     * Constraint validator factory.
+     */
+    private ConstraintValidatorFactory<SubstitutableTerm, ImmutableTask,
+            SubstitutableCondition> constraintValidatorFactory;
 	
 	/**
 	 * Set the unification service.
-	 * @param unificationService the unification service to use
+	 * @param constraintValidatorFactory the constraint validator factory to use
 	 */
-	public SimpleDecompositionService(UnificationService<SubstitutableMethod, SubstitutableTerm, ImmutableTask,
-			ImmutableTaskNetwork, ImmutableConstraint<?>,
-			SubstitutableCondition, SimpleVariable> unificationService) {
-		this.unificationService = unificationService;
+	public SimpleDecompositionService(ConstraintValidatorFactory<SubstitutableTerm,
+	        ImmutableTask, SubstitutableCondition> constraintValidatorFactory) {
+		this.constraintValidatorFactory = constraintValidatorFactory;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableTaskNetwork decompose(Substitution<SubstitutableTerm, SimpleVariable> unifier,
-			ImmutableTaskNetwork taskNetwork, ImmutableTask task, SubstitutableMethod method) {
-		// TODO: Ensure the original task network is never altered
+	public final ImmutableTaskNetwork decompose(ImmutableSubstitution substitution,
+			ImmutableTaskNetwork taskNetwork, ImmutableTask task, SubstitutableMethod method) throws InvalidConstraint {
 	    
 		// Apply unifier where relevant
-		ImmutableTaskNetwork unifiedMethodSubTasks = unificationService.apply(unifier, method.getTaskNetwork());
+		ImmutableTaskNetwork unifiedMethodSubTasks = method.getTaskNetwork()
+		        .createCopyBuilder(constraintValidatorFactory.create())
+		        .apply(substitution)
+		        .build();
+		
 		// TODO: Confirm if unifier really needs to be applied to the rest of the task network
-		ImmutableTaskNetwork updatedTaskNetwork = unificationService.apply(unifier, taskNetwork);
-		
-		// Replace the original task with the sub tasks provided by the method
-		updatedTaskNetwork.getTasks().remove(task);
-		updatedTaskNetwork.getTasks().addAll(unifiedMethodSubTasks.getTasks());
-		
-		// TODO Complete implementation, including constraints
+		ImmutableTaskNetwork updatedTaskNetwork = taskNetwork
+		        .createCopyBuilder(constraintValidatorFactory.create())
+		        .apply(substitution)
+		        .replace(task, unifiedMethodSubTasks)
+		        .build();
 		
 		return updatedTaskNetwork;
 	}
-
 }

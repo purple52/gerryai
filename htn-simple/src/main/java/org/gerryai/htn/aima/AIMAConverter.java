@@ -20,10 +20,10 @@ package org.gerryai.htn.aima;
 import java.util.List;
 import java.util.Map;
 
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
-import org.gerryai.logic.unification.Substitution;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
 
@@ -84,5 +84,6 @@ public interface AIMAConverter<T extends Term, V extends Variable, K extends Tas
 	 * @param map map to convert
 	 * @return the unifier
 	 */
-	Substitution<T, V> convert(Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map);
+	ImmutableSubstitution convert(Map<aima.core.logic.fol.parsing.ast.Variable,
+	        aima.core.logic.fol.parsing.ast.Term> map);
 }

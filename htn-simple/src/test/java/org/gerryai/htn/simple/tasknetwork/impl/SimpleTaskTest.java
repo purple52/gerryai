@@ -21,13 +21,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
+import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
@@ -98,8 +98,10 @@ public class SimpleTaskTest {
      */
     @Test
     public void testSimpleTaskBuilder() {
+        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
+        
         // Create the builder under test
-        ImmutableTaskBuilder builder = new SimpleTask.Builder();
+        ImmutableTaskBuilder builder = new SimpleTask.Builder(mockLogicFactory);
         
         // Check that the arguments list has been initialised
         assertTrue(builder.getArguments().isEmpty());
@@ -111,8 +113,10 @@ public class SimpleTaskTest {
      */
     @Test
     public void testSetName() {
+        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
+        
         // Create the builder under test
-        ImmutableTaskBuilder builder = new SimpleTask.Builder()
+        ImmutableTaskBuilder builder = new SimpleTask.Builder(mockLogicFactory)
                 .setName("testname");
         
         // Check that the name has been set
@@ -126,11 +130,13 @@ public class SimpleTaskTest {
     @Test
     public void testAddArgument() {
 
+        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
+        
         SubstitutableTerm mockTermA = mock(SubstitutableTerm.class);
         SubstitutableTerm mockTermB = mock(SubstitutableTerm.class);
         
         // Create the builder under test
-        ImmutableTaskBuilder builder = new SimpleTask.Builder()
+        ImmutableTaskBuilder builder = new SimpleTask.Builder(mockLogicFactory)
                 .addArgument(mockTermA)
                 .addArgument(mockTermB);
         
@@ -147,6 +153,8 @@ public class SimpleTaskTest {
     @Test
     public void testAddArguments() {
         
+        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
+        
         SubstitutableTerm mockTermA = mock(SubstitutableTerm.class);
         SubstitutableTerm mockTermB = mock(SubstitutableTerm.class);
         List<SubstitutableTerm> mockTermsOne = new ArrayList<SubstitutableTerm>();
@@ -160,7 +168,7 @@ public class SimpleTaskTest {
         mockTermsTwo.add(mockTermD);
         
         // Create the builder under test
-        ImmutableTaskBuilder builder = new SimpleTask.Builder()
+        ImmutableTaskBuilder builder = new SimpleTask.Builder(mockLogicFactory)
                 .addArguments(mockTermsOne)
                 .addArguments(mockTermsTwo);
         
@@ -178,10 +186,11 @@ public class SimpleTaskTest {
     @Test
     public void testBuildPrimitive() {
 
+        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
         SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
         
         // Create the builder under test
-        ImmutableTask primitiveTask = new SimpleTask.Builder()
+        ImmutableTask primitiveTask = new SimpleTask.Builder(mockLogicFactory)
                 .setName("testname")
                 .addArgument(mockTerm)
                 .setIsPrimitive(true)
@@ -198,10 +207,11 @@ public class SimpleTaskTest {
     @Test
     public void testBuildNonPrimitive() {
 
+        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
         SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
         
         // Create the builder under test
-        ImmutableTask primitiveTask = new SimpleTask.Builder()
+        ImmutableTask primitiveTask = new SimpleTask.Builder(mockLogicFactory)
                 .setName("testname")
                 .addArgument(mockTerm)
                 .setIsPrimitive(false)
@@ -221,7 +231,8 @@ public class SimpleTaskTest {
         SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
         List<SubstitutableTerm> terms = new ArrayList<SubstitutableTerm>();
         terms.add(mockTerm);
-        ImmutableTask initialTask = new SimpleTask.Builder()
+        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
+        ImmutableTask initialTask = new SimpleTask.Builder(mockLogicFactory)
                 .setName(name)
                 .addArguments(terms)
                 .setIsPrimitive(true)
@@ -241,27 +252,31 @@ public class SimpleTaskTest {
     @Test
     public void testBuilderApply() {
         String name = "testname";
-        SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
-        List<SubstitutableTerm> terms = new ArrayList<SubstitutableTerm>();
-        terms.add(mockTerm);
-        ImmutableTask initialTask = new SimpleTask.Builder()
+        
+        SubstitutableTerm mockTermA = mock(SubstitutableTerm.class);
+        List<SubstitutableTerm> termsA = new ArrayList<SubstitutableTerm>();
+        termsA.add(mockTermA);
+
+        SubstitutableTerm mockTermB = mock(SubstitutableTerm.class);
+        List<SubstitutableTerm> termsB = new ArrayList<SubstitutableTerm>();
+        termsB.add(mockTermB);
+        
+        ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
+        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
+        when(mockLogicFactory.copyApply(termsA, mockSubstitution)).thenReturn(termsB);
+        ImmutableTask initialTask = new SimpleTask.Builder(mockLogicFactory)
         .setName(name)
-        .addArguments(terms)
+        .addArguments(termsA)
         .setIsPrimitive(true)
         .build();
         
-        @SuppressWarnings("unchecked")
-        Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
-        
         // Create the builder under test
         ImmutableTask newTask = initialTask.createCopyBuilder()
-                .apply(mockSubstituter)
+                .apply(mockSubstitution)
                 .build();
         
         assertEquals(name, newTask.getName());
-        assertEquals(terms, newTask.getArguments());
+        assertEquals(termsB, newTask.getArguments());
         assertTrue(newTask.isPrimitive());
-        
-        verify(mockSubstituter).visit(terms);
     }
 }

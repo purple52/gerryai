@@ -20,8 +20,7 @@ package org.gerryai.htn.simple.tasknetwork;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.decomposition.Substituter;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 
 /**
  * Interface for a task network builder.
@@ -73,10 +72,18 @@ public interface ImmutableTaskNetworkBuilder {
 	
     /**
      * Apply the provided substituter to the arguments provided so far.
-     * @param substituter the substituter to apply
+     * @param substitution the substitution to apply
      * @return the updated builder
      */
-	ImmutableTaskNetworkBuilder apply(Substituter<SubstitutableTerm> substituter);
+	ImmutableTaskNetworkBuilder apply(ImmutableSubstitution substitution);
+	
+	/**
+	 * Replace the given task with the network of tasks and constraints provided.
+	 * @param oldTask the task to replace
+	 * @param taskNetwork the network to replace with
+	 * @return the updated builder
+	 */
+	ImmutableTaskNetworkBuilder replace(ImmutableTask oldTask, ImmutableTaskNetwork taskNetwork);
 	
 	/**
 	 * Get the set of tasks for the task network to be built.

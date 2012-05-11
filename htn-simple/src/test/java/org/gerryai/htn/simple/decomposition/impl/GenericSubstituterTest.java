@@ -26,9 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.SubstitutableVariable;
-import org.gerryai.logic.unification.Substitution;
 
 import org.junit.Test;
 
@@ -45,10 +45,10 @@ public class GenericSubstituterTest {
 	public void testEmptyList() {
 		SubstitutableVariable mockVariable = mock(SubstitutableVariable.class);
 		SubstitutableTerm mockTerm = mock(SubstitutableTerm.class);
-		Map<SubstitutableVariable,SubstitutableTerm> map = new HashMap<SubstitutableVariable,SubstitutableTerm>();
+		Map<SubstitutableTerm, SubstitutableTerm> map = new HashMap<SubstitutableTerm, SubstitutableTerm>();
 		map.put(mockVariable, mockTerm);
-		@SuppressWarnings("unchecked")
-		Substitution<SubstitutableTerm, SubstitutableVariable> mockSubstitution = mock(Substitution.class);
+
+		ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
 		when(mockSubstitution.getMap()).thenReturn(map);
 		
 		List<SubstitutableTerm> mockTerms = new ArrayList<SubstitutableTerm>();
@@ -65,9 +65,8 @@ public class GenericSubstituterTest {
 	@Test
 	public void testEmptySubstitution() {
 		
-		@SuppressWarnings("unchecked")
-		Substitution<SubstitutableTerm, SubstitutableVariable> mockSubstitution = mock(Substitution.class);
-		Map<SubstitutableVariable,SubstitutableTerm> map = new HashMap<SubstitutableVariable,SubstitutableTerm>();
+	    ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
+	    Map<SubstitutableTerm, SubstitutableTerm> map = new HashMap<SubstitutableTerm, SubstitutableTerm>();
 		when(mockSubstitution.getMap()).thenReturn(map);
 		
 		SubstitutableTerm mockTermA = mock(SubstitutableTerm.class);
@@ -96,9 +95,8 @@ public class GenericSubstituterTest {
         mockTerms.add(mockVariableA);
         mockTerms.add(mockTermB);
         
-        @SuppressWarnings("unchecked")
-        Substitution<SubstitutableTerm, SubstitutableVariable> mockSubstitution = mock(Substitution.class);
-        Map<SubstitutableVariable,SubstitutableTerm> map = new HashMap<SubstitutableVariable,SubstitutableTerm>();
+        ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
+        Map<SubstitutableTerm, SubstitutableTerm> map = new HashMap<SubstitutableTerm, SubstitutableTerm>();
         map.put(mockVariableA, mockTermA);
         when(mockSubstitution.getMap()).thenReturn(map);
        
@@ -122,9 +120,8 @@ public class GenericSubstituterTest {
         mockTerms.add(mockTermA);
         mockTerms.add(mockVariableA);
         
-        @SuppressWarnings("unchecked")
-        Substitution<SubstitutableTerm, SubstitutableVariable> mockSubstitution = mock(Substitution.class);
-        Map<SubstitutableVariable,SubstitutableTerm> map = new HashMap<SubstitutableVariable,SubstitutableTerm>();
+        ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
+        Map<SubstitutableTerm, SubstitutableTerm> map = new HashMap<SubstitutableTerm, SubstitutableTerm>();
         map.put(mockVariableA, mockTermB);
         when(mockSubstitution.getMap()).thenReturn(map);
        
@@ -149,9 +146,8 @@ public class GenericSubstituterTest {
         mockTerms.add(mockVariableA);
         mockTerms.add(mockVariableB);
         
-        @SuppressWarnings("unchecked")
-        Substitution<SubstitutableTerm, SubstitutableVariable> mockSubstitution = mock(Substitution.class);
-        Map<SubstitutableVariable,SubstitutableTerm> map = new HashMap<SubstitutableVariable,SubstitutableTerm>();
+        ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
+        Map<SubstitutableTerm, SubstitutableTerm> map = new HashMap<SubstitutableTerm, SubstitutableTerm>();
         map.put(mockVariableA, mockTermA);
         map.put(mockVariableB, mockTermB);
         when(mockSubstitution.getMap()).thenReturn(map);

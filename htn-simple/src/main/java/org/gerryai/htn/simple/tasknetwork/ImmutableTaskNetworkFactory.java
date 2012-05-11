@@ -17,34 +17,27 @@
  */
 package org.gerryai.htn.simple.tasknetwork;
 
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
- * Interface for a factory that creates task network builders.
- * @param <T> the class of task the builder will handle
- * @param <K> type of task this factory uses
- * @param <N> type of task network this factory uses
- * @param <C> the class of constraint the builder will handle
  * @author David Edwards <david@more.fool.me.uk>
+ *
  */
-public interface TaskNetworkBuilderFactory<
-		T extends SubstitutableTerm,
-		K extends Task<T>,
-		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>> {
+public interface ImmutableTaskNetworkFactory extends
+        TaskNetworkFactory<SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
+        ImmutableConstraint<?>, ImmutableSubstitution> {
 
-	/**
-	 * Create a task network builder of the required type.
-	 * @return the task network builder
-	 */
-	ImmutableTaskNetworkBuilder createTaskNetworkBuilder();
-	
-	/**
-	 * Create a task builder of the required type.
-	 * @return the task builder
-	 */
-	ImmutableTaskBuilder createTaskBuilder();
+    /**
+     * Create a fresh task builder.
+     * @return the builder
+     */
+    ImmutableTaskBuilder createTaskBuilder();
+    
+    /**
+     * Create a fresh task network builder.
+     * @return the builder
+     */
+    ImmutableTaskNetworkBuilder createTaskNetworkBuilder();
 }

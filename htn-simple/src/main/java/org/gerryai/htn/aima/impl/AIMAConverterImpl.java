@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.aima.AIMAConverter;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleConstant;
 import org.gerryai.htn.simple.logic.impl.SimpleTerm;
@@ -83,10 +84,10 @@ public class AIMAConverterImpl implements AIMAConverter<SubstitutableTerm, Simpl
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleUnifier convert(Map<aima.core.logic.fol.parsing.ast.Variable,
+	public final ImmutableSubstitution convert(Map<aima.core.logic.fol.parsing.ast.Variable,
 			aima.core.logic.fol.parsing.ast.Term> map) {
 		
-		Map<SimpleVariable, SubstitutableTerm> substitutionMap = new HashMap<SimpleVariable, SubstitutableTerm>();
+		Map<SubstitutableTerm, SubstitutableTerm> substitutionMap = new HashMap<SubstitutableTerm, SubstitutableTerm>();
 
 		for (aima.core.logic.fol.parsing.ast.Variable variable : map.keySet()) {
 

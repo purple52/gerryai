@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.decomposition.Substituter;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.SubstitutableCondition;
 import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -118,8 +118,7 @@ public class SimplePrecedenceConstraintTest {
         Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
 
-        @SuppressWarnings("unchecked")
-        Substituter<SubstitutableTerm> mockSubstituter = mock(Substituter.class);
+        ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
 
         SimplePrecedenceConstraint initialConstraint = new SimplePrecedenceConstraint.Builder()
                 .setPrecedingTasks(mockPrecedingTasks)
@@ -127,7 +126,7 @@ public class SimplePrecedenceConstraintTest {
                 .build();
         
         SimplePrecedenceConstraint constraint = initialConstraint.createCopyBuilder()
-                .apply(mockSubstituter)
+                .apply(mockSubstitution)
                 .build();
 
         assertEquals(mockPrecedingTasks, constraint.getPrecedingTasks());
