@@ -29,8 +29,8 @@ import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.junit.Test;
@@ -48,8 +48,8 @@ public class SimpleDomainHelperTest {
 	public void testGetDomain() {
 		
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, SubstitutableCondition>
+		Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		ImmutableConstraint<?>, ImmutableCondition<?>>
 				mockDomain = mock(Domain.class);
 		
 		// Create the domain helper under test
@@ -66,8 +66,8 @@ public class SimpleDomainHelperTest {
 	public void testGetOperatorByNameEmptyList() throws OperatorNotFound {
 		
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, SubstitutableCondition>
+		Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		        ImmutableConstraint<?>, ImmutableCondition<?>>
 				mockDomain = mock(Domain.class);
 		when(mockDomain.getOperators()).thenReturn(new HashSet<SubstitutableOperator>());
 
@@ -84,8 +84,8 @@ public class SimpleDomainHelperTest {
 	@Test(expected=OperatorNotFound.class)
 	public void testGetOperatorByNameNotFound() throws OperatorNotFound {
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, SubstitutableCondition>
+		Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		        ImmutableConstraint<?>, ImmutableCondition<?>>
 				mockDomain = mock(Domain.class);
 		SubstitutableOperator mockOperatorA = mock(SubstitutableOperator.class);
 		when(mockOperatorA.getName()).thenReturn("operatorA");
@@ -109,8 +109,8 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetOperatorByNameFound() throws OperatorNotFound {
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, SubstitutableCondition>
+		Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		        ImmutableConstraint<?>, ImmutableCondition<?>>
 				mockDomain = mock(Domain.class);
 		SubstitutableOperator mockOperatorA = mock(SubstitutableOperator.class);
 		when(mockOperatorA.getName()).thenReturn("operatorA");
@@ -135,8 +135,8 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetMethodByTaskEmptyList() {
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, SubstitutableCondition>
+		Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		        ImmutableConstraint<?>, ImmutableCondition<?>>
 				mockDomain = mock(Domain.class);
 		when(mockDomain.getMethods()).thenReturn(new HashSet<SubstitutableMethod>());
 
@@ -155,8 +155,8 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetMethodByTaskNotFound() {
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, SubstitutableCondition>
+		Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		        ImmutableConstraint<?>, ImmutableCondition<?>>
 				mockDomain = mock(Domain.class);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
@@ -189,8 +189,8 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetMethodByTaskOneFound() {
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, SubstitutableCondition>
+		Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		        ImmutableConstraint<?>, ImmutableCondition<?>>
 				mockDomain = mock(Domain.class);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
@@ -224,8 +224,8 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetMethodByTaskTwoFound() {
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, SubstitutableCondition>
+		Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		        ImmutableConstraint<?>, ImmutableCondition<?>>
 				mockDomain = mock(Domain.class);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);

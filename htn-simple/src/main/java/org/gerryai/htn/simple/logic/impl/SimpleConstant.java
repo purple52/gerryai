@@ -17,16 +17,17 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import org.gerryai.htn.simple.decomposition.Substituter;
-import org.gerryai.htn.simple.logic.SubstitutableConstant;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
+import org.gerryai.htn.simple.logic.ImmutableConstant;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTermBuilder;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant
-		implements SubstitutableConstant, SimpleTerm {
+		implements ImmutableConstant<SimpleConstant> {
 
 	/**
 	 * Constructor.
@@ -43,11 +44,51 @@ public class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant
 		return this.getSymbolicName();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void apply(Substituter<SubstitutableTerm> substituter) {
-		// Nothing to do, since we can't replace ourselves
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public final ImmutableTermBuilder<SimpleConstant> createCopyBuilder() {
+        return new Builder()
+            .copy(this);
+    }
+    
+    /**
+     * Builder class for SimpleConstant.
+     * @author David Edwards <david@more.fool.me.uk>
+     */
+    public static class Builder implements ImmutableTermBuilder<SimpleConstant> {
+        
+        /**
+         * Name of the term to be built.
+         */
+        private String name;
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder copy(SimpleConstant term) {
+            this.name = term.getName();
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder apply(ImmutableSubstitution substitution) {
+            for (ImmutableTerm<?> oldTerm : substitution.getMap().keySet()) {
+                if (oldTerm.getName().equals(this.name)) {
+                    this.name = oldTerm.getName();
+                }
+            }
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final SimpleConstant build() {
+            return new SimpleConstant(this.name);
+        }
+    }
 
 }

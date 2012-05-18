@@ -6,8 +6,8 @@ import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -34,8 +34,8 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  *
  */
 public class SimpleProblem implements Problem<SubstitutableOperator, SubstitutableMethod,
-		SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, SubstitutableCondition> {
+		ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		ImmutableConstraint<?>, ImmutableCondition<?>> {
 
 	/**
 	 * The initial state for this problem.
@@ -43,16 +43,16 @@ public class SimpleProblem implements Problem<SubstitutableOperator, Substitutab
 	private State state;
 	
 	/**
-	 * The task network to acheive.
+	 * The task network to achieve.
 	 */
 	private ImmutableTaskNetwork taskNetwork;
 	
 	/**
 	 * The domain to operate in.
 	 */
-	private Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+	private Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, SubstitutableCondition> domain;
+			ImmutableConstraint<?>, ImmutableCondition<?>> domain;
 	
 	/**
 	 * {@inheritDoc}
@@ -85,18 +85,18 @@ public class SimpleProblem implements Problem<SubstitutableOperator, Substitutab
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+	public final Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, SubstitutableCondition> getDomain() {
+			ImmutableConstraint<?>, ImmutableCondition<?>> getDomain() {
 		return domain;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setDomain(Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+	public final void setDomain(Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, SubstitutableCondition> domain) {
+			ImmutableConstraint<?>, ImmutableCondition<?>> domain) {
 		this.domain = domain;
 	}
 

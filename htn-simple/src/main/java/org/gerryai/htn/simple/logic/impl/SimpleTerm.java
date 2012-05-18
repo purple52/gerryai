@@ -17,12 +17,12 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface SimpleTerm extends	SubstitutableTerm {
+public interface SimpleTerm extends	ImmutableTerm {
 
 }

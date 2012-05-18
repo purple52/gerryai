@@ -18,12 +18,12 @@
 package org.gerryai.htn.simple.domain;
 
 import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
 
 /**
  * Extended operator interface that can be visited by a substituter.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface SubstitutableOperator extends Operator<SubstitutableCondition> {
+public interface SubstitutableOperator extends Operator<ImmutableCondition<?>> {
 
 }

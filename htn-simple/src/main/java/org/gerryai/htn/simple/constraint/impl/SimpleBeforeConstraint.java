@@ -25,9 +25,8 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
-import org.gerryai.htn.simple.decomposition.impl.GenericSubstituter;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
@@ -38,7 +37,7 @@ import com.google.common.base.Objects;
  * 
  */
 public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeConstraint>,
-        ValidatableBeforeConstraint<SubstitutableTerm, ImmutableTask, SubstitutableCondition> {
+        ValidatableBeforeConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
 
     /**
      * The set of tasks that this constraint must hold for.
@@ -48,7 +47,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
     /**
      * The condition that must be true directly before the first of these tasks.
      */
-    private SubstitutableCondition condition;
+    private ImmutableCondition<?> condition;
 
     /**
      * Constructor.
@@ -74,7 +73,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
      * 
      * @return the condition
      */
-    public final SubstitutableCondition getCondition() {
+    public final ImmutableCondition<?> getCondition() {
         return condition;
     }
 
@@ -82,7 +81,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
      * {@inheritDoc}
      */
     public final boolean validate(
-            ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> validator) {
+            ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> validator) {
         return validator.validate(this);
     }
 
@@ -90,7 +89,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
      * {@inheritDoc}
      */
     public final void add(
-            ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> validator)
+            ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> validator)
             throws InvalidConstraint {
         validator.add(this);
     }
@@ -125,7 +124,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
         /**
          * The condition that must be true directly after the last of these tasks.
          */
-        private SubstitutableCondition condition;
+        private ImmutableCondition<?> condition;
         
         /**
          * Default constructor.
@@ -147,7 +146,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
          * @param condition the condition to set
          * @return the updated builder
          */
-        public final Builder setCondition(SubstitutableCondition condition) {
+        public final Builder setCondition(ImmutableCondition<?> condition) {
             this.condition = condition;
             return this;
         }
@@ -162,7 +161,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
         /**
          * @return the condition
          */
-        protected final SubstitutableCondition getCondition() {
+        protected final ImmutableCondition<?> getCondition() {
             return condition;
         }
         
@@ -201,9 +200,10 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
          * {@inheritDoc}
          */
         public final Builder apply(ImmutableSubstitution substitution) {
-            //TODO: Replace with immutable condition
-            GenericSubstituter substituter = new GenericSubstituter(substitution);
-            this.condition.apply(substituter);
+            ImmutableCondition<?> newCondition = (ImmutableCondition<?>) this.condition.createCopyBuilder()
+                    .apply(substitution)
+                    .build();
+            this.condition = newCondition;
             return this;
         }  
         

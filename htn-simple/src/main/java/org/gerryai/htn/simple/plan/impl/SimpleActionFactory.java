@@ -20,8 +20,8 @@ package org.gerryai.htn.simple.plan.impl;
 import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -31,20 +31,20 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
  *
  */
 public class SimpleActionFactory implements ActionFactory<SubstitutableOperator,
-		SubstitutableTerm, ImmutableTask, SubstitutableCondition> {
+		ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
 
 	/**
 	 * Helper object for doing the difficult bits.
 	 */
-	private ActionFactoryHelper<SubstitutableOperator, SubstitutableTerm, ImmutableTask,
-			SubstitutableCondition> actionFactoryHelper;
+	private ActionFactoryHelper<SubstitutableOperator, ImmutableTerm<?>, ImmutableTask,
+	ImmutableCondition<?>> actionFactoryHelper;
 	
 	/**
 	 * Constructor taking all required dependencies.
 	 * @param actionFactoryHelper the action factory
 	 */
-	public SimpleActionFactory(ActionFactoryHelper<SubstitutableOperator, SubstitutableTerm,
-			ImmutableTask, SubstitutableCondition> actionFactoryHelper) {
+	public SimpleActionFactory(ActionFactoryHelper<SubstitutableOperator, ImmutableTerm<?>,
+			ImmutableTask, ImmutableCondition<?>> actionFactoryHelper) {
 		this.actionFactoryHelper = actionFactoryHelper;
 	}
 	

@@ -31,7 +31,7 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.domain.DomainHelper;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -50,10 +50,10 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  */
 public class AIMAUnificationService<
 		O extends Operator<I>,
-		M extends Method<SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
+		M extends Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
 		I extends Condition,
 		V extends Variable>
-				implements UnificationService<M, SubstitutableTerm, ImmutableTask,
+				implements UnificationService<M, ImmutableTerm<?>, ImmutableTask,
 				ImmutableTaskNetwork, ImmutableConstraint<?>, I> {
 
 	/**
@@ -64,12 +64,12 @@ public class AIMAUnificationService<
 	/**
 	 * Converter to convert between our classes and the AIMA FOL classes.
 	 */
-	private AIMAConverter<SubstitutableTerm, V, ImmutableTask> converter;
+	private AIMAConverter<ImmutableTerm<?>, V, ImmutableTask> converter;
 	
 	/**
 	 * Factory for creating task network builders.
 	 */
-	private TaskNetworkFactory<SubstitutableTerm, ImmutableTask,
+	private TaskNetworkFactory<ImmutableTerm<?>, ImmutableTask,
 	        ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableSubstitution> taskNetworkBuilderFactory;
 	
 	/**
@@ -80,10 +80,10 @@ public class AIMAUnificationService<
 	 * @param taskNetworkBuilderFactory factory for creating task network builders
 	 */
 	public AIMAUnificationService(aima.core.logic.fol.Unifier unifier,
-			AIMAConverter<SubstitutableTerm, V, ImmutableTask> converter,
-			DomainHelper<O, M, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
+			AIMAConverter<ImmutableTerm<?>, V, ImmutableTask> converter,
+			DomainHelper<O, M, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 			        ImmutableConstraint<?>, I> domainHelper,
-			TaskNetworkFactory<SubstitutableTerm, ImmutableTask,  ImmutableTaskNetwork,
+			TaskNetworkFactory<ImmutableTerm<?>, ImmutableTask,  ImmutableTaskNetwork,
 			        ImmutableConstraint<?>, ImmutableSubstitution> taskNetworkBuilderFactory) {
 		this.unifier = unifier;
 		this.converter = converter;
@@ -127,8 +127,8 @@ public class AIMAUnificationService<
 	 */
 	public final ImmutableTask apply(ImmutableSubstitution unifier, ImmutableTask task) {
 		
-		List<SubstitutableTerm> updatedTerms = new ArrayList<SubstitutableTerm>();		
-		for (SubstitutableTerm term : task.getArguments()) {
+		List<ImmutableTerm<?>> updatedTerms = new ArrayList<ImmutableTerm<?>>();		
+		for (ImmutableTerm<?> term : task.getArguments()) {
 			if (unifier.getMap().containsKey(term)) {
 				updatedTerms.add(unifier.getMap().get(term));
 			} else {

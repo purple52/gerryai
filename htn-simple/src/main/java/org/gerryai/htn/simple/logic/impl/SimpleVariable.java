@@ -17,16 +17,17 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import org.gerryai.htn.simple.decomposition.Substituter;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
-import org.gerryai.htn.simple.logic.SubstitutableVariable;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTermBuilder;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable
-		implements SubstitutableVariable, SimpleTerm {
+		implements ImmutableVariable<SimpleVariable> {
 
 	/**
 	 * @param name name of the variable
@@ -41,11 +42,51 @@ public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable
 	public final String getName() {
 		return this.getSymbolicName();
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void apply(Substituter<SubstitutableTerm> substituter) {
-		// Nothing to do, since we can't replace ourselves
-	}
+	
+    /**
+     * {@inheritDoc}
+     */
+    public final ImmutableTermBuilder<SimpleVariable> createCopyBuilder() {
+        return new Builder()
+            .copy(this);
+    }
+    
+    /**
+     * Builder class for SimpleVariable.
+     * @author David Edwards <david@more.fool.me.uk>
+     */
+    public static class Builder implements ImmutableTermBuilder<SimpleVariable> {
+        
+        /**
+         * Name of the term to be built.
+         */
+        private String name;
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder copy(SimpleVariable term) {
+            this.name = term.getName();
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder apply(ImmutableSubstitution substitution) {
+            for (ImmutableTerm<?> oldTerm : substitution.getMap().keySet()) {
+                if (oldTerm.getName().equals(this.name)) {
+                    this.name = oldTerm.getName();
+                }
+            }
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final SimpleVariable build() {
+            return new SimpleVariable(this.name);
+        }
+    }
 }

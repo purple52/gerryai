@@ -28,8 +28,8 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
@@ -42,21 +42,21 @@ import org.gerryai.logic.Variable;
  *
  */
 public class SimpleActionFactoryHelper implements ActionFactoryHelper<SubstitutableOperator,
-		SubstitutableTerm, ImmutableTask, SubstitutableCondition> {
+        ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
 
 	/**
 	 * Service for the domain that we are working in.
 	 */
-	private DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask,
-			ImmutableTaskNetwork, ImmutableConstraint<?>, SubstitutableCondition> domainHelper;
+	private DomainHelper<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask,
+			ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>> domainHelper;
 	
 	/**
 	 * Constructor requiring a domain helper.
 	 * @param domainHelper helper to use
 	 */
 	public SimpleActionFactoryHelper(DomainHelper<SubstitutableOperator, SubstitutableMethod,
-			SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, SubstitutableCondition> domainHelper) {
+	        ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+			ImmutableConstraint<?>, ImmutableCondition<?>> domainHelper) {
 		this.domainHelper = domainHelper;
 	}
 	
@@ -85,7 +85,7 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<Substituta
 		Map<Variable, Constant> bindingsMap = new HashMap<Variable, Constant>();
 		bindings.setMap(bindingsMap);
 		
-		List<SubstitutableTerm> taskArguments = task.getArguments();
+		List<ImmutableTerm<?>> taskArguments = task.getArguments();
 		List<Variable> operatorArguments = operator.getArguments();
 		
 		if (taskArguments.size() != operatorArguments.size()) {

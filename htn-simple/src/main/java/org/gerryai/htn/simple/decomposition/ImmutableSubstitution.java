@@ -17,13 +17,13 @@
  */
 package org.gerryai.htn.simple.decomposition;
 
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.logic.unification.Substitution;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ImmutableSubstitution extends Substitution<SubstitutableTerm, SubstitutableTerm> {
+public interface ImmutableSubstitution extends Substitution<ImmutableTerm<?>, ImmutableTerm<?>> {
 
 }

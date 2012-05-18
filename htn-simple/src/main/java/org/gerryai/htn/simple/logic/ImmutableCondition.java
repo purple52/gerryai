@@ -17,13 +17,13 @@
  */
 package org.gerryai.htn.simple.logic;
 
-import org.gerryai.logic.Variable;
+import org.gerryai.htn.domain.Condition;
 
 /**
- * Extended interface for variables that support a visitor for doing substitutions.
+ * Extended interface for immutable conditions that can only be modified via a builder.
+ * @param <T> type of immutable term being implemented
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface SubstitutableVariable extends Variable, SubstitutableTerm {
+public interface ImmutableCondition<T extends ImmutableCondition<T>> extends Condition, ImmutableTerm<T> {
 
 }

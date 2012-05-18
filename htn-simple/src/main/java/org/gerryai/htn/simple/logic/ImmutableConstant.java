@@ -17,14 +17,13 @@
  */
 package org.gerryai.htn.simple.logic;
 
-import org.gerryai.htn.simple.decomposition.Substitutable;
-import org.gerryai.logic.Term;
+import org.gerryai.logic.Constant;
 
 /**
- * Extended interface for terms that support a visitor for doing substitutions.
+ * Extended interface for immutable constants that use a builder to do modifications.
+ * @param <T> type of constant being implemented
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface SubstitutableTerm extends Term, Substitutable<SubstitutableTerm> {
+public interface ImmutableConstant<T extends ImmutableConstant<T>> extends Constant, ImmutableTerm<T> {
 
 }

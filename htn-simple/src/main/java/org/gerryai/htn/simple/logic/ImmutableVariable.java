@@ -17,13 +17,13 @@
  */
 package org.gerryai.htn.simple.logic;
 
-import org.gerryai.logic.Constant;
+import org.gerryai.logic.Variable;
 
 /**
- * Extended interface for constants that support a visitor for doing substitutions.
+ * Extended interface for immutable variables that use a builder to do modifications.
+ * @param <T> type of variable implemented
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface SubstitutableConstant extends Constant, SubstitutableTerm {
+public interface ImmutableVariable<T extends ImmutableVariable<T>> extends Variable, ImmutableTerm<T> {
 
 }

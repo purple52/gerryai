@@ -23,9 +23,9 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
@@ -47,16 +47,16 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
 	/**
 	 * Factory for creating constraint validators, as used by the task network builders.
 	 */
-	private ConstraintValidatorFactory<SubstitutableTerm, ImmutableTask,
-			SubstitutableCondition> constraintValidatorFactory;
+	private ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask,
+			ImmutableCondition<?>> constraintValidatorFactory;
 	
 	/**
 	 * Constructor, requiring a factory for creating constraint validators.
 	 * @param constraintValidatorFactory the constraint validator factory
 	 * @param logicFactory the logic factory
 	 */
-	public SimpleTaskNetworkFactory(ConstraintValidatorFactory<SubstitutableTerm,
-			ImmutableTask, SubstitutableCondition> constraintValidatorFactory,
+	public SimpleTaskNetworkFactory(ConstraintValidatorFactory<ImmutableTerm<?>,
+			ImmutableTask, ImmutableCondition<?>> constraintValidatorFactory,
 			ImmutableLogicFactory logicFactory) {
 		this.constraintValidatorFactory = constraintValidatorFactory;
 		this.logicFactory = logicFactory;
@@ -104,7 +104,7 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
     /**
      * {@inheritDoc}
      */
-	public final ImmutableTask createTask(String name, List<SubstitutableTerm> arguments, boolean isPrimitive) {
+	public final ImmutableTask createTask(String name, List<ImmutableTerm<?>> arguments, boolean isPrimitive) {
 	    return new SimpleTask.Builder(logicFactory)
 	            .setName(name)
 	            .addArguments(arguments)

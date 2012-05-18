@@ -29,8 +29,8 @@ import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
@@ -48,8 +48,8 @@ public class SimpleDecompositionServiceTest {
     @SuppressWarnings("unchecked")
     public void testDecompose() throws InvalidConstraint {
     	
-    	ConstraintValidatorFactory<SubstitutableTerm, ImmutableTask,
-                SubstitutableCondition> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
+    	ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask,
+                ImmutableCondition<?>> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
 
     	SimpleDecompositionService decompositionService = new SimpleDecompositionService(mockConstraintValidatorFactory);
     	

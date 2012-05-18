@@ -21,9 +21,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.gerryai.htn.constraint.Constraint;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Term;
 import org.gerryai.logic.unification.Substitution;
 
 /**
@@ -36,7 +36,7 @@ import org.gerryai.logic.unification.Substitution;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface TaskNetworkFactory<
-		T extends SubstitutableTerm,
+		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,

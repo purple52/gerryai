@@ -20,8 +20,8 @@ package org.gerryai.htn.simple.constraint.impl;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ConstraintFactory;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
@@ -29,7 +29,7 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
  *
  */
 public class SimpleConstraintFactory implements
-        ConstraintFactory<SubstitutableTerm, ImmutableTask, SubstitutableCondition> {
+        ConstraintFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
 
 	/**
 	 * {@inheritDoc}
@@ -46,7 +46,7 @@ public class SimpleConstraintFactory implements
 	 * {@inheritDoc}
 	 */
 	public final SimpleBeforeConstraint createBeforeConstraint(Set<ImmutableTask> tasks,
-			SubstitutableCondition condition) {
+	        ImmutableCondition<?> condition) {
         return new SimpleBeforeConstraint.Builder()
                 .addTasks(tasks)
                 .setCondition(condition)
@@ -57,7 +57,7 @@ public class SimpleConstraintFactory implements
 	 * {@inheritDoc}
 	 */
 	public final SimpleAfterConstraint createAfterConstraint(Set<ImmutableTask> tasks,
-			SubstitutableCondition condition) {
+	        ImmutableCondition<?> condition) {
 		return new SimpleAfterConstraint.Builder()
 		        .addTasks(tasks)
 		        .setCondition(condition)
@@ -68,7 +68,7 @@ public class SimpleConstraintFactory implements
 	 * {@inheritDoc}
 	 */
 	public final SimpleBetweenConstraint createBetweenConstraint(Set<ImmutableTask> precedingTasks,
-			Set<ImmutableTask> procedingTasks, SubstitutableCondition condition) {
+			Set<ImmutableTask> procedingTasks, ImmutableCondition<?> condition) {
         return new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(precedingTasks)
                 .addProcedingTasks(procedingTasks)

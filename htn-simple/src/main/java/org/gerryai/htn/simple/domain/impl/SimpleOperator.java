@@ -23,7 +23,7 @@ import java.util.Set;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.SubstitutableOperatorBuilder;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.logic.Variable;
 
 /**
@@ -45,7 +45,7 @@ public class SimpleOperator implements SubstitutableOperator {
 	/**
 	 * Preconditions for this operator.
 	 */
-	private Set<SubstitutableCondition> preconditions;
+	private Set<ImmutableCondition<?>> preconditions;
 	
 	/**
 	 * Effects of this operator.
@@ -94,7 +94,7 @@ public class SimpleOperator implements SubstitutableOperator {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<SubstitutableCondition> getPreconditions() {
+	public final Set<ImmutableCondition<?>> getPreconditions() {
 		return preconditions;
 	}
 

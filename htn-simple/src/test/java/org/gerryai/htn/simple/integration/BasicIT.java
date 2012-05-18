@@ -28,9 +28,9 @@ import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleConstant;
 import org.gerryai.htn.simple.logic.impl.SimpleLogicFactory;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
@@ -56,8 +56,8 @@ public class BasicIT {
 	    ImmutableLogicFactory logicFactory = new SimpleLogicFactory();
 		SimpleDomainBuilderFactory domainBuilderFactory
 				= new SimpleDomainBuilderFactory();
-		GenericConstraintValidatorFactory<SubstitutableTerm, ImmutableTask, SubstitutableCondition> constraintValidatorFactory
-				= new GenericConstraintValidatorFactory<SubstitutableTerm, ImmutableTask, SubstitutableCondition>();
+		GenericConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> constraintValidatorFactory
+				= new GenericConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>>();
 		SimpleTaskNetworkFactory taskNetworkBuilderFactory
 				= new SimpleTaskNetworkFactory(constraintValidatorFactory, logicFactory);
 		
@@ -155,7 +155,7 @@ public class BasicIT {
 		problem.setTaskNetwork(taskNetwork);
 		
 		
-		Plan<SubstitutableOperator, SubstitutableCondition> plan = planningService.solve(problem);
+		Plan<SubstitutableOperator, ImmutableCondition<?>> plan = planningService.solve(problem);
 		
 		assertEquals(plan.getActions().size(),2);
 		assertEquals("drop", plan.getActions().get(0).getOperator().getName());

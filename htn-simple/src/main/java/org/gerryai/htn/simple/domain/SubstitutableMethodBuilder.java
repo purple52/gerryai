@@ -18,7 +18,7 @@
 package org.gerryai.htn.simple.domain;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -31,7 +31,7 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  */
 public interface SubstitutableMethodBuilder
         extends
-        MethodBuilder<SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork, 
+        MethodBuilder<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, 
         ImmutableConstraint<?>, SubstitutableMethod> {
 
 }

@@ -15,21 +15,20 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.decomposition;
+package org.gerryai.htn.simple.logic;
 
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.logic.Term;
 
 /**
- * Interface that indicates that substitutions can be applied to the implementing class.
- * @param <T> type of logical term used by the substituter
+ * Extended interface for immutable terms that use a builder for modification.
+ * @param <T> type of term being implemented
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Substitutable<T extends SubstitutableTerm> {
+public interface ImmutableTerm<T extends ImmutableTerm<T>> extends Term {
 
-	/**
-	 * Apply a substitution to this object using the substituter provided.
-	 * @param substituter the substituter to use
-	 */
-	void apply(Substituter<T> substituter);
-	
+    /**
+     * Create a new builder object that can build a copy of this immutable term.
+     * @return the builder
+     */
+    ImmutableTermBuilder<T> createCopyBuilder();
 }

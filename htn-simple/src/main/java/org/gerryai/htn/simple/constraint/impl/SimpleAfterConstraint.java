@@ -25,9 +25,8 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
-import org.gerryai.htn.simple.decomposition.impl.GenericSubstituter;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
@@ -38,7 +37,7 @@ import com.google.common.base.Objects;
  *
  */
 public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterConstraint>,
-        ValidatableAfterConstraint<SubstitutableTerm, ImmutableTask, SubstitutableCondition> {
+        ValidatableAfterConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
 
 	/**
 	 * The set of tasks that this constraint must hold for.
@@ -48,7 +47,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
 	/**
 	 * The condition that must be true directly after the last of these tasks.
 	 */
-	private SubstitutableCondition condition;
+	private ImmutableCondition<?> condition;
 
 	/**
      * Constructor.
@@ -71,22 +70,22 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
 	 * Get the condition that must be true directly after the last of these tasks.
 	 * @return the condition
 	 */
-	public final SubstitutableCondition getCondition() {
+	public final ImmutableCondition<?> getCondition() {
 		return condition;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<SubstitutableTerm, ImmutableTask,
-			SubstitutableCondition> validator) {
+	public final boolean validate(ConstraintValidator<ImmutableTerm<?>, ImmutableTask,
+	        ImmutableCondition<?>> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> validator)
+	public final void add(ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> validator)
 			throws InvalidConstraint {
 		validator.add(this);
 	}
@@ -129,7 +128,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
         /**
          * The condition that must be true directly after the last of these tasks.
          */
-        private SubstitutableCondition condition;
+        private ImmutableCondition<?> condition;
         
         /**
          * Default constructor.
@@ -151,7 +150,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
          * @param condition the condition to set
          * @return the updated builder
          */
-        public final Builder setCondition(SubstitutableCondition condition) {
+        public final Builder setCondition(ImmutableCondition<?> condition) {
             this.condition = condition;
             return this;
         }
@@ -161,7 +160,6 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
          */
         public final Builder copy(SimpleAfterConstraint constraint) {
             this.tasks = new HashSet<ImmutableTask>(constraint.getTasks());
-            //TODO: this should copy the condition
             this.condition = constraint.getCondition();
             return this;
         }
@@ -192,9 +190,10 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
          * {@inheritDoc}
          */
         public final Builder apply(ImmutableSubstitution substitution) {
-            //TODO: Replace with immutable condition
-            GenericSubstituter substituter = new GenericSubstituter(substitution);
-            this.condition.apply(substituter);
+            ImmutableCondition<?> newCondition = (ImmutableCondition<?>) this.condition.createCopyBuilder()
+                    .apply(substitution)
+                    .build();
+            this.condition = newCondition;
             return this;
         }        
         
@@ -208,7 +207,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
         /**
          * @return the condition
          */
-        protected final SubstitutableCondition getCondition() {
+        protected final ImmutableCondition<?> getCondition() {
             return condition;
         }
         

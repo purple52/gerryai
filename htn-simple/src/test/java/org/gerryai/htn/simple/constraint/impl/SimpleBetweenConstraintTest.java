@@ -20,19 +20,19 @@ package org.gerryai.htn.simple.constraint.impl;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
-import org.gerryai.htn.simple.decomposition.impl.GenericSubstituter;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTermBuilder;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -51,7 +51,7 @@ public class SimpleBetweenConstraintTest {
         ImmutableTask mockProcedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
-        SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
+        ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
         
         SimpleBetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(mockPrecedingTasks)
@@ -76,9 +76,9 @@ public class SimpleBetweenConstraintTest {
         ImmutableTask mockProcedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
-        SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
+        ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
         @SuppressWarnings("unchecked")
-        ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> mockValidator = mock(ConstraintValidator.class);
  
         SimpleBetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(mockPrecedingTasks)
@@ -106,9 +106,9 @@ public class SimpleBetweenConstraintTest {
         ImmutableTask mockProcedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
-        SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
+        ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
         @SuppressWarnings("unchecked")
-        ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> mockValidator = mock(ConstraintValidator.class);
  
         SimpleBetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(mockPrecedingTasks)
@@ -125,21 +125,28 @@ public class SimpleBetweenConstraintTest {
      * Test construction using copy and apply
      */
     @Test
-    public void testCopyApply() {
+    public <T extends ImmutableCondition<T>> void testCopyApply() {
+        
         ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);
         ImmutableTask mockProcedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
-        SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
-
+        
         ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
+        ImmutableTermBuilder<T> mockConditionBuilderA = mock(ImmutableTermBuilder.class);
+        ImmutableTermBuilder<T> mockConditionBuilderB = mock(ImmutableTermBuilder.class);
+        ImmutableCondition<T> mockConditionA = mock(ImmutableCondition.class);
+        ImmutableCondition<T> mockConditionB = mock(ImmutableCondition.class);
+        when(mockConditionA.createCopyBuilder()).thenReturn(mockConditionBuilderA);
+        when(mockConditionBuilderA.apply(mockSubstitution)).thenReturn(mockConditionBuilderB);
+        when(mockConditionBuilderB.build()).thenReturn(mockConditionB);
 
         SimpleBetweenConstraint initialConstraint = new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(mockPrecedingTasks)
                 .addProcedingTasks(mockProcedingTasks)
-                .setCondition(mockCondition)
+                .setCondition(mockConditionA)
                 .build();
         
         SimpleBetweenConstraint constraint = initialConstraint.createCopyBuilder()
@@ -148,9 +155,8 @@ public class SimpleBetweenConstraintTest {
 
         assertEquals(mockPrecedingTasks, constraint.getPrecedingTasks());
         assertEquals(mockProcedingTasks, constraint.getProcedingTasks());
-        ArgumentCaptor<GenericSubstituter> substituter = ArgumentCaptor.forClass(GenericSubstituter.class);
-        verify(mockCondition).apply(substituter.capture());
-        assertEquals(mockSubstitution, substituter.getValue().getSubstitution());
+        assertEquals(mockConditionB, constraint.getCondition());
+        //TODO: check the substitution has been properly applied
     }
 
     /**
@@ -176,7 +182,7 @@ public class SimpleBetweenConstraintTest {
         mockNewProcedingTasks.add(mockTaskD);
         mockNewProcedingTasks.add(mockTaskE);
         
-        SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
+        ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
 
         SimpleBetweenConstraint initialConstraint = new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(mockPrecedingTasks)

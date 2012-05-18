@@ -25,7 +25,7 @@ import java.util.Set;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.SubstitutableOperatorBuilder;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.logic.Variable;
 
 /**
@@ -47,7 +47,7 @@ public class SimpleOperatorBuilder implements SubstitutableOperatorBuilder {
 	/**
 	 * Set of preconditions that must hold for the operator to be valid.
 	 */
-	private Set<SubstitutableCondition> preconditions;
+	private Set<ImmutableCondition<?>> preconditions;
 	
 	/**
 	 * Set of effects that the operator has.
@@ -59,7 +59,7 @@ public class SimpleOperatorBuilder implements SubstitutableOperatorBuilder {
 	 */
 	protected SimpleOperatorBuilder() {
 		arguments = new ArrayList<Variable>();
-		preconditions = new HashSet<SubstitutableCondition>();
+		preconditions = new HashSet<ImmutableCondition<?>>();
 		effects = new HashSet<Effect>();
 	}
 	
@@ -90,7 +90,7 @@ public class SimpleOperatorBuilder implements SubstitutableOperatorBuilder {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableOperatorBuilder addPrecondition(SubstitutableCondition condition) {
+	public final SubstitutableOperatorBuilder addPrecondition(ImmutableCondition<?> condition) {
 		preconditions.add(condition);
 		return this;
 	}
@@ -98,7 +98,7 @@ public class SimpleOperatorBuilder implements SubstitutableOperatorBuilder {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableOperatorBuilder addPreconditions(Set<SubstitutableCondition> conditions) {
+	public final SubstitutableOperatorBuilder addPreconditions(Set<ImmutableCondition<?>> conditions) {
 		preconditions.addAll(conditions);
 		return this;
 	}
@@ -143,7 +143,7 @@ public class SimpleOperatorBuilder implements SubstitutableOperatorBuilder {
 	/**
 	 * @return the preconditions
 	 */
-	public final Set<SubstitutableCondition> getPreconditions() {
+	public final Set<ImmutableCondition<?>> getPreconditions() {
 		return preconditions;
 	}
 

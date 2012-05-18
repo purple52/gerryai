@@ -26,8 +26,8 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -36,30 +36,30 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  *
  */
 public class SimpleDomainHelper implements DomainHelper<SubstitutableOperator, SubstitutableMethod,
-		SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, SubstitutableCondition> {
+		ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		ImmutableConstraint<?>, ImmutableCondition<?>> {
 
 	/**
 	 * Domain this helper is working on.
 	 */
-	private Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask,
-	ImmutableTaskNetwork, ImmutableConstraint<?>, SubstitutableCondition> domain;
+	private Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask,
+	ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>> domain;
 	
 	/**
 	 * Constructor taking a domain to work on.
 	 * @param domain the domain to work on
 	 */
-	public SimpleDomainHelper(Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+	public SimpleDomainHelper(Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, SubstitutableCondition> domain) {
+			ImmutableConstraint<?>, ImmutableCondition<?>> domain) {
 		this.domain = domain;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask,
-	ImmutableTaskNetwork, ImmutableConstraint<?>, SubstitutableCondition> getDomain() {
+	public final Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask,
+	ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>> getDomain() {
 		return domain;
 	}
 

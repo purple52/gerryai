@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 
 /**
  * Interface for a builder for creating immutable tasks.
@@ -31,14 +31,14 @@ public interface ImmutableTaskBuilder {
 	 * @param term the term to add
 	 * @return the updated builder
 	 */
-	ImmutableTaskBuilder addArgument(SubstitutableTerm term);
+	ImmutableTaskBuilder addArgument(ImmutableTerm<?> term);
 	
 	/**
 	 * Add a list of arguments to the task.
 	 * @param terms the terms to add
 	 * @return the updated builder
 	 */
-	ImmutableTaskBuilder addArguments(List<SubstitutableTerm> terms);
+	ImmutableTaskBuilder addArguments(List<ImmutableTerm<?>> terms);
 	
 	/**
 	 * Copy from the provided task, overwriting any values already set.
@@ -70,7 +70,7 @@ public interface ImmutableTaskBuilder {
 	 * Get the arguments for the tack to be built.
 	 * @return the arguments
 	 */
-	List<SubstitutableTerm> getArguments();
+	List<ImmutableTerm<?>> getArguments();
 	
 	/**
 	 * Build the task.

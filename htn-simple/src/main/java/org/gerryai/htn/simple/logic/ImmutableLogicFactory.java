@@ -18,15 +18,12 @@
 package org.gerryai.htn.simple.logic;
 
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
-import org.gerryai.htn.simple.logic.impl.SimpleConstant;
-import org.gerryai.htn.simple.logic.impl.SimplePredicate;
-import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ImmutableLogicFactory extends LogicFactory<SimpleVariable, SimpleConstant,
-		SimplePredicate, SubstitutableTerm, ImmutableSubstitution> {
+public interface ImmutableLogicFactory extends LogicFactory<ImmutableVariable<?>, ImmutableConstant<?>,
+		ImmutableCondition<?>, ImmutableTerm<?>, ImmutableSubstitution> {
 
 }

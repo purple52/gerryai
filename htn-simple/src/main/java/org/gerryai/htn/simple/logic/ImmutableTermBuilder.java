@@ -15,23 +15,34 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.decomposition;
+package org.gerryai.htn.simple.logic;
 
-import java.util.List;
-
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 
 /**
- * Interface for a class that can apply substitutions to objects from the simple HTN implementation.
- * @param <T> type of term used by this substituter
+ * Interface for builders for immutable terms.
+ * @param <T> type of term being built
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Substituter<T extends SubstitutableTerm> {
+public interface ImmutableTermBuilder<T extends ImmutableTerm<T>> {
 
-	/**
-	 * Use this substituter to apply a substitution of the given list of terms.
-	 * @param terms the terms
-	 */
-	void visit(List<SubstitutableTerm> terms);
-
+    /**
+     * Copy the provided term as a basis for a new one.
+     * @param term the term to copy
+     * @return the updated builder
+     */
+    ImmutableTermBuilder<T> copy(T term);
+    
+    /**
+     * Apply the substituter provided to the term.
+     * @param substitution the substitution to apply
+     * @return the updated builder
+     */
+    ImmutableTermBuilder<T> apply(ImmutableSubstitution substitution);
+    
+    /**
+     * Build the term.
+     * @return the finished constraint
+     */
+    ImmutableTerm<T> build();
 }

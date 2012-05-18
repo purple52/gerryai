@@ -20,8 +20,8 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 import static org.mockito.Mockito.mock;
 
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.junit.Test;
 
@@ -37,7 +37,7 @@ public class SimpleTaskNetworkFactoryTest {
 	@Test
 	public void testCreateTaskBuilder() {
 		@SuppressWarnings("unchecked")
-		ConstraintValidatorFactory<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
+		ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
 		//SimpleTaskNetworkFactory factory = new SimpleTaskNetworkFactory(mockConstraintValidatorFactory);
 		//assertTrue(factory.createTask() instanceof SimpleTask.Builder);
 	}
@@ -48,7 +48,7 @@ public class SimpleTaskNetworkFactoryTest {
 	@Test
 	public void testCreateTaskNetworkBuilder() {
 		@SuppressWarnings("unchecked")
-		ConstraintValidatorFactory<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
+		ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
 		//SimpleTaskNetworkFactory factory = new SimpleTaskNetworkFactory(mockConstraintValidatorFactory);
 		//assertTrue(factory.createTaskNetworkBuilder() instanceof SimpleTaskNetwork.Builder);
 	}

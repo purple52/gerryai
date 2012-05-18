@@ -25,8 +25,8 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
@@ -37,7 +37,7 @@ import com.google.common.base.Objects;
  *
  */
 public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePrecedenceConstraint>,
-		ValidatablePrecedenceConstraint<SubstitutableTerm, ImmutableTask, SubstitutableCondition> {
+		ValidatablePrecedenceConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
 
 	/**
 	 * The task that must come first.
@@ -75,16 +75,16 @@ public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePre
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<SubstitutableTerm, ImmutableTask,
-			SubstitutableCondition> validator) {
+	public final boolean validate(ConstraintValidator<ImmutableTerm<?>, ImmutableTask,
+	        ImmutableCondition<?>> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<SubstitutableTerm, ImmutableTask,
-			SubstitutableCondition> validator) throws InvalidConstraint {
+	public final void add(ConstraintValidator<ImmutableTerm<?>, ImmutableTask,
+	        ImmutableCondition<?>> validator) throws InvalidConstraint {
 		validator.add(this);
 	}
 	

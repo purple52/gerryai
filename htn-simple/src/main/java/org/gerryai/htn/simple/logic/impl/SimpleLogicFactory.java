@@ -17,12 +17,12 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
-import org.gerryai.htn.simple.decomposition.impl.GenericSubstituter;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -47,18 +47,22 @@ public class SimpleLogicFactory implements ImmutableLogicFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimplePredicate createPredicate(String name, List<SubstitutableTerm> terms) {
+	public final SimplePredicate createPredicate(String name, List<ImmutableTerm<?>> terms) {
 		return new SimplePredicate(name, terms);
 	}
 	
     /**
      * {@inheritDoc}
      */
-	public final List<SubstitutableTerm> copyApply(List<SubstitutableTerm> oldTerms,
+	public final List<ImmutableTerm<?>> copyApply(List<ImmutableTerm<?>> oldTerms,
 	        ImmutableSubstitution substitution) {
-        //TODO: Ensure immutable
-	    GenericSubstituter substituter = new GenericSubstituter(substitution);
-        substituter.visit(oldTerms);	
-        return oldTerms;
+	    List<ImmutableTerm<?>> newTerms = new ArrayList<ImmutableTerm<?>>(oldTerms.size());
+	    for (ImmutableTerm<?> oldTerm : oldTerms) {
+	        ImmutableTerm<?> newTerm = oldTerm.createCopyBuilder()
+	                .apply(substitution)
+	                .build();
+	        newTerms.add(newTerm);
+	    }	
+        return newTerms;
 	}
 }

@@ -28,7 +28,7 @@ import java.util.Set;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.SubstitutableOperatorBuilder;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.logic.Variable;
 import org.junit.Test;
 
@@ -110,8 +110,8 @@ public class SimpleOperatorBuilderTest {
 	 */
 	@Test
 	public void testAddPrecondition() {
-		SubstitutableCondition mockConditionA = mock(SubstitutableCondition.class);
-		SubstitutableCondition mockConditionB = mock(SubstitutableCondition.class);
+	    ImmutableCondition<?> mockConditionA = mock(ImmutableCondition.class);
+	    ImmutableCondition<?> mockConditionB = mock(ImmutableCondition.class);
 		SubstitutableOperatorBuilder builder = new SimpleOperatorBuilder()
 				.addPrecondition(mockConditionA)
 				.addPrecondition(mockConditionB);
@@ -125,14 +125,14 @@ public class SimpleOperatorBuilderTest {
 	 */
 	@Test
 	public void testAddPreconditions() {
-		SubstitutableCondition mockConditionA = mock(SubstitutableCondition.class);
-		SubstitutableCondition mockConditionB = mock(SubstitutableCondition.class);
-		Set<SubstitutableCondition> mockConditionsA = new HashSet<SubstitutableCondition>();
+	    ImmutableCondition<?> mockConditionA = mock(ImmutableCondition.class);
+	    ImmutableCondition<?> mockConditionB = mock(ImmutableCondition.class);
+		Set<ImmutableCondition<?>> mockConditionsA = new HashSet<ImmutableCondition<?>>();
 		mockConditionsA.add(mockConditionA);
 		mockConditionsA.add(mockConditionB);
-		SubstitutableCondition mockConditionC = mock(SubstitutableCondition.class);
-		SubstitutableCondition mockConditionD = mock(SubstitutableCondition.class);
-		Set<SubstitutableCondition> mockConditionsB = new HashSet<SubstitutableCondition>();
+		ImmutableCondition<?> mockConditionC = mock(ImmutableCondition.class);
+		ImmutableCondition<?> mockConditionD = mock(ImmutableCondition.class);
+		Set<ImmutableCondition<?>> mockConditionsB = new HashSet<ImmutableCondition<?>>();
 		mockConditionsB.add(mockConditionC);
 		mockConditionsB.add(mockConditionD);
 		
@@ -195,8 +195,8 @@ public class SimpleOperatorBuilderTest {
 		Variable mockVariable = mock(Variable.class);
 		List<Variable> mockArguments = new ArrayList<Variable>();
 		mockArguments.add(mockVariable);
-		SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
-		Set<SubstitutableCondition> mockConditions = new HashSet<SubstitutableCondition>();
+		ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
+		Set<ImmutableCondition<?>> mockConditions = new HashSet<ImmutableCondition<?>>();
 		mockConditions.add(mockCondition);
 		Effect mockEffect = mock(Effect.class);
 		Set<Effect> mockEffects = new HashSet<Effect>();

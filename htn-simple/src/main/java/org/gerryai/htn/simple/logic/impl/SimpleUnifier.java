@@ -20,7 +20,7 @@ package org.gerryai.htn.simple.logic.impl;
 import java.util.Map;
 
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 
 /**
  * Class representing a unifier of two expressions as a set of substitutions.
@@ -32,19 +32,19 @@ public class SimpleUnifier implements ImmutableSubstitution {
 	/**
 	 * The map of variables to terms.
 	 */
-	private Map<SubstitutableTerm, SubstitutableTerm> map;
+	private Map<ImmutableTerm<?>, ImmutableTerm<?>> map;
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Map<SubstitutableTerm, SubstitutableTerm> getMap() {
+	public final Map<ImmutableTerm<?>, ImmutableTerm<?>> getMap() {
 		return map;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setMap(Map<SubstitutableTerm, SubstitutableTerm> map) {
+	public final void setMap(Map<ImmutableTerm<?>, ImmutableTerm<?>> map) {
 		this.map = map;
 	}
 

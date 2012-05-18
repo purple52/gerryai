@@ -20,19 +20,19 @@ package org.gerryai.htn.simple.constraint.impl;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
-import org.gerryai.htn.simple.decomposition.impl.GenericSubstituter;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTermBuilder;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -48,7 +48,7 @@ public class SimpleBeforeConstraintTest {
         ImmutableTask mockTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
         mockTasks.add(mockTask);
-        SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
+        ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
 
         SimpleBeforeConstraint constraint = new SimpleBeforeConstraint.Builder()
                 .addTasks(mockTasks)
@@ -67,10 +67,10 @@ public class SimpleBeforeConstraintTest {
         ImmutableTask mockTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
         mockTasks.add(mockTask);
-        SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
+        ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
 
         @SuppressWarnings("unchecked")
-        ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> mockValidator = mock(ConstraintValidator.class);
         SimpleBeforeConstraint constraint = new SimpleBeforeConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockCondition)
@@ -93,10 +93,10 @@ public class SimpleBeforeConstraintTest {
         ImmutableTask mockTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
         mockTasks.add(mockTask);
-        SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
+        ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
 
         @SuppressWarnings("unchecked")
-        ConstraintValidator<SubstitutableTerm, ImmutableTask, SubstitutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> mockValidator = mock(ConstraintValidator.class);
         SimpleBeforeConstraint constraint = new SimpleBeforeConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockCondition)
@@ -110,17 +110,22 @@ public class SimpleBeforeConstraintTest {
      * Test construction using copy and apply
      */
     @Test
-    public void testCopyApply() {
+    public <T extends ImmutableCondition<T>> void testCopyApply() {
+        ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
         ImmutableTask mockTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
         mockTasks.add(mockTask);
-        SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
-
-        ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
+        ImmutableTermBuilder<T> mockConditionBuilderA = mock(ImmutableTermBuilder.class);
+        ImmutableTermBuilder<T> mockConditionBuilderB = mock(ImmutableTermBuilder.class);
+        ImmutableCondition<T> mockConditionA = mock(ImmutableCondition.class);
+        ImmutableCondition<T> mockConditionB = mock(ImmutableCondition.class);
+        when(mockConditionA.createCopyBuilder()).thenReturn(mockConditionBuilderA);
+        when(mockConditionBuilderA.apply(mockSubstitution)).thenReturn(mockConditionBuilderB);
+        when(mockConditionBuilderB.build()).thenReturn(mockConditionB);
 
         SimpleBeforeConstraint initialConstraint = new SimpleBeforeConstraint.Builder()
                 .addTasks(mockTasks)
-                .setCondition(mockCondition)
+                .setCondition(mockConditionA)
                 .build();
         
         SimpleBeforeConstraint constraint = initialConstraint.createCopyBuilder()
@@ -128,9 +133,8 @@ public class SimpleBeforeConstraintTest {
                 .build();
 
         assertEquals(mockTasks, constraint.getTasks());
-        ArgumentCaptor<GenericSubstituter> substituter = ArgumentCaptor.forClass(GenericSubstituter.class);
-        verify(mockCondition).apply(substituter.capture());
-        assertEquals(mockSubstitution, substituter.getValue().getSubstitution());
+        assertEquals(mockConditionB, constraint.getCondition());
+        //TODO: check substitution reuslts properly
     }
 
     /**
@@ -146,7 +150,7 @@ public class SimpleBeforeConstraintTest {
         Set<ImmutableTask> mockNewTasks = new HashSet<ImmutableTask>();
         mockNewTasks.add(mockTaskB);
         mockNewTasks.add(mockTaskC);
-        SubstitutableCondition mockCondition = mock(SubstitutableCondition.class);
+        ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
 
         SimpleBeforeConstraint initialConstraint = new SimpleBeforeConstraint.Builder()
                 .addTasks(mockTasks)

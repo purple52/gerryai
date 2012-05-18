@@ -20,12 +20,12 @@ package org.gerryai.htn.simple.plan.impl;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleAction implements Action<SubstitutableOperator, SubstitutableCondition> {
+public class SimpleAction implements Action<SubstitutableOperator, ImmutableCondition<?>> {
 
 	/**
 	 * Operator that this action is a grounded instance of.

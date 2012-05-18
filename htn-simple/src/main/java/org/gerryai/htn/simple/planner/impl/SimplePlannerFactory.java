@@ -31,11 +31,11 @@ import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.logic.impl.SimpleLogicFactory;
-import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactory;
@@ -51,44 +51,45 @@ import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkFactory;
  *
  */
 public class SimplePlannerFactory implements
-		PlannerFactory<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+		PlannerFactory<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 		ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, SubstitutableCondition> {
+		ImmutableConstraint<?>, ImmutableCondition<?>> {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public final SimplePlanner create(
-			Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+			Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, SubstitutableCondition> domain) {
+			ImmutableConstraint<?>, ImmutableCondition<?>> domain) {
 		
-		DomainHelper<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm,
+		DomainHelper<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 				ImmutableTask, ImmutableTaskNetwork,
-				ImmutableConstraint<?>, SubstitutableCondition> domainHelper
+				ImmutableConstraint<?>, ImmutableCondition<?>> domainHelper
 				= new SimpleDomainHelper(domain);
 		
-		ActionFactoryHelper<SubstitutableOperator, SubstitutableTerm, ImmutableTask, SubstitutableCondition>
+		ActionFactoryHelper<SubstitutableOperator, ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>>
 				actionFactoryHelper = new SimpleActionFactoryHelper(domainHelper);
-		ActionFactory<SubstitutableOperator, SubstitutableTerm, ImmutableTask, SubstitutableCondition>
+		ActionFactory<SubstitutableOperator, ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>>
 				actionFactory = new SimpleActionFactory(actionFactoryHelper);
 		
 		SimplePlanFactory planFactory = new SimplePlanFactory();
 		
 		aima.core.logic.fol.Unifier unifier = new aima.core.logic.fol.Unifier();
-		AIMAConverter<SubstitutableTerm, SimpleVariable, ImmutableTask> converter = new AIMAConverterImpl();
-		ConstraintValidatorFactory<SubstitutableTerm, ImmutableTask,
-		SubstitutableCondition> constraintValidatorFactory
-				= new GenericConstraintValidatorFactory<SubstitutableTerm, ImmutableTask, SubstitutableCondition>();
+		AIMAConverter<ImmutableTerm<?>, ImmutableVariable<?>, ImmutableTask> converter = new AIMAConverterImpl();
+		ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask,
+		ImmutableCondition<?>> constraintValidatorFactory
+				= new GenericConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>>();
 		ImmutableLogicFactory logicFactory = new SimpleLogicFactory();
 		SimpleTaskNetworkFactory taskNetworkBuilderFactory =
 			new SimpleTaskNetworkFactory(constraintValidatorFactory, logicFactory);
 		AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, 
-				SubstitutableCondition, SimpleVariable> unificationService =
-			new AIMAUnificationService<SubstitutableOperator, SubstitutableMethod,
-				SubstitutableCondition, SimpleVariable>(unifier, converter, domainHelper, taskNetworkBuilderFactory);
+		        ImmutableCondition<?>, ImmutableVariable<?>> unificationService =
+		        new AIMAUnificationService<SubstitutableOperator, SubstitutableMethod,
+		        ImmutableCondition<?>, ImmutableVariable<?>>(unifier, converter,
+		                domainHelper, taskNetworkBuilderFactory);
 		
-		DecompositionService<SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
+		DecompositionService<SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableSubstitution> decompositionService =
 				new SimpleDecompositionService(constraintValidatorFactory);
 		

@@ -24,8 +24,8 @@ import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.junit.Test;
@@ -42,8 +42,8 @@ public class SimplePlannerFactoryTest {
 	@Test
 	public void testCreate() {
 		@SuppressWarnings("unchecked")
-		Domain<SubstitutableOperator, SubstitutableMethod, SubstitutableTerm, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, SubstitutableCondition> mockDomain = mock(Domain.class);
+		Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		        ImmutableConstraint<?>, ImmutableCondition<?>> mockDomain = mock(Domain.class);
 		SimplePlannerFactory factory = new SimplePlannerFactory();
 		
 		assertTrue(factory.create(mockDomain) instanceof SimplePlanner);

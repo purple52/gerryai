@@ -17,12 +17,15 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.gerryai.htn.aima.AIMAConverter;
-import org.gerryai.htn.simple.decomposition.Substituter;
-import org.gerryai.htn.simple.logic.SubstitutableCondition;
-import org.gerryai.htn.simple.logic.SubstitutableTerm;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTermBuilder;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
@@ -31,17 +34,17 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePredicate extends Predicate implements SubstitutableCondition, SubstitutableTerm {
+public class SimplePredicate extends Predicate implements ImmutableCondition<SimplePredicate> {
 
 	/**
 	 * List of terms belonging to this predicate.
 	 */
-	private List<SubstitutableTerm> terms;
+	private List<ImmutableTerm<?>> terms;
 	
 	/**
 	 * Converter to help build the underlying AIMA objects.
 	 */
-	private static AIMAConverter<SubstitutableTerm, SimpleVariable, ImmutableTask> converter;
+	private static AIMAConverter<ImmutableTerm<?>, ImmutableVariable<?>, ImmutableTask> converter;
 	
 	/**
 	 * {@inheritDoc}
@@ -55,18 +58,72 @@ public class SimplePredicate extends Predicate implements SubstitutableCondition
 	 * @param predicateName the name
 	 * @param terms the terms
 	 */
-	public SimplePredicate(String predicateName, List<SubstitutableTerm> terms) {
+	public SimplePredicate(String predicateName, List<ImmutableTerm<?>> terms) {
 		super(predicateName, converter.convert(terms));
 		this.terms = terms;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void apply(Substituter<SubstitutableTerm> substituter) {
-		// TODO: this only works for atomic elements!
-		substituter.visit(terms);
-	}
-
-
+    /**
+     * {@inheritDoc}
+     */
+    public final ImmutableTermBuilder<SimplePredicate> createCopyBuilder() {
+        return new Builder()
+            .copy(this);
+    }
+    
+    /**
+     * Builder class for SimplePredicate.
+     * @author David Edwards <david@more.fool.me.uk>
+     */
+    public static class Builder implements ImmutableTermBuilder<SimplePredicate> {
+        
+        /**
+         * Name of the term to be built.
+         */
+        private String name;
+        
+        /**
+         * List of terms belonging to the predicate to be built.
+         */
+        private List<ImmutableTerm<?>> terms;
+        
+        /**
+         * Constructor.
+         */
+        protected Builder() {
+            this.terms = new ArrayList<ImmutableTerm<?>>();
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder copy(SimplePredicate term) {
+            this.name = term.getName();
+            for (ImmutableTerm<?> subTerm : term.terms) {
+                this.terms.add(subTerm);
+            }
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder apply(ImmutableSubstitution substitution) {
+            List<ImmutableTerm<?>> newTerms = new ArrayList<ImmutableTerm<?>>(terms.size());
+            for (ImmutableTerm<?> oldTerm : terms) {
+                ImmutableTerm<?> newTerm = oldTerm.createCopyBuilder()
+                        .apply(substitution)
+                        .build();
+                newTerms.add(newTerm);
+            }
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final SimplePredicate build() {
+            return new SimplePredicate(this.name, this.terms);
+        }
+    }
 }
