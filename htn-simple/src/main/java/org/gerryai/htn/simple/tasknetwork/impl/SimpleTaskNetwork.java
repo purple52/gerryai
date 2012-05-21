@@ -144,6 +144,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
          */
         public final Builder addTask(ImmutableTask task) {
             tasks.add(task);
+            constraintValidator.add(task);
             return this;
         }
         
@@ -152,6 +153,9 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
          */
         public final Builder addTasks(Set<ImmutableTask> tasks) {
             this.tasks.addAll(tasks);
+            for (ImmutableTask task : tasks) {
+                constraintValidator.add(task);
+            }
             return this;
         }
         

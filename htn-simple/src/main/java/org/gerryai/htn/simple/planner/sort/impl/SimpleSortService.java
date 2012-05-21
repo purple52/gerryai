@@ -18,7 +18,6 @@
 package org.gerryai.htn.simple.planner.sort.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +29,9 @@ import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
+import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
+import org.jgrapht.traverse.TopologicalOrderIterator;
 
 /**
  * Simple implementation of the SortService interface.
@@ -52,11 +53,27 @@ public class SimpleSortService implements SortService<ImmutableTerm<?>, Immutabl
                 precedenceConstraints.add((PrecedenceConstraint<ImmutableTerm<?>, ImmutableTask>) constraint);
             }
         }
-        
-        //SimpleDirectedGraph
-        //TaskComparator<ImmutableTask> comparator
-        List<ImmutableTask> sortedTasks = new ArrayList<ImmutableTask>(tasks);
-        
+
+        SimpleDirectedGraph<ImmutableTask, DefaultEdge> taskGraph =
+                new SimpleDirectedGraph<ImmutableTask, DefaultEdge>(DefaultEdge.class);
+        for (ImmutableTask task : tasks) {
+            taskGraph.addVertex(task);
+        }
+        for (PrecedenceConstraint<ImmutableTerm<?>, ImmutableTask> constraint : precedenceConstraints) {
+            for (ImmutableTask precedingTask : constraint.getPrecedingTasks()) {
+                for (ImmutableTask procedingTask : constraint.getProcedingTasks()) {
+                    taskGraph.addEdge(precedingTask, procedingTask);                
+                }
+            }
+        }
+
+        TopologicalOrderIterator<ImmutableTask, DefaultEdge> taskIterator =
+                new TopologicalOrderIterator<ImmutableTask, DefaultEdge>(taskGraph);
+        List<ImmutableTask> sortedTasks = new ArrayList<ImmutableTask>(tasks.size());
+        while (taskIterator.hasNext()) {
+            sortedTasks.add(taskIterator.next());
+        }
+
         return sortedTasks;
     }
 

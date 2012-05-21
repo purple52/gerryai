@@ -17,6 +17,7 @@
  */
 package org.gerryai.htn.simple.constraint.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ConstraintFactory;
@@ -31,6 +32,19 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 public class SimpleConstraintFactory implements
         ConstraintFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
 
+    /**
+     * {@inheritDoc}
+     */
+    public final SimplePrecedenceConstraint
+            createPrecedenceConstraint(ImmutableTask precedingTask, ImmutableTask procedingTask) {
+        Set<ImmutableTask> precedingTasks = new HashSet<ImmutableTask>(1);
+        precedingTasks.add(precedingTask);
+        Set<ImmutableTask> procedingTasks = new HashSet<ImmutableTask>(1);
+        procedingTasks.add(procedingTask);        
+        return createPrecedenceConstraint(precedingTasks, procedingTasks);
+    }
+
+    
 	/**
 	 * {@inheritDoc}
 	 */
