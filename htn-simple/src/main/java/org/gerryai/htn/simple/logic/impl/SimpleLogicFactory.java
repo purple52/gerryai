@@ -54,15 +54,17 @@ public class SimpleLogicFactory implements ImmutableLogicFactory {
     /**
      * {@inheritDoc}
      */
-	public final List<ImmutableTerm<?>> copyApply(List<ImmutableTerm<?>> oldTerms,
+	public final List<ImmutableTerm<?>> apply(List<ImmutableTerm<?>> oldTerms,
 	        ImmutableSubstitution substitution) {
-	    List<ImmutableTerm<?>> newTerms = new ArrayList<ImmutableTerm<?>>(oldTerms.size());
-	    for (ImmutableTerm<?> oldTerm : oldTerms) {
-	        ImmutableTerm<?> newTerm = oldTerm.createCopyBuilder()
-	                .apply(substitution)
-	                .build();
-	        newTerms.add(newTerm);
-	    }	
-        return newTerms;
+        List<ImmutableTerm<?>> updatedTerms = new ArrayList<ImmutableTerm<?>>();        
+        for (ImmutableTerm<?> oldTerm : oldTerms) {
+            if (substitution.getMap().containsKey(oldTerm)) {
+                updatedTerms.add(substitution.getMap().get(oldTerm));
+            } else {
+                updatedTerms.add(oldTerm);
+            }
+        }
+        
+        return updatedTerms;
 	}
 }

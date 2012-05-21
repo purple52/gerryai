@@ -34,7 +34,6 @@ import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.TaskNetworkFactory;
 import org.gerryai.logic.Variable;
 
 import org.junit.Test;
@@ -60,17 +59,13 @@ public class AIMAUnificationServiceTest {
 		DomainHelper<Operator<Condition>, Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
 		        ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>, Condition> mockDomainHelper
 					= mock(DomainHelper.class);
-		@SuppressWarnings("unchecked")
-		TaskNetworkFactory<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableSubstitution> mockTaskNetworkBuilderFactory
-					= mock(TaskNetworkFactory.class);
 		AIMAUnificationService<Operator<Condition>, Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
 		            Condition, Variable> unificationService
 					= new AIMAUnificationService<
 					        Operator<Condition>,
 					        Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
 					        Condition, Variable>(
-					aimaUnifier, aimaConverter, mockDomainHelper, 
-					mockTaskNetworkBuilderFactory);
+					aimaUnifier, aimaConverter, mockDomainHelper);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
 		ImmutableTask mockTaskB = mock(ImmutableTask.class);

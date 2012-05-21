@@ -17,11 +17,7 @@
  */
 package org.gerryai.htn.aima.unification;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.domain.Condition;
@@ -34,8 +30,6 @@ import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.simple.tasknetwork.TaskNetworkFactory;
 import org.gerryai.logic.Variable;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
@@ -67,28 +61,19 @@ public class AIMAUnificationService<
 	private AIMAConverter<ImmutableTerm<?>, V, ImmutableTask> converter;
 	
 	/**
-	 * Factory for creating task network builders.
-	 */
-	private TaskNetworkFactory<ImmutableTerm<?>, ImmutableTask,
-	        ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableSubstitution> taskNetworkBuilderFactory;
-	
-	/**
 	 * Constructor taking all required dependencies.
 	 * @param unifier AIMA unifier object
 	 * @param converter converted to translate between the two class schemes
 	 * @param domainHelper helper object to deal with the domain
-	 * @param taskNetworkBuilderFactory factory for creating task network builders
 	 */
 	public AIMAUnificationService(aima.core.logic.fol.Unifier unifier,
 			AIMAConverter<ImmutableTerm<?>, V, ImmutableTask> converter,
 			DomainHelper<O, M, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-			        ImmutableConstraint<?>, I> domainHelper,
-			TaskNetworkFactory<ImmutableTerm<?>, ImmutableTask,  ImmutableTaskNetwork,
-			        ImmutableConstraint<?>, ImmutableSubstitution> taskNetworkBuilderFactory) {
+			        ImmutableConstraint<?>, I> domainHelper) {
 		this.unifier = unifier;
 		this.converter = converter;
-		this.taskNetworkBuilderFactory = taskNetworkBuilderFactory;
 	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -99,47 +84,8 @@ public class AIMAUnificationService<
 		
 		Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> map
 				= unifier.unify(taskPredicate, methodTaskPredicate);
+
 		return converter.convert(map);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @throws InvalidConstraint 
-	 */
-	public final ImmutableTaskNetwork apply(ImmutableSubstitution unifier, 
-			ImmutableTaskNetwork taskNetwork) throws InvalidConstraint {
-		
-		// TODO Add support constraints
-		Set<ImmutableTask> updatedTasks = new HashSet<ImmutableTask>();
-		for (ImmutableTask task : taskNetwork.getTasks()) {
-		    ImmutableTask updatedTask = apply(unifier, task);
-			updatedTasks.add(updatedTask);
-		}
-
-		ImmutableTaskNetwork updatedTaskNetwork = taskNetworkBuilderFactory.createTaskNetwork(
-		        updatedTasks, taskNetwork.getConstraints());
-		
-		return updatedTaskNetwork;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final ImmutableTask apply(ImmutableSubstitution unifier, ImmutableTask task) {
-		
-		List<ImmutableTerm<?>> updatedTerms = new ArrayList<ImmutableTerm<?>>();		
-		for (ImmutableTerm<?> term : task.getArguments()) {
-			if (unifier.getMap().containsKey(term)) {
-				updatedTerms.add(unifier.getMap().get(term));
-			} else {
-				updatedTerms.add(term);
-			}
-		}
-
-		ImmutableTask updatedTask = taskNetworkBuilderFactory.createTask(
-		        task.getName(), updatedTerms, task.isPrimitive());
-		
-		return updatedTask;
 	}
 
 }

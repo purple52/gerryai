@@ -46,6 +46,10 @@
   		<groupId>com.google.guava</groupId>
   		<artifactId>guava</artifactId>
   	</dependency>
+  	<dependency>
+		<groupId>net.sf.jgrapht</groupId>
+		<artifactId>jgrapht-core</artifactId>
+	</dependency>
   </dependencies>
 
 </project>

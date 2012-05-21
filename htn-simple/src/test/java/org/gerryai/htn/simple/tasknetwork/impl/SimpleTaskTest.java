@@ -263,7 +263,7 @@ public class SimpleTaskTest {
         
         ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
         ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
-        when(mockLogicFactory.copyApply(termsA, mockSubstitution)).thenReturn(termsB);
+        when(mockLogicFactory.apply(termsA, mockSubstitution)).thenReturn(termsB);
         ImmutableTask initialTask = new SimpleTask.Builder(mockLogicFactory)
         .setName(name)
         .addArguments(termsA)

@@ -44,6 +44,7 @@ import org.gerryai.htn.simple.logic.impl.SimpleUnifier;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.PlanFactory;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
+import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -71,9 +72,12 @@ public class SimplePlannerHelperTest {
 		@SuppressWarnings("unchecked")
 		UnificationService<SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableCondition<?>> mockUnificationService = mock(UnificationService.class);
+		@SuppressWarnings("unchecked")
+		SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> mockSortService
+		        = mock(SortService.class);
 
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(mockActionFactory,
-				mockPlanFactory, mockDecompositionService, mockUnificationService);
+				mockPlanFactory, mockDecompositionService, mockUnificationService, mockSortService);
 		
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
@@ -106,9 +110,12 @@ public class SimplePlannerHelperTest {
 		@SuppressWarnings("unchecked")
 		UnificationService<SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableCondition<?>> mockUnificationService = mock(UnificationService.class);
-
+        @SuppressWarnings("unchecked")
+        SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> mockSortService
+                = mock(SortService.class);
+        
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(mockActionFactory,
-				mockPlanFactory, mockDecompositionService, mockUnificationService);
+				mockPlanFactory, mockDecompositionService, mockUnificationService, mockSortService);
 		
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
@@ -144,16 +151,23 @@ public class SimplePlannerHelperTest {
 		@SuppressWarnings("unchecked")
 		UnificationService<SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableCondition<?>> mockUnificationService = mock(UnificationService.class);
-
+        @SuppressWarnings("unchecked")
+        SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> mockSortService
+                = mock(SortService.class);
+        
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(mockActionFactory,
-				mockPlanFactory, mockDecompositionService, mockUnificationService);
+				mockPlanFactory, mockDecompositionService, mockUnificationService, mockSortService);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
 		tasks.add(mockTaskA);
+		Set<ImmutableConstraint<?>> mockConstraints = new HashSet<ImmutableConstraint<?>>();
+		List<ImmutableTask> sortedTasks = new ArrayList<ImmutableTask>(tasks);
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
+		when(mockTaskNetwork.getConstraints()).thenReturn(mockConstraints);
 		State mockState = mock(State.class);
+		when(mockSortService.sortByConstaints(tasks, mockConstraints)).thenReturn(sortedTasks);
 		
 		@SuppressWarnings("unchecked")
 		Action<SubstitutableOperator, ImmutableCondition<?>> mockActionA = mock(Action.class);
@@ -189,9 +203,12 @@ public class SimplePlannerHelperTest {
 		@SuppressWarnings("unchecked")
 		UnificationService<SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableCondition<?>> mockUnificationService = mock(UnificationService.class);
-
+        @SuppressWarnings("unchecked")
+        SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> mockSortService
+                = mock(SortService.class);
+        
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(mockActionFactory,
-				mockPlanFactory, mockDecompositionService, mockUnificationService);
+				mockPlanFactory, mockDecompositionService, mockUnificationService, mockSortService);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
 		ImmutableTask mockTaskB = mock(ImmutableTask.class);
@@ -199,9 +216,13 @@ public class SimplePlannerHelperTest {
 		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
 		tasks.add(mockTaskA);
 		tasks.add(mockTaskB);
-		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
-		State mockState = mock(State.class);
-		
+		List<ImmutableTask> sortedTasks = new ArrayList<ImmutableTask>(tasks);
+        Set<ImmutableConstraint<?>> mockConstraints = new HashSet<ImmutableConstraint<?>>();
+        when(mockTaskNetwork.getTasks()).thenReturn(tasks);
+        when(mockTaskNetwork.getConstraints()).thenReturn(mockConstraints);
+        State mockState = mock(State.class);
+        when(mockSortService.sortByConstaints(tasks, mockConstraints)).thenReturn(sortedTasks);
+        
 		@SuppressWarnings("unchecked")
 		Action<SubstitutableOperator, ImmutableCondition<?>> mockActionA = mock(Action.class);
 		@SuppressWarnings("unchecked")
@@ -240,17 +261,24 @@ public class SimplePlannerHelperTest {
 		@SuppressWarnings("unchecked")
 		UnificationService<SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableCondition<?>> mockUnificationService = mock(UnificationService.class);
-
+        @SuppressWarnings("unchecked")
+        SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> mockSortService
+                = mock(SortService.class);
+        
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(mockActionFactory,
-				mockPlanFactory, mockDecompositionService, mockUnificationService);
+				mockPlanFactory, mockDecompositionService, mockUnificationService, mockSortService);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
 		tasks.add(mockTaskA);
-		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
-		State mockState = mock(State.class);
-		
+		List<ImmutableTask> sortedTasks = new ArrayList<ImmutableTask>(tasks);
+		Set<ImmutableConstraint<?>> mockConstraints = new HashSet<ImmutableConstraint<?>>();
+        when(mockTaskNetwork.getTasks()).thenReturn(tasks);
+        when(mockTaskNetwork.getConstraints()).thenReturn(mockConstraints);
+        State mockState = mock(State.class);
+        when(mockSortService.sortByConstaints(tasks, mockConstraints)).thenReturn(sortedTasks);
+        
 		when(mockActionFactory.create(mockTaskA)).thenThrow(new TaskNotActionable());
 		
 		// Try to find a plan which should throw an exception because the task account be converted
@@ -283,9 +311,12 @@ public class SimplePlannerHelperTest {
 		UnificationService<SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableCondition<?>> mockUnificationService = mock(UnificationService.class);
 		when(mockUnificationService.findUnifier(mockTask, mockMethod)).thenThrow(new UnifierNotFound());
-		
+        @SuppressWarnings("unchecked")
+        SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> mockSortService
+                = mock(SortService.class);
+        
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(mockActionFactory,
-				mockPlanFactory, mockDecompositionService, mockUnificationService);
+				mockPlanFactory, mockDecompositionService, mockUnificationService, mockSortService);
 		
 		plannerHelper.decompose(mockTaskNetwork, mockTask, mockMethod);
 	}
@@ -319,9 +350,12 @@ public class SimplePlannerHelperTest {
 		        ImmutableConstraint<?>, ImmutableCondition<?>> mockUnificationService = mock(UnificationService.class);
 		when(mockUnificationService.findUnifier(mockTask, mockMethod)).thenReturn(mockUnifier);
 		when(mockDecompositionService.decompose(mockUnifier, mockTaskNetwork, mockTask, mockMethod)).thenReturn(mockDecomposedTaskNetwork);
-		
+        @SuppressWarnings("unchecked")
+        SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> mockSortService
+                = mock(SortService.class);
+        
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(mockActionFactory,
-				mockPlanFactory, mockDecompositionService, mockUnificationService);
+				mockPlanFactory, mockDecompositionService, mockUnificationService, mockSortService);
 		
 		assertEquals(mockDecomposedTaskNetwork,plannerHelper.decompose(mockTaskNetwork, mockTask, mockMethod));
 	}

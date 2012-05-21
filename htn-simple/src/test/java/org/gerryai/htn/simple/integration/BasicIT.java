@@ -26,6 +26,7 @@ import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.impl.SimpleDomain;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
@@ -49,7 +50,7 @@ import org.junit.Test;
  */
 public class BasicIT {
 
-	@Ignore
+	//@Ignore
 	@Test
 	public void test() throws PlanNotFound {
 		
@@ -150,7 +151,7 @@ public class BasicIT {
 				.addTask(task)
 				.build();
 		
-		Problem problem = new SimpleProblem();
+		SimpleProblem problem = new SimpleProblem();
 		problem.setDomain(domain);
 		problem.setTaskNetwork(taskNetwork);
 		

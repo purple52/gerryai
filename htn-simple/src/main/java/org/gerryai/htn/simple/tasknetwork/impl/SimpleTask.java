@@ -190,7 +190,7 @@ public class SimpleTask implements ImmutableTask {
 	     * {@inheritDoc}
 	     */
 	    public final Builder apply(ImmutableSubstitution substitution) {
-	        arguments = logicFactory.copyApply(arguments, substitution);
+	        arguments = logicFactory.apply(arguments, substitution);
 	        return this;
 	    }
 	    

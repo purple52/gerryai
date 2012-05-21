@@ -59,6 +59,6 @@ public interface LogicFactory<V, C, P, T, S> {
 	 * @param substitution substitution to apply
 	 * @return the new terms
 	 */
-	List<T> copyApply(List<T> oldTerms, S substitution);
+	List<T> apply(List<T> oldTerms, S substitution);
 	
 }

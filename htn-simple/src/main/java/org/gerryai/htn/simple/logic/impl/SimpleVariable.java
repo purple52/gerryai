@@ -76,7 +76,7 @@ public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable
         public final Builder apply(ImmutableSubstitution substitution) {
             for (ImmutableTerm<?> oldTerm : substitution.getMap().keySet()) {
                 if (oldTerm.getName().equals(this.name)) {
-                    this.name = oldTerm.getName();
+                    this.name = substitution.getMap().get(oldTerm).getName();
                 }
             }
             return this;

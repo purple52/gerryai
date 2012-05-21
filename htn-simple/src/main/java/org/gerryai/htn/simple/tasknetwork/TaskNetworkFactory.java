@@ -58,7 +58,7 @@ public interface TaskNetworkFactory<
 	 * @return the new task network
 	 * @throws InvalidConstraint if any of constraints involved end up being invalid
 	 */
-	N copy(N taskNetwork, S substitution) throws InvalidConstraint;
+	N copyApply(N taskNetwork, S substitution) throws InvalidConstraint;
 	
 	/**
 	 * Copy the given task network, apply a substitution and replace a task with a network.

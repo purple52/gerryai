@@ -32,19 +32,18 @@ import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
-import org.gerryai.htn.simple.logic.impl.SimpleLogicFactory;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactory;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactoryHelper;
 import org.gerryai.htn.simple.plan.impl.SimplePlanFactory;
 import org.gerryai.htn.simple.planner.PlannerFactory;
+import org.gerryai.htn.simple.planner.sort.SortService;
+import org.gerryai.htn.simple.planner.sort.impl.SimpleSortService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkFactory;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -80,21 +79,21 @@ public class SimplePlannerFactory implements
 		ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask,
 		ImmutableCondition<?>> constraintValidatorFactory
 				= new GenericConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>>();
-		ImmutableLogicFactory logicFactory = new SimpleLogicFactory();
-		SimpleTaskNetworkFactory taskNetworkBuilderFactory =
-			new SimpleTaskNetworkFactory(constraintValidatorFactory, logicFactory);
 		AIMAUnificationService<SubstitutableOperator, SubstitutableMethod, 
 		        ImmutableCondition<?>, ImmutableVariable<?>> unificationService =
 		        new AIMAUnificationService<SubstitutableOperator, SubstitutableMethod,
 		        ImmutableCondition<?>, ImmutableVariable<?>>(unifier, converter,
-		                domainHelper, taskNetworkBuilderFactory);
+		                domainHelper);
 		
 		DecompositionService<SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableSubstitution> decompositionService =
 				new SimpleDecompositionService(constraintValidatorFactory);
 		
+		SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> sortService =
+		        new SimpleSortService();
+		
 		SimplePlannerHelper plannerHelper =
-				new SimplePlannerHelper(actionFactory, planFactory,	decompositionService, unificationService);
+				new SimplePlannerHelper(actionFactory, planFactory,	decompositionService, unificationService, sortService);
 		
 		SimplePlanner planner = new SimplePlanner(domainHelper, plannerHelper);
 		

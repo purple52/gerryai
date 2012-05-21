@@ -47,6 +47,11 @@
 				<artifactId>guava</artifactId>
 				<version>11.0.1</version>
 			</dependency>
+			<dependency>
+				<groupId>net.sf.jgrapht</groupId>
+				<artifactId>jgrapht-core</artifactId>
+				<version>0.8.3-SNAPSHOT</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 </project>

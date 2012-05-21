@@ -69,14 +69,6 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
 
 	/**
 	 * {@inheritDoc}
-	 *
-	public final void setTasks(Set<SubstitutableTask> tasks) {
-		this.tasks = tasks;
-	}
-    */
-	
-	/**
-	 * {@inheritDoc}
 	 */
 	public final Set<ImmutableConstraint<?>> getConstraints() {
 		return Collections.unmodifiableSet(constraints);
@@ -230,7 +222,34 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
          * {@inheritDoc}
          */
         public final Builder replace(ImmutableTask oldTask, ImmutableTaskNetwork newTaskNetwork) {
-            //TODO: Implement!
+            //TODO: Check implementation
+            
+            // Build a new set of tasks
+            Set<ImmutableTask> newTasks = new HashSet<ImmutableTask>(tasks.size() + newTaskNetwork.getTasks().size());
+            for (ImmutableTask task : tasks) {
+                if (!task.equals(oldTask)) {
+                    newTasks.add(task);
+                } else {
+                    newTasks.addAll(newTaskNetwork.getTasks());
+                }
+            }
+            
+            // Update existing constraints
+            int numConstraints = constraints.size() + newTaskNetwork.getConstraints().size();
+            Set<ImmutableConstraint<?>> newConstraints = new HashSet<ImmutableConstraint<?>>(numConstraints);
+            for (ImmutableConstraint<?> oldConstraint : constraints) {
+                ImmutableConstraint<?> newConstraint = oldConstraint.createCopyBuilder()
+                        .replace(oldTask, newTaskNetwork.getTasks())
+                        .build();
+                newConstraints.add(newConstraint);
+            }
+            
+            // Add existing constraints
+            newConstraints.addAll(newTaskNetwork.getConstraints());
+            
+            tasks = newTasks;
+            constraints = newConstraints;
+            
             return this;
         }
         

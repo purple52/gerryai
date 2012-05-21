@@ -17,6 +17,8 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
+import java.util.List;
+
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.plan.TaskNotActionable;
@@ -36,6 +38,7 @@ import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.PlanFactory;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
+import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -72,6 +75,8 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 	private UnificationService<SubstitutableMethod, ImmutableTerm<?>, ImmutableTask,
 			ImmutableTaskNetwork, ImmutableConstraint<?>,
 			ImmutableCondition<?>>  unificationService;
+
+	private SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> sortService;
 	
 	/**
 	 * Constructor providing all the dependencies required to function.
@@ -87,11 +92,13 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 			DecompositionService<SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableSubstitution> decompositionservice,
 			UnificationService<SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>>  unificationService) {
+			ImmutableConstraint<?>, ImmutableCondition<?>>  unificationService,
+			SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> sortService) {
 		this.actionFactory = actionFactory;
 		this.planFactory = planFactory;
 		this.decompositionService = decompositionservice;
 		this.unificationService = unificationService;
+		this.sortService = sortService;
 	}
 	
 	/**
@@ -108,11 +115,12 @@ public class SimplePlannerHelper implements PlannerHelper<SubstitutableOperator,
 	public final Plan<SubstitutableOperator, ImmutableCondition<?>>
 		findPlanForPrimitive(State state, ImmutableTaskNetwork taskNetwork) throws PlanNotFound {
 		// TODO: Confirm implementation
-		// TODO: Enforce constraints
-		
+		// TODO: Enforce constraints completely
+	    List<ImmutableTask> sortedTasks = sortService.sortByConstaints(taskNetwork.getTasks(), taskNetwork.getConstraints());
+
 		Plan<SubstitutableOperator, ImmutableCondition<?>> plan = planFactory.create();
 		
-		for (ImmutableTask task : taskNetwork.getTasks()) {
+		for (ImmutableTask task : sortedTasks) {
 			Action<SubstitutableOperator, ImmutableCondition<?>> action;
 			try {
 				action = actionFactory.create(task);

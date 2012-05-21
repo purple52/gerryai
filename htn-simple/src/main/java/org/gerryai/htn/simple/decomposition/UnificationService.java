@@ -20,7 +20,6 @@ package org.gerryai.htn.simple.decomposition;
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
@@ -52,20 +51,4 @@ public interface UnificationService<
 	 */
     ImmutableSubstitution findUnifier(K task, M method) throws UnifierNotFound;
 	
-	/**
-	 * Create a new task network cloning the given task network and applying the given unifier.
-	 * @param unifier the unifier to apply
-	 * @param taskNetwork the task network to apply the unifier to
-	 * @return the revised task network
-	 * @throws InvalidConstraint 
-	 */
-	N apply(ImmutableSubstitution unifier, N taskNetwork) throws InvalidConstraint;
-	
-	/**
-	 * Create a new task by cloning the given task and applying the given unifier.
-	 * @param unifier the unifier to apply
-	 * @param task the task to apply the unifier to
-	 * @return the revised task
-	 */
-	K apply(ImmutableSubstitution unifier, K task);
 }

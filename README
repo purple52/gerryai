@@ -5,3 +5,11 @@ http://code.google.com/p/aima-java/
 
 2. Install using:
 mvn install:install-file -Dfile=aima-core.jar -DgroupId=aima -DartifactId=aima-core -Dversion=1.6.0 -Dpackaging=jar -DgeneratePom=true
+
+Install JGraphT:
+
+1. Clone the JGraphT repo:
+https://github.com/jgrapht/jgrapht.git
+
+2. Install:
+mvn install

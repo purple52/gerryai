@@ -76,7 +76,7 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
     /**
      * {@inheritDoc}
      */
-	public final ImmutableTaskNetwork copy(ImmutableTaskNetwork taskNetwork,
+	public final ImmutableTaskNetwork copyApply(ImmutableTaskNetwork taskNetwork,
 	        ImmutableSubstitution substitution) throws InvalidConstraint {
 	    return taskNetwork.createCopyBuilder(constraintValidatorFactory.create())
 	        .apply(substitution)
