@@ -33,7 +33,7 @@ public class SimpleOperatorBuilderFactoryTest {
 	@Test
 	public void testCreate() {
 		SimpleDomainBuilderFactory factory = new SimpleDomainBuilderFactory();
-		assertTrue(factory.createOperatorBuilder() instanceof SimpleOperatorBuilder);
+		assertTrue(factory.createOperatorBuilder() instanceof SimpleOperator.Builder);
 	}
 
 }

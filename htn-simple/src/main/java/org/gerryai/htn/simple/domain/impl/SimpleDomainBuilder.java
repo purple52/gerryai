@@ -23,9 +23,10 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainBuilder;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
-import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -33,14 +34,14 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleDomainBuilder implements	DomainBuilder<SimpleDomain, SubstitutableOperator,
+public class SimpleDomainBuilder implements	DomainBuilder<SimpleDomain, ImmutableOperator,
 		SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition<?>> {
+		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 
 	/**
 	 * Set of operators the domain uses.
 	 */
-	private Set<SubstitutableOperator> operators;
+	private Set<ImmutableOperator> operators;
 	
 	/**
 	 * Set of methods that the domain uses.
@@ -51,14 +52,14 @@ public class SimpleDomainBuilder implements	DomainBuilder<SimpleDomain, Substitu
 	 * Default constructor.
 	 */
 	protected SimpleDomainBuilder() {
-		operators = new HashSet<SubstitutableOperator>();
+		operators = new HashSet<ImmutableOperator>();
 		methods = new HashSet<SubstitutableMethod>();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleDomainBuilder addOperator(SubstitutableOperator operator) {
+	public final SimpleDomainBuilder addOperator(ImmutableOperator operator) {
 		operators.add(operator);
 		return this;
 	}
@@ -81,7 +82,7 @@ public class SimpleDomainBuilder implements	DomainBuilder<SimpleDomain, Substitu
 	/**
 	 * @return the operators
 	 */
-	protected final Set<SubstitutableOperator> getOperators() {
+	protected final Set<ImmutableOperator> getOperators() {
 		return operators;
 	}
 

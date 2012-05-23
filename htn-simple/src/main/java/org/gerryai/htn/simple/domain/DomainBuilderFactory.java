@@ -26,6 +26,7 @@ import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 
 /**
  * Interface for a factory that creates domain and operator builders.
@@ -37,27 +38,29 @@ import org.gerryai.logic.Term;
  * @param <N> the class of task network the builders will handle
  * @param <C> the class of constraint the builder will handle
  * @param <I> the class of condition the builder will handle
+ * @param <V> type of variable this factory will handle
  * @param <E> the class of effect the builder will handle
  * @param <B> the class of operator builder being used
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface DomainBuilderFactory<
-		D extends Domain<O, M, T, K, N, C, I>,
-		O extends Operator<I>,
+		D extends Domain<O, M, T, K, N, C, I, V>,
+		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
 		I extends Condition,
+		V extends Variable,
 		E extends Effect,
-		B extends OperatorBuilder<I, E, O, B>> {
+		B extends OperatorBuilder<I, V, E, O, B>> {
 
 	/**
 	 * Create a domain builder of the required type.
 	 * @return the domain builder
 	 */
-	DomainBuilder<D, O, M, T, K, N, C, I> createDomainBuilder();
+	DomainBuilder<D, O, M, T, K, N, C, I, V> createDomainBuilder();
 	
 	/**
 	 * Create an operator builder of the required type.

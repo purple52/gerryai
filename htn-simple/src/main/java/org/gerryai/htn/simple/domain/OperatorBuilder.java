@@ -21,19 +21,26 @@ import java.util.List;
 import java.util.Set;
 
 import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.logic.Variable;
 
 /**
  * Interface for a class that can build operators.
  * @param <I> class of condition the builder can handle
+ * @param <V> type of variable this builder can handle
  * @param <E> class of effect the builder can handle
  * @param <O> type of operator the builder creates
  * @param <B> class of builder being advertised
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface OperatorBuilder<I extends Condition, E, O extends Operator<I>, B extends OperatorBuilder<I, E, O, B>> {
+public interface OperatorBuilder<
+        I extends Condition,
+        V extends Variable,
+        E extends Effect,
+        O extends Operator<I, V>,
+        B extends OperatorBuilder<I, V, E, O, B>> {
 
 	/**
 	 * Set the name of the operator.
@@ -47,14 +54,14 @@ public interface OperatorBuilder<I extends Condition, E, O extends Operator<I>, 
 	 * @param argument the variable to add
 	 * @return the updated builder
 	 */
-	B addArgument(Variable argument);
+	B addArgument(V argument);
 
 	/**
 	 * Add a list of arguments to the operator.
 	 * @param arguments the variables to add
 	 * @return the updated builder
 	 */
-	B addArguments(List<Variable> arguments);
+	B addArguments(List<V> arguments);
 
 	/**
 	 * Add an argument to the operator.
@@ -95,7 +102,7 @@ public interface OperatorBuilder<I extends Condition, E, O extends Operator<I>, 
      * Get the arguments for the operator being built.
      * @return the arguments
      */
-    List<Variable> getArguments();
+    List<V> getArguments();
  
     /**
      * Get the preconditions for the operator being built.

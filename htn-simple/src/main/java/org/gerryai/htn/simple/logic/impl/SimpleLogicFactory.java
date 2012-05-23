@@ -43,12 +43,21 @@ public class SimpleLogicFactory implements ImmutableLogicFactory {
 	public final SimpleConstant createConstant(String name) {
 		return new SimpleConstant(name);
 	}
-	
+    
+    /**
+     * {@inheritDoc}
+     */
+    public final SimpleCondition createCondition(String name, ImmutableTerm<?> term) {
+        List<ImmutableTerm<?>> terms = new ArrayList<ImmutableTerm<?>>(1);
+        terms.add(term);
+        return createCondition(name, terms);
+    }
+    
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimplePredicate createPredicate(String name, List<ImmutableTerm<?>> terms) {
-		return new SimplePredicate(name, terms);
+	public final SimpleCondition createCondition(String name, List<ImmutableTerm<?>> terms) {
+		return new SimpleCondition(name, terms);
 	}
 	
     /**

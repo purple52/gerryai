@@ -23,10 +23,11 @@ import org.gerryai.htn.simple.domain.DomainBuilder;
 import org.gerryai.htn.simple.domain.DomainBuilderFactory;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
 import org.gerryai.htn.simple.domain.SubstitutableMethodBuilder;
-import org.gerryai.htn.simple.domain.SubstitutableOperator;
-import org.gerryai.htn.simple.domain.SubstitutableOperatorBuilder;
+import org.gerryai.htn.simple.domain.ImmutableOperator;
+import org.gerryai.htn.simple.domain.ImmutableOperatorBuilder;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -35,25 +36,25 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  *
  */
 public class SimpleDomainBuilderFactory implements
-		DomainBuilderFactory<SimpleDomain, SubstitutableOperator, SubstitutableMethod,
+		DomainBuilderFactory<SimpleDomain, ImmutableOperator, SubstitutableMethod,
 		ImmutableTerm<?>, ImmutableTask,
 				ImmutableTaskNetwork, ImmutableConstraint<?>,
-				ImmutableCondition<?>, Effect, SubstitutableOperatorBuilder> {
+				ImmutableCondition<?>, ImmutableVariable<?>, Effect, ImmutableOperatorBuilder> {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final DomainBuilder<SimpleDomain, SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+	public final DomainBuilder<SimpleDomain, ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>> createDomainBuilder() {
+			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> createDomainBuilder() {
 		return new SimpleDomainBuilder();	
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableOperatorBuilder createOperatorBuilder() {
-		return new SimpleOperatorBuilder();	
+	public final ImmutableOperatorBuilder createOperatorBuilder() {
+		return new SimpleOperator.Builder();	
 	}
 
 	/**

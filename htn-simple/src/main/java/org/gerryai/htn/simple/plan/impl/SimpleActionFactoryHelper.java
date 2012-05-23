@@ -27,9 +27,10 @@ import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
-import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
@@ -41,31 +42,31 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleActionFactoryHelper implements ActionFactoryHelper<SubstitutableOperator,
-        ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
+public class SimpleActionFactoryHelper implements ActionFactoryHelper<ImmutableOperator,
+        ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>, ImmutableVariable<?>> {
 
 	/**
 	 * Service for the domain that we are working in.
 	 */
-	private DomainHelper<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask,
-			ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>> domainHelper;
+	private DomainHelper<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask,
+			ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domainHelper;
 	
 	/**
 	 * Constructor requiring a domain helper.
 	 * @param domainHelper helper to use
 	 */
-	public SimpleActionFactoryHelper(DomainHelper<SubstitutableOperator, SubstitutableMethod,
+	public SimpleActionFactoryHelper(DomainHelper<ImmutableOperator, SubstitutableMethod,
 	        ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>> domainHelper) {
+			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domainHelper) {
 		this.domainHelper = domainHelper;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableOperator getOperator(ImmutableTask task) throws TaskNotActionable {
+	public final ImmutableOperator getOperator(ImmutableTask task) throws TaskNotActionable {
 		
-		SubstitutableOperator operator;
+		ImmutableOperator operator;
 		
 		try {
 			operator = domainHelper.getOperatorByName(task.getName());
@@ -79,14 +80,14 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<Substituta
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Bindings getBindings(ImmutableTask task, SubstitutableOperator operator) throws TaskNotActionable {
+	public final Bindings getBindings(ImmutableTask task, ImmutableOperator operator) throws TaskNotActionable {
 
 		Bindings bindings = new Bindings();
 		Map<Variable, Constant> bindingsMap = new HashMap<Variable, Constant>();
 		bindings.setMap(bindingsMap);
 		
 		List<ImmutableTerm<?>> taskArguments = task.getArguments();
-		List<Variable> operatorArguments = operator.getArguments();
+		List<ImmutableVariable<?>> operatorArguments = operator.getArguments();
 		
 		if (taskArguments.size() != operatorArguments.size()) {
 			throw new TaskNotActionable("Task and operator arguments size does not match");

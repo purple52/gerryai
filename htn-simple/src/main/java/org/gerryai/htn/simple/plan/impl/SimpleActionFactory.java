@@ -19,9 +19,10 @@ package org.gerryai.htn.simple.plan.impl;
 
 import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.plan.TaskNotActionable;
-import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -30,21 +31,21 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleActionFactory implements ActionFactory<SubstitutableOperator,
-		ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
+public class SimpleActionFactory implements ActionFactory<ImmutableOperator,
+		ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>, ImmutableVariable<?>> {
 
 	/**
 	 * Helper object for doing the difficult bits.
 	 */
-	private ActionFactoryHelper<SubstitutableOperator, ImmutableTerm<?>, ImmutableTask,
-	ImmutableCondition<?>> actionFactoryHelper;
+	private ActionFactoryHelper<ImmutableOperator, ImmutableTerm<?>, ImmutableTask,
+	        ImmutableCondition<?>, ImmutableVariable<?>> actionFactoryHelper;
 	
 	/**
 	 * Constructor taking all required dependencies.
 	 * @param actionFactoryHelper the action factory
 	 */
-	public SimpleActionFactory(ActionFactoryHelper<SubstitutableOperator, ImmutableTerm<?>,
-			ImmutableTask, ImmutableCondition<?>> actionFactoryHelper) {
+	public SimpleActionFactory(ActionFactoryHelper<ImmutableOperator, ImmutableTerm<?>,
+			ImmutableTask, ImmutableCondition<?>, ImmutableVariable<?>> actionFactoryHelper) {
 		this.actionFactoryHelper = actionFactoryHelper;
 	}
 	
@@ -54,7 +55,7 @@ public class SimpleActionFactory implements ActionFactory<SubstitutableOperator,
 	public final SimpleAction create(ImmutableTask task) throws TaskNotActionable {
 
 		// Try and get the operator
-		SubstitutableOperator operator = actionFactoryHelper.getOperator(task);
+		ImmutableOperator operator = actionFactoryHelper.getOperator(task);
 		
 		// Try and get the bindings
 		Bindings bindings = actionFactoryHelper.getBindings(task, operator);

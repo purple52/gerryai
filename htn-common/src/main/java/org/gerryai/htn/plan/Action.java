@@ -19,6 +19,7 @@ package org.gerryai.htn.plan;
 
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Operator;
+import org.gerryai.logic.Variable;
 
 /**
  * Interface to be implemented by an action within a plan.
@@ -26,10 +27,11 @@ import org.gerryai.htn.domain.Operator;
  * a set of bindings to ground the operator.
  * @param <O> type of operator this action uses
  * @param <I> type of condition the action uses
+ * @param <V> type of variable the action uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface Action<O extends Operator<I>, I extends Condition> {
+public interface Action<O extends Operator<I, V>, I extends Condition, V extends Variable> {
 
 	/**
 	 * Get the operator that this action uses.

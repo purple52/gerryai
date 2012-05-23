@@ -18,8 +18,8 @@
 package org.gerryai.htn.domain;
 
 /**
+ * Interface for classes that represent a logical condition, or predicate.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public interface Condition {
 

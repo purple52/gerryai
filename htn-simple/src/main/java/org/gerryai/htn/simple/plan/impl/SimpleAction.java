@@ -19,18 +19,19 @@ package org.gerryai.htn.simple.plan.impl;
 
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Bindings;
-import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleAction implements Action<SubstitutableOperator, ImmutableCondition<?>> {
+public class SimpleAction implements Action<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>> {
 
 	/**
 	 * Operator that this action is a grounded instance of.
 	 */
-	private SubstitutableOperator operator;
+	private ImmutableOperator operator;
 	
 	/**
 	 * Bindings that ground the operator.
@@ -40,14 +41,14 @@ public class SimpleAction implements Action<SubstitutableOperator, ImmutableCond
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableOperator getOperator() {
+	public final ImmutableOperator getOperator() {
 		return operator;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setOperator(SubstitutableOperator operator) {
+	public final void setOperator(ImmutableOperator operator) {
 		this.operator = operator;
 	}
 

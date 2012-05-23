@@ -24,9 +24,10 @@ import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
-import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -38,23 +39,23 @@ import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class SimplePlanner implements
-		Planner<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+		Planner<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 		ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition<?>> {
+		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 	
 	/**
 	 * Manager the domain being worked in.
 	 */
-	private DomainHelper<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+	private DomainHelper<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>> domainHelper;
+			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domainHelper;
 	
 	/**
 	 * Helper for off-loading some of the logic.
 	 */
-	private PlannerHelper<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+	private PlannerHelper<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>> plannerHelper;
+			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> plannerHelper;
 	
 	/**
 	 * Constructor taking the domain manager and planner helper to use.
@@ -62,14 +63,14 @@ public class SimplePlanner implements
 	 * @param plannerHelper the planner helper
 	 */
 	public SimplePlanner(
-			DomainHelper<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+			DomainHelper<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 					ImmutableTask, ImmutableTaskNetwork,
 					ImmutableConstraint<?>,
-					ImmutableCondition<?>> domainHelper,
-			PlannerHelper<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+					ImmutableCondition<?>, ImmutableVariable<?>> domainHelper,
+			PlannerHelper<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 					ImmutableTask, ImmutableTaskNetwork,
 					ImmutableConstraint<?>,
-					ImmutableCondition<?>> plannerHelper) {
+					ImmutableCondition<?>, ImmutableVariable<?>> plannerHelper) {
 		this.domainHelper = domainHelper;
 		this.plannerHelper = plannerHelper;
 	}
@@ -77,7 +78,7 @@ public class SimplePlanner implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Plan<SubstitutableOperator, ImmutableCondition<?>>
+	public final Plan<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>>
 			findPlan(State state, ImmutableTaskNetwork taskNetwork) throws PlanNotFound {
 		
 		if (plannerHelper.isUnsolvable(taskNetwork)) {

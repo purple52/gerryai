@@ -23,15 +23,22 @@ import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 
 /**
  * @param <O> type of operator this action uses
  * @param <I> type of condition the action uses
  * @param <T> type of logical term this helper has to deal with
  * @param <K> type of task this helper works with
+ * @param <V> type of variable this helper works with
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ActionFactoryHelper<O extends Operator<I>, T extends Term, K extends Task<T>, I extends Condition> {
+public interface ActionFactoryHelper<
+        O extends Operator<I, V>,
+        T extends Term,
+        K extends Task<T>,
+        I extends Condition,
+        V extends Variable> {
 	
 	/**
 	 * Get the operator for the given task.

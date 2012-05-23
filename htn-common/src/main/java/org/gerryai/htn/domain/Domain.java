@@ -23,6 +23,7 @@ import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 
 /**
  * Interface that a domain must implement.
@@ -33,16 +34,18 @@ import org.gerryai.logic.Term;
  * @param <N> type of task network this domain uses
  * @param <C> type of constraint this domain uses
  * @param <I> the class of condition the domain will handle
+ * @param <V> type of variable this domain uses
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Domain<
-		O extends Operator<I>,
+		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition> {
+		I extends Condition,
+		V extends Variable> {
 
 	/**
 	 * Get the full set of available operators for this domain.

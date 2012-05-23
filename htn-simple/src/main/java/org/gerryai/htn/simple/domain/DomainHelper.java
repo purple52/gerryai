@@ -28,6 +28,7 @@ import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 
 /**
  * Interface for a service that manages a domain.
@@ -38,22 +39,24 @@ import org.gerryai.logic.Term;
  * @param <N> type of task network this domain helper uses
  * @param <C> type of constraint this domain helper uses
  * @param <I> the class of condition the domain will handle
+ * @param <V> type of variable this domain will handle
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface DomainHelper<
-		O extends Operator<I>,
+		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition> {
+		I extends Condition,
+		V extends Variable> {
 	
 	/**
 	 * Get the domain that this service is managing.
 	 * @return the domain
 	 */
-	Domain<O, M, T, K, N, C, I> getDomain();
+	Domain<O, M, T, K, N, C, I, V> getDomain();
 	
 	/**
 	 * Get an operator by name.

@@ -25,9 +25,10 @@ import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
-import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -35,40 +36,40 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleDomainHelper implements DomainHelper<SubstitutableOperator, SubstitutableMethod,
+public class SimpleDomainHelper implements DomainHelper<ImmutableOperator, SubstitutableMethod,
 		ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition<?>> {
+		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 
 	/**
 	 * Domain this helper is working on.
 	 */
-	private Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask,
-	ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>> domain;
+	private Domain<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask,
+	ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domain;
 	
 	/**
 	 * Constructor taking a domain to work on.
 	 * @param domain the domain to work on
 	 */
-	public SimpleDomainHelper(Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+	public SimpleDomainHelper(Domain<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>> domain) {
+			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domain) {
 		this.domain = domain;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Domain<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask,
-	ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>> getDomain() {
+	public final Domain<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask,
+	ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> getDomain() {
 		return domain;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SubstitutableOperator getOperatorByName(String name) throws OperatorNotFound {
+	public final ImmutableOperator getOperatorByName(String name) throws OperatorNotFound {
 		// TODO Ensure that two operators cannot have the same name and arguments match
-		for (SubstitutableOperator operator : domain.getOperators()) {
+		for (ImmutableOperator operator : domain.getOperators()) {
 			if (operator.getName().equals(name)) {
 				return operator;
 			}

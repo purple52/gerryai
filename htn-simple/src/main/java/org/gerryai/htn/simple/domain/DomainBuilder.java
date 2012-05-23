@@ -25,6 +25,7 @@ import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 
 /**
  * Interface for a domain builder.
@@ -36,36 +37,38 @@ import org.gerryai.logic.Term;
  * @param <N> the type of task network this domain builder uses
  * @param <C> the type of constraint this domain builder uses
  * @param <I> the class of condition the builder will handle
+ * @param <V> type of variable this builder will handle
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface DomainBuilder<
-		D extends Domain<O, M, T, K, N, C, I>,
-		O extends Operator<I>,
+		D extends Domain<O, M, T, K, N, C, I, V>,
+		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition> {
+		I extends Condition,
+		V extends Variable> {
 	
 	/**
 	 * Add an operator to the domain.
 	 * @param operator the operator to add
 	 * @return the updated builder
 	 */
-	DomainBuilder<D, O, M, T, K, N, C, I> addOperator(O operator);
+	DomainBuilder<D, O, M, T, K, N, C, I, V> addOperator(O operator);
 	
 	/**
 	 * Add a method to the domain.
 	 * @param method the method to add
 	 * @return the updated builder
 	 */
-	DomainBuilder<D, O, M, T, K, N, C, I> addMethod(M method);
+	DomainBuilder<D, O, M, T, K, N, C, I, V> addMethod(M method);
 
 	/**
 	 * Build the domain.
 	 * @return the domain
 	 */
-	Domain<O, M, T, K, N, C, I> build();
+	Domain<O, M, T, K, N, C, I, V> build();
 }

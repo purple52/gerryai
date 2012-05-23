@@ -17,13 +17,16 @@
  */
 package org.gerryai.htn.simple.domain;
 
-import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 
 /**
- * Extended operator interface that can be visited by a substituter.
+ * Extended operator builder interface for creating subsitutable operators.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface SubstitutableOperator extends Operator<ImmutableCondition<?>> {
+public interface ImmutableOperatorBuilder extends
+        OperatorBuilder<ImmutableCondition<?>, ImmutableVariable<?>, Effect,
+        ImmutableOperator, ImmutableOperatorBuilder> {
 
 }

@@ -20,17 +20,22 @@ package org.gerryai.htn.simple.plan;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Plan;
+import org.gerryai.logic.Variable;
 
 /**
  * @param <O> type of operator this action uses
  * @param <I> type of condition the action uses
+ * @param <V> type of variable this factory uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface PlanFactory<O extends Operator<I>, I extends Condition> {
+public interface PlanFactory<
+        O extends Operator<I, V>,
+        I extends Condition,
+        V extends Variable> {
 
 	/**
 	 * Create a new empty plan.
 	 * @return an empty plan
 	 */
-	Plan<O, I> create();
+	Plan<O, I, V> create();
 }

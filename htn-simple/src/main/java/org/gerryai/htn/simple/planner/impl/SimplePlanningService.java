@@ -24,9 +24,10 @@ import org.gerryai.htn.planner.PlanningService;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
-import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.planner.PlannerFactory;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
@@ -35,39 +36,39 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * A simple domain non-specific planning service that uses the simple planner.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimplePlanningService implements PlanningService<SubstitutableOperator,
+public class SimplePlanningService implements PlanningService<ImmutableOperator,
 		SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition<?>> {
+		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 
 	/**
 	 * A factory for creating planners.
 	 */
-	private PlannerFactory<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+	private PlannerFactory<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>,	ImmutableCondition<?>> plannerFactory;
+			ImmutableConstraint<?>,	ImmutableCondition<?>, ImmutableVariable<?>> plannerFactory;
 	
 	/**
 	 * Constructor taking a factory for creating planners.
 	 * @param plannerFactory the factory
 	 */
-	public SimplePlanningService(PlannerFactory<SubstitutableOperator, SubstitutableMethod,
+	public SimplePlanningService(PlannerFactory<ImmutableOperator, SubstitutableMethod,
 	        ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>> plannerFactory) {
+			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> plannerFactory) {
 		this.plannerFactory = plannerFactory;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Plan<SubstitutableOperator, ImmutableCondition<?>> solve(Problem<SubstitutableOperator,
+	public final Plan<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>> solve(Problem<ImmutableOperator,
 			SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>,
-			ImmutableCondition<?>> problem) throws PlanNotFound {
+			ImmutableCondition<?>, ImmutableVariable<?>> problem) throws PlanNotFound {
 		
 		// Create a planner that will work in the domain of the given problem
-		Planner<SubstitutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+		Planner<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
 				ImmutableTask, ImmutableTaskNetwork,
-				ImmutableConstraint<?>, ImmutableCondition<?>>
+				ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
 				planner = plannerFactory.create(problem.getDomain());
 				
 		// Find a plan of the given problem

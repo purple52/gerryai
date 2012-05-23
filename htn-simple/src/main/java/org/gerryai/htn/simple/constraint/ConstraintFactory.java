@@ -52,7 +52,15 @@ public interface ConstraintFactory<T extends Term, K extends Task<T>, I extends 
 	 */
 	PrecedenceConstraint<T, K> createPrecedenceConstraint(Set<K> precedingTasks, Set<K> procedingTasks);
 	
-	/**
+    /**
+     * Create a before constraint.
+     * @param task a task that the constraint must hold for
+     * @param condition the condition that must be true directly before the first task in the set
+     * @return the constraint
+     */
+    BeforeConstraint<T, K, I> createBeforeConstraint(K task, I condition);
+
+    /**
 	 * Create a before constraint.
 	 * @param tasks set of tasks that the constraint must hold for
 	 * @param condition the condition that must be true directly before the first task in the set

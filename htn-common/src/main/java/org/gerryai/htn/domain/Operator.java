@@ -25,9 +25,10 @@ import org.gerryai.logic.Variable;
 /**
  * Interface that an operator must implement.
  * @param <I> type of condition this operator takes
+ * @param <V> type of variable this operator uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Operator<I extends Condition> {
+public interface Operator<I extends Condition, V extends Variable> {
 	
 	/**
 	 * Get the name of this operator.
@@ -36,22 +37,10 @@ public interface Operator<I extends Condition> {
 	String getName();
 	
 	/**
-	 * Set the name of this operator.
-	 * @param name name to set
-	 */
-	//void setName(String name);
-	
-	/**
 	 * Get the list of arguments for this operator.
 	 * @return the list of arguments
 	 */
-	List<Variable> getArguments();
-	
-	/**
-	 * Set the list of arguments for this operator.
-	 * @param arguments list of arguments to set
-	 */
-	//void setArguments(List<Variable> arguments);
+	List<V> getArguments();
 	
 	/**
 	 * Get the preconditions for this operator.
@@ -60,21 +49,9 @@ public interface Operator<I extends Condition> {
 	Set<I> getPreconditions();
 	
 	/**
-	 * Set the preconditions for this operator.
-	 * @param preconditions preconditions to set
-	 */
-	//void setPreconditions(Set<I> preconditions);
-	
-	/**
 	 * Get the effects of this operator.
 	 * @return the effects
 	 */
 	Set<Effect> getEffects();
-	
-	/**
-	 * Set the effects of this operator.
-	 * @param effects effects to set
-	 */
-	//void setEffects(Set<Effect> effects);
 
 }

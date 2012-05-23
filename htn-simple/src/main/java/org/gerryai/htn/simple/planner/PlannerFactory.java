@@ -26,6 +26,7 @@ import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 
 /**
  * Interface for factories that create planners.
@@ -36,23 +37,25 @@ import org.gerryai.logic.Term;
  * @param <N> type of task network this planner factory uses
  * @param <C> type of constraint this planner factory uses
  * @param <I> type of condition this factory uses
+ * @param <V> type of variable this factory uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface PlannerFactory<
-		O extends Operator<I>,
+		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition> {
+		I extends Condition,
+		V extends Variable> {
 
 	/**
 	 * Create a planner instance using the domain provided.
 	 * @param domain the domain the planner will work in
 	 * @return the planner
 	 */
-	Planner<O, M, T, K, N, C, I> create(Domain<O, M, T, K, N, C, I> domain);
+	Planner<O, M, T, K, N, C, I, V> create(Domain<O, M, T, K, N, C, I, V> domain);
 	
 }

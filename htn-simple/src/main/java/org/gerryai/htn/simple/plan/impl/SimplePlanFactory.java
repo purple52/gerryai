@@ -21,23 +21,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gerryai.htn.plan.Action;
-import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.PlanFactory;
 
 /**
  * Factory for creating simple plans.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimplePlanFactory implements PlanFactory<SubstitutableOperator, ImmutableCondition<?>> {
+public class SimplePlanFactory implements PlanFactory<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>> {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public final SimplePlan create() {
 		SimplePlan plan = new SimplePlan();
-		List<Action<SubstitutableOperator, ImmutableCondition<?>>> actions
-				= new ArrayList<Action<SubstitutableOperator, ImmutableCondition<?>>>();
+		List<Action<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>>> actions
+				= new ArrayList<Action<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>>>();
 		plan.setActions(actions);
 		
 		return plan;

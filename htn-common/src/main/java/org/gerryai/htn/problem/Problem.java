@@ -25,6 +25,7 @@ import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 
 /**
  * Interface that a problem must implement.
@@ -35,17 +36,19 @@ import org.gerryai.logic.Term;
  * @param <N> the type of task network this problem uses
  * @param <C> the type of constraint this problem uses
  * @param <I> the class of condition the problem will handle
+ * @param <V> type of variabl ethis problem uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface Problem<
-		O extends Operator<I>,
+		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition> {
+		I extends Condition,
+		V extends Variable> {
 	
 	/**
 	 * Get the state of the problem.
@@ -75,12 +78,12 @@ public interface Problem<
 	 * Get the domain for this problem.
 	 * @return the domain
 	 */
-	Domain<O, M, T, K, N, C, I> getDomain();
+	Domain<O, M, T, K, N, C, I, V> getDomain();
 	
 	/**
 	 * Set the domain for this problem.
 	 * @param domain domain to set
 	 */
-	void setDomain(Domain<O, M, T, K, N, C, I> domain);
+	void setDomain(Domain<O, M, T, K, N, C, I, V> domain);
 
 }

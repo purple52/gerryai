@@ -26,6 +26,7 @@ import org.gerryai.htn.problem.State;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 
 /**
  * Interface that a planner must implement.
@@ -36,16 +37,18 @@ import org.gerryai.logic.Term;
  * @param <N> type of task network this planner works with
  * @param <C> type of constraint this planner works with
  * @param <I> the class of condition the planner will handle
+ * @param <V> type of variable the planner will handle
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Planner<
-		O extends Operator<I>,
+		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition> {
+		I extends Condition,
+		V extends Variable> {
 
 	/**
 	 * Finds a plan that achieves the given task network.
@@ -54,6 +57,6 @@ public interface Planner<
 	 * @return the plan found
 	 * @throws PlanNotFound if no plan could be found
 	 */
-	Plan<O, I> findPlan(State state, N taskNetwork) throws PlanNotFound;
+	Plan<O, I, V> findPlan(State state, N taskNetwork) throws PlanNotFound;
 		
 }

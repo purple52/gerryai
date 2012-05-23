@@ -17,12 +17,115 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import org.gerryai.htn.domain.Condition;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.gerryai.htn.aima.AIMAConverter;
+import org.gerryai.htn.aima.impl.AIMAConverterImpl;
+import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableTermBuilder;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+
+import aima.core.logic.fol.parsing.ast.Predicate;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleCondition implements Condition {
+public class SimpleCondition extends Predicate implements ImmutableCondition<SimpleCondition> {
 
+	/**
+	 * List of terms belonging to this predicate.
+	 */
+	private List<ImmutableTerm<?>> terms;
+	
+	/**
+	 * Converter to help build the underlying AIMA objects.
+	 */
+	private static AIMAConverter<ImmutableTerm<?>, ImmutableVariable<?>, ImmutableTask>
+	        converter = new AIMAConverterImpl();
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final String getName() {
+		return this.getSymbolicName();
+	}
+	
+	/**
+	 * Constructor, taking a name and a list of terms.
+	 * @param predicateName the name
+	 * @param terms the terms
+	 */
+	protected SimpleCondition(String predicateName, List<ImmutableTerm<?>> terms) {
+		super(predicateName, converter.convert(terms));
+		this.terms = terms;
+	}
+
+    /**
+     * {@inheritDoc}
+     */
+    public final ImmutableTermBuilder<SimpleCondition> createCopyBuilder() {
+        return new Builder()
+            .copy(this);
+    }
+    
+    /**
+     * Builder class for SimplePredicate.
+     * @author David Edwards <david@more.fool.me.uk>
+     */
+    public static class Builder implements ImmutableTermBuilder<SimpleCondition> {
+        
+        /**
+         * Name of the term to be built.
+         */
+        private String name;
+        
+        /**
+         * List of terms belonging to the predicate to be built.
+         */
+        private List<ImmutableTerm<?>> terms;
+        
+        /**
+         * Constructor.
+         */
+        protected Builder() {
+            this.terms = new ArrayList<ImmutableTerm<?>>();
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder copy(SimpleCondition term) {
+            this.name = term.getName();
+            for (ImmutableTerm<?> subTerm : term.terms) {
+                this.terms.add(subTerm);
+            }
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder apply(ImmutableSubstitution substitution) {
+            List<ImmutableTerm<?>> newTerms = new ArrayList<ImmutableTerm<?>>(terms.size());
+            for (ImmutableTerm<?> oldTerm : terms) {
+                ImmutableTerm<?> newTerm = oldTerm.createCopyBuilder()
+                        .apply(substitution)
+                        .build();
+                newTerms.add(newTerm);
+            }
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final SimpleCondition build() {
+            return new SimpleCondition(this.name, this.terms);
+        }
+    }
 }

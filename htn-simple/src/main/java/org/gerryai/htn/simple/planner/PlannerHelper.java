@@ -29,6 +29,7 @@ import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 
 /**
  * @param <O> type of operator this planner helper uses
@@ -38,17 +39,19 @@ import org.gerryai.logic.Term;
  * @param <N> type of task network this planner works with
  * @param <C> type of constraint this planner works with
  * @param <I> type of condition the planner uses
+ * @param <V> type of variable the planner uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface PlannerHelper<
-		O extends Operator<I>,
+		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition> {
+		I extends Condition,
+		V extends Variable> {
 	
 	/**
 	 * Check for obvious reasons why the given task network is unsolvable.
@@ -65,7 +68,7 @@ public interface PlannerHelper<
 	 * @return the plan
 	 * @throws PlanNotFound if no plan exists
 	 */
-	Plan<O, I> findPlanForPrimitive(State state, N taskNetwork) throws PlanNotFound;
+	Plan<O, I, V> findPlanForPrimitive(State state, N taskNetwork) throws PlanNotFound;
 	
 	/**
 	 * Try to get a non-primitive task from a given network.

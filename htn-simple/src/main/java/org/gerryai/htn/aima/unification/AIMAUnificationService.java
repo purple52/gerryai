@@ -43,7 +43,7 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class AIMAUnificationService<
-		O extends Operator<I>,
+		O extends Operator<I, V>,
 		M extends Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
 		I extends Condition,
 		V extends Variable>
@@ -69,7 +69,7 @@ public class AIMAUnificationService<
 	public AIMAUnificationService(aima.core.logic.fol.Unifier unifier,
 			AIMAConverter<ImmutableTerm<?>, V, ImmutableTask> converter,
 			DomainHelper<O, M, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-			        ImmutableConstraint<?>, I> domainHelper) {
+			        ImmutableConstraint<?>, I, V> domainHelper) {
 		this.unifier = unifier;
 		this.converter = converter;
 	}

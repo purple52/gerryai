@@ -26,6 +26,7 @@ import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 
 /**
  * Interface for a service that can solve problems.
@@ -36,17 +37,19 @@ import org.gerryai.logic.Term;
  * @param <N> type of task network this service works with
  * @param <C> type of constraint this service works with
  * @param <I> the class of condition this service will handle
+ * @param <V> type of variable this service will handle
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface PlanningService<
-		O extends Operator<I>,
+		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition> {
+		I extends Condition,
+		V extends Variable> {
 	
 	/**
 	 * Find a plan that solve the given problem.
@@ -54,6 +57,6 @@ public interface PlanningService<
 	 * @return a solution
 	 * @throws PlanNotFound if no plan exists for the given problem
 	 */
-	Plan<O, I> solve(Problem<O, M, T, K, N, C, I> problem) throws PlanNotFound;
+	Plan<O, I, V> solve(Problem<O, M, T, K, N, C, I, V> problem) throws PlanNotFound;
 	
 }

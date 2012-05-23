@@ -21,31 +21,32 @@ import java.util.List;
 
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
-import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePlan implements Plan<SubstitutableOperator, ImmutableCondition<?>> {
+public class SimplePlan implements Plan<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>> {
 
 	/**
 	 * List of actions that implement this plan.
 	 */
-	private List<Action<SubstitutableOperator, ImmutableCondition<?>>> actions;
+	private List<Action<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>>> actions;
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<Action<SubstitutableOperator, ImmutableCondition<?>>> getActions() {
+	public final List<Action<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>>> getActions() {
 		return actions;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setActions(List<Action<SubstitutableOperator, ImmutableCondition<?>>> actions) {
+	public final void setActions(List<Action<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>>> actions) {
 		this.actions = actions;
 	}
 

@@ -44,14 +44,22 @@ public interface LogicFactory<V, C, P, T, S> {
 	 * @return the variable
 	 */
 	C createConstant(String name);
-	
+
 	/**
-	 * Create a predicate.
+     * Create a condition.
+     * @param name the name of the predicate
+     * @param terms a single term for the predicate
+     * @return the condition
+     */
+    P createCondition(String name, T terms);
+    
+	/**
+	 * Create a condition.
 	 * @param name the name of the predicate
 	 * @param terms list of terms for the predicate
-	 * @return the variable
+	 * @return the condition
 	 */
-	P createPredicate(String name, List<T> terms);
+	P createCondition(String name, List<T> terms);
 	
 	/**
 	 * Copy the supplied terms and apply the substitution provided.

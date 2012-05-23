@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.gerryai.htn.simple.domain.SubstitutableMethod;
-import org.gerryai.htn.simple.domain.SubstitutableOperator;
+import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.junit.Test;
 
 /**
@@ -35,7 +35,7 @@ public class SimpleDomainTest {
 
 	@Test
 	public void testOperators() {
-		Set<SubstitutableOperator> operators = new HashSet<SubstitutableOperator>();
+		Set<ImmutableOperator> operators = new HashSet<ImmutableOperator>();
 		
 		SimpleDomainBuilder mockBuilder = mock(SimpleDomainBuilder.class);
 		SimpleDomain domain = new SimpleDomain(mockBuilder);

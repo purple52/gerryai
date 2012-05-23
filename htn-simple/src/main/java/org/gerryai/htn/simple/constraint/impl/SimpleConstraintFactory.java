@@ -56,6 +56,16 @@ public class SimpleConstraintFactory implements
 		        .build();
 	}
 
+	   /**
+     * {@inheritDoc}
+     */
+    public final SimpleBeforeConstraint createBeforeConstraint(ImmutableTask task,
+            ImmutableCondition<?> condition) {
+        Set<ImmutableTask> tasks = new HashSet<ImmutableTask>(1);
+        tasks.add(task);
+        return createBeforeConstraint(tasks, condition);
+    }
+    
 	/**
 	 * {@inheritDoc}
 	 */
