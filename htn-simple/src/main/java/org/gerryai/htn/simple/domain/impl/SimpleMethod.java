@@ -17,8 +17,8 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import org.gerryai.htn.simple.domain.SubstitutableMethod;
-import org.gerryai.htn.simple.domain.SubstitutableMethodBuilder;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableMethodBuilder;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -26,7 +26,7 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleMethod implements SubstitutableMethod {
+public class SimpleMethod implements ImmutableMethod {
 
 	/**
 	 * Name of this method.
@@ -47,7 +47,7 @@ public class SimpleMethod implements SubstitutableMethod {
 	 * Constructor using a builder.
 	 * @param builder the builder to use
 	 */
-	protected SimpleMethod(SubstitutableMethodBuilder builder) {
+	protected SimpleMethod(ImmutableMethodBuilder builder) {
 		name = builder.getName();
 		task = builder.getTask();
 		taskNetwork = builder.getTaskNetwork();
@@ -61,26 +61,10 @@ public class SimpleMethod implements SubstitutableMethod {
 
 	/**
 	 * {@inheritDoc}
-	 *
-	public final void setName(String name) {
-		this.name = name;
-	}
-	*/
-
-	/**
-	 * {@inheritDoc}
 	 */
 	public final ImmutableTask getTask() {
 		return task;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	public final void setTask(SubstitutableTask task) {
-		this.task = task;
-	}
-    */
 	
 	/**
 	 * {@inheritDoc}
@@ -90,11 +74,87 @@ public class SimpleMethod implements SubstitutableMethod {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 *
-	public final void setTaskNetwork(SubstitutableTaskNetwork taskNetwork) {
-		this.taskNetwork = taskNetwork;
-	}
-	*/
+	 * Builder class for SimpleMethod objects.
+	 * @author David Edwards <david@more.fool.me.uk>
+	 */
+	public static class Builder implements ImmutableMethodBuilder {
 
+	    /**
+	     * Name of the method being built.
+	     */
+	    private String name;
+
+	    /**
+	     * Task that the method being built will decompose.
+	     */
+	    private ImmutableTask task;
+
+	    /**
+	     * Task network that the method being built decomposes into.
+	     */
+	    private ImmutableTaskNetwork taskNetwork;
+
+	    /**
+         * Default constructor.
+         */
+        protected Builder() {
+            // Does nothing except not being public
+        }
+        
+	    /**
+	     * {@inheritDoc}
+	     */
+	    public final ImmutableMethodBuilder setName(String name) {
+	        this.name = name;
+	        return this;
+	    }
+
+	    /**
+	     * {@inheritDoc}
+	     */
+	    public final ImmutableMethodBuilder setTask(ImmutableTask task) {
+	        this.task = task;
+	        return this;
+	    }
+
+	    /**
+	     * {@inheritDoc}
+	     */
+	    public final ImmutableMethodBuilder setTaskNetwork(
+	            ImmutableTaskNetwork taskNetwork) {
+	        this.taskNetwork = taskNetwork;
+	        return this;
+	    }
+
+	    /**
+	     * {@inheritDoc}
+	     */
+	    public final ImmutableMethod build() {
+	        return new SimpleMethod(this);
+	    }
+
+	    /**
+	     * Get the name of the method being built.
+	     * @return the name
+	     */
+	    public final String getName() {
+	        return name;
+	    }
+
+	    /**
+	     * Get the task for the method being built.
+	     * @return the task
+	     */
+	    public final ImmutableTask getTask() {
+	        return task;
+	    }
+
+	    /**
+	     * Get the task network for the method being built.
+	     * @return the task network
+	     */
+	    public final ImmutableTaskNetwork getTaskNetwork() {
+	        return taskNetwork;
+	    }
+	}
 }

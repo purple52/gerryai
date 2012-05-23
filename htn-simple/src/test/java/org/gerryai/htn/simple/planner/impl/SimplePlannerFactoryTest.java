@@ -22,7 +22,7 @@ import static org.mockito.Mockito.mock;
 
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
@@ -43,7 +43,7 @@ public class SimplePlannerFactoryTest {
 	@Test
 	public void testCreate() {
 		@SuppressWarnings("unchecked")
-		Domain<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> mockDomain = mock(Domain.class);
 		SimplePlannerFactory factory = new SimplePlannerFactory();
 		

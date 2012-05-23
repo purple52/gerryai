@@ -26,7 +26,7 @@ import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
-import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
@@ -48,14 +48,14 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<ImmutableO
 	/**
 	 * Service for the domain that we are working in.
 	 */
-	private DomainHelper<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask,
+	private DomainHelper<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask,
 			ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domainHelper;
 	
 	/**
 	 * Constructor requiring a domain helper.
 	 * @param domainHelper helper to use
 	 */
-	public SimpleActionFactoryHelper(DomainHelper<ImmutableOperator, SubstitutableMethod,
+	public SimpleActionFactoryHelper(DomainHelper<ImmutableOperator, ImmutableMethod,
 	        ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domainHelper) {
 		this.domainHelper = domainHelper;

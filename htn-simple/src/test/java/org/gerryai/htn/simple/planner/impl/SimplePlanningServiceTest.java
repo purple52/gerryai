@@ -30,7 +30,7 @@ import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
@@ -55,16 +55,16 @@ public class SimplePlanningServiceTest {
 		
 		@SuppressWarnings("unchecked")
 		Plan<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>> mockPlan = mock(Plan.class);
-		Problem<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		Problem<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
 				mockProblem = createMockProblem();
 		@SuppressWarnings("unchecked")
-		Planner<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		Planner<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
 				mockPlanner = mock(Planner.class);
 		when(mockPlanner.findPlan(mockProblem.getState(), mockProblem.getTaskNetwork())).thenReturn(mockPlan);
 		@SuppressWarnings("unchecked")
-		PlannerFactory<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask,
+		PlannerFactory<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask,
 				ImmutableTaskNetwork, ImmutableConstraint<?>,
 				ImmutableCondition<?>, ImmutableVariable<?>> mockPlannerFactory = mock(PlannerFactory.class);
 		
@@ -88,15 +88,15 @@ public class SimplePlanningServiceTest {
 	@Test(expected=PlanNotFound.class)
 	public void testSolvePlanNotFound() throws PlanNotFound {
 		
-		Problem<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		Problem<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> mockProblem = createMockProblem();
 		@SuppressWarnings("unchecked")
-		Planner<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		Planner<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
 				mockPlanner = mock(Planner.class);
 		when(mockPlanner.findPlan(mockProblem.getState(), mockProblem.getTaskNetwork())).thenThrow(new PlanNotFound());
 		@SuppressWarnings("unchecked")
-		PlannerFactory<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		PlannerFactory<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
 				mockPlannerFactory = mock(PlannerFactory.class);
 		
@@ -113,17 +113,17 @@ public class SimplePlanningServiceTest {
 	 * Create a simple mocked Problem.
 	 * @return a mock problem
 	 */
-	private Problem<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+	private Problem<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 	        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> createMockProblem() {
 		
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		State mockState = mock(State.class);
 		@SuppressWarnings("unchecked")
-		Domain<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
 				mockDomain = mock(Domain.class);
 		@SuppressWarnings("unchecked")
-		Problem<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		Problem<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
 				mockProblem = mock(Problem.class);
 		when(mockProblem.getTaskNetwork()).thenReturn(mockTaskNetwork);

@@ -27,7 +27,7 @@ import org.gerryai.htn.simple.constraint.impl.SimpleBeforeConstraint;
 import org.gerryai.htn.simple.constraint.impl.SimpleConstraintFactory;
 import org.gerryai.htn.simple.constraint.impl.SimplePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
-import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
@@ -79,7 +79,7 @@ public class BasicIT {
 				.addArgument(variableA)
 				.build();
 		
-		Domain<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+		Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 		    ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>, 
 		    ImmutableCondition<?>, ImmutableVariable<?>> domain = domainBuilderFactory.createDomainBuilder()
 				.addOperator(operatorA)
@@ -142,12 +142,12 @@ public class BasicIT {
 				.addConstraint(beforeConstraintB)
                 .build();
 		
-		SubstitutableMethod methodA = domainBuilderFactory.createMethodBuilder()
+		ImmutableMethod methodA = domainBuilderFactory.createMethodBuilder()
 				.setName("swap")
 				.setTask(methodATask)
 				.setTaskNetwork(methodATaskNetwork)
 				.build();
-		SubstitutableMethod methodB = domainBuilderFactory.createMethodBuilder()
+		ImmutableMethod methodB = domainBuilderFactory.createMethodBuilder()
 				.setName("swap")
 				.setTask(methodBTask)
 				.setTaskNetwork(methodBTaskNetwork)

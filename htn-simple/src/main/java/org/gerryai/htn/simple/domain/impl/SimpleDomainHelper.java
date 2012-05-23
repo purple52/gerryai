@@ -24,7 +24,7 @@ import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
-import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
@@ -36,21 +36,21 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleDomainHelper implements DomainHelper<ImmutableOperator, SubstitutableMethod,
+public class SimpleDomainHelper implements DomainHelper<ImmutableOperator, ImmutableMethod,
 		ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 
 	/**
 	 * Domain this helper is working on.
 	 */
-	private Domain<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask,
+	private Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask,
 	ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domain;
 	
 	/**
 	 * Constructor taking a domain to work on.
 	 * @param domain the domain to work on
 	 */
-	public SimpleDomainHelper(Domain<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+	public SimpleDomainHelper(Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domain) {
 		this.domain = domain;
@@ -59,7 +59,7 @@ public class SimpleDomainHelper implements DomainHelper<ImmutableOperator, Subst
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Domain<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>, ImmutableTask,
+	public final Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask,
 	ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> getDomain() {
 		return domain;
 	}
@@ -80,10 +80,10 @@ public class SimpleDomainHelper implements DomainHelper<ImmutableOperator, Subst
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<SubstitutableMethod> getMethodsByTask(ImmutableTask task) {
+	public final Set<ImmutableMethod> getMethodsByTask(ImmutableTask task) {
 		// TODO Check task arguments match
-		Set<SubstitutableMethod> methods = new HashSet<SubstitutableMethod>();
-		for (SubstitutableMethod method : domain.getMethods()) {
+		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
+		for (ImmutableMethod method : domain.getMethods()) {
 			if (method.getTask().getName().equals(task.getName())) {
 				methods.add(method);
 			}

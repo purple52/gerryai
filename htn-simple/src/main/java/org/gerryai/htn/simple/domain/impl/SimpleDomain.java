@@ -21,7 +21,7 @@ import java.util.Set;
 
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
@@ -34,7 +34,7 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * Wraps a set of operators and a set of methods to define the domain.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleDomain implements Domain<ImmutableOperator, SubstitutableMethod,
+public class SimpleDomain implements Domain<ImmutableOperator, ImmutableMethod,
 		ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 
@@ -46,7 +46,7 @@ public class SimpleDomain implements Domain<ImmutableOperator, SubstitutableMeth
 	/**
 	 * Methods available in this domain.
 	 */
-	private Set<SubstitutableMethod> methods;
+	private Set<ImmutableMethod> methods;
 	
 	/**
 	 * Constructor for a simple domain.
@@ -74,14 +74,14 @@ public class SimpleDomain implements Domain<ImmutableOperator, SubstitutableMeth
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<SubstitutableMethod> getMethods() {
+	public final Set<ImmutableMethod> getMethods() {
 		return methods;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setMethods(Set<SubstitutableMethod> methods) {
+	public final void setMethods(Set<ImmutableMethod> methods) {
 		this.methods = methods;
 	}
 

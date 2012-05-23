@@ -28,7 +28,7 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
-import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -84,7 +84,7 @@ public class SimpleDecompositionServiceTest {
     	when(mockUnifiedMethodSubTasks.getTasks()).thenReturn(methodSubTasks);
     	
     	// Mock method converts TaskA into TaskB and TaskC
-    	SubstitutableMethod mockMethod = mock(SubstitutableMethod.class);
+    	ImmutableMethod mockMethod = mock(ImmutableMethod.class);
     	when(mockMethod.getTask()).thenReturn(mockTaskA);
     	when(mockMethod.getTaskNetwork()).thenReturn(mockMethodSubTasks);
     	

@@ -17,21 +17,17 @@
  */
 package org.gerryai.htn.simple.domain;
 
+import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
- * Interface for a method builder that uses the correct set of classes for
- * substitutaion and validation.
- * 
+ * Extension of the method interface that can be visited by a substituter.
  * @author David Edwards <david@more.fool.me.uk>
- * 
  */
-public interface SubstitutableMethodBuilder
-        extends
-        MethodBuilder<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, 
-        ImmutableConstraint<?>, SubstitutableMethod> {
+public interface ImmutableMethod extends
+	Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>> {
 
 }

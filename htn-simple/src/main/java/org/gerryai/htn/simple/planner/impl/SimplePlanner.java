@@ -23,7 +23,7 @@ import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
-import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
@@ -39,21 +39,21 @@ import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class SimplePlanner implements
-		Planner<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+		Planner<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 		ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 	
 	/**
 	 * Manager the domain being worked in.
 	 */
-	private DomainHelper<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+	private DomainHelper<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domainHelper;
 	
 	/**
 	 * Helper for off-loading some of the logic.
 	 */
-	private PlannerHelper<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+	private PlannerHelper<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> plannerHelper;
 	
@@ -63,11 +63,11 @@ public class SimplePlanner implements
 	 * @param plannerHelper the planner helper
 	 */
 	public SimplePlanner(
-			DomainHelper<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+			DomainHelper<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 					ImmutableTask, ImmutableTaskNetwork,
 					ImmutableConstraint<?>,
 					ImmutableCondition<?>, ImmutableVariable<?>> domainHelper,
-			PlannerHelper<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+			PlannerHelper<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 					ImmutableTask, ImmutableTaskNetwork,
 					ImmutableConstraint<?>,
 					ImmutableCondition<?>, ImmutableVariable<?>> plannerHelper) {
@@ -94,7 +94,7 @@ public class SimplePlanner implements
 				// 3. Task network is non-primitive
 				// TODO: Confirm implementation
 				// TODO: Handle state changes (and correct backtracking?)			
-				for (SubstitutableMethod method : domainHelper.getMethodsByTask(task)) {
+				for (ImmutableMethod method : domainHelper.getMethodsByTask(task)) {
 					try {
 						ImmutableTaskNetwork decomposedNetwork = plannerHelper.decompose(taskNetwork, task, method);
 						// Try recursing to further process the decomposed network

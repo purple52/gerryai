@@ -4,7 +4,7 @@ import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
@@ -34,7 +34,7 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleProblem implements Problem<ImmutableOperator, SubstitutableMethod,
+public class SimpleProblem implements Problem<ImmutableOperator, ImmutableMethod,
 		ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 
@@ -51,7 +51,7 @@ public class SimpleProblem implements Problem<ImmutableOperator, SubstitutableMe
 	/**
 	 * The domain to operate in.
 	 */
-	private Domain<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+	private Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domain;
 	
@@ -86,7 +86,7 @@ public class SimpleProblem implements Problem<ImmutableOperator, SubstitutableMe
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Domain<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+	public final Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> getDomain() {
 		return domain;
@@ -95,7 +95,7 @@ public class SimpleProblem implements Problem<ImmutableOperator, SubstitutableMe
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setDomain(Domain<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+	public final void setDomain(Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domain) {
 		this.domain = domain;

@@ -28,7 +28,7 @@ import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.decomposition.impl.SimpleDecompositionService;
 import org.gerryai.htn.simple.domain.DomainHelper;
-import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
@@ -50,7 +50,7 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  *
  */
 public class SimplePlannerFactory implements
-		PlannerFactory<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+		PlannerFactory<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 		ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 
@@ -58,11 +58,11 @@ public class SimplePlannerFactory implements
 	 * {@inheritDoc}
 	 */
 	public final SimplePlanner create(
-			Domain<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+			Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domain) {
 		
-		DomainHelper<ImmutableOperator, SubstitutableMethod, ImmutableTerm<?>,
+		DomainHelper<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 				ImmutableTask, ImmutableTaskNetwork,
 				ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domainHelper
 				= new SimpleDomainHelper(domain);
@@ -80,13 +80,13 @@ public class SimplePlannerFactory implements
 		ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask,
 		ImmutableCondition<?>> constraintValidatorFactory
 				= new GenericConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>>();
-		AIMAUnificationService<ImmutableOperator, SubstitutableMethod, 
+		AIMAUnificationService<ImmutableOperator, ImmutableMethod, 
 		        ImmutableCondition<?>, ImmutableVariable<?>> unificationService =
-		        new AIMAUnificationService<ImmutableOperator, SubstitutableMethod,
+		        new AIMAUnificationService<ImmutableOperator, ImmutableMethod,
 		        ImmutableCondition<?>, ImmutableVariable<?>>(unifier, converter,
 		                domainHelper);
 		
-		DecompositionService<SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		DecompositionService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableSubstitution> decompositionService =
 				new SimpleDecompositionService(constraintValidatorFactory);
 		

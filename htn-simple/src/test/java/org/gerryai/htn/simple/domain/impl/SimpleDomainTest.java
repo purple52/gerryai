@@ -23,7 +23,7 @@ import static org.mockito.Mockito.mock;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.junit.Test;
 
@@ -47,7 +47,7 @@ public class SimpleDomainTest {
 
 	@Test
 	public void testMethods() {
-		Set<SubstitutableMethod> methods = new HashSet<SubstitutableMethod>();
+		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
 		
 		SimpleDomainBuilder mockBuilder = mock(SimpleDomainBuilder.class);
 		SimpleDomain domain = new SimpleDomain(mockBuilder);

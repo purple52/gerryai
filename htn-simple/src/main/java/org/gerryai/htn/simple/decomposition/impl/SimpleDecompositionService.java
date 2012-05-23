@@ -21,7 +21,7 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
-import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -35,7 +35,7 @@ import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
  *
  */
 public class SimpleDecompositionService implements
-		DecompositionService<SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		DecompositionService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, ImmutableSubstitution> {
 
     /**
@@ -57,7 +57,7 @@ public class SimpleDecompositionService implements
 	 * {@inheritDoc}
 	 */
 	public final ImmutableTaskNetwork decompose(ImmutableSubstitution substitution,
-			ImmutableTaskNetwork taskNetwork, ImmutableTask task, SubstitutableMethod method) throws InvalidConstraint {
+			ImmutableTaskNetwork taskNetwork, ImmutableTask task, ImmutableMethod method) throws InvalidConstraint {
 	    
 		// Apply unifier where relevant
 		ImmutableTaskNetwork unifiedMethodSubTasks = method.getTaskNetwork()

@@ -22,7 +22,7 @@ import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainBuilder;
-import org.gerryai.htn.simple.domain.SubstitutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
@@ -35,7 +35,7 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  *
  */
 public class SimpleDomainBuilder implements	DomainBuilder<SimpleDomain, ImmutableOperator,
-		SubstitutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 
 	/**
@@ -46,14 +46,14 @@ public class SimpleDomainBuilder implements	DomainBuilder<SimpleDomain, Immutabl
 	/**
 	 * Set of methods that the domain uses.
 	 */
-	private Set<SubstitutableMethod> methods;
+	private Set<ImmutableMethod> methods;
 	
 	/**
 	 * Default constructor.
 	 */
 	protected SimpleDomainBuilder() {
 		operators = new HashSet<ImmutableOperator>();
-		methods = new HashSet<SubstitutableMethod>();
+		methods = new HashSet<ImmutableMethod>();
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class SimpleDomainBuilder implements	DomainBuilder<SimpleDomain, Immutabl
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleDomainBuilder addMethod(SubstitutableMethod method) {
+	public final SimpleDomainBuilder addMethod(ImmutableMethod method) {
 		methods.add(method);
 		return this;
 	}
@@ -89,7 +89,7 @@ public class SimpleDomainBuilder implements	DomainBuilder<SimpleDomain, Immutabl
 	/**
 	 * @return the effects
 	 */
-	protected final Set<SubstitutableMethod> getMethods() {
+	protected final Set<ImmutableMethod> getMethods() {
 		return methods;
 	}
 
