@@ -19,10 +19,12 @@ package org.gerryai.htn.simple.domain.impl;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.simple.domain.ImmutableDomainBuilder;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.junit.Test;
@@ -37,10 +39,9 @@ public class SimpleDomainTest {
 	public void testOperators() {
 		Set<ImmutableOperator> operators = new HashSet<ImmutableOperator>();
 		
-		SimpleDomainBuilder mockBuilder = mock(SimpleDomainBuilder.class);
+		ImmutableDomainBuilder mockBuilder = mock(ImmutableDomainBuilder.class);
+		when(mockBuilder.getOperators()).thenReturn(operators);
 		SimpleDomain domain = new SimpleDomain(mockBuilder);
-		
-		domain.setOperators(operators);
 		
 		assertEquals(operators, domain.getOperators());
 	}
@@ -49,10 +50,9 @@ public class SimpleDomainTest {
 	public void testMethods() {
 		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
 		
-		SimpleDomainBuilder mockBuilder = mock(SimpleDomainBuilder.class);
+		ImmutableDomainBuilder mockBuilder = mock(ImmutableDomainBuilder.class);
+		when(mockBuilder.getMethods()).thenReturn(methods);
 		SimpleDomain domain = new SimpleDomain(mockBuilder);
-		
-		domain.setMethods(methods);
 		
 		assertEquals(methods, domain.getMethods());
 	}

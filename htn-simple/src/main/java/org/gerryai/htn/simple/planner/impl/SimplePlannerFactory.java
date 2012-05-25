@@ -20,7 +20,6 @@ package org.gerryai.htn.simple.planner.impl;
 import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.aima.impl.AIMAConverterImpl;
 import org.gerryai.htn.aima.unification.AIMAUnificationService;
-import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
@@ -28,6 +27,7 @@ import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.decomposition.impl.SimpleDecompositionService;
 import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
@@ -50,19 +50,16 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  *
  */
 public class SimplePlannerFactory implements
-		PlannerFactory<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
+		PlannerFactory<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 		ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimplePlanner create(
-			Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
-			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domain) {
+	public final SimplePlanner create(ImmutableDomain domain) {
 		
-		DomainHelper<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
+		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 				ImmutableTask, ImmutableTaskNetwork,
 				ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domainHelper
 				= new SimpleDomainHelper(domain);
@@ -72,7 +69,6 @@ public class SimplePlannerFactory implements
 				actionFactoryHelper = new SimpleActionFactoryHelper(domainHelper);
 		ActionFactory<ImmutableOperator, ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>, ImmutableVariable<?>>
 				actionFactory = new SimpleActionFactory(actionFactoryHelper);
-		
 		SimplePlanFactory planFactory = new SimplePlanFactory();
 		
 		aima.core.logic.fol.Unifier unifier = new aima.core.logic.fol.Unifier();
@@ -83,8 +79,7 @@ public class SimplePlannerFactory implements
 		AIMAUnificationService<ImmutableOperator, ImmutableMethod, 
 		        ImmutableCondition<?>, ImmutableVariable<?>> unificationService =
 		        new AIMAUnificationService<ImmutableOperator, ImmutableMethod,
-		        ImmutableCondition<?>, ImmutableVariable<?>>(unifier, converter,
-		                domainHelper);
+		        ImmutableCondition<?>, ImmutableVariable<?>>(unifier, converter);
 		
 		DecompositionService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableSubstitution> decompositionService =

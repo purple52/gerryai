@@ -26,7 +26,6 @@ import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.decomposition.UnificationService;
-import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
@@ -64,12 +63,9 @@ public class AIMAUnificationService<
 	 * Constructor taking all required dependencies.
 	 * @param unifier AIMA unifier object
 	 * @param converter converted to translate between the two class schemes
-	 * @param domainHelper helper object to deal with the domain
 	 */
 	public AIMAUnificationService(aima.core.logic.fol.Unifier unifier,
-			AIMAConverter<ImmutableTerm<?>, V, ImmutableTask> converter,
-			DomainHelper<O, M, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-			        ImmutableConstraint<?>, I, V> domainHelper) {
+			AIMAConverter<ImmutableTerm<?>, V, ImmutableTask> converter) {
 		this.unifier = unifier;
 		this.converter = converter;
 	}

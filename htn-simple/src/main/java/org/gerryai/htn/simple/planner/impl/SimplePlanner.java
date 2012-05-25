@@ -23,6 +23,7 @@ import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
@@ -46,7 +47,7 @@ public class SimplePlanner implements
 	/**
 	 * Manager the domain being worked in.
 	 */
-	private DomainHelper<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
+	private DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domainHelper;
 	
@@ -63,7 +64,7 @@ public class SimplePlanner implements
 	 * @param plannerHelper the planner helper
 	 */
 	public SimplePlanner(
-			DomainHelper<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
+			DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 					ImmutableTask, ImmutableTaskNetwork,
 					ImmutableConstraint<?>,
 					ImmutableCondition<?>, ImmutableVariable<?>> domainHelper,

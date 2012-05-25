@@ -60,7 +60,7 @@ public interface DomainBuilderFactory<
 	 * Create a domain builder of the required type.
 	 * @return the domain builder
 	 */
-	DomainBuilder<D, O, M, T, K, N, C, I, V> createDomainBuilder();
+	ImmutableDomainBuilder createDomainBuilder();
 	
 	/**
 	 * Create an operator builder of the required type.

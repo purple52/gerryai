@@ -32,6 +32,7 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface for a service that manages a domain.
+ * @param <D> type of domain thsi helper uses
  * @param <O> type of operator this domain helper uses
  * @param <M> type of method this domain helpers uses
  * @param <T> type of logical term this domain helper uses
@@ -43,6 +44,7 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface DomainHelper<
+        D extends Domain<O, M, T, K, N, C, I, V>,
 		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
@@ -56,7 +58,7 @@ public interface DomainHelper<
 	 * Get the domain that this service is managing.
 	 * @return the domain
 	 */
-	Domain<O, M, T, K, N, C, I, V> getDomain();
+	D getDomain();
 	
 	/**
 	 * Get an operator by name.

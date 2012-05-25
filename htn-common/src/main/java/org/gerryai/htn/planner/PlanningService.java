@@ -19,6 +19,7 @@ package org.gerryai.htn.planner;
 
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Plan;
@@ -30,6 +31,7 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface for a service that can solve problems.
+ * @param <D> type of domain this service works with
  * @param <O> type of operator this service works with
  * @param <M> type of method this service works with
  * @param <T> type of logical term this service works with
@@ -42,6 +44,7 @@ import org.gerryai.logic.Variable;
  *
  */
 public interface PlanningService<
+        D extends Domain<O, M, T, K, N, C, I, V>,
 		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
@@ -57,6 +60,6 @@ public interface PlanningService<
 	 * @return a solution
 	 * @throws PlanNotFound if no plan exists for the given problem
 	 */
-	Plan<O, I, V> solve(Problem<O, M, T, K, N, C, I, V> problem) throws PlanNotFound;
+	Plan<O, I, V> solve(Problem<D, O, M, T, K, N, C, I, V> problem) throws PlanNotFound;
 	
 }

@@ -24,16 +24,11 @@ import static org.mockito.Mockito.when;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.OperatorNotFound;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.junit.Test;
 
 /**
@@ -48,10 +43,7 @@ public class SimpleDomainHelperTest {
 	@Test
 	public void testGetDomain() {
 		
-		@SuppressWarnings("unchecked")
-		Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
-				mockDomain = mock(Domain.class);
+		ImmutableDomain	mockDomain = mock(ImmutableDomain.class);
 		
 		// Create the domain helper under test
 		SimpleDomainHelper domainHelper = new SimpleDomainHelper(mockDomain);
@@ -66,10 +58,7 @@ public class SimpleDomainHelperTest {
 	@Test(expected=OperatorNotFound.class)
 	public void testGetOperatorByNameEmptyList() throws OperatorNotFound {
 		
-		@SuppressWarnings("unchecked")
-		Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
-				mockDomain = mock(Domain.class);
+		ImmutableDomain	mockDomain = mock(ImmutableDomain.class);
 		when(mockDomain.getOperators()).thenReturn(new HashSet<ImmutableOperator>());
 
 		// Create the domain helper under test
@@ -84,10 +73,8 @@ public class SimpleDomainHelperTest {
 	 */
 	@Test(expected=OperatorNotFound.class)
 	public void testGetOperatorByNameNotFound() throws OperatorNotFound {
-		@SuppressWarnings("unchecked")
-		Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
-				mockDomain = mock(Domain.class);
+
+		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
 		ImmutableOperator mockOperatorA = mock(ImmutableOperator.class);
 		when(mockOperatorA.getName()).thenReturn("operatorA");
 		ImmutableOperator mockOperatorB = mock(ImmutableOperator.class);
@@ -109,10 +96,8 @@ public class SimpleDomainHelperTest {
 	 */
 	@Test
 	public void testGetOperatorByNameFound() throws OperatorNotFound {
-		@SuppressWarnings("unchecked")
-		Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
-				mockDomain = mock(Domain.class);
+
+		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
 		ImmutableOperator mockOperatorA = mock(ImmutableOperator.class);
 		when(mockOperatorA.getName()).thenReturn("operatorA");
 		ImmutableOperator mockOperatorB = mock(ImmutableOperator.class);
@@ -135,10 +120,8 @@ public class SimpleDomainHelperTest {
 	 */
 	@Test
 	public void testGetMethodByTaskEmptyList() {
-		@SuppressWarnings("unchecked")
-		Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
-				mockDomain = mock(Domain.class);
+
+		ImmutableDomain	mockDomain = mock(ImmutableDomain.class);
 		when(mockDomain.getMethods()).thenReturn(new HashSet<ImmutableMethod>());
 
 		ImmutableTask mockTask = mock(ImmutableTask.class);
@@ -155,10 +138,8 @@ public class SimpleDomainHelperTest {
 	 */
 	@Test
 	public void testGetMethodByTaskNotFound() {
-		@SuppressWarnings("unchecked")
-		Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
-				mockDomain = mock(Domain.class);
+
+		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
 		when(mockTaskA.getName()).thenReturn("taskA");
@@ -189,10 +170,8 @@ public class SimpleDomainHelperTest {
 	 */
 	@Test
 	public void testGetMethodByTaskOneFound() {
-		@SuppressWarnings("unchecked")
-		Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
-				mockDomain = mock(Domain.class);
+
+		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
 		when(mockTaskA.getName()).thenReturn("taskA");
@@ -224,10 +203,8 @@ public class SimpleDomainHelperTest {
 	 */
 	@Test
 	public void testGetMethodByTaskTwoFound() {
-		@SuppressWarnings("unchecked")
-		Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
-				mockDomain = mock(Domain.class);
+
+		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
 		when(mockTaskA.getName()).thenReturn("taskA");

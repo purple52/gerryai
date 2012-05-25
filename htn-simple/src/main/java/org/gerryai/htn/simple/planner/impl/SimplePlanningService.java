@@ -23,6 +23,7 @@ import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.planner.PlanningService;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
@@ -36,14 +37,14 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * A simple domain non-specific planning service that uses the simple planner.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimplePlanningService implements PlanningService<ImmutableOperator,
+public class SimplePlanningService implements PlanningService<ImmutableDomain, ImmutableOperator,
 		ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 
 	/**
 	 * A factory for creating planners.
 	 */
-	private PlannerFactory<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
+	private PlannerFactory<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>,	ImmutableCondition<?>, ImmutableVariable<?>> plannerFactory;
 	
@@ -51,7 +52,7 @@ public class SimplePlanningService implements PlanningService<ImmutableOperator,
 	 * Constructor taking a factory for creating planners.
 	 * @param plannerFactory the factory
 	 */
-	public SimplePlanningService(PlannerFactory<ImmutableOperator, ImmutableMethod,
+	public SimplePlanningService(PlannerFactory<ImmutableDomain, ImmutableOperator, ImmutableMethod,
 	        ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> plannerFactory) {
 		this.plannerFactory = plannerFactory;
@@ -60,7 +61,8 @@ public class SimplePlanningService implements PlanningService<ImmutableOperator,
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Plan<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>> solve(Problem<ImmutableOperator,
+	public final Plan<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>> solve(
+	        Problem<ImmutableDomain, ImmutableOperator,
 			ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>,
 			ImmutableCondition<?>, ImmutableVariable<?>> problem) throws PlanNotFound {

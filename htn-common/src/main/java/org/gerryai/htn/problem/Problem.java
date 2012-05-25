@@ -29,6 +29,7 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface that a problem must implement.
+ * @param <D> type of domain thsi problem uses
  * @param <O> type of operator this problem uses
  * @param <M> type of method this problem uses
  * @param <T> type of logical term this problem uses
@@ -36,11 +37,12 @@ import org.gerryai.logic.Variable;
  * @param <N> the type of task network this problem uses
  * @param <C> the type of constraint this problem uses
  * @param <I> the class of condition the problem will handle
- * @param <V> type of variabl ethis problem uses
+ * @param <V> type of variable this problem uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface Problem<
+        D extends Domain<O, M, T, K, N, C, I, V>,
 		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
@@ -78,12 +80,12 @@ public interface Problem<
 	 * Get the domain for this problem.
 	 * @return the domain
 	 */
-	Domain<O, M, T, K, N, C, I, V> getDomain();
+	D getDomain();
 	
 	/**
 	 * Set the domain for this problem.
 	 * @param domain domain to set
 	 */
-	void setDomain(Domain<O, M, T, K, N, C, I, V> domain);
+	void setDomain(D domain);
 
 }

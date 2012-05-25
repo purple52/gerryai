@@ -19,14 +19,13 @@ package org.gerryai.htn.simple.integration;
 
 import static org.junit.Assert.*;
 
-import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.impl.SimpleBeforeConstraint;
 import org.gerryai.htn.simple.constraint.impl.SimpleConstraintFactory;
 import org.gerryai.htn.simple.constraint.impl.SimplePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
+import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
@@ -79,9 +78,7 @@ public class BasicIT {
 				.addArgument(variableA)
 				.build();
 		
-		Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
-		    ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>, 
-		    ImmutableCondition<?>, ImmutableVariable<?>> domain = domainBuilderFactory.createDomainBuilder()
+		ImmutableDomain domain = domainBuilderFactory.createDomainBuilder()
 				.addOperator(operatorA)
 				.addOperator(operatorB)
 				.build();

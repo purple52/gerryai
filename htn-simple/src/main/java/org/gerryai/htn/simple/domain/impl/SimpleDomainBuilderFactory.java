@@ -19,7 +19,7 @@ package org.gerryai.htn.simple.domain.impl;
 
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.DomainBuilder;
+import org.gerryai.htn.simple.domain.ImmutableDomainBuilder;
 import org.gerryai.htn.simple.domain.DomainBuilderFactory;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableMethodBuilder;
@@ -44,10 +44,8 @@ public class SimpleDomainBuilderFactory implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final DomainBuilder<SimpleDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
-			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> createDomainBuilder() {
-		return new SimpleDomainBuilder();	
+	public final ImmutableDomainBuilder createDomainBuilder() {
+		return new SimpleDomain.Builder();	
 	}
 	
 	/**

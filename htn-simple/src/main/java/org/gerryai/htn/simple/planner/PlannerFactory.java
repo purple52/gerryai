@@ -30,6 +30,7 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface for factories that create planners.
+ * @param <D> type of domain this planner factory creates
  * @param <O> type of operator this planner factory uses
  * @param <M> type of method this planner factory uses
  * @param <T> type of logical term this planner factory uses
@@ -42,6 +43,7 @@ import org.gerryai.logic.Variable;
  *
  */
 public interface PlannerFactory<
+        D extends Domain<O, M, T, K, N, C, I, V>,
 		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
@@ -56,6 +58,6 @@ public interface PlannerFactory<
 	 * @param domain the domain the planner will work in
 	 * @return the planner
 	 */
-	Planner<O, M, T, K, N, C, I, V> create(Domain<O, M, T, K, N, C, I, V> domain);
+	Planner<O, M, T, K, N, C, I, V> create(D domain);
 	
 }

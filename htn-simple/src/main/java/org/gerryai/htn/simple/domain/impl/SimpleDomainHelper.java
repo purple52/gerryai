@@ -20,10 +20,10 @@ package org.gerryai.htn.simple.domain.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
@@ -36,31 +36,27 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleDomainHelper implements DomainHelper<ImmutableOperator, ImmutableMethod,
+public class SimpleDomainHelper implements DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod,
 		ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 
 	/**
 	 * Domain this helper is working on.
 	 */
-	private Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask,
-	ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domain;
+	private ImmutableDomain domain;
 	
 	/**
 	 * Constructor taking a domain to work on.
 	 * @param domain the domain to work on
 	 */
-	public SimpleDomainHelper(Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
-			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domain) {
+	public SimpleDomainHelper(ImmutableDomain domain) {
 		this.domain = domain;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask,
-	ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> getDomain() {
+	public final ImmutableDomain getDomain() {
 		return domain;
 	}
 

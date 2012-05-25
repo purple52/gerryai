@@ -1,9 +1,9 @@
 package org.gerryai.htn.simple.problem.impl;
 
-import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
@@ -34,7 +34,7 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleProblem implements Problem<ImmutableOperator, ImmutableMethod,
+public class SimpleProblem implements Problem<ImmutableDomain, ImmutableOperator, ImmutableMethod,
 		ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 
@@ -51,9 +51,7 @@ public class SimpleProblem implements Problem<ImmutableOperator, ImmutableMethod
 	/**
 	 * The domain to operate in.
 	 */
-	private Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
-			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domain;
+	private ImmutableDomain domain;
 	
 	/**
 	 * {@inheritDoc}
@@ -86,18 +84,14 @@ public class SimpleProblem implements Problem<ImmutableOperator, ImmutableMethod
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
-			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> getDomain() {
+	public final ImmutableDomain getDomain() {
 		return domain;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setDomain(Domain<ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
-			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domain) {
+	public final void setDomain(ImmutableDomain domain) {
 		this.domain = domain;
 	}
 

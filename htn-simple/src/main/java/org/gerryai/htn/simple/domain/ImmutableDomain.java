@@ -15,29 +15,22 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.planner.impl;
+package org.gerryai.htn.simple.domain;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-
-import org.gerryai.htn.simple.domain.ImmutableDomain;
-import org.junit.Test;
+import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePlannerFactoryTest {
-
-	/**
-	 * Test that the factory can create a simple planner.
-	 */
-	@Test
-	public void testCreate() {
-		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
-		SimplePlannerFactory factory = new SimplePlannerFactory();
-		
-		assertTrue(factory.create(mockDomain) instanceof SimplePlanner);
-	}
+public interface ImmutableDomain extends Domain<ImmutableOperator, ImmutableMethod,
+            ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+            ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
 
 }

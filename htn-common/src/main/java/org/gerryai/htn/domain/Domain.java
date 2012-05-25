@@ -54,21 +54,9 @@ public interface Domain<
 	Set<O> getOperators();
 	
 	/**
-	 * Set the available operators for this domain.
-	 * @param operators the set of operators
-	 */
-	void setOperators(Set<O> operators);
-	
-	/**
 	 * Get the set of methods available for this domain.
 	 * @return the methods
 	 */
 	Set<M> getMethods();
-	
-	/**
-	 * Set the available methods for this domain.
-	 * @param methods the set of methods
-	 */
-	void setMethods(Set<M> methods);
-	
+
 }

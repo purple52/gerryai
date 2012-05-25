@@ -15,29 +15,45 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.planner.impl;
+package org.gerryai.htn.simple.domain;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-
-import org.gerryai.htn.simple.domain.ImmutableDomain;
-import org.junit.Test;
+import java.util.Set;
 
 /**
+ * Builder interface for an immutable domain.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class SimplePlannerFactoryTest {
+public interface ImmutableDomainBuilder {
+	
+	/**
+	 * Add an operator to the domain.
+	 * @param operator the operator to add
+	 * @return the updated builder
+	 */
+	ImmutableDomainBuilder addOperator(ImmutableOperator operator);
+	
+	/**
+	 * Add a method to the domain.
+	 * @param method the method to add
+	 * @return the updated builder
+	 */
+	ImmutableDomainBuilder addMethod(ImmutableMethod method);
 
 	/**
-	 * Test that the factory can create a simple planner.
-	 */
-	@Test
-	public void testCreate() {
-		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
-		SimplePlannerFactory factory = new SimplePlannerFactory();
-		
-		assertTrue(factory.create(mockDomain) instanceof SimplePlanner);
-	}
+	 * Get the set of operators added to this builder.
+     * @return the operators
+     */
+    Set<ImmutableOperator> getOperators();
 
+    /**
+     * Get the methods added to this builder.
+     * @return the methods
+     */
+    Set<ImmutableMethod> getMethods();
+	
+	/**
+	 * Build the domain.
+	 * @return the domain
+	 */
+	ImmutableDomain build();
 }
