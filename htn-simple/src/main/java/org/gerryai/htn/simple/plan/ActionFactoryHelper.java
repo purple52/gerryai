@@ -17,11 +17,13 @@
  */
 package org.gerryai.htn.simple.plan;
 
+import java.util.Map;
+
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
@@ -31,6 +33,7 @@ import org.gerryai.logic.Variable;
  * @param <T> type of logical term this helper has to deal with
  * @param <K> type of task this helper works with
  * @param <V> type of variable this helper works with
+ * @param <C> type of constant thishelper works with
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ActionFactoryHelper<
@@ -38,7 +41,8 @@ public interface ActionFactoryHelper<
         T extends Term,
         K extends Task<T>,
         I extends Condition,
-        V extends Variable> {
+        V extends Variable,
+        C extends Constant> {
 	
 	/**
 	 * Get the operator for the given task.
@@ -55,6 +59,6 @@ public interface ActionFactoryHelper<
 	 * @return a set of bindings that ground this operator to implement this task
 	 * @throws TaskNotActionable if a set of bindings cannot be generated
 	 */
-	Bindings getBindings(K task, O operator) throws TaskNotActionable;
+	Map<V, C> getBindings(K task, O operator) throws TaskNotActionable;
 
 }

@@ -21,6 +21,7 @@ import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.State;
@@ -28,10 +29,12 @@ import org.gerryai.htn.simple.planner.impl.NonPrimitiveTaskNotFound;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
+ * @param <A> type of action this planner works with
  * @param <O> type of operator this planner helper uses
  * @param <M> type of method the planner helper works with
  * @param <T> type of term the planner works with
@@ -40,10 +43,12 @@ import org.gerryai.logic.Variable;
  * @param <C> type of constraint this planner works with
  * @param <I> type of condition the planner uses
  * @param <V> type of variable the planner uses
+ * @param <S> type of constant the planner works with
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface PlannerHelper<
+        A extends Action<O, I, V, S>,
 		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
@@ -51,7 +56,8 @@ public interface PlannerHelper<
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
 		I extends Condition,
-		V extends Variable> {
+		V extends Variable,
+		S extends Constant> {
 	
 	/**
 	 * Check for obvious reasons why the given task network is unsolvable.
@@ -68,7 +74,7 @@ public interface PlannerHelper<
 	 * @return the plan
 	 * @throws PlanNotFound if no plan exists
 	 */
-	Plan<O, I, V> findPlanForPrimitive(State state, N taskNetwork) throws PlanNotFound;
+	Plan<A, O, I, V, S> findPlanForPrimitive(State state, N taskNetwork) throws PlanNotFound;
 	
 	/**
 	 * Try to get a non-primitive task from a given network.

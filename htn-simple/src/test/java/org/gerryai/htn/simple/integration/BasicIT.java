@@ -30,12 +30,14 @@ import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.logic.impl.SimpleConstant;
 import org.gerryai.htn.simple.logic.impl.SimpleLogicFactory;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
+import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.planner.impl.SimplePlannerFactory;
 import org.gerryai.htn.simple.planner.impl.SimplePlanningService;
 import org.gerryai.htn.simple.problem.impl.SimpleProblem;
@@ -171,16 +173,16 @@ public class BasicIT {
 		problem.setTaskNetwork(taskNetwork);
 		
 		
-		Plan<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>> plan = planningService.solve(problem);
+		Plan<ImmutableAction, ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> plan = planningService.solve(problem);
 		
 		assertEquals(2,plan.getActions().size());
 		assertEquals("drop", plan.getActions().get(0).getOperator().getName());
-		assertEquals(plan.getActions().get(0).getBindings().getMap().size(),1);
-		assertEquals(plan.getActions().get(0).getBindings().getMap()
+		assertEquals(plan.getActions().get(0).getBindings().size(),1);
+		assertEquals(plan.getActions().get(0).getBindings()
 				.get(plan.getActions().get(0).getOperator().getArguments().get(0)), constantKiwi);
 		assertEquals(plan.getActions().get(1).getOperator().getName(),"pickup");
-		assertEquals(plan.getActions().get(1).getBindings().getMap().size(),1);
-		assertEquals(plan.getActions().get(1).getBindings().getMap()
+		assertEquals(plan.getActions().get(1).getBindings().size(),1);
+		assertEquals(plan.getActions().get(1).getBindings()
 				.get(plan.getActions().get(1).getOperator().getArguments().get(0)), constantBanjo);
 
 	}

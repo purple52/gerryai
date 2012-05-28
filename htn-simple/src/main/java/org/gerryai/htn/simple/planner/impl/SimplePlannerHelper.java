@@ -19,7 +19,6 @@ package org.gerryai.htn.simple.planner.impl;
 
 import java.util.List;
 
-import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.planner.PlanNotFound;
@@ -32,10 +31,12 @@ import org.gerryai.htn.simple.decomposition.UnifierNotFound;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.logic.impl.SimpleUnifier;
-import org.gerryai.htn.simple.plan.ActionFactory;
+import org.gerryai.htn.simple.plan.ImmutableAction;
+import org.gerryai.htn.simple.plan.ImmutableActionFactory;
 import org.gerryai.htn.simple.plan.PlanFactory;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.PlannerHelper;
@@ -49,20 +50,20 @@ import org.gerryai.htn.tasknetwork.Task;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePlannerHelper implements PlannerHelper<ImmutableOperator, ImmutableMethod,
+public class SimplePlannerHelper implements PlannerHelper<ImmutableAction, ImmutableOperator, ImmutableMethod,
         ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
+		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> {
 
 	/**
 	 * Factory for creating actions.
 	 */
-	private ActionFactory<ImmutableOperator, ImmutableTerm<?>, ImmutableTask,
-	        ImmutableCondition<?>, ImmutableVariable<?>> actionFactory;
+	private ImmutableActionFactory actionFactory;
 	
 	/**
 	 * Factory for creating plans.
 	 */
-	private PlanFactory<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>> planFactory;
+	private PlanFactory<ImmutableAction, ImmutableOperator, ImmutableCondition<?>,
+	        ImmutableVariable<?>, ImmutableConstant<?>> planFactory;
 	
 	/**
 	 * Service for decomposing tasks.
@@ -91,9 +92,9 @@ public class SimplePlannerHelper implements PlannerHelper<ImmutableOperator, Imm
 	 * @param sortService the sorting service
 	 */
 	public SimplePlannerHelper(
-			ActionFactory<ImmutableOperator, ImmutableTerm<?>, ImmutableTask,
-					ImmutableCondition<?>, ImmutableVariable<?>> actionFactory,
-			PlanFactory<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>> planFactory,
+	        ImmutableActionFactory actionFactory,
+			PlanFactory<ImmutableAction, ImmutableOperator, ImmutableCondition<?>,
+			ImmutableVariable<?>, ImmutableConstant<?>> planFactory,
 			DecompositionService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableSubstitution> decompositionservice,
 			UnificationService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
@@ -117,17 +118,19 @@ public class SimplePlannerHelper implements PlannerHelper<ImmutableOperator, Imm
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Plan<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>>
+	public final Plan<ImmutableAction, ImmutableOperator, ImmutableCondition<?>,
+	    ImmutableVariable<?>, ImmutableConstant<?>>
 		findPlanForPrimitive(State state, ImmutableTaskNetwork taskNetwork) throws PlanNotFound {
 		// TODO: Confirm implementation
 		// TODO: Enforce constraints completely
 	    List<ImmutableTask> sortedTasks = sortService.sortByConstaints(
 	            taskNetwork.getTasks(), taskNetwork.getConstraints());
 
-		Plan<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>> plan = planFactory.create();
+		Plan<ImmutableAction, ImmutableOperator, ImmutableCondition<?>,
+		        ImmutableVariable<?>, ImmutableConstant<?>> plan = planFactory.create();
 		
 		for (ImmutableTask task : sortedTasks) {
-			Action<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>> action;
+			ImmutableAction action;
 			try {
 				action = actionFactory.create(task);
 			} catch (TaskNotActionable e) {

@@ -17,16 +17,19 @@
  */
 package org.gerryai.htn.simple.plan.impl;
 
-import org.gerryai.htn.plan.Action;
-import org.gerryai.htn.plan.Bindings;
+import java.util.Collections;
+import java.util.Map;
+
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
+import org.gerryai.htn.simple.plan.ImmutableAction;
 
 /**
+ * An immutable implementation of an action that provides a builder for construction.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleAction implements Action<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>> {
+public class SimpleAction implements ImmutableAction {
 
 	/**
 	 * Operator that this action is a grounded instance of.
@@ -36,8 +39,16 @@ public class SimpleAction implements Action<ImmutableOperator, ImmutableConditio
 	/**
 	 * Bindings that ground the operator.
 	 */
-	private Bindings bindings;
+	private Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings;
 	
+	/**
+	 * Constructor only called by the builder class.
+	 * @param builder the builder
+	 */
+	protected SimpleAction(Builder builder) {
+	    this.operator = builder.getOperator();
+	    this.bindings = builder.getBindings();
+	}
 	/**
 	 * {@inheritDoc}
 	 */
@@ -48,22 +59,68 @@ public class SimpleAction implements Action<ImmutableOperator, ImmutableConditio
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setOperator(ImmutableOperator operator) {
-		this.operator = operator;
+	public final Map<ImmutableVariable<?>, ImmutableConstant<?>> getBindings() {
+		return Collections.unmodifiableMap(bindings);
 	}
-
+	
 	/**
-	 * {@inheritDoc}
+	 * Builder class for SimpleAction objects.
+	 * @author David Edwards <david@more.fool.me.uk>
 	 */
-	public final Bindings getBindings() {
-		return bindings;
-	}
+	public static class Builder {
+	    
+	    /**
+	     * Operator that this action is a grounded instance of.
+	     */
+	    private ImmutableOperator operator;
+	    
+	    /**
+	     * Bindings that ground the operator.
+	     */
+	    private Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings;
+	    
+	    /**
+	     * Set the operator the action to be built will implement.
+	     * @param operator the operator
+	     * @return an updated builder
+	     */
+	    public final Builder setOperator(ImmutableOperator operator) {
+	        this.operator = operator;
+	        return this;
+	    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setBindings(Bindings bindings) {
-		this.bindings = bindings;
-	}
+	    /**
+	     * Set the bindings the action to be built will be grounded with.
+	     * @param bindings the bindings
+	     * @return an updated builder
+	     */
+	    public final Builder setBindings(Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings) {
+	        this.bindings = bindings;
+	        return this;
+	    }
+	    
+	    /**
+	     * Get the operator the action to be built will implement.
+	     * @return the operator
+	     */
+	    protected final ImmutableOperator getOperator() {
+	        return operator;
+	    }
 
+	    /**
+	     * Get the bindings that the action to be built will be grounded with.
+	     * @return the bindings
+	     */
+	    protected final Map<ImmutableVariable<?>, ImmutableConstant<?>> getBindings() {
+	        return bindings;
+	    }
+	    
+	    /**
+	     * Build the action.
+	     * @return the action
+	     */
+	    public final ImmutableAction build() {
+	        return new SimpleAction(this);
+	    }
+	}
 }

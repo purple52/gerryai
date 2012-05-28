@@ -22,15 +22,18 @@ import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
  * Interface for a service that can solve problems.
+ * @param <A> type of action this service works with
  * @param <D> type of domain this service works with
  * @param <O> type of operator this service works with
  * @param <M> type of method this service works with
@@ -40,10 +43,12 @@ import org.gerryai.logic.Variable;
  * @param <C> type of constraint this service works with
  * @param <I> the class of condition this service will handle
  * @param <V> type of variable this service will handle
+ * @param <S> type of constant this service will handle
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface PlanningService<
+        A extends Action<O, I, V, S>,
         D extends Domain<O, M, T, K, N, C, I, V>,
 		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
@@ -52,7 +57,8 @@ public interface PlanningService<
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
 		I extends Condition,
-		V extends Variable> {
+		V extends Variable,
+		S extends Constant> {
 	
 	/**
 	 * Find a plan that solve the given problem.
@@ -60,6 +66,6 @@ public interface PlanningService<
 	 * @return a solution
 	 * @throws PlanNotFound if no plan exists for the given problem
 	 */
-	Plan<O, I, V> solve(Problem<D, O, M, T, K, N, C, I, V> problem) throws PlanNotFound;
+	Plan<A, O, I, V, S> solve(Problem<D, O, M, T, K, N, C, I, V> problem) throws PlanNotFound;
 	
 }

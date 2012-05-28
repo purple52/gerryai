@@ -22,6 +22,7 @@ import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
@@ -31,6 +32,8 @@ import org.gerryai.logic.Variable;
  * @param <T> type of logical term this factory has to deal with
  * @param <K> type of task this factory works with
  * @param <V> type of variable this factory works with
+ * @param <C> type of constant this factory works with
+ * @param <A> type of action this factory generates
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ActionFactory<
@@ -38,7 +41,9 @@ public interface ActionFactory<
         T extends Term,
         K extends Task<T>,
         I extends Condition,
-        V extends Variable> {
+        V extends Variable,
+        C extends Constant,
+        A extends Action<O, I, V, C>> {
 
 	/**
 	 * Convert a task into an action.
@@ -46,5 +51,5 @@ public interface ActionFactory<
 	 * @return the action for this task
 	 * @throws TaskNotActionable if the task cannot be converted into an action
 	 */
-	Action<O, I, V> create(K task) throws TaskNotActionable;
+	A create(K task) throws TaskNotActionable;
 }

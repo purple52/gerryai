@@ -17,31 +17,17 @@
  */
 package org.gerryai.htn.simple.plan;
 
-import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Action;
-import org.gerryai.htn.plan.Plan;
-import org.gerryai.logic.Constant;
-import org.gerryai.logic.Variable;
+import org.gerryai.htn.simple.domain.ImmutableOperator;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableConstant;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 
 /**
- * @param <A> type of action this factory uses
- * @param <O> type of operator this factory uses
- * @param <I> type of condition the factory uses
- * @param <V> type of variable this factory uses
- * @param <S> type of constant this factory uses
+ * Interface for an immutable action.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface PlanFactory<
-        A extends Action<O, I, V, S>,
-        O extends Operator<I, V>,
-        I extends Condition,
-        V extends Variable,
-        S extends Constant> {
+public interface ImmutableAction extends
+        Action<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> {
 
-	/**
-	 * Create a new empty plan.
-	 * @return an empty plan
-	 */
-	Plan<A, O, I, V, S> create();
 }

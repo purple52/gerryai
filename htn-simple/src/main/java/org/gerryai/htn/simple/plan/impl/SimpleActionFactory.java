@@ -17,54 +17,52 @@
  */
 package org.gerryai.htn.simple.plan.impl;
 
-import org.gerryai.htn.plan.Bindings;
+import java.util.Map;
+
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
-import org.gerryai.htn.simple.plan.ActionFactory;
-import org.gerryai.htn.simple.plan.ActionFactoryHelper;
+import org.gerryai.htn.simple.plan.ImmutableAction;
+import org.gerryai.htn.simple.plan.ImmutableActionFactory;
+import org.gerryai.htn.simple.plan.ImmutableActionFactoryHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
+ * Factory for creating actions.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class SimpleActionFactory implements ActionFactory<ImmutableOperator,
-		ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>, ImmutableVariable<?>> {
+public class SimpleActionFactory implements ImmutableActionFactory {
 
 	/**
 	 * Helper object for doing the difficult bits.
 	 */
-	private ActionFactoryHelper<ImmutableOperator, ImmutableTerm<?>, ImmutableTask,
-	        ImmutableCondition<?>, ImmutableVariable<?>> actionFactoryHelper;
+	private ImmutableActionFactoryHelper actionFactoryHelper;
 	
 	/**
 	 * Constructor taking all required dependencies.
 	 * @param actionFactoryHelper the action factory
 	 */
-	public SimpleActionFactory(ActionFactoryHelper<ImmutableOperator, ImmutableTerm<?>,
-			ImmutableTask, ImmutableCondition<?>, ImmutableVariable<?>> actionFactoryHelper) {
+	public SimpleActionFactory(ImmutableActionFactoryHelper actionFactoryHelper) {
 		this.actionFactoryHelper = actionFactoryHelper;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleAction create(ImmutableTask task) throws TaskNotActionable {
+	public final ImmutableAction create(ImmutableTask task) throws TaskNotActionable {
 
 		// Try and get the operator
 		ImmutableOperator operator = actionFactoryHelper.getOperator(task);
 		
 		// Try and get the bindings
-		Bindings bindings = actionFactoryHelper.getBindings(task, operator);
+		Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings = actionFactoryHelper.getBindings(task, operator);
 		
-		// Finally, create and add this action
-		SimpleAction action = new SimpleAction();
-		action.setOperator(operator);
-		action.setBindings(bindings);
-		return action;
+		// Finally create this action
+		return new SimpleAction.Builder()
+		    .setOperator(operator)
+		    .setBindings(bindings)
+		    .build();
 	}
 	
 

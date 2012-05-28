@@ -22,14 +22,17 @@ import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
  * Interface for factories that create planners.
+ * @param <A> type of action this planner factory uses
  * @param <D> type of domain this planner factory creates
  * @param <O> type of operator this planner factory uses
  * @param <M> type of method this planner factory uses
@@ -39,10 +42,12 @@ import org.gerryai.logic.Variable;
  * @param <C> type of constraint this planner factory uses
  * @param <I> type of condition this factory uses
  * @param <V> type of variable this factory uses
+ * @param <S> type of constantr this factory uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface PlannerFactory<
+        A extends Action<O, I, V, S>,
         D extends Domain<O, M, T, K, N, C, I, V>,
 		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
@@ -51,13 +56,14 @@ public interface PlannerFactory<
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
 		I extends Condition,
-		V extends Variable> {
+		V extends Variable,
+		S extends Constant> {
 
 	/**
 	 * Create a planner instance using the domain provided.
 	 * @param domain the domain the planner will work in
 	 * @return the planner
 	 */
-	Planner<O, M, T, K, N, C, I, V> create(D domain);
+	Planner<A, O, M, T, K, N, C, I, V, S> create(D domain);
 	
 }

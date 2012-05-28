@@ -17,8 +17,11 @@
  */
 package org.gerryai.htn.plan;
 
+import java.util.Map;
+
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Operator;
+import org.gerryai.logic.Constant;
 import org.gerryai.logic.Variable;
 
 /**
@@ -28,10 +31,11 @@ import org.gerryai.logic.Variable;
  * @param <O> type of operator this action uses
  * @param <I> type of condition the action uses
  * @param <V> type of variable the action uses
+ * @param <C> type of constant the action uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface Action<O extends Operator<I, V>, I extends Condition, V extends Variable> {
+public interface Action<O extends Operator<I, V>, I extends Condition, V extends Variable, C extends Constant> {
 
 	/**
 	 * Get the operator that this action uses.
@@ -40,20 +44,9 @@ public interface Action<O extends Operator<I, V>, I extends Condition, V extends
 	O getOperator();
 	
 	/**
-	 * Set the operator that this action uses.
-	 * @param operator operator to set
-	 */
-	void setOperator(O operator);
-	
-	/**
 	 * Get the bindings for this action.
 	 * @return the bindings
 	 */
-	Bindings getBindings();
+	Map<V, C> getBindings();
 	
-	/**
-	 * Set the bindings for this action.
-	 * @param bindings bindings to set
-	 */
-	void setBindings(Bindings bindings);
 }

@@ -32,10 +32,12 @@ import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
-import org.gerryai.htn.simple.plan.ActionFactory;
-import org.gerryai.htn.simple.plan.ActionFactoryHelper;
+import org.gerryai.htn.simple.plan.ImmutableAction;
+import org.gerryai.htn.simple.plan.ImmutableActionFactory;
+import org.gerryai.htn.simple.plan.ImmutableActionFactoryHelper;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactory;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactoryHelper;
 import org.gerryai.htn.simple.plan.impl.SimplePlanFactory;
@@ -50,9 +52,9 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  *
  */
 public class SimplePlannerFactory implements
-		PlannerFactory<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
-		ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
+		PlannerFactory<ImmutableAction, ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
+		ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>,
+		ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> {
 
 	/**
 	 * {@inheritDoc}
@@ -64,11 +66,8 @@ public class SimplePlannerFactory implements
 				ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domainHelper
 				= new SimpleDomainHelper(domain);
 		
-		ActionFactoryHelper<ImmutableOperator, ImmutableTerm<?>, ImmutableTask,
-		        ImmutableCondition<?>, ImmutableVariable<?>>
-				actionFactoryHelper = new SimpleActionFactoryHelper(domainHelper);
-		ActionFactory<ImmutableOperator, ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>, ImmutableVariable<?>>
-				actionFactory = new SimpleActionFactory(actionFactoryHelper);
+		ImmutableActionFactoryHelper actionFactoryHelper = new SimpleActionFactoryHelper(domainHelper);
+		ImmutableActionFactory actionFactory = new SimpleActionFactory(actionFactoryHelper);
 		SimplePlanFactory planFactory = new SimplePlanFactory();
 		
 		aima.core.logic.fol.Unifier unifier = new aima.core.logic.fol.Unifier();

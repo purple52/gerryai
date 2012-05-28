@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.domain.OperatorNotFound;
-import org.gerryai.htn.plan.Bindings;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.DomainHelper;
@@ -30,21 +29,18 @@ import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
-import org.gerryai.htn.simple.plan.ActionFactoryHelper;
+import org.gerryai.htn.simple.plan.ImmutableActionFactoryHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.logic.Constant;
-import org.gerryai.logic.Term;
-import org.gerryai.logic.Variable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleActionFactoryHelper implements ActionFactoryHelper<ImmutableOperator,
-        ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>, ImmutableVariable<?>> {
+public class SimpleActionFactoryHelper implements ImmutableActionFactoryHelper {
 
 	/**
 	 * Service for the domain that we are working in.
@@ -81,11 +77,12 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<ImmutableO
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Bindings getBindings(ImmutableTask task, ImmutableOperator operator) throws TaskNotActionable {
+	public final Map<ImmutableVariable<?>, ImmutableConstant<?>>
+	        getBindings(ImmutableTask task, ImmutableOperator operator) 
+	                throws TaskNotActionable {
 
-		Bindings bindings = new Bindings();
-		Map<Variable, Constant> bindingsMap = new HashMap<Variable, Constant>();
-		bindings.setMap(bindingsMap);
+	    Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings =
+	            new HashMap<ImmutableVariable<?>, ImmutableConstant<?>>();
 		
 		List<ImmutableTerm<?>> taskArguments = task.getArguments();
 		List<ImmutableVariable<?>> operatorArguments = operator.getArguments();
@@ -95,15 +92,15 @@ public class SimpleActionFactoryHelper implements ActionFactoryHelper<ImmutableO
 		}
 		
 		for (int i = 0; i < taskArguments.size(); i++) {
-			Variable variable = operatorArguments.get(i);
-			Term taskArgument = taskArguments.get(i);
-			Constant constant;
+		    ImmutableVariable<?> variable = operatorArguments.get(i);
+			ImmutableTerm<?> taskArgument = taskArguments.get(i);
+			ImmutableConstant<?> constant;
 			try {
-				constant = (Constant) taskArgument;
+				constant = (ImmutableConstant<?>) taskArgument;
 			} catch (ClassCastException e) {
 				throw new TaskNotActionable("Task argument is not a constant", e);
 			}
-			bindingsMap.put(variable, constant);
+			bindings.put(variable, constant);
 		}
 		
 		return bindings;
