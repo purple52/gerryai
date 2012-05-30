@@ -17,21 +17,19 @@
  */
 package org.gerryai.htn.simple.plan.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.gerryai.htn.plan.Plan;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableConstant;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ImmutableAction;
+import org.gerryai.htn.simple.plan.ImmutablePlan;
+import org.gerryai.htn.simple.plan.ImmutablePlanBuilder;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePlan implements Plan<ImmutableAction, ImmutableOperator,
-        ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> {
+public class SimplePlan implements ImmutablePlan {
 
 	/**
 	 * List of actions that implement this plan.
@@ -39,17 +37,58 @@ public class SimplePlan implements Plan<ImmutableAction, ImmutableOperator,
 	private List<ImmutableAction> actions;
 	
 	/**
-	 * {@inheritDoc}
+	 * Constructor.
+	 * @param builder the builder to build from
 	 */
-	public final List<ImmutableAction> getActions() {
-		return actions;
+	protected SimplePlan(Builder builder) {
+	    actions = new ArrayList<ImmutableAction>(builder.getActions());
 	}
-
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setActions(List<ImmutableAction> actions) {
-		this.actions = actions;
+	public final List<ImmutableAction> getActions() {
+		return Collections.unmodifiableList(actions);
 	}
-
+	
+	/**
+	 * Builder class for SimplePlan objects.
+	 * @author David Edwards <david@more.fool.me.uk>
+	 */
+	public static class Builder implements ImmutablePlanBuilder {
+	    
+	    /**
+	     * The actions to use when building the plan.
+	     */
+	    private List<ImmutableAction> actions;
+	    
+	    /**
+	     * Constructor.
+	     */
+	    protected Builder() {
+	        actions = new ArrayList<ImmutableAction>();
+	    }
+	    
+	    /**
+	     * {@inheritDoc}
+	     */
+	    public final ImmutablePlanBuilder addAction(ImmutableAction action) {
+	        actions.add(action);
+	        return this;
+	    }
+	    
+	    /**
+	     * {@inheritDoc}
+	     */
+	    public final ImmutablePlan build() {
+	        return new SimplePlan(this);
+	    }
+	    
+	    /**
+	     * Get the actions added to this builder.
+	     * @return the actions
+	     */
+	    protected final List<ImmutableAction> getActions() {
+	        return Collections.unmodifiableList(actions);
+	    }
+	}
 }

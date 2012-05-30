@@ -362,14 +362,10 @@ public class SimpleTaskNetworkTest {
         mockTasks.add(mockTaskA);
         mockTasks.add(mockTaskB);
         
-        @SuppressWarnings("rawtypes")
-        ImmutableConstraint mockConstraintA = mock(ImmutableConstraint.class);
-        @SuppressWarnings("rawtypes")
-        ImmutableConstraint mockConstraintB = mock(ImmutableConstraint.class);
-        @SuppressWarnings("rawtypes")
-        ImmutableConstraint mockConstraintC = mock(ImmutableConstraint.class);
-        @SuppressWarnings("rawtypes")
-        ImmutableConstraint mockConstraintD = mock(ImmutableConstraint.class);
+        ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
+        ImmutableConstraint<?> mockConstraintB = mock(ImmutableConstraint.class);
+        ImmutableConstraint<?> mockConstraintC = mock(ImmutableConstraint.class);
+        ImmutableConstraint<?> mockConstraintD = mock(ImmutableConstraint.class);
         Set<ImmutableConstraint<?>> mockConstraints = new HashSet<ImmutableConstraint<?>>();
         mockConstraints.add(mockConstraintA);
         mockConstraints.add(mockConstraintB);

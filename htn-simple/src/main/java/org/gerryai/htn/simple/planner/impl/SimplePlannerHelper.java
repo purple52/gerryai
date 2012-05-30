@@ -19,7 +19,6 @@ package org.gerryai.htn.simple.planner.impl;
 
 import java.util.List;
 
-import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.State;
@@ -29,17 +28,16 @@ import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.decomposition.UnifierNotFound;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.logic.impl.SimpleUnifier;
 import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.plan.ImmutableActionFactory;
-import org.gerryai.htn.simple.plan.PlanFactory;
+import org.gerryai.htn.simple.plan.ImmutablePlan;
+import org.gerryai.htn.simple.plan.ImmutablePlanBuilder;
+import org.gerryai.htn.simple.plan.ImmutablePlanBuilderFactory;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
-import org.gerryai.htn.simple.planner.PlannerHelper;
+import org.gerryai.htn.simple.planner.ImmutablePlannerHelper;
 import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
@@ -47,13 +45,11 @@ import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 
 /**
+ * Planner helper.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class SimplePlannerHelper implements PlannerHelper<ImmutableAction, ImmutableOperator, ImmutableMethod,
-        ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> {
-
+public class SimplePlannerHelper implements ImmutablePlannerHelper {
+    
 	/**
 	 * Factory for creating actions.
 	 */
@@ -62,8 +58,7 @@ public class SimplePlannerHelper implements PlannerHelper<ImmutableAction, Immut
 	/**
 	 * Factory for creating plans.
 	 */
-	private PlanFactory<ImmutableAction, ImmutableOperator, ImmutableCondition<?>,
-	        ImmutableVariable<?>, ImmutableConstant<?>> planFactory;
+	private ImmutablePlanBuilderFactory planBuilderFactory;
 	
 	/**
 	 * Service for decomposing tasks.
@@ -86,22 +81,21 @@ public class SimplePlannerHelper implements PlannerHelper<ImmutableAction, Immut
 	/**
 	 * Constructor providing all the dependencies required to function.
 	 * @param actionFactory the action factory
-	 * @param planFactory the plan factory
+	 * @param planBuilderFactory the plan factory
 	 * @param decompositionservice the decomposition service
 	 * @param unificationService the unification service
 	 * @param sortService the sorting service
 	 */
 	public SimplePlannerHelper(
 	        ImmutableActionFactory actionFactory,
-			PlanFactory<ImmutableAction, ImmutableOperator, ImmutableCondition<?>,
-			ImmutableVariable<?>, ImmutableConstant<?>> planFactory,
+	        ImmutablePlanBuilderFactory planBuilderFactory,
 			DecompositionService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableSubstitution> decompositionservice,
 			UnificationService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableCondition<?>>  unificationService,
 			SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> sortService) {
 		this.actionFactory = actionFactory;
-		this.planFactory = planFactory;
+		this.planBuilderFactory = planBuilderFactory;
 		this.decompositionService = decompositionservice;
 		this.unificationService = unificationService;
 		this.sortService = sortService;
@@ -118,16 +112,13 @@ public class SimplePlannerHelper implements PlannerHelper<ImmutableAction, Immut
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Plan<ImmutableAction, ImmutableOperator, ImmutableCondition<?>,
-	    ImmutableVariable<?>, ImmutableConstant<?>>
-		findPlanForPrimitive(State state, ImmutableTaskNetwork taskNetwork) throws PlanNotFound {
+	public final ImmutablePlan findPlanForPrimitive(State state, ImmutableTaskNetwork taskNetwork) throws PlanNotFound {
 		// TODO: Confirm implementation
 		// TODO: Enforce constraints completely
 	    List<ImmutableTask> sortedTasks = sortService.sortByConstaints(
 	            taskNetwork.getTasks(), taskNetwork.getConstraints());
 
-		Plan<ImmutableAction, ImmutableOperator, ImmutableCondition<?>,
-		        ImmutableVariable<?>, ImmutableConstant<?>> plan = planFactory.create();
+		ImmutablePlanBuilder planBuilder = planBuilderFactory.createBuilder();
 		
 		for (ImmutableTask task : sortedTasks) {
 			ImmutableAction action;
@@ -136,10 +127,10 @@ public class SimplePlannerHelper implements PlannerHelper<ImmutableAction, Immut
 			} catch (TaskNotActionable e) {
 				throw new PlanNotFound("Could not turn task into action", e);
 			}
-			plan.getActions().add(action);
+			planBuilder = planBuilder.addAction(action);
 		}
 		
-		return plan;
+		return planBuilder.build();
 	}
 
 	/**

@@ -26,7 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
@@ -35,12 +34,12 @@ import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ImmutableAction;
+import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
-import org.gerryai.htn.simple.planner.PlannerHelper;
+import org.gerryai.htn.simple.planner.ImmutablePlannerHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -62,17 +61,13 @@ public class SimplePlannerTest {
 		
 		State mockState = mock(State.class);
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
-		@SuppressWarnings("unchecked")
-		Plan<ImmutableAction, ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> mockPlan = mock(Plan.class);
+		ImmutablePlan mockPlan = mock(ImmutablePlan.class);
 		List<ImmutableAction> actions = new ArrayList<ImmutableAction>();
 		when(mockPlan.getActions()).thenReturn(actions);
 		
 		// Create a mock planner helper that will throw an exception if no primitive tasks were found
 		// And no plan if an empty network is searched
-		@SuppressWarnings("unchecked")
-		PlannerHelper<ImmutableAction, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>>
-				mockPlannerHelper = mock(PlannerHelper.class);
+		ImmutablePlannerHelper mockPlannerHelper = mock(ImmutablePlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenThrow(new NonPrimitiveTaskNotFound());
 		when(mockPlannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork)).thenReturn(mockPlan);
 		@SuppressWarnings("unchecked")
@@ -84,7 +79,7 @@ public class SimplePlannerTest {
 		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
 		
 		// Try and find a plan
-		Plan<ImmutableAction, ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> plan = planner.findPlan(mockState, mockTaskNetwork);
+		ImmutablePlan plan = planner.findPlan(mockState, mockTaskNetwork);
 		
 		assertTrue(plan.getActions().isEmpty());
 	}
@@ -107,10 +102,7 @@ public class SimplePlannerTest {
 		
 		// Create a mock planner helper that will throw an exception since no non-primitive tasks were found
 		// and an exception when trying to action the primitive task
-		@SuppressWarnings("unchecked")
-		PlannerHelper<ImmutableAction, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>>
-				mockPlannerHelper = mock(PlannerHelper.class);
+		ImmutablePlannerHelper mockPlannerHelper = mock(ImmutablePlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenThrow(new NonPrimitiveTaskNotFound());
 		when(mockPlannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork)).thenThrow(new PlanNotFound());
 		@SuppressWarnings("unchecked")
@@ -143,10 +135,7 @@ public class SimplePlannerTest {
 		
 		// Create a mock planner helper that will throw an exception since no non-primitive tasks were found
 		// and an exception when trying to action the primitive task
-		@SuppressWarnings("unchecked")
-		PlannerHelper<ImmutableAction, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>>
-				mockPlannerHelper = mock(PlannerHelper.class);
+		ImmutablePlannerHelper mockPlannerHelper = mock(ImmutablePlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenReturn(mockTaskA);
 		@SuppressWarnings("unchecked")
 		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
@@ -193,10 +182,7 @@ public class SimplePlannerTest {
 		
 		// Create a mock planner helper that will throw an exception since no non-primitive tasks were found
 		// and an exception when trying to action the primitive task
-		@SuppressWarnings("unchecked")
-		PlannerHelper<ImmutableAction, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>>
-				mockPlannerHelper = mock(PlannerHelper.class);
+		ImmutablePlannerHelper mockPlannerHelper = mock(ImmutablePlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenReturn(mockTaskA);
 		when(mockPlannerHelper.decompose(mockTaskNetwork, mockTaskA, mockMethodA)).thenThrow(new DecompositionNotFound());
 		when(mockPlannerHelper.decompose(mockTaskNetwork, mockTaskA, mockMethodB)).thenThrow(new DecompositionNotFound());
@@ -224,8 +210,7 @@ public class SimplePlannerTest {
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
 		
-		@SuppressWarnings("unchecked")
-		Plan<ImmutableAction, ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> mockPlan = mock(Plan.class);
+		ImmutablePlan mockPlan = mock(ImmutablePlan.class);
 		List<ImmutableAction> actions = new ArrayList<ImmutableAction>();
 		ImmutableAction mockActionA = mock(ImmutableAction.class);
 		actions.add(mockActionA);
@@ -233,10 +218,7 @@ public class SimplePlannerTest {
 		
 		// Create a mock planner helper that will throw an exception if no primitive tasks were found
 		// and a plan that returns one action in response to our network of one primitive task
-		@SuppressWarnings("unchecked")
-		PlannerHelper<ImmutableAction, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>>
-				mockPlannerHelper = mock(PlannerHelper.class);
+		ImmutablePlannerHelper mockPlannerHelper = mock(ImmutablePlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenThrow(new NonPrimitiveTaskNotFound());
 		when(mockPlannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork)).thenReturn(mockPlan);
 		@SuppressWarnings("unchecked")
@@ -248,7 +230,7 @@ public class SimplePlannerTest {
 		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
 		
 		// Try and find a plan
-		Plan<ImmutableAction, ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> plan = planner.findPlan(mockState, mockTaskNetwork);
+		ImmutablePlan plan = planner.findPlan(mockState, mockTaskNetwork);
 		
 		assertEquals(1, plan.getActions().size());
 		assertEquals(mockActionA, plan.getActions().get(0));
@@ -280,8 +262,7 @@ public class SimplePlannerTest {
 		when(mockDecomposedTaskNetwork.getTasks()).thenReturn(decomposedTasks);
 		
 		// The target plan containing action B
-		@SuppressWarnings("unchecked")
-		Plan<ImmutableAction, ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> mockPlan = mock(Plan.class);
+		ImmutablePlan mockPlan = mock(ImmutablePlan.class);
 		List<ImmutableAction> actions = new ArrayList<ImmutableAction>();
 		ImmutableAction mockActionB = mock(ImmutableAction.class);
 		actions.add(mockActionB);
@@ -298,10 +279,7 @@ public class SimplePlannerTest {
 		when(mockDomainHelper.getMethodsByTask(mockTaskA)).thenReturn(methods);
 		
 		// Create a mock planner helper
-		@SuppressWarnings("unchecked")
-		PlannerHelper<ImmutableAction, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>>
-				mockPlannerHelper = mock(PlannerHelper.class);
+		ImmutablePlannerHelper mockPlannerHelper = mock(ImmutablePlannerHelper.class);
 		// Task A is primitive
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenReturn(mockTaskA);
 		// Method A will decompose task A into task B
@@ -315,7 +293,7 @@ public class SimplePlannerTest {
 		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
 		
 		// Try and find a plan
-		Plan<ImmutableAction, ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> plan = planner.findPlan(mockState, mockTaskNetwork);
+		ImmutablePlan plan = planner.findPlan(mockState, mockTaskNetwork);
 		
 		assertEquals(1, plan.getActions().size());
 		assertEquals(mockActionB, plan.getActions().get(0));

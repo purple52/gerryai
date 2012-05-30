@@ -15,34 +15,38 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.plan.impl;
+package org.gerryai.htn.simple.planner;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.domain.ImmutableDomain;
+import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableConstant;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ImmutableAction;
-import org.gerryai.htn.simple.plan.PlanFactory;
+import org.gerryai.htn.simple.plan.ImmutablePlan;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
- * Factory for creating simple plans.
+ * Interface for a planner factory that creates planners that generate immutable plans.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimplePlanFactory implements PlanFactory<ImmutableAction,
-        ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> {
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final SimplePlan create() {
-		SimplePlan plan = new SimplePlan();
-		List<ImmutableAction> actions = new ArrayList<ImmutableAction>();
-		plan.setActions(actions);
-		
-		return plan;
-	}
+public interface ImmutablePlannerFactory extends PlannerFactory<
+        ImmutablePlanner,
+        ImmutablePlan,
+        ImmutableAction,
+        ImmutableDomain,
+        ImmutableOperator,
+        ImmutableMethod,
+        ImmutableTerm<?>,
+		ImmutableTask,
+		ImmutableTaskNetwork,
+		ImmutableConstraint<?>,
+		ImmutableCondition<?>,
+		ImmutableVariable<?>,
+		ImmutableConstant<?>> {
 
 }

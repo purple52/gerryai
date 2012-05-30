@@ -32,34 +32,30 @@ import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
-import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.plan.ImmutableActionFactory;
 import org.gerryai.htn.simple.plan.ImmutableActionFactoryHelper;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactory;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactoryHelper;
-import org.gerryai.htn.simple.plan.impl.SimplePlanFactory;
-import org.gerryai.htn.simple.planner.PlannerFactory;
+import org.gerryai.htn.simple.plan.impl.SimplePlanBuilderFactory;
+import org.gerryai.htn.simple.planner.ImmutablePlanner;
+import org.gerryai.htn.simple.planner.ImmutablePlannerFactory;
 import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.planner.sort.impl.SimpleSortService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
+ * Simple factory for creating planners that generate imutable plans.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class SimplePlannerFactory implements
-		PlannerFactory<ImmutableAction, ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
-		ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>,
-		ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> {
+public class SimplePlannerFactory implements ImmutablePlannerFactory {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimplePlanner create(ImmutableDomain domain) {
+	public final ImmutablePlanner create(ImmutableDomain domain) {
 		
 		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 				ImmutableTask, ImmutableTaskNetwork,
@@ -68,7 +64,7 @@ public class SimplePlannerFactory implements
 		
 		ImmutableActionFactoryHelper actionFactoryHelper = new SimpleActionFactoryHelper(domainHelper);
 		ImmutableActionFactory actionFactory = new SimpleActionFactory(actionFactoryHelper);
-		SimplePlanFactory planFactory = new SimplePlanFactory();
+		SimplePlanBuilderFactory planFactory = new SimplePlanBuilderFactory();
 		
 		aima.core.logic.fol.Unifier unifier = new aima.core.logic.fol.Unifier();
 		AIMAConverter<ImmutableTerm<?>, ImmutableVariable<?>, ImmutableTask> converter = new AIMAConverterImpl();

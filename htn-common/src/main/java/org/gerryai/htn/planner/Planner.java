@@ -32,6 +32,7 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface that a planner must implement.
+ * @param <P> type of plan this planner creates
  * @param <A> type of action this planner works with
  * @param <O> type of operator this planner works with
  * @param <M> type of method this planner works with
@@ -45,6 +46,7 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Planner<
+        P extends Plan<A, O, I, V, S>,
         A extends Action<O, I, V, S>,
 		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
@@ -63,6 +65,6 @@ public interface Planner<
 	 * @return the plan found
 	 * @throws PlanNotFound if no plan could be found
 	 */
-	Plan<A, O, I, V, S> findPlan(State state, N taskNetwork) throws PlanNotFound;
+	P findPlan(State state, N taskNetwork) throws PlanNotFound;
 		
 }

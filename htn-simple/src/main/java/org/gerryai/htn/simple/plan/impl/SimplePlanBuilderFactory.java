@@ -15,33 +15,22 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.plan;
+package org.gerryai.htn.simple.plan.impl;
 
-import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.plan.Action;
-import org.gerryai.htn.plan.Plan;
-import org.gerryai.logic.Constant;
-import org.gerryai.logic.Variable;
+import org.gerryai.htn.simple.plan.ImmutablePlanBuilder;
+import org.gerryai.htn.simple.plan.ImmutablePlanBuilderFactory;
 
 /**
- * @param <A> type of action this factory uses
- * @param <O> type of operator this factory uses
- * @param <I> type of condition the factory uses
- * @param <V> type of variable this factory uses
- * @param <S> type of constant this factory uses
+ * Factory for creating simple plans.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface PlanFactory<
-        A extends Action<O, I, V, S>,
-        O extends Operator<I, V>,
-        I extends Condition,
-        V extends Variable,
-        S extends Constant> {
+public class SimplePlanBuilderFactory implements ImmutablePlanBuilderFactory {
 
 	/**
-	 * Create a new empty plan.
-	 * @return an empty plan
+	 * {@inheritDoc}
 	 */
-	Plan<A, O, I, V, S> create();
+	public final ImmutablePlanBuilder createBuilder() {
+		return new SimplePlan.Builder();
+	}
+
 }

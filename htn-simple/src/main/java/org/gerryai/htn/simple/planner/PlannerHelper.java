@@ -34,6 +34,8 @@ import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
+ * Interface for a helper class to support a planner.
+ * @param <P> type of plan this helper handles
  * @param <A> type of action this planner works with
  * @param <O> type of operator this planner helper uses
  * @param <M> type of method the planner helper works with
@@ -45,9 +47,9 @@ import org.gerryai.logic.Variable;
  * @param <V> type of variable the planner uses
  * @param <S> type of constant the planner works with
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public interface PlannerHelper<
+        P extends Plan<A, O, I, V, S>,
         A extends Action<O, I, V, S>,
 		O extends Operator<I, V>,
 		M extends Method<T, K, N, C>,
@@ -74,7 +76,7 @@ public interface PlannerHelper<
 	 * @return the plan
 	 * @throws PlanNotFound if no plan exists
 	 */
-	Plan<A, O, I, V, S> findPlanForPrimitive(State state, N taskNetwork) throws PlanNotFound;
+	P findPlanForPrimitive(State state, N taskNetwork) throws PlanNotFound;
 	
 	/**
 	 * Try to get a non-primitive task from a given network.

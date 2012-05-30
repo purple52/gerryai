@@ -50,7 +50,7 @@ public interface Plan<
 	/**
 	 * Set the actions that make up this plan.
 	 * @param actions actions to set
-	 */
+	 *
 	void setActions(List<A> actions);
-
+	*/
 }
