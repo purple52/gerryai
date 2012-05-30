@@ -25,6 +25,7 @@ import org.gerryai.htn.simple.constraint.impl.SimpleConstraintFactory;
 import org.gerryai.htn.simple.constraint.impl.SimplePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
+import org.gerryai.htn.simple.domain.ImmutableDomainBuilder;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
@@ -77,11 +78,9 @@ public class BasicIT {
 				.addArgument(variableA)
 				.build();
 		
-		ImmutableDomain domain = domainBuilderFactory.createDomainBuilder()
+		ImmutableDomainBuilder domainBuilder = domainBuilderFactory.createDomainBuilder()
 				.addOperator(operatorA)
-				.addOperator(operatorB)
-				.build();
-		//SimpleDomainHelper domainHelper = new SimpleDomainHelper(domain);
+				.addOperator(operatorB);
 		
 		SimpleVariable variableX = new SimpleVariable("x");
 		SimpleVariable variableY = new SimpleVariable("y");
@@ -148,8 +147,8 @@ public class BasicIT {
 				.setTask(methodBTask)
 				.setTaskNetwork(methodBTaskNetwork)
 				.build();
-		domain.getMethods().add(methodA);
-		domain.getMethods().add(methodB);
+		domainBuilder.addMethod(methodA);
+		domainBuilder.addMethod(methodB);
 		
 		// Build the task network to be solved
 		SimpleConstant constantKiwi = new SimpleConstant("kiwi");
@@ -165,6 +164,7 @@ public class BasicIT {
 				.build();
 		
 		// Create the problem by putting together the domain and network to be solved
+		ImmutableDomain domain = domainBuilder.build();
 		SimpleProblem problem = new SimpleProblem();
 		problem.setDomain(domain);
 		problem.setTaskNetwork(taskNetwork);

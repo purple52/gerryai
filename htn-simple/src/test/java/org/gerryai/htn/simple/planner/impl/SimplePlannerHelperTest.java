@@ -179,10 +179,13 @@ public class SimplePlannerHelperTest {
         ImmutablePlanBuilder mockPlanBuilderA = mock(ImmutablePlanBuilder.class);
         ImmutablePlanBuilder mockPlanBuilderB = mock(ImmutablePlanBuilder.class);
         ImmutablePlanBuilder mockPlanBuilderC = mock(ImmutablePlanBuilder.class);
+        ImmutablePlanBuilder mockPlanBuilderD = mock(ImmutablePlanBuilder.class);
+        ImmutablePlanBuilder mockPlanBuilderE = mock(ImmutablePlanBuilder.class);
         ImmutablePlanBuilderFactory mockPlanBuilderFactory = mock(ImmutablePlanBuilderFactory.class);
         when(mockPlanBuilderFactory.createBuilder()).thenReturn(mockPlanBuilderA);
         when(mockPlanBuilderC.build()).thenReturn(mockPlan);
-		
+        when(mockPlanBuilderE.build()).thenReturn(mockPlan);
+        
 		ImmutableActionFactory mockActionFactory = mock(ImmutableActionFactory.class);
 		@SuppressWarnings("unchecked")
 		DecompositionService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
@@ -219,7 +222,9 @@ public class SimplePlannerHelperTest {
 		when(mockActionFactory.create(mockTaskB)).thenReturn(mockActionB);
 		when(mockPlanBuilderA.addAction(mockActionA)).thenReturn(mockPlanBuilderB);
 		when(mockPlanBuilderB.addAction(mockActionB)).thenReturn(mockPlanBuilderC);
-        
+		when(mockPlanBuilderA.addAction(mockActionB)).thenReturn(mockPlanBuilderD);
+		when(mockPlanBuilderD.addAction(mockActionA)).thenReturn(mockPlanBuilderE);
+		
 		// Try to find a plan
 		ImmutablePlan plan = plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);		
 		
