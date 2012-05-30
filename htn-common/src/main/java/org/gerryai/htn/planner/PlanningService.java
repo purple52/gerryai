@@ -33,6 +33,8 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface for a service that can solve problems.
+ * @param <Pl> type of plan this service generates
+ * @param <Pr> type of problem this service handles
  * @param <A> type of action this service works with
  * @param <D> type of domain this service works with
  * @param <O> type of operator this service works with
@@ -48,6 +50,8 @@ import org.gerryai.logic.Variable;
  *
  */
 public interface PlanningService<
+        Pl extends Plan<A, O, I, V, S>,
+        Pr extends Problem<D, O, M, T, K, N, C, I, V>,
         A extends Action<O, I, V, S>,
         D extends Domain<O, M, T, K, N, C, I, V>,
 		O extends Operator<I, V>,
@@ -66,6 +70,6 @@ public interface PlanningService<
 	 * @return a solution
 	 * @throws PlanNotFound if no plan exists for the given problem
 	 */
-	Plan<A, O, I, V, S> solve(Problem<D, O, M, T, K, N, C, I, V> problem) throws PlanNotFound;
+	Pl solve(Pr problem) throws PlanNotFound;
 	
 }

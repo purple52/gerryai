@@ -59,33 +59,15 @@ public interface Problem<
 	State getState();
 	
 	/**
-	 * Set the state of the problem.
-	 * @param state state to set
-	 */
-	void setState(State state);
-	
-	/**
 	 * Get the task network for this problem.
 	 * @return the task network
 	 */
 	N getTaskNetwork();
 	
 	/**
-	 * Set the task network for this problem.
-	 * @param taskNetwork task network to set
-	 */
-	void setTaskNetwork(N taskNetwork);
-	
-	/**
 	 * Get the domain for this problem.
 	 * @return the domain
 	 */
 	D getDomain();
-	
-	/**
-	 * Set the domain for this problem.
-	 * @param domain domain to set
-	 */
-	void setDomain(D domain);
 
 }

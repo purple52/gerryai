@@ -20,24 +20,23 @@ package org.gerryai.htn.simple.integration;
 import static org.junit.Assert.*;
 
 import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.simple.constraint.impl.SimpleBeforeConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.impl.SimpleConstraintFactory;
-import org.gerryai.htn.simple.constraint.impl.SimplePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
-import org.gerryai.htn.simple.domain.ImmutableDomainBuilder;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.logic.impl.SimpleConstant;
 import org.gerryai.htn.simple.logic.impl.SimpleLogicFactory;
-import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.planner.impl.SimplePlannerFactory;
 import org.gerryai.htn.simple.planner.impl.SimplePlanningService;
+import org.gerryai.htn.simple.problem.ImmutableProblem;
 import org.gerryai.htn.simple.problem.impl.SimpleProblem;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
@@ -68,7 +67,7 @@ public class BasicIT {
 		SimplePlanningService planningService = new SimplePlanningService(plannerFactory);
 		SimpleConstraintFactory constraintFactory = new SimpleConstraintFactory();
 		
-		SimpleVariable variableA = new SimpleVariable("a");
+		ImmutableVariable<?> variableA = logicFactory.createVariable("a");
 		ImmutableOperator operatorA = domainBuilderFactory.createOperatorBuilder()
 				.setName("pickup")
 				.addArgument(variableA)
@@ -78,13 +77,9 @@ public class BasicIT {
 				.addArgument(variableA)
 				.build();
 		
-		ImmutableDomainBuilder domainBuilder = domainBuilderFactory.createDomainBuilder()
-				.addOperator(operatorA)
-				.addOperator(operatorB);
-		
-		SimpleVariable variableX = new SimpleVariable("x");
-		SimpleVariable variableY = new SimpleVariable("y");
-
+		ImmutableVariable<?> variableX = logicFactory.createVariable("x");
+		ImmutableVariable<?> variableY = logicFactory.createVariable("y");
+        
 		ImmutableTask methodATask = taskNetworkBuilderFactory.createTaskBuilder()
 				.setName("swap")
 				.addArgument(variableX)
@@ -102,8 +97,8 @@ public class BasicIT {
 				.setIsPrimitive(true)
 				.build();
 		ImmutableCondition<?> beforeConditionA = logicFactory.createCondition("have", variableX);
-		SimpleBeforeConstraint beforeConstraintA = constraintFactory.createBeforeConstraint(methodASubTask1, beforeConditionA);
-		SimplePrecedenceConstraint precedenceConstraintA = constraintFactory.createPrecedenceConstraint(methodASubTask1, methodASubTask2);
+		ImmutableConstraint<?> beforeConstraintA = constraintFactory.createBeforeConstraint(methodASubTask1, beforeConditionA);
+		ImmutableConstraint<?> precedenceConstraintA = constraintFactory.createPrecedenceConstraint(methodASubTask1, methodASubTask2);
         ImmutableTaskNetwork methodATaskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
                 .addTask(methodASubTask1)
                 .addTask(methodASubTask2)
@@ -128,8 +123,8 @@ public class BasicIT {
 				.setIsPrimitive(true)
 				.build();
 		ImmutableCondition<?> beforeConditionB = logicFactory.createCondition("have", variableY);
-        SimpleBeforeConstraint beforeConstraintB = constraintFactory.createBeforeConstraint(methodBSubTask1, beforeConditionB);
-        SimplePrecedenceConstraint precedenceConstraintB = constraintFactory.createPrecedenceConstraint(methodBSubTask1, methodBSubTask2);
+		ImmutableConstraint<?> beforeConstraintB = constraintFactory.createBeforeConstraint(methodBSubTask1, beforeConditionB);
+		ImmutableConstraint<?> precedenceConstraintB = constraintFactory.createPrecedenceConstraint(methodBSubTask1, methodBSubTask2);
 		ImmutableTaskNetwork methodBTaskNetwork = taskNetworkBuilderFactory.createTaskNetworkBuilder()
 				.addTask(methodBSubTask1)
 				.addTask(methodBSubTask2)
@@ -147,8 +142,13 @@ public class BasicIT {
 				.setTask(methodBTask)
 				.setTaskNetwork(methodBTaskNetwork)
 				.build();
-		domainBuilder.addMethod(methodA);
-		domainBuilder.addMethod(methodB);
+		
+	    ImmutableDomain domain =  domainBuilderFactory.createDomainBuilder()
+	            .addOperator(operatorA)
+	            .addOperator(operatorB)
+	            .addMethod(methodA)
+	            .addMethod(methodB)
+	            .build();
 		
 		// Build the task network to be solved
 		SimpleConstant constantKiwi = new SimpleConstant("kiwi");
@@ -163,11 +163,11 @@ public class BasicIT {
 				.addTask(task)
 				.build();
 		
-		// Create the problem by putting together the domain and network to be solved
-		ImmutableDomain domain = domainBuilder.build();
-		SimpleProblem problem = new SimpleProblem();
-		problem.setDomain(domain);
-		problem.setTaskNetwork(taskNetwork);
+		// Create the problem by putting together the domain and network to be solved;
+		ImmutableProblem problem = new SimpleProblem.Builder()
+		        .setDomain(domain)
+		        .setTaskNetwork(taskNetwork)
+		        .build();
 		
 		
 		ImmutablePlan plan = planningService.solve(problem);

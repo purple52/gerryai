@@ -1,15 +1,8 @@
 package org.gerryai.htn.simple.problem.impl;
 
-import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.problem.State;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.simple.problem.ImmutableProblem;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
@@ -34,9 +27,7 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleProblem implements Problem<ImmutableDomain, ImmutableOperator, ImmutableMethod,
-		ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
+public class SimpleProblem implements ImmutableProblem {
 
 	/**
 	 * The initial state for this problem.
@@ -54,17 +45,20 @@ public class SimpleProblem implements Problem<ImmutableDomain, ImmutableOperator
 	private ImmutableDomain domain;
 	
 	/**
+	 * Constructor called only by builder class.
+	 * @param builder the builder to build from
+	 */
+	protected SimpleProblem(Builder builder) {
+	    this.state = builder.getState();
+	    this.taskNetwork = builder.getTaskNetwork();
+	    this.domain = builder.getDomain();
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	public final State getState() {
 		return state;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setState(State state) {
-		this.state = state;
 	}
 
 	/**
@@ -77,22 +71,91 @@ public class SimpleProblem implements Problem<ImmutableDomain, ImmutableOperator
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void setTaskNetwork(ImmutableTaskNetwork taskNetwork) {
-		this.taskNetwork = taskNetwork;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	public final ImmutableDomain getDomain() {
 		return domain;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Builder class for SimpleProblem.
+	 * @author David Edwards <david@more.fool.me.uk>
 	 */
-	public final void setDomain(ImmutableDomain domain) {
-		this.domain = domain;
-	}
+	public static class Builder {
+	    
+	    /**
+	     * The initial state for this problem.
+	     */
+	    private State state;
+	    
+	    /**
+	     * The task network to achieve.
+	     */
+	    private ImmutableTaskNetwork taskNetwork;
+	    
+	    /**
+	     * The domain to operate in.
+	     */
+	    private ImmutableDomain domain;
+	    
+	    /**
+	     * Set the initial state.
+	     * @param state the state
+	     * @return an updated builder object
+	     */
+	    public final Builder setState(State state) {
+	        this.state = state;
+	        return this;
+	    }
+	    
+	    /**
+	     * Set the task network to be solved.
+	     * @param taskNetwork the task network
+         * @return an updated builder object
+  	     */
+	    public final Builder setTaskNetwork(ImmutableTaskNetwork taskNetwork) {
+	        this.taskNetwork = taskNetwork;
+	        return this;
+	    }
+	    
+    	/**
+    	 * Set the domain to be used by the problem.
+    	 * @param domain the domain
+    	 * @return an updated builder object
+    	 */
+    	public final Builder setDomain(ImmutableDomain domain) {
+    		this.domain = domain;
+    		return this;
+    	}
 
+    	/**
+         * Get the initial state for the problem.
+         * @return the initial state
+         */
+        public final State getState() {
+            return state;
+        }
+
+        /**
+         * Get the task network to solve.
+         * @return the task network
+         */
+        public final ImmutableTaskNetwork getTaskNetwork() {
+            return taskNetwork;
+        }
+
+        /**
+         * Get the domain to work in.
+         * @return the domain
+         */
+        public final ImmutableDomain getDomain() {
+            return domain;
+        }
+    	
+        /**
+         * Build the finished problem.
+         * @return the problem
+         */
+        public final ImmutableProblem build() {
+            return new SimpleProblem(this);
+        }
+	}
 }
