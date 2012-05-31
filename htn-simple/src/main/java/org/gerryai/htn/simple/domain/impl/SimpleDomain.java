@@ -85,7 +85,7 @@ public class SimpleDomain implements ImmutableDomain {
 	    /**
 	     * Default constructor.
 	     */
-	    protected Builder() {
+	    public Builder() {
 	        operators = new HashSet<ImmutableOperator>();
 	        methods = new HashSet<ImmutableMethod>();
 	    }

@@ -3,6 +3,7 @@ package org.gerryai.htn.simple.problem.impl;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.problem.ImmutableProblem;
+import org.gerryai.htn.simple.problem.ImmutableProblemBuilder;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
@@ -79,7 +80,7 @@ public class SimpleProblem implements ImmutableProblem {
 	 * Builder class for SimpleProblem.
 	 * @author David Edwards <david@more.fool.me.uk>
 	 */
-	public static class Builder {
+	public static class Builder implements ImmutableProblemBuilder {
 	    
 	    /**
 	     * The initial state for this problem.

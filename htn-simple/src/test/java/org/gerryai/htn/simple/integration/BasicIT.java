@@ -24,6 +24,7 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.impl.SimpleConstraintFactory;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
+import org.gerryai.htn.simple.domain.ImmutableDomainBuilderFactory;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
@@ -34,10 +35,13 @@ import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.logic.impl.SimpleConstant;
 import org.gerryai.htn.simple.logic.impl.SimpleLogicFactory;
 import org.gerryai.htn.simple.plan.ImmutablePlan;
+import org.gerryai.htn.simple.planner.ImmutablePlannerFactory;
+import org.gerryai.htn.simple.planner.ImmutablePlanningService;
 import org.gerryai.htn.simple.planner.impl.SimplePlannerFactory;
 import org.gerryai.htn.simple.planner.impl.SimplePlanningService;
 import org.gerryai.htn.simple.problem.ImmutableProblem;
-import org.gerryai.htn.simple.problem.impl.SimpleProblem;
+import org.gerryai.htn.simple.problem.ImmutableProblemBuilderFactory;
+import org.gerryai.htn.simple.problem.impl.SimpleProblemBuilderFactory;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -46,8 +50,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
+ * End-to-end integration test of simple implementation using the JSHOP basic example.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public class BasicIT {
 
@@ -56,15 +60,16 @@ public class BasicIT {
 	public void test() throws PlanNotFound, InvalidConstraint {
 		
 	    ImmutableLogicFactory logicFactory = new SimpleLogicFactory();
-		SimpleDomainBuilderFactory domainBuilderFactory
-				= new SimpleDomainBuilderFactory();
+		ImmutableDomainBuilderFactory domainBuilderFactory = new SimpleDomainBuilderFactory();
+		ImmutableProblemBuilderFactory problemBuilderFactory = new SimpleProblemBuilderFactory();
+        
 		GenericConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> constraintValidatorFactory
 				= new GenericConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>>();
 		SimpleTaskNetworkFactory taskNetworkBuilderFactory
 				= new SimpleTaskNetworkFactory(constraintValidatorFactory, logicFactory);
 		
-		SimplePlannerFactory plannerFactory = new SimplePlannerFactory();
-		SimplePlanningService planningService = new SimplePlanningService(plannerFactory);
+		ImmutablePlannerFactory plannerFactory = new SimplePlannerFactory();
+		ImmutablePlanningService planningService = new SimplePlanningService(plannerFactory);
 		SimpleConstraintFactory constraintFactory = new SimpleConstraintFactory();
 		
 		ImmutableVariable<?> variableA = logicFactory.createVariable("a");
@@ -164,7 +169,7 @@ public class BasicIT {
 				.build();
 		
 		// Create the problem by putting together the domain and network to be solved;
-		ImmutableProblem problem = new SimpleProblem.Builder()
+		ImmutableProblem problem = problemBuilderFactory.createProblemBuilder()
 		        .setDomain(domain)
 		        .setTaskNetwork(taskNetwork)
 		        .build();

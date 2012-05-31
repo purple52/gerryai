@@ -17,29 +17,16 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import org.gerryai.htn.domain.Effect;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilder;
-import org.gerryai.htn.simple.domain.DomainBuilderFactory;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableDomainBuilderFactory;
 import org.gerryai.htn.simple.domain.ImmutableMethodBuilder;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.domain.ImmutableOperatorBuilder;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
+ * Simple implementation of a factory for generating immutable domain builders.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class SimpleDomainBuilderFactory implements
-		DomainBuilderFactory<SimpleDomain, ImmutableOperator, ImmutableMethod,
-		ImmutableTerm<?>, ImmutableTask,
-				ImmutableTaskNetwork, ImmutableConstraint<?>,
-				ImmutableCondition<?>, ImmutableVariable<?>, Effect, ImmutableOperatorBuilder> {
+public class SimpleDomainBuilderFactory implements ImmutableDomainBuilderFactory {
 
 	/**
 	 * {@inheritDoc}

@@ -18,31 +18,17 @@
 package org.gerryai.htn.simple.planner.impl;
 
 import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.planner.PlanningService;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.ImmutableDomain;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableConstant;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
-import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.planner.ImmutablePlanner;
 import org.gerryai.htn.simple.planner.ImmutablePlannerFactory;
+import org.gerryai.htn.simple.planner.ImmutablePlanningService;
 import org.gerryai.htn.simple.problem.ImmutableProblem;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  * A simple domain non-specific planning service that uses the simple planner.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimplePlanningService implements PlanningService<ImmutablePlan,
-        ImmutableProblem, ImmutableAction, ImmutableDomain, ImmutableOperator,
-		ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> {
+public class SimplePlanningService implements ImmutablePlanningService {
 
 	/**
 	 * A factory for creating planners.
