@@ -20,9 +20,8 @@ package org.gerryai.htn.simple.constraint.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
-import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
@@ -36,8 +35,7 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  * 
  */
-public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeConstraint>,
-        ValidatableBeforeConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
+public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstraint {
 
     /**
      * The set of tasks that this constraint must hold for.
@@ -114,7 +112,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
      * Builder class for SimpleBeforeConstraint.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder implements ImmutableConstraintBuilder<SimpleBeforeConstraint> {
+    public static class Builder implements ImmutableConstraintBuilder<ImmutableValidatableBeforeConstraint> {
         
         /**
          * The set of tasks that this constraint must hold for.
@@ -168,7 +166,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
         /**
          * {@inheritDoc}
          */
-        public final Builder copy(SimpleBeforeConstraint constraint) {
+        public final Builder copy(ImmutableValidatableBeforeConstraint constraint) {
             this.tasks = new HashSet<ImmutableTask>(constraint.getTasks());
             this.condition = constraint.getCondition();
             return this;
@@ -211,7 +209,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
          * Build the constraint.
          * @return the finished constraint
          */
-        public final SimpleBeforeConstraint build() {
+        public final ImmutableValidatableBeforeConstraint build() {
             return new SimpleBeforeConstraint(this);
         }
     }
@@ -219,7 +217,7 @@ public class SimpleBeforeConstraint implements ImmutableConstraint<SimpleBeforeC
     /**
      * {@inheritDoc}
      */
-    public final ImmutableConstraintBuilder<SimpleBeforeConstraint> createCopyBuilder() {
+    public final ImmutableConstraintBuilder<ImmutableValidatableBeforeConstraint> createCopyBuilder() {
         return new Builder()
             .copy(this);
     }

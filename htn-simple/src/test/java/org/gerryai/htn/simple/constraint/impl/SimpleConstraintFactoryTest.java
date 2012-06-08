@@ -23,6 +23,10 @@ import static org.mockito.Mockito.mock;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.simple.constraint.ImmutableValidatableAfterConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableValidatableBeforeConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableValidatableBetweenConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.junit.Test;
@@ -50,7 +54,7 @@ public class SimpleConstraintFactoryTest {
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
 		
 		//Try and create the constraint
-		SimplePrecedenceConstraint constraint = factory.createPrecedenceConstraint(mockTasksOne, mockTasksTwo);
+		ImmutableValidatablePrecedenceConstraint constraint = factory.createPrecedenceConstraint(mockTasksOne, mockTasksTwo);
 		
 		assertEquals(mockTasksOne, constraint.getPrecedingTasks());
 		assertEquals(mockTasksTwo, constraint.getProcedingTasks());
@@ -68,7 +72,7 @@ public class SimpleConstraintFactoryTest {
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
 		
 		//Try and create the constraint
-		SimpleBeforeConstraint constraint = factory.createBeforeConstraint(mockTasks, mockCondition);
+		ImmutableValidatableBeforeConstraint constraint = factory.createBeforeConstraint(mockTasks, mockCondition);
 		
 		assertEquals(mockTasks,constraint.getTasks());
 		assertEquals(mockCondition,constraint.getCondition());
@@ -86,7 +90,7 @@ public class SimpleConstraintFactoryTest {
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
 		
 		//Try and create the constraint
-		SimpleAfterConstraint constraint = factory.createAfterConstraint(mockTasks, mockCondition);
+		ImmutableValidatableAfterConstraint constraint = factory.createAfterConstraint(mockTasks, mockCondition);
 		
 		assertEquals(mockTasks,constraint.getTasks());
 		assertEquals(mockCondition,constraint.getCondition());
@@ -105,7 +109,7 @@ public class SimpleConstraintFactoryTest {
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
 		
 		//Try and create the constraint
-		SimpleBetweenConstraint constraint = factory.createBetweenConstraint(mockTasksA, mockTasksB, mockCondition);
+		ImmutableValidatableBetweenConstraint constraint = factory.createBetweenConstraint(mockTasksA, mockTasksB, mockCondition);
 		
 		assertEquals(mockTasksA,constraint.getPrecedingTasks());
 		assertEquals(mockTasksB,constraint.getProcedingTasks());

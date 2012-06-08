@@ -24,6 +24,7 @@ import static org.mockito.Mockito.verify;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.simple.constraint.ImmutableValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
@@ -49,7 +50,7 @@ public class SimplePrecedenceConstraintTest {
         ImmutableTask mockProcedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
-        SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
+        ImmutableValidatablePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
                 .setPrecedingTasks(mockPrecedingTasks)
                 .setProcedingTasks(mockProcedingTasks)
                 .build();
@@ -72,7 +73,7 @@ public class SimplePrecedenceConstraintTest {
         mockProcedingTasks.add(mockProcedingTask);
         @SuppressWarnings("unchecked")
         ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> mockValidator = mock(ConstraintValidator.class);
-        SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
+        ImmutableValidatablePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
                 .setPrecedingTasks(mockPrecedingTasks)
                 .setProcedingTasks(mockProcedingTasks)
                 .build();
@@ -97,7 +98,7 @@ public class SimplePrecedenceConstraintTest {
         mockProcedingTasks.add(mockProcedingTask);
         @SuppressWarnings("unchecked")
         ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> mockValidator = mock(ConstraintValidator.class);
-        SimplePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
+        ImmutableValidatablePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
                 .setPrecedingTasks(mockPrecedingTasks)
                 .setProcedingTasks(mockProcedingTasks)
                 .build();
@@ -120,12 +121,12 @@ public class SimplePrecedenceConstraintTest {
 
         ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
 
-        SimplePrecedenceConstraint initialConstraint = new SimplePrecedenceConstraint.Builder()
+        ImmutableValidatablePrecedenceConstraint initialConstraint = new SimplePrecedenceConstraint.Builder()
                 .setPrecedingTasks(mockPrecedingTasks)
                 .setProcedingTasks(mockProcedingTasks)
                 .build();
         
-        SimplePrecedenceConstraint constraint = initialConstraint.createCopyBuilder()
+        ImmutableValidatablePrecedenceConstraint constraint = initialConstraint.createCopyBuilder()
                 .apply(mockSubstitution)
                 .build();
 
@@ -158,12 +159,12 @@ public class SimplePrecedenceConstraintTest {
         mockNewProcedingTasks.add(mockTaskD);
         mockNewProcedingTasks.add(mockTaskE);
 
-        SimplePrecedenceConstraint initialConstraint = new SimplePrecedenceConstraint.Builder()
+        ImmutableValidatablePrecedenceConstraint initialConstraint = new SimplePrecedenceConstraint.Builder()
                 .setPrecedingTasks(mockPrecedingTasks)
                 .setProcedingTasks(mockProcedingTasks)
                 .build();
         
-        SimplePrecedenceConstraint constraint = initialConstraint.createCopyBuilder()
+        ImmutableValidatablePrecedenceConstraint constraint = initialConstraint.createCopyBuilder()
                 .replace(mockPrecedingTask, mockNewPrecedingTasks)
                 .replace(mockProcedingTask, mockNewProcedingTasks)
                 .build();

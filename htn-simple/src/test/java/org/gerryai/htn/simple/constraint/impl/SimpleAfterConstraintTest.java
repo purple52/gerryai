@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.simple.constraint.ImmutableValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
@@ -50,7 +51,7 @@ public class SimpleAfterConstraintTest {
         mockTasks.add(mockTask);
         ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
 
-        SimpleAfterConstraint constraint = new SimpleAfterConstraint.Builder()
+        ImmutableValidatableAfterConstraint constraint = new SimpleAfterConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockCondition)
                 .build();
@@ -71,7 +72,7 @@ public class SimpleAfterConstraintTest {
 
         @SuppressWarnings("unchecked")
         ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> mockValidator = mock(ConstraintValidator.class);
-        SimpleAfterConstraint constraint = new SimpleAfterConstraint.Builder()
+        ImmutableValidatableAfterConstraint constraint = new SimpleAfterConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockCondition)
                 .build();
@@ -99,7 +100,7 @@ public class SimpleAfterConstraintTest {
 
         @SuppressWarnings("unchecked")
         ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> mockValidator = mock(ConstraintValidator.class);
-        SimpleAfterConstraint constraint = new SimpleAfterConstraint.Builder()
+        ImmutableValidatableAfterConstraint constraint = new SimpleAfterConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockCondition)
                 .build();
@@ -125,12 +126,12 @@ public class SimpleAfterConstraintTest {
         when(mockConditionBuilderA.apply(mockSubstitution)).thenReturn(mockConditionBuilderB);
         when(mockConditionBuilderB.build()).thenReturn(mockConditionB);
 
-        SimpleAfterConstraint initialConstraint = new SimpleAfterConstraint.Builder()
+        ImmutableValidatableAfterConstraint initialConstraint = new SimpleAfterConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockConditionA)
                 .build();
         
-        SimpleAfterConstraint constraint = initialConstraint.createCopyBuilder()
+        ImmutableValidatableAfterConstraint constraint = initialConstraint.createCopyBuilder()
                 .apply(mockSubstitution)
                 .build();
 
@@ -154,12 +155,12 @@ public class SimpleAfterConstraintTest {
         mockNewTasks.add(mockTaskC);
         ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
 
-        SimpleAfterConstraint initialConstraint = new SimpleAfterConstraint.Builder()
+        ImmutableValidatableAfterConstraint initialConstraint = new SimpleAfterConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockCondition)
                 .build();
         
-        SimpleAfterConstraint constraint = initialConstraint.createCopyBuilder()
+        ImmutableValidatableAfterConstraint constraint = initialConstraint.createCopyBuilder()
                 .replace(mockTaskA, mockNewTasks)
                 .build();
 

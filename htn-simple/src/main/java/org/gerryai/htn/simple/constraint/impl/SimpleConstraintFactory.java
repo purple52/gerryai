@@ -20,22 +20,24 @@ package org.gerryai.htn.simple.constraint.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.ConstraintFactory;
+import org.gerryai.htn.simple.constraint.ImmutableConstraintFactory;
+import org.gerryai.htn.simple.constraint.ImmutableValidatableAfterConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableValidatableBeforeConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableValidatableBetweenConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleConstraintFactory implements
-        ConstraintFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
+public class SimpleConstraintFactory implements ImmutableConstraintFactory {
 
     /**
      * {@inheritDoc}
      */
-    public final SimplePrecedenceConstraint
+    public final ImmutableValidatablePrecedenceConstraint
             createPrecedenceConstraint(ImmutableTask precedingTask, ImmutableTask procedingTask) {
         Set<ImmutableTask> precedingTasks = new HashSet<ImmutableTask>(1);
         precedingTasks.add(precedingTask);
@@ -48,7 +50,7 @@ public class SimpleConstraintFactory implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimplePrecedenceConstraint
+	public final ImmutableValidatablePrecedenceConstraint
 			createPrecedenceConstraint(Set<ImmutableTask> precedingTasks, Set<ImmutableTask> procedingTasks) {
 		return new SimplePrecedenceConstraint.Builder()
 		        .setPrecedingTasks(precedingTasks)
@@ -59,7 +61,7 @@ public class SimpleConstraintFactory implements
 	   /**
      * {@inheritDoc}
      */
-    public final SimpleBeforeConstraint createBeforeConstraint(ImmutableTask task,
+    public final ImmutableValidatableBeforeConstraint createBeforeConstraint(ImmutableTask task,
             ImmutableCondition<?> condition) {
         Set<ImmutableTask> tasks = new HashSet<ImmutableTask>(1);
         tasks.add(task);
@@ -69,7 +71,7 @@ public class SimpleConstraintFactory implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleBeforeConstraint createBeforeConstraint(Set<ImmutableTask> tasks,
+	public final ImmutableValidatableBeforeConstraint createBeforeConstraint(Set<ImmutableTask> tasks,
 	        ImmutableCondition<?> condition) {
         return new SimpleBeforeConstraint.Builder()
                 .addTasks(tasks)
@@ -80,7 +82,7 @@ public class SimpleConstraintFactory implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleAfterConstraint createAfterConstraint(Set<ImmutableTask> tasks,
+	public final ImmutableValidatableAfterConstraint createAfterConstraint(Set<ImmutableTask> tasks,
 	        ImmutableCondition<?> condition) {
 		return new SimpleAfterConstraint.Builder()
 		        .addTasks(tasks)
@@ -91,7 +93,7 @@ public class SimpleConstraintFactory implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleBetweenConstraint createBetweenConstraint(Set<ImmutableTask> precedingTasks,
+	public final ImmutableValidatableBetweenConstraint createBetweenConstraint(Set<ImmutableTask> precedingTasks,
 			Set<ImmutableTask> procedingTasks, ImmutableCondition<?> condition) {
         return new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(precedingTasks)

@@ -20,9 +20,8 @@ package org.gerryai.htn.simple.constraint.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
-import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
@@ -36,8 +35,7 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterConstraint>,
-        ValidatableAfterConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
+public class SimpleAfterConstraint implements ImmutableValidatableAfterConstraint {
 
 	/**
 	 * The set of tasks that this constraint must hold for.
@@ -93,7 +91,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
     /**
      * {@inheritDoc}
      */
-    public final ImmutableConstraintBuilder<SimpleAfterConstraint> createCopyBuilder() {
+    public final ImmutableConstraintBuilder<ImmutableValidatableAfterConstraint> createCopyBuilder() {
         return new Builder()
             .copy(this);
     }
@@ -118,7 +116,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
 	 * Builder class for SimpleAfterConstraint.
 	 * @author David Edwards <david@more.fool.me.uk>
 	 */
-	public static class Builder implements ImmutableConstraintBuilder<SimpleAfterConstraint> {
+	public static class Builder implements ImmutableConstraintBuilder<ImmutableValidatableAfterConstraint> {
 	    
 	    /**
 	     * The set of tasks that this constraint must hold for.
@@ -158,7 +156,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
         /**
          * {@inheritDoc}
          */
-        public final Builder copy(SimpleAfterConstraint constraint) {
+        public final Builder copy(ImmutableValidatableAfterConstraint constraint) {
             this.tasks = new HashSet<ImmutableTask>(constraint.getTasks());
             this.condition = constraint.getCondition();
             return this;
@@ -214,7 +212,7 @@ public class SimpleAfterConstraint implements ImmutableConstraint<SimpleAfterCon
         /**
          * {@inheritDoc}
          */
-	    public final SimpleAfterConstraint build() {
+	    public final ImmutableValidatableAfterConstraint build() {
 	        return new SimpleAfterConstraint(this);
 	    }
 	}	

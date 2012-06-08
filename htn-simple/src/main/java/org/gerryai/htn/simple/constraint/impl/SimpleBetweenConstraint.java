@@ -20,9 +20,8 @@ package org.gerryai.htn.simple.constraint.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
-import org.gerryai.htn.simple.constraint.ValidatableBetweenConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
@@ -36,8 +35,7 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetweenConstraint>,
-		ValidatableBetweenConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
+public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConstraint {
 
 	/**
 	 * The set of tasks that this constraint must hold after.
@@ -107,7 +105,7 @@ public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetwee
     /**
      * {@inheritDoc}
      */
-    public final ImmutableConstraintBuilder<SimpleBetweenConstraint> createCopyBuilder() {
+    public final ImmutableConstraintBuilder<ImmutableValidatableBetweenConstraint> createCopyBuilder() {
         return new Builder()
             .copy(this);
     }
@@ -133,8 +131,7 @@ public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetwee
      * Builder class for SimpleBetweenConstraint.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder implements ImmutableConstraintBuilder<SimpleBetweenConstraint> {
-        
+    public static class Builder implements ImmutableConstraintBuilder<ImmutableValidatableBetweenConstraint> {     
         /**
          * The set of tasks that this constraint must hold after.
          */
@@ -188,7 +185,7 @@ public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetwee
         /**
          * {@inheritDoc}
          */
-        public final Builder copy(SimpleBetweenConstraint constraint) {
+        public final Builder copy(ImmutableValidatableBetweenConstraint constraint) {
             this.precedingTasks = new HashSet<ImmutableTask>(constraint.getPrecedingTasks());
             this.procedingTasks = new HashSet<ImmutableTask>(constraint.getProcedingTasks());
             this.condition = constraint.getCondition();
@@ -261,7 +258,7 @@ public class SimpleBetweenConstraint implements ImmutableConstraint<SimpleBetwee
          * Build the constraint.
          * @return the finished constraint
          */
-        public final SimpleBetweenConstraint build() {
+        public final ImmutableValidatableBetweenConstraint build() {
             return new SimpleBetweenConstraint(this);
         }
     }

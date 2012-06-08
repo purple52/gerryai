@@ -20,9 +20,8 @@ package org.gerryai.htn.simple.constraint.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
-import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
+import org.gerryai.htn.simple.constraint.ImmutableValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
@@ -36,8 +35,7 @@ import com.google.common.base.Objects;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePrecedenceConstraint>,
-		ValidatablePrecedenceConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
+public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenceConstraint {
 
 	/**
 	 * The task that must come first.
@@ -91,7 +89,7 @@ public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePre
     /**
      * {@inheritDoc}
      */
-    public final ImmutableConstraintBuilder<SimplePrecedenceConstraint> createCopyBuilder() {
+    public final ImmutableConstraintBuilder<ImmutableValidatablePrecedenceConstraint> createCopyBuilder() {
         return new Builder()
             .copy(this);
     }
@@ -116,7 +114,7 @@ public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePre
      * Builder class for SimpleBetweenConstraint.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder implements ImmutableConstraintBuilder<SimplePrecedenceConstraint> {
+    public static class Builder implements ImmutableConstraintBuilder<ImmutableValidatablePrecedenceConstraint> {
         
         /**
          * The task that must come first.
@@ -149,7 +147,7 @@ public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePre
         /**
          * {@inheritDoc}
          */
-        public final Builder copy(SimplePrecedenceConstraint constraint) {
+        public final Builder copy(ImmutableValidatablePrecedenceConstraint constraint) {
             this.precedingTasks = new HashSet<ImmutableTask>(constraint.getPrecedingTasks());
             this.procedingTasks = new HashSet<ImmutableTask>(constraint.getProcedingTasks());
             return this;
@@ -211,7 +209,7 @@ public class SimplePrecedenceConstraint	implements ImmutableConstraint<SimplePre
          * Build the constraint.
          * @return the finished constraint
          */
-        public final SimplePrecedenceConstraint build() {
+        public final ImmutableValidatablePrecedenceConstraint build() {
             return new SimplePrecedenceConstraint(this);
         }
     }

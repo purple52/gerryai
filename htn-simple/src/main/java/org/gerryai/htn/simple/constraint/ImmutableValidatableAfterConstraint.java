@@ -17,26 +17,16 @@
  */
 package org.gerryai.htn.simple.constraint;
 
-import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
- * Interface for constraints that support the operations required by this HTN implementation.
- * @param <C> the type of constraint being implemented
+ * Extension of immutable, validatable and after constraint interfaces.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableConstraint<C extends ImmutableConstraint<C>>
-        extends
-        Constraint<ImmutableTerm<?>>,
-        ValidatableConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
+public interface ImmutableValidatableAfterConstraint
+		extends ImmutableConstraint<ImmutableValidatableAfterConstraint>,
+		ValidatableAfterConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
 
-    /**
-     * Create a new builder object that can build this type of constraint.
-     * The builder returned is an immutable constraint builder, so only supports
-     * the build mechanisms that are general to all ImmutableConstraint classes.
-     * @return the builder
-     */
-    ImmutableConstraintBuilder<C> createCopyBuilder();
 }

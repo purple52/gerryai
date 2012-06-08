@@ -31,10 +31,20 @@ import org.gerryai.logic.Term;
  * @param <T> type of logical term used by the constraints created by this factory
  * @param <K> type of task used by the constraints created by this factory
  * @param <I> type of condition used by the constraints created by this factory
+ * @param <BF> type of BeforeConstraint this factory generates
+ * @param <AF> type of AfterConstraint this factory generates
+ * @param <BE> type of BetweenConstraint this factory generates
+ * @param <PR> type of PrecedenceConstraint this factory generates
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface ConstraintFactory<T extends Term, K extends Task<T>, I extends Condition> {
+public interface ConstraintFactory<
+        T extends Term,
+        K extends Task<T>,
+        I extends Condition,
+        BF extends BeforeConstraint<T, K, I>,
+        AF extends AfterConstraint<T, K, I>,
+        BE extends BetweenConstraint<T, K, I>,
+        PR extends PrecedenceConstraint<T, K>> {
 
     /**
      * Create a precedence constraint.
@@ -42,7 +52,7 @@ public interface ConstraintFactory<T extends Term, K extends Task<T>, I extends 
      * @param procedingTask the task that must come last
      * @return the constraint
      */
-    PrecedenceConstraint<T, K> createPrecedenceConstraint(K precedingTask, K procedingTask);
+    PR createPrecedenceConstraint(K precedingTask, K procedingTask);
     
     /**
 	 * Create a precedence constraint.
@@ -50,7 +60,7 @@ public interface ConstraintFactory<T extends Term, K extends Task<T>, I extends 
 	 * @param procedingTasks the tasks that must come last
 	 * @return the constraint
 	 */
-	PrecedenceConstraint<T, K> createPrecedenceConstraint(Set<K> precedingTasks, Set<K> procedingTasks);
+	PR createPrecedenceConstraint(Set<K> precedingTasks, Set<K> procedingTasks);
 	
     /**
      * Create a before constraint.
@@ -58,7 +68,7 @@ public interface ConstraintFactory<T extends Term, K extends Task<T>, I extends 
      * @param condition the condition that must be true directly before the first task in the set
      * @return the constraint
      */
-    BeforeConstraint<T, K, I> createBeforeConstraint(K task, I condition);
+    BF createBeforeConstraint(K task, I condition);
 
     /**
 	 * Create a before constraint.
@@ -66,7 +76,7 @@ public interface ConstraintFactory<T extends Term, K extends Task<T>, I extends 
 	 * @param condition the condition that must be true directly before the first task in the set
 	 * @return the constraint
 	 */
-	BeforeConstraint<T, K, I> createBeforeConstraint(Set<K> tasks, I condition);
+	BF createBeforeConstraint(Set<K> tasks, I condition);
 	
 	/**
 	 * Create an after constraint.
@@ -74,7 +84,7 @@ public interface ConstraintFactory<T extends Term, K extends Task<T>, I extends 
 	 * @param condition the condition that must be true directly after the last task in the set
 	 * @return the constraint
 	 */
-	AfterConstraint<T, K, I> createAfterConstraint(Set<K> tasks, I condition);
+	AF createAfterConstraint(Set<K> tasks, I condition);
 	
 	/**
 	 * Create a between constraint.
@@ -83,6 +93,6 @@ public interface ConstraintFactory<T extends Term, K extends Task<T>, I extends 
 	 * @param condition the condition that must be true between the two sets of tasks
 	 * @return the constraint
 	 */
-	BetweenConstraint<T, K, I> createBetweenConstraint(Set<K> precedingTasks, Set<K> procedingTasks, I condition);
+	BE createBetweenConstraint(Set<K> precedingTasks, Set<K> procedingTasks, I condition);
 
 }
