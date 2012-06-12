@@ -54,12 +54,12 @@ public class AIMAUnificationServiceTest {
 		@SuppressWarnings("unchecked")
 		AIMAConverter<ImmutableTerm<?>, Variable, ImmutableTask> aimaConverter
 				= mock(AIMAConverter.class);
-		AIMAUnificationService<Operator<Condition, Variable>, Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
-		            Condition, Variable> unificationService
+		AIMAUnificationService<Operator<Condition<ImmutableTerm<?>>, Variable>, Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
+		            Condition<ImmutableTerm<?>>, Variable> unificationService
 					= new AIMAUnificationService<
-					        Operator<Condition, Variable>,
+					        Operator<Condition<ImmutableTerm<?>>, Variable>,
 					        Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
-					        Condition, Variable>(
+					        Condition<ImmutableTerm<?>>, Variable>(
 					aimaUnifier, aimaConverter);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);

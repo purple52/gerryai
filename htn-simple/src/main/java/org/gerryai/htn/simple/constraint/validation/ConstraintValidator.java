@@ -33,7 +33,7 @@ import org.gerryai.logic.Term;
  * @param <I> type of condition the constraints use
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ConstraintValidator<T extends Term, K extends Task<T>, I extends Condition> {
+public interface ConstraintValidator<T extends Term, K extends Task<T>, I extends Condition<T>> {
 
 	/**
 	 * Validation check for simple before constraints, but does not add the constraint.

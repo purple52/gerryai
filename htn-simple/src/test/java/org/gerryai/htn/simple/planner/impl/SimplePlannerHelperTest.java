@@ -67,7 +67,7 @@ public class SimplePlannerHelperTest {
 				= mock(DecompositionService.class);
 		@SuppressWarnings("unchecked")
 		UnificationService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>> mockUnificationService = mock(UnificationService.class);
+		        ImmutableConstraint<?>, ImmutableCondition> mockUnificationService = mock(UnificationService.class);
 		@SuppressWarnings("unchecked")
 		SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> mockSortService
 		        = mock(SortService.class);
@@ -101,7 +101,7 @@ public class SimplePlannerHelperTest {
 				mockDecompositionService = mock(DecompositionService.class);
 		@SuppressWarnings("unchecked")
 		UnificationService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>> mockUnificationService = mock(UnificationService.class);
+		        ImmutableConstraint<?>, ImmutableCondition> mockUnificationService = mock(UnificationService.class);
         @SuppressWarnings("unchecked")
         SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> mockSortService
                 = mock(SortService.class);
@@ -138,7 +138,7 @@ public class SimplePlannerHelperTest {
 				mockDecompositionService = mock(DecompositionService.class);
 		@SuppressWarnings("unchecked")
 		UnificationService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>> mockUnificationService = mock(UnificationService.class);
+		        ImmutableConstraint<?>, ImmutableCondition> mockUnificationService = mock(UnificationService.class);
         @SuppressWarnings("unchecked")
         SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> mockSortService
                 = mock(SortService.class);
@@ -193,7 +193,7 @@ public class SimplePlannerHelperTest {
 				mockDecompositionService = mock(DecompositionService.class);
 		@SuppressWarnings("unchecked")
 		UnificationService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>> mockUnificationService = mock(UnificationService.class);
+		        ImmutableConstraint<?>, ImmutableCondition> mockUnificationService = mock(UnificationService.class);
         @SuppressWarnings("unchecked")
         SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> mockSortService
                 = mock(SortService.class);
@@ -251,7 +251,7 @@ public class SimplePlannerHelperTest {
 				mockDecompositionService = mock(DecompositionService.class);
 		@SuppressWarnings("unchecked")
 		UnificationService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>> mockUnificationService = mock(UnificationService.class);
+		        ImmutableConstraint<?>, ImmutableCondition> mockUnificationService = mock(UnificationService.class);
         @SuppressWarnings("unchecked")
         SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> mockSortService
                 = mock(SortService.class);
@@ -296,7 +296,7 @@ public class SimplePlannerHelperTest {
 				mockDecompositionService = mock(DecompositionService.class);
 		@SuppressWarnings("unchecked")
 		UnificationService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>> mockUnificationService = mock(UnificationService.class);
+		        ImmutableConstraint<?>, ImmutableCondition> mockUnificationService = mock(UnificationService.class);
 		when(mockUnificationService.findUnifier(mockTask, mockMethod)).thenThrow(new UnifierNotFound());
         @SuppressWarnings("unchecked")
         SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> mockSortService
@@ -330,7 +330,7 @@ public class SimplePlannerHelperTest {
 				mockDecompositionService = mock(DecompositionService.class);
 		@SuppressWarnings("unchecked")
 		UnificationService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>> mockUnificationService = mock(UnificationService.class);
+		        ImmutableConstraint<?>, ImmutableCondition> mockUnificationService = mock(UnificationService.class);
 		when(mockUnificationService.findUnifier(mockTask, mockMethod)).thenReturn(mockUnifier);
 		when(mockDecompositionService.decompose(mockUnifier, mockTaskNetwork, mockTask, mockMethod)).thenReturn(mockDecomposedTaskNetwork);
         @SuppressWarnings("unchecked")

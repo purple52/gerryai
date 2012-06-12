@@ -33,6 +33,6 @@ public interface ImmutableDomainBuilderFactory extends
 		DomainBuilderFactory<ImmutableDomain, ImmutableOperator, ImmutableMethod,
 		ImmutableTerm<?>, ImmutableTask,
 				ImmutableTaskNetwork, ImmutableConstraint<?>,
-				ImmutableCondition<?>, ImmutableVariable<?>, Effect, ImmutableOperatorBuilder> {
+				ImmutableCondition, ImmutableVariable<?>, Effect, ImmutableOperatorBuilder> {
 
 }

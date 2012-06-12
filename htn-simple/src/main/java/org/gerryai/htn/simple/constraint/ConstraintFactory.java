@@ -40,7 +40,7 @@ import org.gerryai.logic.Term;
 public interface ConstraintFactory<
         T extends Term,
         K extends Task<T>,
-        I extends Condition,
+        I extends Condition<T>,
         BF extends BeforeConstraint<T, K, I>,
         AF extends AfterConstraint<T, K, I>,
         BE extends BetweenConstraint<T, K, I>,

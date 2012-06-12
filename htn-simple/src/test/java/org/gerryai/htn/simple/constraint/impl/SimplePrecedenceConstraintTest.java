@@ -72,7 +72,7 @@ public class SimplePrecedenceConstraintTest {
         Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
         @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
         ImmutableValidatablePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
                 .setPrecedingTasks(mockPrecedingTasks)
                 .setProcedingTasks(mockProcedingTasks)
@@ -97,7 +97,7 @@ public class SimplePrecedenceConstraintTest {
         Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
         @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
         ImmutableValidatablePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
                 .setPrecedingTasks(mockPrecedingTasks)
                 .setProcedingTasks(mockProcedingTasks)

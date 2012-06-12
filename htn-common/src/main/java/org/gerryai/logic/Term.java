@@ -24,7 +24,7 @@ package org.gerryai.logic;
 public interface Term {
 
 	/**
-	 * Get the name of this term.
+	 * Get the symbolic name of this term.
 	 * @return the name
 	 */
 	String getName();
@@ -32,7 +32,7 @@ public interface Term {
 	/**
 	 * Get whether this term is compound or not.
 	 * @return if the term is compound
-	 */
-	boolean isCompound();
+	 *
+	boolean isCompound();*/
 
 }

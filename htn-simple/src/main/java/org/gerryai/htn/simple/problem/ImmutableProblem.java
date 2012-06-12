@@ -34,6 +34,6 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  */
 public interface ImmutableProblem extends Problem<ImmutableDomain, ImmutableOperator, ImmutableMethod,
 		ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
+		ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>> {
 
 }

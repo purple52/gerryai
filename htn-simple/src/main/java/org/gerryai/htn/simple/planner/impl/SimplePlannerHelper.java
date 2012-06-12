@@ -71,7 +71,7 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 	 */
 	private UnificationService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask,
 			ImmutableTaskNetwork, ImmutableConstraint<?>,
-			ImmutableCondition<?>>  unificationService;
+			ImmutableCondition>  unificationService;
 
 	/**
 	 * Service for sorting tasks by precedence constraints.
@@ -92,7 +92,7 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 			DecompositionService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableSubstitution> decompositionservice,
 			UnificationService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>>  unificationService,
+			ImmutableConstraint<?>, ImmutableCondition>  unificationService,
 			SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> sortService) {
 		this.actionFactory = actionFactory;
 		this.planBuilderFactory = planBuilderFactory;

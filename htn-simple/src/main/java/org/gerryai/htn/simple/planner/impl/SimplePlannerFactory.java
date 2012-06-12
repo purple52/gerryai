@@ -59,7 +59,7 @@ public class SimplePlannerFactory implements ImmutablePlannerFactory {
 		
 		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 				ImmutableTask, ImmutableTaskNetwork,
-				ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domainHelper
+				ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>> domainHelper
 				= new SimpleDomainHelper(domain);
 		
 		ImmutableActionFactoryHelper actionFactoryHelper = new SimpleActionFactoryHelper(domainHelper);
@@ -69,12 +69,12 @@ public class SimplePlannerFactory implements ImmutablePlannerFactory {
 		aima.core.logic.fol.Unifier unifier = new aima.core.logic.fol.Unifier();
 		AIMAConverter<ImmutableTerm<?>, ImmutableVariable<?>, ImmutableTask> converter = new AIMAConverterImpl();
 		ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask,
-		ImmutableCondition<?>> constraintValidatorFactory
-				= new GenericConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>>();
+		ImmutableCondition> constraintValidatorFactory
+				= new GenericConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition>();
 		AIMAUnificationService<ImmutableOperator, ImmutableMethod, 
-		        ImmutableCondition<?>, ImmutableVariable<?>> unificationService =
+		        ImmutableCondition, ImmutableVariable<?>> unificationService =
 		        new AIMAUnificationService<ImmutableOperator, ImmutableMethod,
-		        ImmutableCondition<?>, ImmutableVariable<?>>(unifier, converter);
+		        ImmutableCondition, ImmutableVariable<?>>(unifier, converter);
 		
 		DecompositionService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>, ImmutableSubstitution> decompositionService =

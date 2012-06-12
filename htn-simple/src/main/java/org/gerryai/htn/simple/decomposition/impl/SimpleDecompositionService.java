@@ -42,14 +42,14 @@ public class SimpleDecompositionService implements
      * Constraint validator factory.
      */
     private ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask,
-            ImmutableCondition<?>> constraintValidatorFactory;
+            ImmutableCondition> constraintValidatorFactory;
 	
 	/**
 	 * Set the unification service.
 	 * @param constraintValidatorFactory the constraint validator factory to use
 	 */
 	public SimpleDecompositionService(ConstraintValidatorFactory<ImmutableTerm<?>,
-	        ImmutableTask, ImmutableCondition<?>> constraintValidatorFactory) {
+	        ImmutableTask, ImmutableCondition> constraintValidatorFactory) {
 		this.constraintValidatorFactory = constraintValidatorFactory;
 	}
 	

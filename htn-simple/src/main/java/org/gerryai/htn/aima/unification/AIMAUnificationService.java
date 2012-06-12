@@ -44,7 +44,7 @@ import aima.core.logic.fol.parsing.ast.Predicate;
 public class AIMAUnificationService<
 		O extends Operator<I, V>,
 		M extends Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
-		I extends Condition,
+		I extends Condition<ImmutableTerm<?>>,
 		V extends Variable>
 				implements UnificationService<M, ImmutableTerm<?>, ImmutableTask,
 				ImmutableTaskNetwork, ImmutableConstraint<?>, I> {

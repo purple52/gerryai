@@ -25,6 +25,6 @@ import org.gerryai.htn.simple.logic.ImmutableVariable;
  * Extended operator interface for immutable operators.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableOperator extends Operator<ImmutableCondition<?>, ImmutableVariable<?>> {
+public interface ImmutableOperator extends Operator<ImmutableCondition, ImmutableVariable<?>> {
 
 }

@@ -51,10 +51,10 @@ public interface DomainBuilderFactory<
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition,
+		I extends Condition<T>,
 		V extends Variable,
 		E extends Effect,
-		B extends OperatorBuilder<I, V, E, O, B>> {
+		B extends OperatorBuilder<T, I, V, E, O, B>> {
 
 	/**
 	 * Create a domain builder of the required type.

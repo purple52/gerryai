@@ -39,6 +39,6 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 public interface ImmutablePlanningService extends PlanningService<ImmutablePlan,
         ImmutableProblem, ImmutableAction, ImmutableDomain, ImmutableOperator,
 		ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> {
+		ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>, ImmutableConstant<?>> {
 
 }

@@ -28,6 +28,6 @@ import org.gerryai.htn.simple.logic.ImmutableVariable;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutableAction extends
-        Action<ImmutableOperator, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> {
+        Action<ImmutableOperator, ImmutableCondition, ImmutableVariable<?>, ImmutableConstant<?>> {
 
 }

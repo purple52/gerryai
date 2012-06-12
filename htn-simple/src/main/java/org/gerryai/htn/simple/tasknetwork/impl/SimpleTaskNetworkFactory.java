@@ -48,7 +48,7 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
 	 * Factory for creating constraint validators, as used by the task network builders.
 	 */
 	private ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask,
-			ImmutableCondition<?>> constraintValidatorFactory;
+			ImmutableCondition> constraintValidatorFactory;
 	
 	/**
 	 * Constructor, requiring a factory for creating constraint validators.
@@ -56,7 +56,7 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
 	 * @param logicFactory the logic factory
 	 */
 	public SimpleTaskNetworkFactory(ConstraintValidatorFactory<ImmutableTerm<?>,
-			ImmutableTask, ImmutableCondition<?>> constraintValidatorFactory,
+			ImmutableTask, ImmutableCondition> constraintValidatorFactory,
 			ImmutableLogicFactory logicFactory) {
 		this.constraintValidatorFactory = constraintValidatorFactory;
 		this.logicFactory = logicFactory;

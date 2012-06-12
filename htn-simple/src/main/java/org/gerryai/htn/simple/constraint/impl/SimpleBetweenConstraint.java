@@ -50,7 +50,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
 	/**
 	 * The literal that must be true directly between the two sets of tasks.
 	 */
-	private ImmutableCondition<?> condition;
+	private ImmutableCondition condition;
 	
     /**
      * Constructor.
@@ -82,7 +82,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
 	 * Get the condition that must be true directly after the last of these tasks.
 	 * @return the condition
 	 */
-	public final ImmutableCondition<?> getCondition() {
+	public final ImmutableCondition getCondition() {
 		return condition;
 	}
 
@@ -90,14 +90,14 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
 	 * {@inheritDoc}
 	 */
 	public final boolean validate(ConstraintValidator<ImmutableTerm<?>, ImmutableTask,
-	        ImmutableCondition<?>> validator) {
+	        ImmutableCondition> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> validator)
+	public final void add(ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> validator)
 			throws InvalidConstraint {
 		validator.add(this);
 	}
@@ -145,7 +145,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
         /**
          * The condition that must be true directly after the last of these tasks.
          */
-        private ImmutableCondition<?> condition;
+        private ImmutableCondition condition;
         
         /**
          * Default constructor.
@@ -177,7 +177,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
          * @param condition the condition to set
          * @return the updated builder
          */
-        public final Builder setCondition(ImmutableCondition<?> condition) {
+        public final Builder setCondition(ImmutableCondition condition) {
             this.condition = condition;
             return this;
         }
@@ -226,7 +226,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
          * {@inheritDoc}
          */
         public final Builder apply(ImmutableSubstitution substitution) {
-            ImmutableCondition<?> newCondition = (ImmutableCondition<?>) this.condition.createCopyBuilder()
+            ImmutableCondition newCondition = (ImmutableCondition) this.condition.createCopyBuilder()
                     .apply(substitution)
                     .build();
             this.condition = newCondition;
@@ -250,7 +250,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
         /**
          * @return the condition
          */
-        protected final ImmutableCondition<?> getCondition() {
+        protected final ImmutableCondition getCondition() {
             return condition;
         }
         

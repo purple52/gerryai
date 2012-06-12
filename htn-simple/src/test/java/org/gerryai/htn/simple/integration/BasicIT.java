@@ -78,7 +78,7 @@ public class BasicIT {
 				.addArgument(variableY)
 				.setIsPrimitive(true)
 				.build();
-		ImmutableCondition<?> beforeConditionA = planningFactory.getLogicFactory().createCondition("have", variableX);
+		ImmutableCondition beforeConditionA = planningFactory.getLogicFactory().createCondition("have", variableX);
 		ImmutableConstraint<?> beforeConstraintA = planningFactory.getConstraintFactory().createBeforeConstraint(methodASubTask1, beforeConditionA);
 		ImmutableConstraint<?> precedenceConstraintA = planningFactory.getConstraintFactory().createPrecedenceConstraint(methodASubTask1, methodASubTask2);
         ImmutableTaskNetwork methodATaskNetwork = planningFactory.getTaskNetworkFactory().createTaskNetworkBuilder()
@@ -104,7 +104,7 @@ public class BasicIT {
 				.addArgument(variableX)
 				.setIsPrimitive(true)
 				.build();
-		ImmutableCondition<?> beforeConditionB = planningFactory.getLogicFactory().createCondition("have", variableY);
+		ImmutableCondition beforeConditionB = planningFactory.getLogicFactory().createCondition("have", variableY);
 		ImmutableConstraint<?> beforeConstraintB = planningFactory.getConstraintFactory().createBeforeConstraint(methodBSubTask1, beforeConditionB);
 		ImmutableConstraint<?> precedenceConstraintB = planningFactory.getConstraintFactory().createPrecedenceConstraint(methodBSubTask1, methodBSubTask2);
 		ImmutableTaskNetwork methodBTaskNetwork = planningFactory.getTaskNetworkFactory().createTaskNetworkBuilder()

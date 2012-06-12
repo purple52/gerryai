@@ -21,9 +21,13 @@ import org.gerryai.htn.domain.Condition;
 
 /**
  * Extended interface for immutable conditions that can only be modified via a builder.
- * @param <T> type of immutable term being implemented
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableCondition<T extends ImmutableCondition<T>> extends Condition, ImmutableTerm<T> {
+public interface ImmutableCondition extends Condition<ImmutableTerm<?>> {
 
+    /**
+     * Create a builder that will start with a copy if this condition.
+     * @return the builder
+     */
+    ImmutableConditionBuilder createCopyBuilder();
 }

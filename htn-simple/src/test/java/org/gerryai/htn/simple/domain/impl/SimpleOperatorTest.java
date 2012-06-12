@@ -63,7 +63,7 @@ public class SimpleOperatorTest {
 	
 	@Test
 	public void testPreconditions() {
-		Set<ImmutableCondition<?>> conditions = new HashSet<ImmutableCondition<?>>();
+		Set<ImmutableCondition> conditions = new HashSet<ImmutableCondition>();
 		ImmutableOperatorBuilder mockBuilder = mock(ImmutableOperatorBuilder.class);
 		when(mockBuilder.getPreconditions()).thenReturn(conditions);
 		
@@ -155,8 +155,8 @@ public class SimpleOperatorTest {
      */
     @Test
     public void testAddPrecondition() {
-        ImmutableCondition<?> mockConditionA = mock(ImmutableCondition.class);
-        ImmutableCondition<?> mockConditionB = mock(ImmutableCondition.class);
+        ImmutableCondition mockConditionA = mock(ImmutableCondition.class);
+        ImmutableCondition mockConditionB = mock(ImmutableCondition.class);
         ImmutableOperatorBuilder builder = new SimpleOperator.Builder()
                 .addPrecondition(mockConditionA)
                 .addPrecondition(mockConditionB);
@@ -170,14 +170,14 @@ public class SimpleOperatorTest {
      */
     @Test
     public void testAddPreconditions() {
-        ImmutableCondition<?> mockConditionA = mock(ImmutableCondition.class);
-        ImmutableCondition<?> mockConditionB = mock(ImmutableCondition.class);
-        Set<ImmutableCondition<?>> mockConditionsA = new HashSet<ImmutableCondition<?>>();
+        ImmutableCondition mockConditionA = mock(ImmutableCondition.class);
+        ImmutableCondition mockConditionB = mock(ImmutableCondition.class);
+        Set<ImmutableCondition> mockConditionsA = new HashSet<ImmutableCondition>();
         mockConditionsA.add(mockConditionA);
         mockConditionsA.add(mockConditionB);
-        ImmutableCondition<?> mockConditionC = mock(ImmutableCondition.class);
-        ImmutableCondition<?> mockConditionD = mock(ImmutableCondition.class);
-        Set<ImmutableCondition<?>> mockConditionsB = new HashSet<ImmutableCondition<?>>();
+        ImmutableCondition mockConditionC = mock(ImmutableCondition.class);
+        ImmutableCondition mockConditionD = mock(ImmutableCondition.class);
+        Set<ImmutableCondition> mockConditionsB = new HashSet<ImmutableCondition>();
         mockConditionsB.add(mockConditionC);
         mockConditionsB.add(mockConditionD);
         
@@ -240,8 +240,8 @@ public class SimpleOperatorTest {
         ImmutableVariable<?> mockVariable = mock(ImmutableVariable.class);
         List<ImmutableVariable<?>> mockArguments = new ArrayList<ImmutableVariable<?>>();
         mockArguments.add(mockVariable);
-        ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
-        Set<ImmutableCondition<?>> mockConditions = new HashSet<ImmutableCondition<?>>();
+        ImmutableCondition mockCondition = mock(ImmutableCondition.class);
+        Set<ImmutableCondition> mockConditions = new HashSet<ImmutableCondition>();
         mockConditions.add(mockCondition);
         Effect mockEffect = mock(Effect.class);
         Set<Effect> mockEffects = new HashSet<Effect>();

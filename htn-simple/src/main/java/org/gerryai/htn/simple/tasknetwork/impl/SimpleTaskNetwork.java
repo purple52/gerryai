@@ -94,7 +94,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
      * {@inheritDoc}
      */
     public final Builder createCopyBuilder(ConstraintValidator<ImmutableTerm<?>, ImmutableTask,
-            ImmutableCondition<?>> constraintValidator) throws InvalidConstraint {
+            ImmutableCondition> constraintValidator) throws InvalidConstraint {
         return new Builder(constraintValidator)
             .copy(this);
     }
@@ -118,14 +118,14 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
         /**
          * Constraint validator.
          */
-        private ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> constraintValidator;
+        private ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> constraintValidator;
         
         /**
          * Constructor, taking a constraint validator to use.
          * @param constraintValidator the constraint validator
          */
         public Builder(ConstraintValidator<ImmutableTerm<?>, ImmutableTask,
-                ImmutableCondition<?>> constraintValidator) {
+                ImmutableCondition> constraintValidator) {
             this.constraintValidator = constraintValidator;
             tasks = new HashSet<ImmutableTask>();
             constraints = new HashSet<ImmutableConstraint<?>>();
@@ -135,7 +135,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
          * @return the constraintValidator
          */
         protected final ConstraintValidator<ImmutableTerm<?>, ImmutableTask,
-                ImmutableCondition<?>> getConstraintValidator() {
+                ImmutableCondition> getConstraintValidator() {
             return constraintValidator;
         }
         

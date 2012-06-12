@@ -45,7 +45,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
     /**
      * The condition that must be true directly before the first of these tasks.
      */
-    private ImmutableCondition<?> condition;
+    private ImmutableCondition condition;
 
     /**
      * Constructor.
@@ -71,7 +71,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
      * 
      * @return the condition
      */
-    public final ImmutableCondition<?> getCondition() {
+    public final ImmutableCondition getCondition() {
         return condition;
     }
 
@@ -79,7 +79,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
      * {@inheritDoc}
      */
     public final boolean validate(
-            ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> validator) {
+            ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> validator) {
         return validator.validate(this);
     }
 
@@ -87,7 +87,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
      * {@inheritDoc}
      */
     public final void add(
-            ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> validator)
+            ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> validator)
             throws InvalidConstraint {
         validator.add(this);
     }
@@ -122,7 +122,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
         /**
          * The condition that must be true directly after the last of these tasks.
          */
-        private ImmutableCondition<?> condition;
+        private ImmutableCondition condition;
         
         /**
          * Default constructor.
@@ -144,7 +144,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
          * @param condition the condition to set
          * @return the updated builder
          */
-        public final Builder setCondition(ImmutableCondition<?> condition) {
+        public final Builder setCondition(ImmutableCondition condition) {
             this.condition = condition;
             return this;
         }
@@ -159,7 +159,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
         /**
          * @return the condition
          */
-        protected final ImmutableCondition<?> getCondition() {
+        protected final ImmutableCondition getCondition() {
             return condition;
         }
         
@@ -198,7 +198,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
          * {@inheritDoc}
          */
         public final Builder apply(ImmutableSubstitution substitution) {
-            ImmutableCondition<?> newCondition = (ImmutableCondition<?>) this.condition.createCopyBuilder()
+            ImmutableCondition newCondition = (ImmutableCondition) this.condition.createCopyBuilder()
                     .apply(substitution)
                     .build();
             this.condition = newCondition;

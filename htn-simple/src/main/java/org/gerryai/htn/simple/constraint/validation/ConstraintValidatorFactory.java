@@ -29,7 +29,7 @@ import org.gerryai.logic.Term;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ConstraintValidatorFactory<T extends Term, K extends Task<T>, I extends Condition> {
+public interface ConstraintValidatorFactory<T extends Term, K extends Task<T>, I extends Condition<T>> {
 
 	/**
 	 * Create a validator.

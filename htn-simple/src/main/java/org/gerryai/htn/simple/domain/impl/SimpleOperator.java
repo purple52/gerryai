@@ -48,7 +48,7 @@ public class SimpleOperator implements ImmutableOperator {
 	/**
 	 * Preconditions for this operator.
 	 */
-	private Set<ImmutableCondition<?>> preconditions;
+	private Set<ImmutableCondition> preconditions;
 	
 	/**
 	 * Effects of this operator.
@@ -83,7 +83,7 @@ public class SimpleOperator implements ImmutableOperator {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<ImmutableCondition<?>> getPreconditions() {
+	public final Set<ImmutableCondition> getPreconditions() {
 		return Collections.unmodifiableSet(preconditions);
 	}
 
@@ -112,7 +112,7 @@ public class SimpleOperator implements ImmutableOperator {
 	    /**
 	     * Set of preconditions that must hold for the operator to be valid.
 	     */
-	    private Set<ImmutableCondition<?>> preconditions;
+	    private Set<ImmutableCondition> preconditions;
 	    
 	    /**
 	     * Set of effects that the operator has.
@@ -124,7 +124,7 @@ public class SimpleOperator implements ImmutableOperator {
 	     */
 	    protected Builder() {
 	        arguments = new ArrayList<ImmutableVariable<?>>();
-	        preconditions = new HashSet<ImmutableCondition<?>>();
+	        preconditions = new HashSet<ImmutableCondition>();
 	        effects = new HashSet<Effect>();
 	    }
 	    
@@ -155,7 +155,7 @@ public class SimpleOperator implements ImmutableOperator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder addPrecondition(ImmutableCondition<?> condition) {
+	    public final ImmutableOperatorBuilder addPrecondition(ImmutableCondition condition) {
 	        preconditions.add(condition);
 	        return this;
 	    }
@@ -163,7 +163,7 @@ public class SimpleOperator implements ImmutableOperator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder addPreconditions(Set<ImmutableCondition<?>> conditions) {
+	    public final ImmutableOperatorBuilder addPreconditions(Set<ImmutableCondition> conditions) {
 	        preconditions.addAll(conditions);
 	        return this;
 	    }
@@ -208,7 +208,7 @@ public class SimpleOperator implements ImmutableOperator {
 	    /**
 	     * @return the preconditions
 	     */
-	    public final Set<ImmutableCondition<?>> getPreconditions() {
+	    public final Set<ImmutableCondition> getPreconditions() {
 	        return preconditions;
 	    }
 

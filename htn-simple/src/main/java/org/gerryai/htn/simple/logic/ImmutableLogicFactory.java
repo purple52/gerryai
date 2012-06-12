@@ -24,6 +24,6 @@ import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
  *
  */
 public interface ImmutableLogicFactory extends LogicFactory<ImmutableVariable<?>, ImmutableConstant<?>,
-		ImmutableCondition<?>, ImmutableTerm<?>, ImmutableSubstitution> {
+		ImmutableCondition, ImmutableTerm<?>, ImmutableSubstitution> {
 
 }

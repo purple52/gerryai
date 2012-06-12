@@ -72,7 +72,7 @@ public class SimplePlannerTest {
 		when(mockPlannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork)).thenReturn(mockPlan);
 		@SuppressWarnings("unchecked")
 		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
+		        ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>>
 				mockDomainHelper = mock(DomainHelper.class);
 		
 		// Create the planner to be tested
@@ -107,7 +107,7 @@ public class SimplePlannerTest {
 		when(mockPlannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork)).thenThrow(new PlanNotFound());
 		@SuppressWarnings("unchecked")
 		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
+		        ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>>
 				mockDomainHelper = mock(DomainHelper.class);
 		
 		// Create the planner to be tested
@@ -139,7 +139,7 @@ public class SimplePlannerTest {
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenReturn(mockTaskA);
 		@SuppressWarnings("unchecked")
 		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
+		        ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>>
 				mockDomainHelper = mock(DomainHelper.class);
 		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
 		when(mockDomainHelper.getMethodsByTask(mockTaskA)).thenReturn(methods);
@@ -171,7 +171,7 @@ public class SimplePlannerTest {
 		// Create a domain helper that has two potentially matching methods
 		@SuppressWarnings("unchecked")
 		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
+		        ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>>
 				mockDomainHelper = mock(DomainHelper.class);
 		ImmutableMethod mockMethodA = mock(ImmutableMethod.class);
 		ImmutableMethod mockMethodB = mock(ImmutableMethod.class);
@@ -223,7 +223,7 @@ public class SimplePlannerTest {
 		when(mockPlannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork)).thenReturn(mockPlan);
 		@SuppressWarnings("unchecked")
 		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
+		        ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>>
 				mockDomainHelper = mock(DomainHelper.class);
 		
 		// Create the planner to be tested
@@ -274,7 +274,7 @@ public class SimplePlannerTest {
 		methods.add(mockMethodA);
 		@SuppressWarnings("unchecked")
 		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>>
+		        ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>>
 				mockDomainHelper = mock(DomainHelper.class);
 		when(mockDomainHelper.getMethodsByTask(mockTaskA)).thenReturn(methods);
 		

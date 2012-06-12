@@ -21,8 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
+import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.ImmutableVariable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -33,21 +36,21 @@ public class SimpleLogicFactory implements ImmutableLogicFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleVariable createVariable(String name) {
+	public final ImmutableVariable<?> createVariable(String name) {
 		return new SimpleVariable(name);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleConstant createConstant(String name) {
+	public final ImmutableConstant<?> createConstant(String name) {
 		return new SimpleConstant(name);
 	}
     
     /**
      * {@inheritDoc}
      */
-    public final SimpleCondition createCondition(String name, ImmutableTerm<?> term) {
+    public final ImmutableCondition createCondition(String name, ImmutableTerm<?> term) {
         List<ImmutableTerm<?>> terms = new ArrayList<ImmutableTerm<?>>(1);
         terms.add(term);
         return createCondition(name, terms);
@@ -56,8 +59,11 @@ public class SimpleLogicFactory implements ImmutableLogicFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final SimpleCondition createCondition(String name, List<ImmutableTerm<?>> terms) {
-		return new SimpleCondition(name, terms);
+	public final ImmutableCondition createCondition(String name, List<ImmutableTerm<?>> terms) {
+		return new SimpleCondition.Builder()
+		        .setName(name)
+		        .addTerm(terms)
+		        .build();
 	}
 	
     /**

@@ -18,57 +18,57 @@
 package org.gerryai.htn.simple.logic.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.gerryai.htn.aima.AIMAConverter;
-import org.gerryai.htn.aima.impl.AIMAConverterImpl;
 import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableConditionBuilder;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableTermBuilder;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-
-import aima.core.logic.fol.parsing.ast.Predicate;
 
 /**
+ * Simple implementation of an immutable condition.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class SimpleCondition extends Predicate implements ImmutableCondition<SimpleCondition> {
-
+public final class SimpleCondition implements ImmutableCondition {
+    
+    /**
+     * Symbolic name of the underlying predicate.
+     */
+    private String name;
+    
 	/**
-	 * List of terms belonging to this predicate.
+	 * List of terms belonging to the underlying predicate.
 	 */
 	private List<ImmutableTerm<?>> terms;
 	
 	/**
-	 * Converter to help build the underlying AIMA objects.
-	 */
-	private static AIMAConverter<ImmutableTerm<?>, ImmutableVariable<?>, ImmutableTask>
-	        converter = new AIMAConverterImpl();
-	
-	/**
 	 * {@inheritDoc}
 	 */
-	public final String getName() {
-		return this.getSymbolicName();
+	public String getName() {
+		return name;
+	}
+
+	/**
+     * {@inheritDoc}
+     */
+	public List<ImmutableTerm<?>> getTerms() {
+	    return Collections.unmodifiableList(terms);
 	}
 	
 	/**
-	 * Constructor, taking a name and a list of terms.
-	 * @param predicateName the name
-	 * @param terms the terms
+	 * Constructor using a builder.
+	 * @param builder the builder
 	 */
-	protected SimpleCondition(String predicateName, List<ImmutableTerm<?>> terms) {
-		super(predicateName, converter.convert(terms));
-		this.terms = terms;
+	private SimpleCondition(Builder builder) {
+	    this.name = builder.name;
+		this.terms = builder.terms;
 	}
 
     /**
      * {@inheritDoc}
      */
-    public final ImmutableTermBuilder<SimpleCondition> createCopyBuilder() {
+    public ImmutableConditionBuilder createCopyBuilder() {
         return new Builder()
             .copy(this);
     }
@@ -77,7 +77,7 @@ public class SimpleCondition extends Predicate implements ImmutableCondition<Sim
      * Builder class for SimplePredicate.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder implements ImmutableTermBuilder<SimpleCondition> {
+    public static class Builder implements ImmutableConditionBuilder {
         
         /**
          * Name of the term to be built.
@@ -85,7 +85,7 @@ public class SimpleCondition extends Predicate implements ImmutableCondition<Sim
         private String name;
         
         /**
-         * List of terms belonging to the predicate to be built.
+         * List of terms belonging to the condition to be built.
          */
         private List<ImmutableTerm<?>> terms;
         
@@ -99,11 +99,33 @@ public class SimpleCondition extends Predicate implements ImmutableCondition<Sim
         /**
          * {@inheritDoc}
          */
-        public final Builder copy(SimpleCondition term) {
-            this.name = term.getName();
-            for (ImmutableTerm<?> subTerm : term.terms) {
-                this.terms.add(subTerm);
-            }
+        public final ImmutableConditionBuilder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public final ImmutableConditionBuilder addTerm(ImmutableTerm<?> term) {
+            this.terms.add(term);
+            return this;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public final ImmutableConditionBuilder addTerm(List<ImmutableTerm<?>> terms) {
+            this.terms.addAll(terms);
+            return this;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public final Builder copy(ImmutableCondition condition) {
+            this.setName(condition.getName());
+            this.terms.addAll(condition.getTerms());
             return this;
         }
         
@@ -124,8 +146,9 @@ public class SimpleCondition extends Predicate implements ImmutableCondition<Sim
         /**
          * {@inheritDoc}
          */
-        public final SimpleCondition build() {
-            return new SimpleCondition(this.name, this.terms);
+        public final ImmutableCondition build() {
+            return new SimpleCondition(this);
         }
+
     }
 }

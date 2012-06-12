@@ -40,7 +40,7 @@ public interface ActionFactoryHelper<
         O extends Operator<I, V>,
         T extends Term,
         K extends Task<T>,
-        I extends Condition,
+        I extends Condition<T>,
         V extends Variable,
         C extends Constant> {
 	

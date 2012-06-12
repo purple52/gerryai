@@ -28,7 +28,7 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 public interface ImmutableConstraintFactory extends ConstraintFactory<
         ImmutableTerm<?>,
         ImmutableTask,
-        ImmutableCondition<?>,
+        ImmutableCondition,
         ImmutableValidatableBeforeConstraint,
         ImmutableValidatableAfterConstraint,
         ImmutableValidatableBetweenConstraint,

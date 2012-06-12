@@ -30,7 +30,7 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 public interface ImmutableConstraint<C extends ImmutableConstraint<C>>
         extends
         Constraint<ImmutableTerm<?>>,
-        ValidatableConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
+        ValidatableConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> {
 
     /**
      * Create a new builder object that can build this type of constraint.

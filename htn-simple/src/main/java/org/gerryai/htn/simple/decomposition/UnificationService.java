@@ -40,7 +40,7 @@ public interface UnificationService<
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition> {
+		I extends Condition<T>> {
 	
 	/**
 	 * Given a task and a method, try and find the most general unifier (MGU).

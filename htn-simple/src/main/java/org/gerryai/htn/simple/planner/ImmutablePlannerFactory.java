@@ -45,7 +45,7 @@ public interface ImmutablePlannerFactory extends PlannerFactory<
 		ImmutableTask,
 		ImmutableTaskNetwork,
 		ImmutableConstraint<?>,
-		ImmutableCondition<?>,
+		ImmutableCondition,
 		ImmutableVariable<?>,
 		ImmutableConstant<?>> {
 

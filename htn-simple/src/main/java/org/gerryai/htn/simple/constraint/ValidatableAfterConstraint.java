@@ -30,7 +30,7 @@ import org.gerryai.logic.Term;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ValidatableAfterConstraint<T extends Term, K extends Task<T>, I extends Condition>
+public interface ValidatableAfterConstraint<T extends Term, K extends Task<T>, I extends Condition<T>>
 		extends ValidatableConstraint<T, K, I>, AfterConstraint<T, K, I> {
 
 }

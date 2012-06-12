@@ -27,6 +27,5 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
  */
 public interface ImmutableValidatableAfterConstraint
 		extends ImmutableConstraint<ImmutableValidatableAfterConstraint>,
-		ValidatableAfterConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
-
+		ValidatableAfterConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> {
 }

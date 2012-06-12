@@ -74,7 +74,7 @@ public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenc
 	 * {@inheritDoc}
 	 */
 	public final boolean validate(ConstraintValidator<ImmutableTerm<?>, ImmutableTask,
-	        ImmutableCondition<?>> validator) {
+	        ImmutableCondition> validator) {
 		return validator.validate(this);
 	}
 
@@ -82,7 +82,7 @@ public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenc
 	 * {@inheritDoc}
 	 */
 	public final void add(ConstraintValidator<ImmutableTerm<?>, ImmutableTask,
-	        ImmutableCondition<?>> validator) throws InvalidConstraint {
+	        ImmutableCondition> validator) throws InvalidConstraint {
 		validator.add(this);
 	}
 	

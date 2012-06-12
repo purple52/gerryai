@@ -40,7 +40,7 @@ import com.google.common.collect.Multimap;
  * @param <I> type of condition being used by the constraints being validated
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class GenericConstraintValidator<T extends Term, K extends Task<T>, I extends Condition>
+public class GenericConstraintValidator<T extends Term, K extends Task<T>, I extends Condition<T>>
 		implements ConstraintValidator<T, K, I> {
 
 	/**

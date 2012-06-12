@@ -46,7 +46,7 @@ public class SimplePlanner implements ImmutablePlanner {
 	 */
 	private DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domainHelper;
+			ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>> domainHelper;
 	
 	/**
 	 * Helper for off-loading some of the logic.
@@ -62,7 +62,7 @@ public class SimplePlanner implements ImmutablePlanner {
 			DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
 					ImmutableTask, ImmutableTaskNetwork,
 					ImmutableConstraint<?>,
-					ImmutableCondition<?>, ImmutableVariable<?>> domainHelper,
+					ImmutableCondition, ImmutableVariable<?>> domainHelper,
 			ImmutablePlannerHelper plannerHelper) {
 		this.domainHelper = domainHelper;
 		this.plannerHelper = plannerHelper;

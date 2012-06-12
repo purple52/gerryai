@@ -27,6 +27,6 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
  */
 public interface ImmutableValidatableBetweenConstraint
 		extends ImmutableConstraint<ImmutableValidatableBetweenConstraint>,
-		ValidatableBetweenConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> {
+		ValidatableBetweenConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> {
 
 }

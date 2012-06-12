@@ -30,7 +30,7 @@ import org.gerryai.logic.Term;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class GenericConstraintValidatorFactory<T extends Term, K extends Task<T>, I extends Condition>
+public class GenericConstraintValidatorFactory<T extends Term, K extends Task<T>, I extends Condition<T>>
 		implements ConstraintValidatorFactory<T, K, I> {
 
 	/**

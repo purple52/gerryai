@@ -51,7 +51,7 @@ public interface DomainHelper<
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition,
+		I extends Condition<T>,
 		V extends Variable> {
 	
 	/**

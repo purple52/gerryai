@@ -87,11 +87,11 @@ public class SimplePlanningFactory implements ImmutablePlanningFactory {
         GenericConstraintValidatorFactory<
                 ImmutableTerm<?>,
                 ImmutableTask,
-                ImmutableCondition<?>> constraintValidatorFactory
+                ImmutableCondition> constraintValidatorFactory
             = new GenericConstraintValidatorFactory<
                 ImmutableTerm<?>,
                 ImmutableTask,
-                ImmutableCondition<?>>();
+                ImmutableCondition>();
         taskNetworkFactory = new SimpleTaskNetworkFactory(constraintValidatorFactory, logicFactory);
 
         constraintFactory = new SimpleConstraintFactory();

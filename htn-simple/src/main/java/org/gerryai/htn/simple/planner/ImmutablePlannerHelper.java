@@ -42,7 +42,7 @@ public interface ImmutablePlannerHelper extends PlannerHelper<
         ImmutableTask,
         ImmutableTaskNetwork,
 		ImmutableConstraint<?>,
-		ImmutableCondition<?>,
+		ImmutableCondition,
 		ImmutableVariable<?>,
 		ImmutableConstant<?>> {
 

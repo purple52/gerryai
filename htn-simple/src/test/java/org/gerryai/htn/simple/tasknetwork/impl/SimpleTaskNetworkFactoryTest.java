@@ -37,7 +37,7 @@ public class SimpleTaskNetworkFactoryTest {
 	@Test
 	public void testCreateTaskBuilder() {
 		@SuppressWarnings("unchecked")
-		ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
+		ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
 		//SimpleTaskNetworkFactory factory = new SimpleTaskNetworkFactory(mockConstraintValidatorFactory);
 		//assertTrue(factory.createTask() instanceof SimpleTask.Builder);
 	}
@@ -48,7 +48,7 @@ public class SimpleTaskNetworkFactoryTest {
 	@Test
 	public void testCreateTaskNetworkBuilder() {
 		@SuppressWarnings("unchecked")
-		ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
+		ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
 		//SimpleTaskNetworkFactory factory = new SimpleTaskNetworkFactory(mockConstraintValidatorFactory);
 		//assertTrue(factory.createTaskNetworkBuilder() instanceof SimpleTaskNetwork.Builder);
 	}

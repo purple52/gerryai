@@ -28,6 +28,6 @@ import org.gerryai.htn.simple.logic.ImmutableVariable;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutablePlan extends Plan<ImmutableAction, ImmutableOperator,
-        ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> {
+        ImmutableCondition, ImmutableVariable<?>, ImmutableConstant<?>> {
 
 }

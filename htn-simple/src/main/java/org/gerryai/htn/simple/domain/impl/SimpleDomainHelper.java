@@ -38,7 +38,7 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  */
 public class SimpleDomainHelper implements DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod,
 		ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> {
+		ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>> {
 
 	/**
 	 * Domain this helper is working on.

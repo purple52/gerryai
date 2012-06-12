@@ -15,22 +15,26 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.constraint;
+package org.gerryai.logic;
 
-import org.gerryai.htn.constraint.PrecedenceConstraint;
-import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
+import java.util.List;
 
 /**
- * Extension of validatable and precedence constraint interfaces.
- * @param <T> type of logical term this constraint uses
- * @param <K> type of task the constraint applies to
- * @param <I> type of condition the constraint uses
+ * Interface for a logical predicate.
+ * @param <T> type of logical term this predicate uses.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface ValidatablePrecedenceConstraint<T extends Term, K extends Task<T>, I extends Condition<T>>
-		extends	ValidatableConstraint<T, K, I>, PrecedenceConstraint<T, K> {
+public interface Predicate<T extends Term> {
 
+    /**
+     * Get the symbolic name of this predicate.
+     * @return the name
+     */
+    String getName();
+    
+    /**
+     * Get the list of terms that make up this predicate.
+     * @return the terms
+     */
+    List<T> getTerms();
 }

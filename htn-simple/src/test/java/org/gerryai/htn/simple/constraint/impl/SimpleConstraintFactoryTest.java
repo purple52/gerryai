@@ -66,7 +66,7 @@ public class SimpleConstraintFactoryTest {
 	@Test
 	public void testCreateBeforeConstraint() {
 		Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
-		ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
+		ImmutableCondition mockCondition = mock(ImmutableCondition.class);
 		
 		// Create factory under test
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
@@ -84,7 +84,7 @@ public class SimpleConstraintFactoryTest {
 	@Test
 	public void testCreateAfterConstraint() {
 		Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
-		ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
+		ImmutableCondition mockCondition = mock(ImmutableCondition.class);
 		
 		// Create factory under test
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
@@ -103,7 +103,7 @@ public class SimpleConstraintFactoryTest {
 	public void testCreateBetweenConstraint() {
 		Set<ImmutableTask> mockTasksA = new HashSet<ImmutableTask>();
 		Set<ImmutableTask> mockTasksB = new HashSet<ImmutableTask>();
-		ImmutableCondition<?> mockCondition = mock(ImmutableCondition.class);
+		ImmutableCondition mockCondition = mock(ImmutableCondition.class);
 		
 		// Create factory under test
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();

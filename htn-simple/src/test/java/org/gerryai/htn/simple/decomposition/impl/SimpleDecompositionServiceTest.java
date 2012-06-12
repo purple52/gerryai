@@ -49,7 +49,7 @@ public class SimpleDecompositionServiceTest {
     public void testDecompose() throws InvalidConstraint {
     	
     	ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask,
-                ImmutableCondition<?>> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
+                ImmutableCondition> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
 
     	SimpleDecompositionService decompositionService = new SimpleDecompositionService(mockConstraintValidatorFactory);
     	

@@ -46,7 +46,7 @@ public class SimpleActionFactoryHelper implements ImmutableActionFactoryHelper {
 	 * Service for the domain that we are working in.
 	 */
 	private DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask,
-			ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domainHelper;
+			ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>> domainHelper;
 	
 	/**
 	 * Constructor requiring a domain helper.
@@ -54,7 +54,7 @@ public class SimpleActionFactoryHelper implements ImmutableActionFactoryHelper {
 	 */
 	public SimpleActionFactoryHelper(DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod,
 	        ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition<?>, ImmutableVariable<?>> domainHelper) {
+			ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>> domainHelper) {
 		this.domainHelper = domainHelper;
 	}
 	

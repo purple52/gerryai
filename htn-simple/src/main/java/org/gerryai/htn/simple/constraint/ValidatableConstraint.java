@@ -32,7 +32,11 @@ import org.gerryai.logic.Term;
  * @param <I> type of condition used by this sort of constraint
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ValidatableConstraint<T extends Term, K extends Task<T>, I extends Condition> extends Constraint<T> {
+public interface ValidatableConstraint<
+        T extends Term,
+        K extends Task<T>,
+        I extends Condition<T>>
+                extends Constraint<T> {
 
 	/**
 	 * Validate this constraint using the validator provided.

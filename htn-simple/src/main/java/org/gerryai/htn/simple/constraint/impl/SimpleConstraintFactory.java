@@ -62,7 +62,7 @@ public class SimpleConstraintFactory implements ImmutableConstraintFactory {
      * {@inheritDoc}
      */
     public final ImmutableValidatableBeforeConstraint createBeforeConstraint(ImmutableTask task,
-            ImmutableCondition<?> condition) {
+            ImmutableCondition condition) {
         Set<ImmutableTask> tasks = new HashSet<ImmutableTask>(1);
         tasks.add(task);
         return createBeforeConstraint(tasks, condition);
@@ -72,7 +72,7 @@ public class SimpleConstraintFactory implements ImmutableConstraintFactory {
 	 * {@inheritDoc}
 	 */
 	public final ImmutableValidatableBeforeConstraint createBeforeConstraint(Set<ImmutableTask> tasks,
-	        ImmutableCondition<?> condition) {
+	        ImmutableCondition condition) {
         return new SimpleBeforeConstraint.Builder()
                 .addTasks(tasks)
                 .setCondition(condition)
@@ -83,7 +83,7 @@ public class SimpleConstraintFactory implements ImmutableConstraintFactory {
 	 * {@inheritDoc}
 	 */
 	public final ImmutableValidatableAfterConstraint createAfterConstraint(Set<ImmutableTask> tasks,
-	        ImmutableCondition<?> condition) {
+	        ImmutableCondition condition) {
 		return new SimpleAfterConstraint.Builder()
 		        .addTasks(tasks)
 		        .setCondition(condition)
@@ -94,7 +94,7 @@ public class SimpleConstraintFactory implements ImmutableConstraintFactory {
 	 * {@inheritDoc}
 	 */
 	public final ImmutableValidatableBetweenConstraint createBetweenConstraint(Set<ImmutableTask> precedingTasks,
-			Set<ImmutableTask> procedingTasks, ImmutableCondition<?> condition) {
+			Set<ImmutableTask> procedingTasks, ImmutableCondition condition) {
         return new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(precedingTasks)
                 .addProcedingTasks(procedingTasks)

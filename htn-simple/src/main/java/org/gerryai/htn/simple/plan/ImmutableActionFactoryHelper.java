@@ -29,6 +29,6 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutableActionFactoryHelper  extends ActionFactoryHelper<ImmutableOperator,
-        ImmutableTerm<?>, ImmutableTask, ImmutableCondition<?>, ImmutableVariable<?>, ImmutableConstant<?>> {
+        ImmutableTerm<?>, ImmutableTask, ImmutableCondition, ImmutableVariable<?>, ImmutableConstant<?>> {
 
 }

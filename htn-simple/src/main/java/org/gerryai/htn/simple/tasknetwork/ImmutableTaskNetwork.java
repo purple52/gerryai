@@ -37,5 +37,5 @@ public interface ImmutableTaskNetwork extends TaskNetwork<ImmutableTerm<?>, Immu
      * @throws InvalidConstraint if one of the constraints is invalid
      */
     ImmutableTaskNetworkBuilder createCopyBuilder(ConstraintValidator<ImmutableTerm<?>, ImmutableTask,
-            ImmutableCondition<?>> constraintValidator) throws InvalidConstraint;
+            ImmutableCondition> constraintValidator) throws InvalidConstraint;
 }
