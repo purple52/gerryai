@@ -20,15 +20,17 @@ package org.gerryai.htn.domain;
 import java.util.List;
 import java.util.Set;
 
+import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
  * Interface that an operator must implement.
+ * @param <T> type of term this operator uses
  * @param <I> type of condition this operator takes
  * @param <V> type of variable this operator uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Operator<I extends Condition, V extends Variable> {
+public interface Operator<T extends Term, I extends Condition<T>, V extends Variable> {
 	
 	/**
 	 * Get the name of this operator.

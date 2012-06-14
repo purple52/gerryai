@@ -15,15 +15,15 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.decomposition;
+package org.gerryai.htn.simple.problem;
 
+import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.logic.unification.Substitution;
 
 /**
+ * State service interface for immutable terms and conditions.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface ImmutableSubstitution extends Substitution<ImmutableTerm<?>, ImmutableTerm<?>> {
+public interface ImmutableStateService extends StateService<ImmutableTerm<?>, ImmutableCondition> {
 
 }

@@ -17,7 +17,8 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
+import java.util.Map;
+
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableTermBuilder;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
@@ -73,10 +74,10 @@ public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable
         /**
          * {@inheritDoc}
          */
-        public final Builder apply(ImmutableSubstitution substitution) {
-            for (ImmutableTerm<?> oldTerm : substitution.getMap().keySet()) {
-                if (oldTerm.getName().equals(this.name)) {
-                    this.name = substitution.getMap().get(oldTerm).getName();
+        public final Builder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
+            for (ImmutableTerm<?> oldTerm : substitution.keySet()) {
+                if (oldTerm instanceof ImmutableVariable && oldTerm.getName().equals(this.name)) {
+                    this.name = substitution.get(oldTerm).getName();
                 }
             }
             return this;

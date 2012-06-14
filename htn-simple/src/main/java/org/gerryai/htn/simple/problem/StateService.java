@@ -15,37 +15,25 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.plan;
+package org.gerryai.htn.simple.problem;
 
-import java.util.Map;
-
-import org.gerryai.logic.Constant;
-import org.gerryai.logic.Variable;
-import org.gerryai.logic.unification.Substitution;
+import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.problem.State;
+import org.gerryai.logic.Term;
 
 /**
+ * Interface for a service that can handle states, conditional checks.
+ * @param <T> type of logical term this service uses
+ * @param <I> type of condition this service uses
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class Bindings implements Substitution<Constant, Variable> {
-	
-	/**
-	 * Map of variables to constants, which represents these bindings.
-	 */
-	private Map<Variable, Constant> map;
+public interface StateService<T extends Term, I extends Condition<T>> {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final Map<Variable, Constant> getMap() {
-		return map;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void setMap(Map<Variable, Constant> map) {
-		this.map = map;
-	}
-
+    /**
+     * Check if the given condition is satisfied by the given state.
+     * @param state the state to check
+     * @param condition the condition to check for
+     * @return true if the condition is satisfied
+     */
+    boolean isConditionSatisified(State state, I condition);
 }

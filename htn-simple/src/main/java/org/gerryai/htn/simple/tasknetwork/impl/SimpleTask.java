@@ -20,8 +20,8 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -189,7 +189,7 @@ public class SimpleTask implements ImmutableTask {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final Builder apply(ImmutableSubstitution substitution) {
+	    public final Builder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
 	        arguments = logicFactory.apply(arguments, substitution);
 	        return this;
 	    }

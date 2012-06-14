@@ -19,8 +19,8 @@ package org.gerryai.htn.simple.logic.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
@@ -70,11 +70,11 @@ public class SimpleLogicFactory implements ImmutableLogicFactory {
      * {@inheritDoc}
      */
 	public final List<ImmutableTerm<?>> apply(List<ImmutableTerm<?>> oldTerms,
-	        ImmutableSubstitution substitution) {
+	        Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
         List<ImmutableTerm<?>> updatedTerms = new ArrayList<ImmutableTerm<?>>();        
         for (ImmutableTerm<?> oldTerm : oldTerms) {
-            if (substitution.getMap().containsKey(oldTerm)) {
-                updatedTerms.add(substitution.getMap().get(oldTerm));
+            if (substitution.containsKey(oldTerm)) {
+                updatedTerms.add(substitution.get(oldTerm));
             } else {
                 updatedTerms.add(oldTerm);
             }

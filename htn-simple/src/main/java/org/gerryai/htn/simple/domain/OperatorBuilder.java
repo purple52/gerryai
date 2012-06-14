@@ -42,7 +42,7 @@ public interface OperatorBuilder<
         I extends Condition<T>,
         V extends Variable,
         E extends Effect,
-        O extends Operator<I, V>,
+        O extends Operator<T, I, V>,
         B extends OperatorBuilder<T, I, V, E, O, B>> {
 
 	/**

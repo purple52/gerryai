@@ -23,11 +23,11 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Matchers.any;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
@@ -89,8 +89,8 @@ public class SimpleDecompositionServiceTest {
     	when(mockMethod.getTaskNetwork()).thenReturn(mockMethodSubTasks);
     	
     	// Mock unifier to make no changes
-    	ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
-
+    	Map<ImmutableTerm<?>, ImmutableTerm<?>> mockSubstitution = mock(Map.class);
+        
     	when(mockMethodSubTasks.createCopyBuilder(any(ConstraintValidator.class))).thenReturn(mockTaskNetworkBuilderA);
         when(mockTaskNetworkBuilderA.apply(mockSubstitution)).thenReturn(mockTaskNetworkBuilderB);
         when(mockTaskNetworkBuilderB.build()).thenReturn(mockUnifiedMethodSubTasks);

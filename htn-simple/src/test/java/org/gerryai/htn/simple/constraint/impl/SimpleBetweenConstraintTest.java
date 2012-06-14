@@ -23,11 +23,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableConditionBuilder;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
@@ -135,7 +135,8 @@ public class SimpleBetweenConstraintTest {
         Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
         
-        ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
+        @SuppressWarnings("unchecked")
+        Map<ImmutableTerm<?>, ImmutableTerm<?>> mockSubstitution = mock(Map.class);
         ImmutableConditionBuilder mockConditionBuilderA = mock(ImmutableConditionBuilder.class);
         ImmutableConditionBuilder mockConditionBuilderB = mock(ImmutableConditionBuilder.class);
         ImmutableCondition mockConditionA = mock(ImmutableCondition.class);

@@ -18,7 +18,6 @@
 package org.gerryai.htn.simple.tasknetwork;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 
 /**
@@ -27,7 +26,7 @@ import org.gerryai.htn.simple.logic.ImmutableTerm;
  */
 public interface ImmutableTaskNetworkFactory extends
         TaskNetworkFactory<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-        ImmutableConstraint<?>, ImmutableSubstitution> {
+        ImmutableConstraint<?>> {
 
     /**
      * Create a fresh task builder.

@@ -17,13 +17,11 @@
  */
 package org.gerryai.htn.simple.logic;
 
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
-
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface ImmutableLogicFactory extends LogicFactory<ImmutableVariable<?>, ImmutableConstant<?>,
-		ImmutableCondition, ImmutableTerm<?>, ImmutableSubstitution> {
+		ImmutableCondition, ImmutableTerm<?>> {
 
 }

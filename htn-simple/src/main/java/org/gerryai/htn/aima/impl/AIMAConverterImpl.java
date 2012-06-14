@@ -23,11 +23,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.aima.AIMAConverter;
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.logic.impl.SimpleConstant;
-import org.gerryai.htn.simple.logic.impl.SimpleUnifier;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.logic.Constant;
@@ -84,7 +82,7 @@ public class AIMAConverterImpl implements AIMAConverter<ImmutableTerm<?>, Immuta
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableSubstitution convert(Map<aima.core.logic.fol.parsing.ast.Variable,
+	public final Map<ImmutableTerm<?>, ImmutableTerm<?>> convert(Map<aima.core.logic.fol.parsing.ast.Variable,
 			aima.core.logic.fol.parsing.ast.Term> map) {
 		
 		Map<ImmutableTerm<?>, ImmutableTerm<?>> substitutionMap = new HashMap<ImmutableTerm<?>, ImmutableTerm<?>>();
@@ -97,9 +95,7 @@ public class AIMAConverterImpl implements AIMAConverter<ImmutableTerm<?>, Immuta
 			substitutionMap.put(key, value);
 		}
 
-		SimpleUnifier substitution = new SimpleUnifier();
-		substitution.setMap(substitutionMap);
-		return substitution;
+		return substitutionMap;
 	}
 
 	/**

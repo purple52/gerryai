@@ -18,11 +18,11 @@
 package org.gerryai.htn.simple.tasknetwork.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
@@ -77,7 +77,7 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
      * {@inheritDoc}
      */
 	public final ImmutableTaskNetwork copyApply(ImmutableTaskNetwork taskNetwork,
-	        ImmutableSubstitution substitution) throws InvalidConstraint {
+	        Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) throws InvalidConstraint {
 	    return taskNetwork.createCopyBuilder(constraintValidatorFactory.create())
 	        .apply(substitution)
 	        .build();
@@ -86,7 +86,8 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
     /**
      * {@inheritDoc}
      */
-	public final ImmutableTaskNetwork copy(ImmutableTaskNetwork taskNetwork, ImmutableSubstitution substitution,
+	public final ImmutableTaskNetwork copy(ImmutableTaskNetwork taskNetwork,
+	        Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution,
 	        ImmutableTask oldTask, ImmutableTaskNetwork replacementNetwork) throws InvalidConstraint {
 	    //TODO: Replace!
         return taskNetwork.createCopyBuilder(constraintValidatorFactory.create())
@@ -122,7 +123,7 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
     /**
      * {@inheritDoc}
      */
-	public final ImmutableTask copy(ImmutableTask task, ImmutableSubstitution substitution) {
+	public final ImmutableTask copy(ImmutableTask task, Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
 	    return task.createCopyBuilder()
 	            .apply(substitution)
 	            .build();

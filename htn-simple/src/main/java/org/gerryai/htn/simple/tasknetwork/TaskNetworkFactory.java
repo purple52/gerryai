@@ -18,13 +18,13 @@
 package org.gerryai.htn.simple.tasknetwork;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
-import org.gerryai.logic.unification.Substitution;
 
 /**
  * Interface for a factory that creates task network builders.
@@ -32,15 +32,13 @@ import org.gerryai.logic.unification.Substitution;
  * @param <K> type of task this factory uses
  * @param <N> type of task network this factory uses
  * @param <C> the class of constraint the builder will handle
- * @param <S> type of substitution the factory will handle
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface TaskNetworkFactory<
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>,
-		S extends Substitution<T, T>> {
+		C extends Constraint<T>> {
 
 	/**
 	 * Create a task network using the tasks and constraints provided.
@@ -58,7 +56,7 @@ public interface TaskNetworkFactory<
 	 * @return the new task network
 	 * @throws InvalidConstraint if any of constraints involved end up being invalid
 	 */
-	N copyApply(N taskNetwork, S substitution) throws InvalidConstraint;
+	N copyApply(N taskNetwork, Map<T, T> substitution) throws InvalidConstraint;
 	
 	/**
 	 * Copy the given task network, apply a substitution and replace a task with a network.
@@ -69,7 +67,7 @@ public interface TaskNetworkFactory<
 	 * @return the new task network
 	 * @throws InvalidConstraint if any of constraints involved end up being invalid
 	 */
-	N copy(N taskNetwork, S substitution, K oldTask, N replacementNetwork) throws InvalidConstraint;
+	N copy(N taskNetwork, Map<T, T> substitution, K oldTask, N replacementNetwork) throws InvalidConstraint;
 	
 	/**
 	 * Create a task using the name and arguments provided.
@@ -86,5 +84,5 @@ public interface TaskNetworkFactory<
 	 * @param substitution the substitution to apply
 	 * @return the new task
 	 */
-	K copy(K task, S substitution);
+	K copy(K task, Map<T, T> substitution);
 }

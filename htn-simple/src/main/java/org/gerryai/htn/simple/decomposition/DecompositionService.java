@@ -17,13 +17,14 @@
  */
 package org.gerryai.htn.simple.decomposition;
 
+import java.util.Map;
+
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
-import org.gerryai.logic.unification.Substitution;
 
 /**
  * @param <M> type of method this service can decompose
@@ -31,7 +32,6 @@ import org.gerryai.logic.unification.Substitution;
  * @param <K> type of task this service works with
  * @param <N> type of task network this service works with
  * @param <C> type of constraint this service works with
- * @param <S> type of substitution the service works with
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
@@ -40,8 +40,7 @@ public interface DecompositionService<
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>,
-		S extends Substitution<T, T>> {
+		C extends Constraint<T>> {
 
 	/**
 	 * Decomposes a task within a task network using the given method and unifier.
@@ -52,6 +51,6 @@ public interface DecompositionService<
 	 * @return the decomposed task network
 	 * @throws InvalidConstraint 
 	 */
-	N decompose(S substitution, N taskNetwork, K task, M method)  throws InvalidConstraint;
+	N decompose(Map<T, T> substitution, N taskNetwork, K task, M method)  throws InvalidConstraint;
 	
 }

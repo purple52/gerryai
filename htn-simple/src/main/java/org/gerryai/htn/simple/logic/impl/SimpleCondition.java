@@ -20,8 +20,8 @@ package org.gerryai.htn.simple.logic.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableConditionBuilder;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
@@ -132,7 +132,7 @@ public final class SimpleCondition implements ImmutableCondition {
         /**
          * {@inheritDoc}
          */
-        public final Builder apply(ImmutableSubstitution substitution) {
+        public final Builder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
             List<ImmutableTerm<?>> newTerms = new ArrayList<ImmutableTerm<?>>(terms.size());
             for (ImmutableTerm<?> oldTerm : terms) {
                 ImmutableTerm<?> newTerm = oldTerm.createCopyBuilder()

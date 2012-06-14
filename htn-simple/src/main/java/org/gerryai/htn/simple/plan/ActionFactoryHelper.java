@@ -37,7 +37,7 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ActionFactoryHelper<
-        O extends Operator<I, V>,
+        O extends Operator<T, I, V>,
         T extends Term,
         K extends Task<T>,
         I extends Condition<T>,

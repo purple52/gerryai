@@ -26,7 +26,6 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -192,7 +191,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
         /**
          * {@inheritDoc}
          */
-        public final Builder apply(ImmutableSubstitution substitution) {
+        public final Builder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
         
             // Build a map of tasks to their replacements
             Map<ImmutableTask, ImmutableTask> taskReplacementMap =

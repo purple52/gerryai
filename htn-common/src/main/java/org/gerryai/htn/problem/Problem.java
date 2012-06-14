@@ -43,13 +43,13 @@ import org.gerryai.logic.Variable;
  */
 public interface Problem<
         D extends Domain<O, M, T, K, N, C, I, V>,
-		O extends Operator<I, V>,
+		O extends Operator<T, I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition,
+		I extends Condition<T>,
 		V extends Variable> {
 	
 	/**

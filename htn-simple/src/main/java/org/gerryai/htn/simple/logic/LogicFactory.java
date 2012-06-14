@@ -18,6 +18,7 @@
 package org.gerryai.htn.simple.logic;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Interface for a variable factory.
@@ -25,11 +26,10 @@ import java.util.List;
  * @param <C> type of constant this factory produces
  * @param <P> type of predicate this factory produces
  * @param <T> type of term this factory uses
- * @param <S> type of substitution this factory handles
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface LogicFactory<V, C, P, T, S> {
+public interface LogicFactory<V, C, P, T> {
 
 	/**
 	 * Create a variable.
@@ -67,6 +67,6 @@ public interface LogicFactory<V, C, P, T, S> {
 	 * @param substitution substitution to apply
 	 * @return the new terms
 	 */
-	List<T> apply(List<T> oldTerms, S substitution);
+	List<T> apply(List<T> oldTerms, Map<T, T> substitution);
 	
 }

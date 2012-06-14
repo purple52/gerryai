@@ -38,13 +38,13 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Domain<
-		O extends Operator<I, V>,
+		O extends Operator<T, I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition,
+		I extends Condition<T>,
 		V extends Variable> {
 
 	/**

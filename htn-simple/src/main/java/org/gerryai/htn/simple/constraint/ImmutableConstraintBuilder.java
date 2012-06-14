@@ -17,9 +17,10 @@
  */
 package org.gerryai.htn.simple.constraint;
 
+import java.util.Map;
 import java.util.Set;
 
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
+import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
@@ -57,7 +58,7 @@ public interface ImmutableConstraintBuilder<C extends ImmutableConstraint<C>> {
      * @param substitution the substitution to apply
      * @return the updated builder
      */
-    ImmutableConstraintBuilder<C> apply(ImmutableSubstitution substitution);
+    ImmutableConstraintBuilder<C> apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution);
     
     /**
      * Build the constraint.

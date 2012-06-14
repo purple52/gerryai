@@ -22,11 +22,13 @@ import java.util.List;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.logic.Constant;
+import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 
 /**
  * Interface that a plan must implement.
+ * @param <T> type of term this plan uses
  * @param <A> type of action this plan uses
  * @param <O> type of operator this plan uses
  * @param <I> type of condition the plan uses
@@ -35,9 +37,10 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Plan<
-        A extends Action<O, I, V, C>,
-        O extends Operator<I, V>,
-        I extends Condition,
+        T extends Term,
+        A extends Action<T, O, I, V, C>,
+        O extends Operator<T, I, V>,
+        I extends Condition<T>,
         V extends Variable,
         C extends Constant> {
 	

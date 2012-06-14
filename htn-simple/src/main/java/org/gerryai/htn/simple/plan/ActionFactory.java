@@ -37,13 +37,13 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ActionFactory<
-        O extends Operator<I, V>,
+        O extends Operator<T, I, V>,
         T extends Term,
         K extends Task<T>,
         I extends Condition<T>,
         V extends Variable,
         C extends Constant,
-        A extends Action<O, I, V, C>> {
+        A extends Action<T, O, I, V, C>> {
 
 	/**
 	 * Convert a task into an action.

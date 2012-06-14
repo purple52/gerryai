@@ -30,7 +30,7 @@ import org.gerryai.logic.Term;
  * @param <I> type of condition this constraint uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface BetweenConstraint<T extends Term, K extends Task<T>, I extends Condition> extends Constraint<T> {
+public interface BetweenConstraint<T extends Term, K extends Task<T>, I extends Condition<T>> extends Constraint<T> {
 
 	/**
 	 * The set of tasks after which this constraint must hold.

@@ -45,7 +45,7 @@ import org.gerryai.logic.Variable;
  */
 public interface DomainHelper<
         D extends Domain<O, M, T, K, N, C, I, V>,
-		O extends Operator<I, V>,
+		O extends Operator<T, I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,

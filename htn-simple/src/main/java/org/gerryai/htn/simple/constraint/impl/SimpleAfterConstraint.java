@@ -18,12 +18,12 @@
 package org.gerryai.htn.simple.constraint.impl;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -187,7 +187,7 @@ public class SimpleAfterConstraint implements ImmutableValidatableAfterConstrain
         /**
          * {@inheritDoc}
          */
-        public final Builder apply(ImmutableSubstitution substitution) {
+        public final Builder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
             ImmutableCondition newCondition = this.condition.createCopyBuilder()
                     .apply(substitution)
                     .build();

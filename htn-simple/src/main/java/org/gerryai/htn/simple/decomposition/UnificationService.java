@@ -17,6 +17,8 @@
  */
 package org.gerryai.htn.simple.decomposition;
 
+import java.util.Map;
+
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Method;
@@ -49,6 +51,6 @@ public interface UnificationService<
 	 * @return the most general unifier
 	 * @throws UnifierNotFound if no unifier could be found for this task and method
 	 */
-    ImmutableSubstitution findUnifier(K task, M method) throws UnifierNotFound;
+    Map<T, T> findUnifier(K task, M method) throws UnifierNotFound;
 	
 }

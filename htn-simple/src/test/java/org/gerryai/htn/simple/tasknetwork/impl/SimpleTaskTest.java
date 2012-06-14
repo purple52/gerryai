@@ -25,8 +25,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -261,7 +261,8 @@ public class SimpleTaskTest {
         List<ImmutableTerm<?>> termsB = new ArrayList<ImmutableTerm<?>>();
         termsB.add(mockTermB);
         
-        ImmutableSubstitution mockSubstitution = mock(ImmutableSubstitution.class);
+        @SuppressWarnings("unchecked")
+        Map<ImmutableTerm<?>, ImmutableTerm<?>> mockSubstitution = mock(Map.class);
         ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
         when(mockLogicFactory.apply(termsA, mockSubstitution)).thenReturn(termsB);
         ImmutableTask initialTask = new SimpleTask.Builder(mockLogicFactory)

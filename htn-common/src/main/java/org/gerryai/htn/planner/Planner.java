@@ -46,15 +46,15 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Planner<
-        P extends Plan<A, O, I, V, S>,
-        A extends Action<O, I, V, S>,
-		O extends Operator<I, V>,
+        P extends Plan<T, A, O, I, V, S>,
+        A extends Action<T, O, I, V, S>,
+		O extends Operator<T, I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition,
+		I extends Condition<T>,
 		V extends Variable,
 		S extends Constant> {
 

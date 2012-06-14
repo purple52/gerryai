@@ -1,8 +1,8 @@
 package org.gerryai.htn.simple.tasknetwork;
 
 import java.util.List;
+import java.util.Map;
 
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 
@@ -52,7 +52,7 @@ public interface ImmutableTaskBuilder {
 	 * @param substitution the substitution to apply
 	 * @return the updated builder
 	 */
-	ImmutableTaskBuilder apply(ImmutableSubstitution substitution);
+	ImmutableTaskBuilder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution);
 	
 	/**
 	 * Get the name of the task to be built.

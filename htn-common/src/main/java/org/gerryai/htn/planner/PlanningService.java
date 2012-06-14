@@ -50,17 +50,17 @@ import org.gerryai.logic.Variable;
  *
  */
 public interface PlanningService<
-        Pl extends Plan<A, O, I, V, S>,
+        Pl extends Plan<T, A, O, I, V, S>,
         Pr extends Problem<D, O, M, T, K, N, C, I, V>,
-        A extends Action<O, I, V, S>,
+        A extends Action<T, O, I, V, S>,
         D extends Domain<O, M, T, K, N, C, I, V>,
-		O extends Operator<I, V>,
+		O extends Operator<T, I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
-		I extends Condition,
+		I extends Condition<T>,
 		V extends Variable,
 		S extends Constant> {
 	

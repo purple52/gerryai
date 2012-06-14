@@ -51,10 +51,10 @@ import org.gerryai.logic.Variable;
  */
 public interface PlannerFactory<
         L extends Planner<P, A, O, M, T, K, N, C, I, V, S>,
-        P extends Plan<A, O, I, V, S>,
-        A extends Action<O, I, V, S>,
+        P extends Plan<T, A, O, I, V, S>,
+        A extends Action<T, O, I, V, S>,
         D extends Domain<O, M, T, K, N, C, I, V>,
-		O extends Operator<I, V>,
+		O extends Operator<T, I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,

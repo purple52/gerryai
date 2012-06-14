@@ -24,7 +24,6 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
 import org.gerryai.htn.simple.decomposition.impl.SimpleDecompositionService;
 import org.gerryai.htn.simple.domain.DomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
@@ -43,6 +42,8 @@ import org.gerryai.htn.simple.planner.ImmutablePlanner;
 import org.gerryai.htn.simple.planner.ImmutablePlannerFactory;
 import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.planner.sort.impl.SimpleSortService;
+import org.gerryai.htn.simple.problem.ImmutableStateService;
+import org.gerryai.htn.simple.problem.impl.SimpleStateService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -77,14 +78,16 @@ public class SimplePlannerFactory implements ImmutablePlannerFactory {
 		        ImmutableCondition, ImmutableVariable<?>>(unifier, converter);
 		
 		DecompositionService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableSubstitution> decompositionService =
+		        ImmutableConstraint<?>> decompositionService =
 				new SimpleDecompositionService(constraintValidatorFactory);
 		
 		SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> sortService =
 		        new SimpleSortService();
 		
+		ImmutableStateService stateService = new SimpleStateService();
+		
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(actionFactory,
-		        planFactory, decompositionService, unificationService, sortService);
+		        planFactory, decompositionService, unificationService, sortService, stateService);
 		
 		SimplePlanner planner = new SimplePlanner(domainHelper, plannerHelper);
 		

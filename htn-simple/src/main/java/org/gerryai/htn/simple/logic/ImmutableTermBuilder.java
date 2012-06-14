@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.logic;
 
-import org.gerryai.htn.simple.decomposition.ImmutableSubstitution;
+import java.util.Map;
 
 /**
  * Interface for builders for immutable terms.
@@ -38,7 +38,7 @@ public interface ImmutableTermBuilder<T extends ImmutableTerm<T>> {
      * @param substitution the substitution to apply
      * @return the updated builder
      */
-    ImmutableTermBuilder<T> apply(ImmutableSubstitution substitution);
+    ImmutableTermBuilder<T> apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution);
     
     /**
      * Build the term.
