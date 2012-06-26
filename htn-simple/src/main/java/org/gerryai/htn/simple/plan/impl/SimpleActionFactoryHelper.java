@@ -23,18 +23,13 @@ import java.util.Map;
 
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.plan.TaskNotActionable;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.DomainHelper;
-import org.gerryai.htn.simple.domain.ImmutableDomain;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
+import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ImmutableActionFactoryHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -45,16 +40,13 @@ public class SimpleActionFactoryHelper implements ImmutableActionFactoryHelper {
 	/**
 	 * Service for the domain that we are working in.
 	 */
-	private DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask,
-			ImmutableTaskNetwork, ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>> domainHelper;
+	private ImmutableDomainHelper domainHelper;
 	
 	/**
 	 * Constructor requiring a domain helper.
 	 * @param domainHelper helper to use
 	 */
-	public SimpleActionFactoryHelper(DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod,
-	        ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>> domainHelper) {
+	public SimpleActionFactoryHelper(ImmutableDomainHelper domainHelper) {
 		this.domainHelper = domainHelper;
 	}
 	

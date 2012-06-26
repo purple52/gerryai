@@ -25,6 +25,7 @@ import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.UnificationService;
+import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
@@ -41,7 +42,7 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class AIMAUnificationService<
-		O extends Operator<ImmutableTerm<?>, I, V>,
+		O extends Operator<ImmutableEffect, ImmutableTerm<?>, I, V>,
 		M extends Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
 		I extends Condition<ImmutableTerm<?>>,
 		V extends Variable>

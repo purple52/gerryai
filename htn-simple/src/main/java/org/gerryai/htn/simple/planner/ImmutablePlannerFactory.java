@@ -18,15 +18,17 @@
 package org.gerryai.htn.simple.planner;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
+import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.plan.ImmutablePlan;
+import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -35,6 +37,8 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutablePlannerFactory extends PlannerFactory<
+        ImmutableEffect,
+        ImmutableState,
         ImmutablePlanner,
         ImmutablePlan,
         ImmutableAction,

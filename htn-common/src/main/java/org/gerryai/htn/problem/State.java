@@ -18,8 +18,8 @@
 package org.gerryai.htn.problem;
 
 /**
- * @author david
- *
+ * Interface for the representation of current state.
+ * @author David Edwards <david@more.fool.me.uk>
  */
 public interface State {
 

@@ -27,19 +27,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.problem.State;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.DomainHelper;
-import org.gerryai.htn.simple.domain.ImmutableDomain;
+import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.ImmutablePlannerHelper;
+import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -59,7 +53,7 @@ public class SimplePlannerTest {
 	@Test
 	public void testEmptyProblem() throws PlanNotFound, NonPrimitiveTaskNotFound {
 		
-		State mockState = mock(State.class);
+		ImmutableState mockState = mock(ImmutableState.class);
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		ImmutablePlan mockPlan = mock(ImmutablePlan.class);
 		List<ImmutableAction> actions = new ArrayList<ImmutableAction>();
@@ -70,10 +64,7 @@ public class SimplePlannerTest {
 		ImmutablePlannerHelper mockPlannerHelper = mock(ImmutablePlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenThrow(new NonPrimitiveTaskNotFound());
 		when(mockPlannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork)).thenReturn(mockPlan);
-		@SuppressWarnings("unchecked")
-		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>>
-				mockDomainHelper = mock(DomainHelper.class);
+		ImmutableDomainHelper mockDomainHelper = mock(ImmutableDomainHelper.class);
 		
 		// Create the planner to be tested
 		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
@@ -92,7 +83,7 @@ public class SimplePlannerTest {
 	@Test(expected=PlanNotFound.class)
 	public void testOneUnactionablePrimitiveTaskNo() throws NonPrimitiveTaskNotFound, PlanNotFound {
 		
-		State mockState = mock(State.class);
+	    ImmutableState mockState = mock(ImmutableState.class);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
 		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
@@ -105,10 +96,7 @@ public class SimplePlannerTest {
 		ImmutablePlannerHelper mockPlannerHelper = mock(ImmutablePlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenThrow(new NonPrimitiveTaskNotFound());
 		when(mockPlannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork)).thenThrow(new PlanNotFound());
-		@SuppressWarnings("unchecked")
-		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>>
-				mockDomainHelper = mock(DomainHelper.class);
+		ImmutableDomainHelper mockDomainHelper = mock(ImmutableDomainHelper.class);
 		
 		// Create the planner to be tested
 		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
@@ -125,7 +113,7 @@ public class SimplePlannerTest {
 	@Test(expected=PlanNotFound.class)
 	public void testOneUndecomposableNonPrimitiveTaskNoMethods() throws NonPrimitiveTaskNotFound, PlanNotFound {
 		
-		State mockState = mock(State.class);
+	    ImmutableState mockState = mock(ImmutableState.class);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
 		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
@@ -137,10 +125,7 @@ public class SimplePlannerTest {
 		// and an exception when trying to action the primitive task
 		ImmutablePlannerHelper mockPlannerHelper = mock(ImmutablePlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenReturn(mockTaskA);
-		@SuppressWarnings("unchecked")
-		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>>
-				mockDomainHelper = mock(DomainHelper.class);
+		ImmutableDomainHelper mockDomainHelper = mock(ImmutableDomainHelper.class);
 		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
 		when(mockDomainHelper.getMethodsByTask(mockTaskA)).thenReturn(methods);
 		
@@ -160,7 +145,7 @@ public class SimplePlannerTest {
 	@Test(expected=PlanNotFound.class)
 	public void testOneUndecomposableNonPrimitiveTaskMethodsFailed() throws NonPrimitiveTaskNotFound, PlanNotFound, DecompositionNotFound, InvalidConstraint  {
 		
-		State mockState = mock(State.class);
+	    ImmutableState mockState = mock(ImmutableState.class);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
 		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
@@ -169,10 +154,7 @@ public class SimplePlannerTest {
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
 
 		// Create a domain helper that has two potentially matching methods
-		@SuppressWarnings("unchecked")
-		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>>
-				mockDomainHelper = mock(DomainHelper.class);
+		ImmutableDomainHelper mockDomainHelper = mock(ImmutableDomainHelper.class);
 		ImmutableMethod mockMethodA = mock(ImmutableMethod.class);
 		ImmutableMethod mockMethodB = mock(ImmutableMethod.class);
 		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
@@ -202,7 +184,7 @@ public class SimplePlannerTest {
 	@Test
 	public void testOnePrimitiveTask() throws NonPrimitiveTaskNotFound, PlanNotFound {
 		
-		State mockState = mock(State.class);
+	    ImmutableState mockState = mock(ImmutableState.class);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
 		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
@@ -221,10 +203,7 @@ public class SimplePlannerTest {
 		ImmutablePlannerHelper mockPlannerHelper = mock(ImmutablePlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenThrow(new NonPrimitiveTaskNotFound());
 		when(mockPlannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork)).thenReturn(mockPlan);
-		@SuppressWarnings("unchecked")
-		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>>
-				mockDomainHelper = mock(DomainHelper.class);
+		ImmutableDomainHelper mockDomainHelper = mock(ImmutableDomainHelper.class);
 		
 		// Create the planner to be tested
 		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
@@ -245,7 +224,7 @@ public class SimplePlannerTest {
 	@Test
 	public void testOneNonPrimitiveTask() throws NonPrimitiveTaskNotFound, PlanNotFound, DecompositionNotFound, InvalidConstraint {
 		
-		State mockState = mock(State.class);
+	    ImmutableState mockState = mock(ImmutableState.class);
 		
 		// Initial task network containing task A
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
@@ -272,10 +251,7 @@ public class SimplePlannerTest {
 		ImmutableMethod mockMethodA = mock(ImmutableMethod.class);
 		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
 		methods.add(mockMethodA);
-		@SuppressWarnings("unchecked")
-		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>>
-				mockDomainHelper = mock(DomainHelper.class);
+		ImmutableDomainHelper mockDomainHelper = mock(ImmutableDomainHelper.class);
 		when(mockDomainHelper.getMethodsByTask(mockTaskA)).thenReturn(methods);
 		
 		// Create a mock planner helper

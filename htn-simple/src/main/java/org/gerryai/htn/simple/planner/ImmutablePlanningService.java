@@ -19,16 +19,18 @@ package org.gerryai.htn.simple.planner;
 
 import org.gerryai.htn.planner.PlanningService;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
+import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.problem.ImmutableProblem;
+import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -36,9 +38,21 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * Interface for an immutable domain planning service.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutablePlanningService extends PlanningService<ImmutablePlan,
-        ImmutableProblem, ImmutableAction, ImmutableDomain, ImmutableOperator,
-		ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>, ImmutableConstant<?>> {
+public interface ImmutablePlanningService extends PlanningService<
+        ImmutableEffect,
+        ImmutableState,
+        ImmutablePlan,
+        ImmutableProblem,
+        ImmutableAction,
+        ImmutableDomain,
+        ImmutableOperator,
+		ImmutableMethod,
+		ImmutableTerm<?>,
+		ImmutableTask,
+		ImmutableTaskNetwork,
+		ImmutableConstraint<?>,
+		ImmutableCondition,
+		ImmutableVariable<?>,
+		ImmutableConstant<?>> {
 
 }

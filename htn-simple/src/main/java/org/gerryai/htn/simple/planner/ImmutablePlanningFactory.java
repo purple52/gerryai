@@ -21,6 +21,7 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraintFactory;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilderFactory;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.problem.ImmutableProblemBuilderFactory;
+import org.gerryai.htn.simple.problem.ImmutableStateService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkFactory;
 
 /**
@@ -46,6 +47,12 @@ public interface ImmutablePlanningFactory {
      * @return the factory
      */
     ImmutableProblemBuilderFactory getProblemBuilderFactory();
+    
+    /**
+     * Get a service for handling state-related operations.
+     * @return the state service
+     */
+    ImmutableStateService getStateService();
     
     /**
      * Get a factory for generating task networks.

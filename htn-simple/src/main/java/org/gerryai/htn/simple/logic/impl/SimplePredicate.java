@@ -22,15 +22,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableConditionBuilder;
+import org.gerryai.htn.simple.logic.ImmutablePredicate;
+import org.gerryai.htn.simple.logic.ImmutablePredicateBuilder;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 
 /**
  * Simple implementation of an immutable condition.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public final class SimpleCondition implements ImmutableCondition {
+public final class SimplePredicate implements ImmutablePredicate {
     
     /**
      * Symbolic name of the underlying predicate.
@@ -60,7 +60,7 @@ public final class SimpleCondition implements ImmutableCondition {
 	 * Constructor using a builder.
 	 * @param builder the builder
 	 */
-	private SimpleCondition(Builder builder) {
+	private SimplePredicate(Builder builder) {
 	    this.name = builder.name;
 		this.terms = builder.terms;
 	}
@@ -68,7 +68,7 @@ public final class SimpleCondition implements ImmutableCondition {
     /**
      * {@inheritDoc}
      */
-    public ImmutableConditionBuilder createCopyBuilder() {
+    public ImmutablePredicateBuilder createCopyBuilder() {
         return new Builder()
             .copy(this);
     }
@@ -77,7 +77,7 @@ public final class SimpleCondition implements ImmutableCondition {
      * Builder class for SimplePredicate.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder implements ImmutableConditionBuilder {
+    public static class Builder implements ImmutablePredicateBuilder {
         
         /**
          * Name of the term to be built.
@@ -99,7 +99,7 @@ public final class SimpleCondition implements ImmutableCondition {
         /**
          * {@inheritDoc}
          */
-        public final ImmutableConditionBuilder setName(String name) {
+        public final ImmutablePredicateBuilder setName(String name) {
             this.name = name;
             return this;
         }
@@ -107,7 +107,7 @@ public final class SimpleCondition implements ImmutableCondition {
         /**
          * {@inheritDoc}
          */
-        public final ImmutableConditionBuilder addTerm(ImmutableTerm<?> term) {
+        public final ImmutablePredicateBuilder addTerm(ImmutableTerm<?> term) {
             this.terms.add(term);
             return this;
         }
@@ -115,7 +115,7 @@ public final class SimpleCondition implements ImmutableCondition {
         /**
          * {@inheritDoc}
          */
-        public final ImmutableConditionBuilder addTerm(List<ImmutableTerm<?>> terms) {
+        public final ImmutablePredicateBuilder addTerm(List<ImmutableTerm<?>> terms) {
             this.terms.addAll(terms);
             return this;
         }
@@ -123,7 +123,7 @@ public final class SimpleCondition implements ImmutableCondition {
         /**
          * {@inheritDoc}
          */
-        public final Builder copy(ImmutableCondition condition) {
+        public final Builder copy(ImmutablePredicate condition) {
             this.setName(condition.getName());
             this.terms.addAll(condition.getTerms());
             return this;
@@ -146,8 +146,8 @@ public final class SimpleCondition implements ImmutableCondition {
         /**
          * {@inheritDoc}
          */
-        public final ImmutableCondition build() {
-            return new SimpleCondition(this);
+        public final ImmutablePredicate build() {
+            return new SimplePredicate(this);
         }
 
     }

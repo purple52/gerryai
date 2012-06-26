@@ -20,9 +20,9 @@ package org.gerryai.htn.simple.planner.impl;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintFactory;
 import org.gerryai.htn.simple.constraint.impl.SimpleConstraintFactory;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilderFactory;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.impl.SimpleLogicFactory;
@@ -30,7 +30,9 @@ import org.gerryai.htn.simple.planner.ImmutablePlannerFactory;
 import org.gerryai.htn.simple.planner.ImmutablePlanningFactory;
 import org.gerryai.htn.simple.planner.ImmutablePlanningService;
 import org.gerryai.htn.simple.problem.ImmutableProblemBuilderFactory;
+import org.gerryai.htn.simple.problem.ImmutableStateService;
 import org.gerryai.htn.simple.problem.impl.SimpleProblemBuilderFactory;
+import org.gerryai.htn.simple.problem.impl.SimpleStateService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkFactory;
 import org.gerryai.htn.simple.tasknetwork.impl.SimpleTaskNetworkFactory;
@@ -72,6 +74,11 @@ public class SimplePlanningFactory implements ImmutablePlanningFactory {
     private ImmutablePlannerFactory plannerFactory;
 
     /**
+     * The state service to use.
+     */
+    private ImmutableStateService stateService;
+    
+    /**
      * The planning service to use.
      */
     private ImmutablePlanningService planningService;
@@ -95,7 +102,8 @@ public class SimplePlanningFactory implements ImmutablePlanningFactory {
         taskNetworkFactory = new SimpleTaskNetworkFactory(constraintValidatorFactory, logicFactory);
 
         constraintFactory = new SimpleConstraintFactory();
-        plannerFactory = new SimplePlannerFactory();
+        stateService = new SimpleStateService();
+        plannerFactory = new SimplePlannerFactory(stateService);
         planningService = new SimplePlanningService(plannerFactory);
     }
     
@@ -134,6 +142,12 @@ public class SimplePlanningFactory implements ImmutablePlanningFactory {
         return constraintFactory;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public final ImmutableStateService getStateService() {
+        return stateService;
+    }
     /**
      * {@inheritDoc}
      */

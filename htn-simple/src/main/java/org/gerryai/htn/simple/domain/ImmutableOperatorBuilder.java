@@ -17,8 +17,6 @@
  */
 package org.gerryai.htn.simple.domain;
 
-import org.gerryai.htn.domain.Effect;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
 
@@ -30,7 +28,7 @@ public interface ImmutableOperatorBuilder extends OperatorBuilder<
         ImmutableTerm<?>,
         ImmutableCondition,
         ImmutableVariable<?>,
-        Effect,
+        ImmutableEffect,
         ImmutableOperator,
         ImmutableOperatorBuilder> {
 

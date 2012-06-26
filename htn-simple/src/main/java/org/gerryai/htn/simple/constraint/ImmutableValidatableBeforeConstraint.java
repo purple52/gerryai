@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.constraint;
 
-import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 

@@ -1,6 +1,5 @@
 package org.gerryai.htn.simple.problem;
 
-import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -33,7 +32,7 @@ public interface ImmutableProblemBuilder {
      * @param state the state
      * @return an updated builder object
      */
-    ImmutableProblemBuilder setState(State state);
+    ImmutableProblemBuilder setState(ImmutableState state);
     
     /**
      * Set the task network to be solved.

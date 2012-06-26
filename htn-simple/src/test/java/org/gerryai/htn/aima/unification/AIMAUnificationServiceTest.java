@@ -29,6 +29,7 @@ import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
@@ -53,10 +54,10 @@ public class AIMAUnificationServiceTest {
 		@SuppressWarnings("unchecked")
 		AIMAConverter<ImmutableTerm<?>, Variable, ImmutableTask> aimaConverter
 				= mock(AIMAConverter.class);
-		AIMAUnificationService<Operator<ImmutableTerm<?>, Condition<ImmutableTerm<?>>, Variable>, Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
+		AIMAUnificationService<Operator<ImmutableEffect, ImmutableTerm<?>, Condition<ImmutableTerm<?>>, Variable>, Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
 		            Condition<ImmutableTerm<?>>, Variable> unificationService
 					= new AIMAUnificationService<
-					        Operator<ImmutableTerm<?>, Condition<ImmutableTerm<?>>, Variable>,
+					        Operator<ImmutableEffect, ImmutableTerm<?>, Condition<ImmutableTerm<?>>, Variable>,
 					        Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
 					        Condition<ImmutableTerm<?>>, Variable>(
 					aimaUnifier, aimaConverter);

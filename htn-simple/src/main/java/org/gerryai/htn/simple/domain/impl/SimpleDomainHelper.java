@@ -17,28 +17,28 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.domain.OperatorNotFound;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
+import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
+import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleDomainHelper implements DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod,
-		ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-		ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>> {
+public class SimpleDomainHelper implements ImmutableDomainHelper {
 
 	/**
 	 * Domain this helper is working on.
@@ -87,4 +87,31 @@ public class SimpleDomainHelper implements DomainHelper<ImmutableDomain, Immutab
 		return methods;
 	}
 
+    /**
+     * {@inheritDoc}
+     */
+    public final ImmutableEffect getGroundedEffect(ImmutableEffect effect,
+            Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings) {
+        
+        Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution =
+                new HashMap<ImmutableTerm<?>, ImmutableTerm<?>>(bindings);
+        
+        return effect.createCopyBuilder()
+                .apply(substitution)
+                .build();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public final ImmutableCondition getGroundedCondition(ImmutableCondition condition,
+            Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings) {
+        
+        Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution =
+                new HashMap<ImmutableTerm<?>, ImmutableTerm<?>>(bindings);
+        
+        return condition.createCopyBuilder()
+                .apply(substitution)
+                .build();
+    }
 }

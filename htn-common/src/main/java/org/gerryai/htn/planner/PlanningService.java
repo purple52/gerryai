@@ -20,11 +20,13 @@ package org.gerryai.htn.planner;
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.problem.Problem;
+import org.gerryai.htn.problem.State;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Constant;
@@ -33,6 +35,8 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface for a service that can solve problems.
+ * @param <E> type of effect this service works with
+ * @param <St> type of state this service works with
  * @param <Pl> type of plan this service generates
  * @param <Pr> type of problem this service handles
  * @param <A> type of action this service works with
@@ -50,11 +54,13 @@ import org.gerryai.logic.Variable;
  *
  */
 public interface PlanningService<
-        Pl extends Plan<T, A, O, I, V, S>,
-        Pr extends Problem<D, O, M, T, K, N, C, I, V>,
-        A extends Action<T, O, I, V, S>,
-        D extends Domain<O, M, T, K, N, C, I, V>,
-		O extends Operator<T, I, V>,
+        E extends Effect<T>,
+        St extends State,
+        Pl extends Plan<E, T, A, O, I, V, S>,
+        Pr extends Problem<E, St, D, O, M, T, K, N, C, I, V>,
+        A extends Action<E, T, O, I, V, S>,
+        D extends Domain<E, O, M, T, K, N, C, I, V>,
+		O extends Operator<E, T, I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,

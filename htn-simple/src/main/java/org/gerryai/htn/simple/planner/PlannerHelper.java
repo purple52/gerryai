@@ -19,6 +19,7 @@ package org.gerryai.htn.simple.planner;
 
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Action;
@@ -35,6 +36,8 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface for a helper class to support a planner.
+ * @param <E> type of effect this helper handles
+ * @param <ST> type of state this helper handles
  * @param <P> type of plan this helper handles
  * @param <A> type of action this planner works with
  * @param <O> type of operator this planner helper uses
@@ -49,9 +52,11 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface PlannerHelper<
-        P extends Plan<T, A, O, I, V, S>,
-        A extends Action<T, O, I, V, S>,
-		O extends Operator<T, I, V>,
+        E extends Effect<T>,
+        ST extends State,
+        P extends Plan<E, T, A, O, I, V, S>,
+        A extends Action<E, T, O, I, V, S>,
+		O extends Operator<E, T, I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
@@ -76,7 +81,7 @@ public interface PlannerHelper<
 	 * @return the plan
 	 * @throws PlanNotFound if no plan exists
 	 */
-	P findPlanForPrimitive(State state, N taskNetwork) throws PlanNotFound;
+	P findPlanForPrimitive(ST state, N taskNetwork) throws PlanNotFound;
 	
 	/**
 	 * Try to get a non-primitive task from a given network.

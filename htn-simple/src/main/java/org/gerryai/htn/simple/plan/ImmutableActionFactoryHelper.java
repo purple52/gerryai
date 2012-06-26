@@ -17,8 +17,9 @@
  */
 package org.gerryai.htn.simple.plan;
 
+import org.gerryai.htn.simple.domain.ImmutableCondition;
+import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableConstant;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
@@ -28,7 +29,13 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
  * Action factory helper that uses immutable classes.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableActionFactoryHelper  extends ActionFactoryHelper<ImmutableOperator,
-        ImmutableTerm<?>, ImmutableTask, ImmutableCondition, ImmutableVariable<?>, ImmutableConstant<?>> {
+public interface ImmutableActionFactoryHelper extends ActionFactoryHelper<
+        ImmutableEffect,
+        ImmutableOperator,
+        ImmutableTerm<?>,
+        ImmutableTask,
+        ImmutableCondition,
+        ImmutableVariable<?>,
+        ImmutableConstant<?>> {
 
 }

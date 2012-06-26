@@ -17,19 +17,19 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.decomposition.UnifierNotFound;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
+import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
+import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.plan.ImmutableActionFactory;
@@ -39,6 +39,7 @@ import org.gerryai.htn.simple.plan.ImmutablePlanBuilderFactory;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.ImmutablePlannerHelper;
 import org.gerryai.htn.simple.planner.sort.SortService;
+import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.problem.ImmutableStateService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
@@ -50,6 +51,11 @@ import org.gerryai.htn.tasknetwork.Task;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class SimplePlannerHelper implements ImmutablePlannerHelper {
+    
+    /**
+     * Domain helper.
+     */
+    private ImmutableDomainHelper domainHelper;
     
 	/**
 	 * Factory for creating actions.
@@ -92,6 +98,7 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 	 * @param unificationService the unification service
 	 * @param sortService the sorting service
 	 * @param stateService the state service
+	 * @param domainHelper the helper for manipulating domain objects
 	 */
 	public SimplePlannerHelper(
 	        ImmutableActionFactory actionFactory,
@@ -101,13 +108,15 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 			UnificationService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableCondition>  unificationService,
 			SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> sortService,
-			ImmutableStateService stateService) {
+			ImmutableStateService stateService,
+			ImmutableDomainHelper domainHelper) {
 		this.actionFactory = actionFactory;
 		this.planBuilderFactory = planBuilderFactory;
 		this.decompositionService = decompositionservice;
 		this.unificationService = unificationService;
 		this.sortService = sortService;
 		this.stateService = stateService;
+		this.domainHelper = domainHelper;
 	}
 	
 	/**
@@ -121,7 +130,8 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutablePlan findPlanForPrimitive(State state, ImmutableTaskNetwork taskNetwork) throws PlanNotFound {
+	public final ImmutablePlan findPlanForPrimitive(ImmutableState state,
+	        ImmutableTaskNetwork taskNetwork) throws PlanNotFound {
 		// TODO: Confirm implementation
 		// TODO: Enforce constraints from task network completely
 	    List<ImmutableTask> sortedTasks = sortService.sortByConstaints(
@@ -137,13 +147,14 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 				throw new PlanNotFound("Could not turn task into action", e);
 			}
 			for (ImmutableCondition condition : action.getOperator().getPreconditions()) {
-			    Map<ImmutableTerm<?>, ImmutableTerm<?>> bindings =
-			            new HashMap<ImmutableTerm<?>, ImmutableTerm<?>>(action.getBindings());
-			    ImmutableCondition groundCondition = condition.createCopyBuilder()
-			            .apply(bindings)
-			            .build();
-			    if (!stateService.isConditionSatisified(state, groundCondition)) {
+			    ImmutableCondition groundCondition = domainHelper.getGroundedCondition(condition, action.getBindings());
+			    if (!stateService.ask(state, groundCondition)) {
 			        throw new PlanNotFound("Preconditions of operator not satisfied");
+			    } else {
+			        for (ImmutableEffect effect : action.getOperator().getEffects()) {
+			            ImmutableEffect groundEffect = domainHelper.getGroundedEffect(effect, action.getBindings());
+			            stateService.tell(state, groundEffect);
+			        }
 			    }
 			}
 			planBuilder = planBuilder.addAction(action);

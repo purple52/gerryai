@@ -17,13 +17,23 @@
  */
 package org.gerryai.htn.simple.problem;
 
-import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
+import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 
 /**
  * State service interface for immutable terms and conditions.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableStateService extends StateService<ImmutableTerm<?>, ImmutableCondition> {
+public interface ImmutableStateService extends StateService<
+        ImmutableState,
+        ImmutableTerm<?>,
+        ImmutableCondition,
+        ImmutableEffect> {
 
+    /**
+     * Create an empty state builder.
+     * @return the builder
+     */
+    ImmutableStateBuilder createStateBuilder();
 }

@@ -18,11 +18,13 @@
 package org.gerryai.htn.simple.logic.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.logic.ImmutablePredicate;
 import org.gerryai.htn.simple.logic.ImmutableConstant;
+import org.gerryai.htn.simple.logic.ImmutableFunction;
 import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
@@ -33,6 +35,25 @@ import org.gerryai.htn.simple.logic.ImmutableVariable;
  */
 public class SimpleLogicFactory implements ImmutableLogicFactory {
 
+    /**
+     * {@inheritDoc}
+     */
+    public final ImmutableFunction createFunction(String name, ImmutableTerm<?> term) {
+        List<ImmutableTerm<?>> terms = new ArrayList<ImmutableTerm<?>>(1);
+        terms.add(term);
+        return createFunction(name, terms);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public final ImmutableFunction createFunction(String name, List<ImmutableTerm<?>> terms) {
+        return new SimpleFunction.Builder()
+                .setName(name)
+                .addTerm(terms)
+                .build();
+    }
+    
 	/**
 	 * {@inheritDoc}
 	 */
@@ -50,17 +71,17 @@ public class SimpleLogicFactory implements ImmutableLogicFactory {
     /**
      * {@inheritDoc}
      */
-    public final ImmutableCondition createCondition(String name, ImmutableTerm<?> term) {
+    public final ImmutablePredicate createPredicate(String name, ImmutableTerm<?> term) {
         List<ImmutableTerm<?>> terms = new ArrayList<ImmutableTerm<?>>(1);
         terms.add(term);
-        return createCondition(name, terms);
+        return createPredicate(name, terms);
     }
     
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableCondition createCondition(String name, List<ImmutableTerm<?>> terms) {
-		return new SimpleCondition.Builder()
+	public final ImmutablePredicate createPredicate(String name, List<ImmutableTerm<?>> terms) {
+		return new SimplePredicate.Builder()
 		        .setName(name)
 		        .addTerm(terms)
 		        .build();
@@ -82,4 +103,32 @@ public class SimpleLogicFactory implements ImmutableLogicFactory {
         
         return updatedTerms;
 	}
+	
+    /**
+     * {@inheritDoc}
+     */
+    public final ImmutablePredicate copyApply(ImmutablePredicate condition,
+            Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings) {
+        
+        Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution =
+                new HashMap<ImmutableTerm<?>, ImmutableTerm<?>>(bindings);
+        
+        return condition.createCopyBuilder()
+                .apply(substitution)
+                .build();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public final ImmutableFunction copyApply(ImmutableFunction function,
+            Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings) {
+        
+        Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution =
+                new HashMap<ImmutableTerm<?>, ImmutableTerm<?>>(bindings);
+        
+        return function.createCopyBuilder()
+                .apply(substitution)
+                .build();
+    }
 }

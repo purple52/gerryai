@@ -28,8 +28,8 @@ import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableConditionBuilder;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
+import org.gerryai.htn.simple.domain.ImmutableConditionBuilder;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -126,7 +126,7 @@ public class SimpleBetweenConstraintTest {
      * Test construction using copy and apply
      */
     @Test
-    public <T extends ImmutableCondition> void testCopyApply() {
+    public void testCopyApply() {
         
         ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();

@@ -18,22 +18,37 @@
 package org.gerryai.htn.simple.problem;
 
 import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.problem.State;
 import org.gerryai.logic.Term;
 
 /**
  * Interface for a service that can handle states, conditional checks.
+ * @param <S> type of state this service uses
  * @param <T> type of logical term this service uses
  * @param <I> type of condition this service uses
+ * @param <E> type of effect this service uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface StateService<T extends Term, I extends Condition<T>> {
+public interface StateService<
+        S extends State,
+        T extends Term,
+        I extends Condition<T>,
+        E extends Effect<T>> {
 
     /**
      * Check if the given condition is satisfied by the given state.
      * @param state the state to check
      * @param condition the condition to check for
-     * @return true if the condition is satisfied
+     * @return true if the predicate is satisfied
      */
-    boolean isConditionSatisified(State state, I condition);
+    boolean ask(S state, I condition);
+    
+    /**
+     * Get an updated state where the supplied effect has been applied to the knowledge base.
+     * @param state the initial state
+     * @param effect the effect to be applied
+     * @return an updated state
+     */
+    S tell(S state, E effect);
 }

@@ -24,12 +24,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Matchers.any;
 
 import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.planner.ImmutablePlanner;
 import org.gerryai.htn.simple.planner.ImmutablePlannerFactory;
 import org.gerryai.htn.simple.problem.ImmutableProblem;
+import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.junit.Test;
 
@@ -93,7 +93,7 @@ public class SimplePlanningServiceTest {
 	private ImmutableProblem createMockProblem() {
 		
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
-		State mockState = mock(State.class);
+		ImmutableState mockState = mock(ImmutableState.class);
 		ImmutableDomain	mockDomain = mock(ImmutableDomain.class);
 		ImmutableProblem mockProblem = mock(ImmutableProblem.class);
 		when(mockProblem.getTaskNetwork()).thenReturn(mockTaskNetwork);

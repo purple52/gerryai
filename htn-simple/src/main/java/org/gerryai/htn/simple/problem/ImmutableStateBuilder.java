@@ -15,19 +15,33 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.logic;
+package org.gerryai.htn.simple.problem;
 
-import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.simple.domain.ImmutableEffect;
 
 /**
- * Extended interface for immutable conditions that can only be modified via a builder.
+ * Interface for a builder class for immutable state objects.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableCondition extends Condition<ImmutableTerm<?>> {
+public interface ImmutableStateBuilder {
 
     /**
-     * Create a builder that will start with a copy if this condition.
-     * @return the builder
+     * Copy the state provided.
+     * @param state the state to copy
+     * @return an updated builder
      */
-    ImmutableConditionBuilder createCopyBuilder();
+    ImmutableStateBuilder copy(ImmutableState state);
+    
+    /**
+     * Apply the supplied effect to the state to be built.
+     * @param effect the effect to apply
+     * @return an updated builder
+     */
+    ImmutableStateBuilder tell(ImmutableEffect effect);
+    
+    /**
+     * Build the finished state.
+     * @return the state
+     */
+    ImmutableState build();
 }

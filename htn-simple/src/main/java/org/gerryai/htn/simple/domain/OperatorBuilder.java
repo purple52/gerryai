@@ -41,8 +41,8 @@ public interface OperatorBuilder<
         T extends Term,
         I extends Condition<T>,
         V extends Variable,
-        E extends Effect,
-        O extends Operator<T, I, V>,
+        E extends Effect<T>,
+        O extends Operator<E, T, I, V>,
         B extends OperatorBuilder<T, I, V, E, O, B>> {
 
 	/**
@@ -93,31 +93,6 @@ public interface OperatorBuilder<
 	 * @return the updated builder
 	 */
 	B addEffects(Set<E> effects);
-	
-    /**
-     * Get the name of the operator being built.
-     * 
-     * @return the name
-     */
-    String getName();
-    
-    /**
-     * Get the arguments for the operator being built.
-     * @return the arguments
-     */
-    List<V> getArguments();
- 
-    /**
-     * Get the preconditions for the operator being built.
-     * @return the preconditions
-     */
-    Set<I> getPreconditions();
-
-    /**
-     * Get the effects for the operator being built.
-     * @return the effects
-     */
-    Set<E> getEffects();
     
 	/**
 	 * Build the operator.

@@ -44,8 +44,8 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface DomainBuilderFactory<
-		D extends Domain<O, M, T, K, N, C, I, V>,
-		O extends Operator<T, I, V>,
+		D extends Domain<E, O, M, T, K, N, C, I, V>,
+		O extends Operator<E, T, I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
@@ -53,7 +53,7 @@ public interface DomainBuilderFactory<
 		C extends Constraint<T>,
 		I extends Condition<T>,
 		V extends Variable,
-		E extends Effect,
+		E extends Effect<T>,
 		B extends OperatorBuilder<T, I, V, E, O, B>> {
 
 	/**
@@ -73,4 +73,16 @@ public interface DomainBuilderFactory<
 	 * @return the method builder
 	 */
 	MethodBuilder<T, K, N, C, M> createMethodBuilder();
+	
+	/**
+	 * Create an effect builder of the required type.
+	 * @return the effect builder
+	 */
+	ImmutableEffectBuilder createEffectBuilder();
+	
+	   /**
+     * Create a condition builder of the required type.
+     * @return the condition builder
+     */
+    ImmutableConditionBuilder createConditionBuilder();
 }

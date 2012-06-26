@@ -27,7 +27,7 @@ import org.gerryai.htn.simple.constraint.ImmutableValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableValidatablePrecedenceConstraint;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.junit.Test;
 

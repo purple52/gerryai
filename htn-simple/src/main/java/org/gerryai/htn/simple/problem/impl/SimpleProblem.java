@@ -1,9 +1,9 @@
 package org.gerryai.htn.simple.problem.impl;
 
-import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.problem.ImmutableProblem;
 import org.gerryai.htn.simple.problem.ImmutableProblemBuilder;
+import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
@@ -33,7 +33,7 @@ public class SimpleProblem implements ImmutableProblem {
 	/**
 	 * The initial state for this problem.
 	 */
-	private State state;
+	private ImmutableState state;
 	
 	/**
 	 * The task network to achieve.
@@ -50,15 +50,15 @@ public class SimpleProblem implements ImmutableProblem {
 	 * @param builder the builder to build from
 	 */
 	protected SimpleProblem(Builder builder) {
-	    this.state = builder.getState();
-	    this.taskNetwork = builder.getTaskNetwork();
-	    this.domain = builder.getDomain();
+	    this.state = builder.state;
+	    this.taskNetwork = builder.taskNetwork;
+	    this.domain = builder.domain;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final State getState() {
+	public final ImmutableState getState() {
 		return state;
 	}
 
@@ -85,7 +85,7 @@ public class SimpleProblem implements ImmutableProblem {
 	    /**
 	     * The initial state for this problem.
 	     */
-	    private State state;
+	    private ImmutableState state;
 	    
 	    /**
 	     * The task network to achieve.
@@ -102,7 +102,7 @@ public class SimpleProblem implements ImmutableProblem {
 	     * @param state the state
 	     * @return an updated builder object
 	     */
-	    public final Builder setState(State state) {
+	    public final Builder setState(ImmutableState state) {
 	        this.state = state;
 	        return this;
 	    }
@@ -126,30 +126,6 @@ public class SimpleProblem implements ImmutableProblem {
     		this.domain = domain;
     		return this;
     	}
-
-    	/**
-         * Get the initial state for the problem.
-         * @return the initial state
-         */
-        public final State getState() {
-            return state;
-        }
-
-        /**
-         * Get the task network to solve.
-         * @return the task network
-         */
-        public final ImmutableTaskNetwork getTaskNetwork() {
-            return taskNetwork;
-        }
-
-        /**
-         * Get the domain to work in.
-         * @return the domain
-         */
-        public final ImmutableDomain getDomain() {
-            return domain;
-        }
     	
         /**
          * Build the finished problem.

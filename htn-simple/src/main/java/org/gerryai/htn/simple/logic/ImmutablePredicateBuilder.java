@@ -24,46 +24,46 @@ import java.util.Map;
  * Interface for builders for immutable terms.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableConditionBuilder {
+public interface ImmutablePredicateBuilder {
 
     /**
      * Set the symbolic name of the underlying predicate.
      * @param name the name
      * @return an updated builder
      */
-    ImmutableConditionBuilder setName(String name);
+    ImmutablePredicateBuilder setName(String name);
 
     /**
      * Add a term to the underlying predicate.
      * @param term the term to add
      * @return an updated builder
      */
-    ImmutableConditionBuilder addTerm(ImmutableTerm<?> term);
+    ImmutablePredicateBuilder addTerm(ImmutableTerm<?> term);
 
     /**
      * Add a list of terms to the underlying predicate.
      * @param terms the terms to add
      * @return an updated builder
      */
-    ImmutableConditionBuilder addTerm(List<ImmutableTerm<?>> terms);
+    ImmutablePredicateBuilder addTerm(List<ImmutableTerm<?>> terms);
     
     /**
      * Copy the provided condition as a basis for a new one.
      * @param condition the condition to copy
      * @return the updated builder
      */
-    ImmutableConditionBuilder copy(ImmutableCondition condition);
+    ImmutablePredicateBuilder copy(ImmutablePredicate condition);
     
     /**
      * Apply the substituter provided to the underlying predicate.
      * @param substitution the substitution to apply
      * @return the updated builder
      */
-    ImmutableConditionBuilder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution);
+    ImmutablePredicateBuilder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution);
     
     /**
      * Build the condition.
      * @return the finished condition
      */
-    ImmutableCondition build();
+    ImmutablePredicate build();
 }

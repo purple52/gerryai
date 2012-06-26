@@ -20,11 +20,13 @@ package org.gerryai.htn.simple.planner;
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.Planner;
+import org.gerryai.htn.problem.State;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Constant;
@@ -33,6 +35,8 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface for factories that create planners.
+ * @param <E> type of effect this planner factory uses
+ * @param <St> type of state this planner factory uses
  * @param <L> type of planner this planner factory generates
  * @param <P> type of plan this planner factory uses
  * @param <A> type of action this planner factory uses
@@ -50,11 +54,13 @@ import org.gerryai.logic.Variable;
  *
  */
 public interface PlannerFactory<
-        L extends Planner<P, A, O, M, T, K, N, C, I, V, S>,
-        P extends Plan<T, A, O, I, V, S>,
-        A extends Action<T, O, I, V, S>,
-        D extends Domain<O, M, T, K, N, C, I, V>,
-		O extends Operator<T, I, V>,
+        E extends Effect<T>,
+        St extends State,
+        L extends Planner<E, St, P, A, O, M, T, K, N, C, I, V, S>,
+        P extends Plan<E, T, A, O, I, V, S>,
+        A extends Action<E, T, O, I, V, S>,
+        D extends Domain<E, O, M, T, K, N, C, I, V>,
+		O extends Operator<E, T, I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,

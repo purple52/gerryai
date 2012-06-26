@@ -17,22 +17,26 @@
  */
 package org.gerryai.htn.simple.domain;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
  * Interface for a service that manages a domain.
- * @param <D> type of domain thsi helper uses
+ * @param <E> type of effect this domain helper uses
+ * @param <D> type of domain this helper uses
  * @param <O> type of operator this domain helper uses
  * @param <M> type of method this domain helpers uses
  * @param <T> type of logical term this domain helper uses
@@ -41,18 +45,21 @@ import org.gerryai.logic.Variable;
  * @param <C> type of constraint this domain helper uses
  * @param <I> the class of condition the domain will handle
  * @param <V> type of variable this domain will handle
+ * @param <Const> type of constant this domain with handle
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface DomainHelper<
-        D extends Domain<O, M, T, K, N, C, I, V>,
-		O extends Operator<T, I, V>,
+        E extends Effect<T>,
+        D extends Domain<E, O, M, T, K, N, C, I, V>,
+		O extends Operator<E, T, I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
 		N extends TaskNetwork<T, K, C>,
 		C extends Constraint<T>,
 		I extends Condition<T>,
-		V extends Variable> {
+		V extends Variable,
+		Const extends Constant> {
 	
 	/**
 	 * Get the domain that this service is managing.
@@ -74,4 +81,21 @@ public interface DomainHelper<
 	 * @return a set of matching methods
 	 */
 	Set<M> getMethodsByTask(K task);
+	
+	/**
+	 * Get a grounded version of the supplied effect by applying the given bindings.
+	 * @param effect the effect to ground
+	 * @param bindings the bindings to apply
+	 * @return the grounded effect
+	 */
+	E getGroundedEffect(E effect, Map<V, Const> bindings);
+	
+	/**
+	 * Get a grounded version of the supplied condition by applying the given bindings.
+	 * @param condition the condition to ground
+	 * @param bindings the bindings to apply
+	 * @return the grounded condition
+	 */
+	I getGroundedCondition(I condition, Map<V, Const> bindings);
+	
 }

@@ -25,12 +25,12 @@ import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.impl.SimpleDecompositionService;
-import org.gerryai.htn.simple.domain.DomainHelper;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
+import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ImmutableActionFactory;
@@ -43,7 +43,6 @@ import org.gerryai.htn.simple.planner.ImmutablePlannerFactory;
 import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.planner.sort.impl.SimpleSortService;
 import org.gerryai.htn.simple.problem.ImmutableStateService;
-import org.gerryai.htn.simple.problem.impl.SimpleStateService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -52,16 +51,26 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class SimplePlannerFactory implements ImmutablePlannerFactory {
+    
+    /**
+     * The state service.
+     */
+    private ImmutableStateService stateService;
+    
+    /**
+     * Constructor taking a state service to use.
+     * @param stateService the state service to use
+     */
+    public SimplePlannerFactory(ImmutableStateService stateService) {
+        this.stateService = stateService;
+    }
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public final ImmutablePlanner create(ImmutableDomain domain) {
 		
-		DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
-				ImmutableTask, ImmutableTaskNetwork,
-				ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>> domainHelper
-				= new SimpleDomainHelper(domain);
+	    ImmutableDomainHelper domainHelper = new SimpleDomainHelper(domain);
 		
 		ImmutableActionFactoryHelper actionFactoryHelper = new SimpleActionFactoryHelper(domainHelper);
 		ImmutableActionFactory actionFactory = new SimpleActionFactory(actionFactoryHelper);
@@ -83,11 +92,10 @@ public class SimplePlannerFactory implements ImmutablePlannerFactory {
 		
 		SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> sortService =
 		        new SimpleSortService();
-		
-		ImmutableStateService stateService = new SimpleStateService();
-		
+
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(actionFactory,
-		        planFactory, decompositionService, unificationService, sortService, stateService);
+		        planFactory, decompositionService, unificationService, sortService,
+		        stateService, domainHelper);
 		
 		SimplePlanner planner = new SimplePlanner(domainHelper, plannerHelper);
 		

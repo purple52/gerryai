@@ -25,6 +25,6 @@ import org.gerryai.logic.Term;
  * @param <T> type of logical term this condition uses.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Condition<T extends Term> extends Predicate<T> {
+public interface Condition<T extends Term> {
 
 }

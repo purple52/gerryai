@@ -24,7 +24,7 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -198,7 +198,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
          * {@inheritDoc}
          */
         public final Builder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
-            ImmutableCondition newCondition = (ImmutableCondition) this.condition.createCopyBuilder()
+            ImmutableCondition newCondition = this.condition.createCopyBuilder()
                     .apply(substitution)
                     .build();
             this.condition = newCondition;

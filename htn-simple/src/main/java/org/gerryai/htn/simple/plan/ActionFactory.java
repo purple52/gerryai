@@ -18,6 +18,7 @@
 package org.gerryai.htn.simple.plan;
 
 import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.TaskNotActionable;
@@ -27,6 +28,8 @@ import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
+ * Interface for a factory that can generate actions.
+ * @param <E> type of effect this action uses
  * @param <O> type of operator this action uses
  * @param <I> type of condition the action uses
  * @param <T> type of logical term this factory has to deal with
@@ -37,13 +40,14 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ActionFactory<
-        O extends Operator<T, I, V>,
+        E extends Effect<T>,
+        O extends Operator<E, T, I, V>,
         T extends Term,
         K extends Task<T>,
         I extends Condition<T>,
         V extends Variable,
         C extends Constant,
-        A extends Action<T, O, I, V, C>> {
+        A extends Action<E, T, O, I, V, C>> {
 
 	/**
 	 * Convert a task into an action.

@@ -17,10 +17,13 @@
  */
 package org.gerryai.htn.domain;
 
+import org.gerryai.logic.Term;
+
 /**
  * Interface that an effect must implement.
+ * @param <T> type of logical term this effect uses.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Effect {
+public interface Effect<T extends Term> {
 
 }

@@ -19,17 +19,15 @@ package org.gerryai.htn.simple.domain.impl;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.domain.Effect;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
+import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.domain.ImmutableOperatorBuilder;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.junit.Test;
 
@@ -39,73 +37,15 @@ import org.junit.Test;
  */
 public class SimpleOperatorTest {
 
-	@Test
-	public void testName() {
-		String name = "testname";
-		
-		ImmutableOperatorBuilder mockBuilder = mock(ImmutableOperatorBuilder.class);
-		when(mockBuilder.getName()).thenReturn(name);
-		SimpleOperator operator = new SimpleOperator(mockBuilder);
-		
-		assertEquals(name, operator.getName());
-	}
-
-	@Test
-	public void testArguments() {
-		List<ImmutableVariable<?>> arguments = new ArrayList<ImmutableVariable<?>>();
-		ImmutableOperatorBuilder mockBuilder = mock(ImmutableOperatorBuilder.class);
-		when(mockBuilder.getArguments()).thenReturn(arguments);
-		
-		SimpleOperator operator = new SimpleOperator(mockBuilder);
-
-		assertEquals(arguments, operator.getArguments());
-	}
-	
-	@Test
-	public void testPreconditions() {
-		Set<ImmutableCondition> conditions = new HashSet<ImmutableCondition>();
-		ImmutableOperatorBuilder mockBuilder = mock(ImmutableOperatorBuilder.class);
-		when(mockBuilder.getPreconditions()).thenReturn(conditions);
-		
-		SimpleOperator operator = new SimpleOperator(mockBuilder);
-
-		assertEquals(conditions, operator.getPreconditions());
-	}
-	
-	@Test
-	public void testEffects() {
-		Set<Effect> effects = new HashSet<Effect>();
-		ImmutableOperatorBuilder mockBuilder = mock(ImmutableOperatorBuilder.class);
-		when(mockBuilder.getEffects()).thenReturn(effects);
-		
-		SimpleOperator operator = new SimpleOperator(mockBuilder);
-
-		assertEquals(effects, operator.getEffects());
-	}
-
-	   /**
-     * Test builder construction.
-     */
-    @Test
-    public void testSimpleOperatorBuilder() {
-        // Create the builder under test
-        ImmutableOperatorBuilder builder = new SimpleOperator.Builder();
-        
-        // Check that the argument, preconditions and effects collections have been initialised
-        assertTrue(builder.getArguments().isEmpty());
-        assertTrue(builder.getPreconditions().isEmpty());
-        assertTrue(builder.getEffects().isEmpty());
-    }
-    
     /**
      * Test setting the name.
      */
     @Test
     public void testSetName() {
-        // Create the builder under test
-        ImmutableOperatorBuilder builder = new SimpleOperator.Builder()
-                .setName("testname");
-        assertEquals("testname", builder.getName());
+        ImmutableOperator operator = new SimpleOperator.Builder()
+                .setName("testname")
+                .build();
+        assertEquals("testname", operator.getName());
     }
 
     /**
@@ -115,12 +55,13 @@ public class SimpleOperatorTest {
     public void testAddArgument() {
         ImmutableVariable<?> mockVariableA = mock(ImmutableVariable.class);
         ImmutableVariable<?> mockVariableB = mock(ImmutableVariable.class);
-        ImmutableOperatorBuilder builder = new SimpleOperator.Builder()
+        ImmutableOperator operator = new SimpleOperator.Builder()
                 .addArgument(mockVariableA)
-                .addArgument(mockVariableB);
-        assertEquals(2, builder.getArguments().size());
-        assertEquals(builder.getArguments().get(0), mockVariableA);
-        assertEquals(builder.getArguments().get(1), mockVariableB);
+                .addArgument(mockVariableB)
+                .build();
+        assertEquals(2, operator.getArguments().size());
+        assertEquals(operator.getArguments().get(0), mockVariableA);
+        assertEquals(operator.getArguments().get(1), mockVariableB);
     }
 
     /**
@@ -140,14 +81,15 @@ public class SimpleOperatorTest {
         mockVariablesB.add(mockVariableC);
         mockVariablesB.add(mockVariableD);
         
-        ImmutableOperatorBuilder builder = new SimpleOperator.Builder()
+        ImmutableOperator operator = new SimpleOperator.Builder()
                 .addArguments(mockVariablesA)
-                .addArguments(mockVariablesB);
-        assertEquals(4, builder.getArguments().size());
-        assertEquals(builder.getArguments().get(0), mockVariableA);
-        assertEquals(builder.getArguments().get(1), mockVariableB);
-        assertEquals(builder.getArguments().get(2), mockVariableC);
-        assertEquals(builder.getArguments().get(3), mockVariableD);
+                .addArguments(mockVariablesB)
+                .build();
+        assertEquals(4, operator.getArguments().size());
+        assertEquals(operator.getArguments().get(0), mockVariableA);
+        assertEquals(operator.getArguments().get(1), mockVariableB);
+        assertEquals(operator.getArguments().get(2), mockVariableC);
+        assertEquals(operator.getArguments().get(3), mockVariableD);
         }
 
     /**
@@ -157,12 +99,13 @@ public class SimpleOperatorTest {
     public void testAddPrecondition() {
         ImmutableCondition mockConditionA = mock(ImmutableCondition.class);
         ImmutableCondition mockConditionB = mock(ImmutableCondition.class);
-        ImmutableOperatorBuilder builder = new SimpleOperator.Builder()
+        ImmutableOperator operator = new SimpleOperator.Builder()
                 .addPrecondition(mockConditionA)
-                .addPrecondition(mockConditionB);
-        assertEquals(2, builder.getPreconditions().size());
-        assertTrue(builder.getPreconditions().contains(mockConditionA));
-        assertTrue(builder.getPreconditions().contains(mockConditionB));
+                .addPrecondition(mockConditionB)
+                .build();
+        assertEquals(2, operator.getPreconditions().size());
+        assertTrue(operator.getPreconditions().contains(mockConditionA));
+        assertTrue(operator.getPreconditions().contains(mockConditionB));
     }
 
     /**
@@ -181,14 +124,15 @@ public class SimpleOperatorTest {
         mockConditionsB.add(mockConditionC);
         mockConditionsB.add(mockConditionD);
         
-        ImmutableOperatorBuilder builder = new SimpleOperator.Builder()
+        ImmutableOperator operator = new SimpleOperator.Builder()
                 .addPreconditions(mockConditionsA)
-                .addPreconditions(mockConditionsB);
-        assertEquals(4, builder.getPreconditions().size());
-        assertTrue(builder.getPreconditions().contains(mockConditionA));
-        assertTrue(builder.getPreconditions().contains(mockConditionB));
-        assertTrue(builder.getPreconditions().contains(mockConditionC));
-        assertTrue(builder.getPreconditions().contains(mockConditionD));
+                .addPreconditions(mockConditionsB)
+                .build();
+        assertEquals(4, operator.getPreconditions().size());
+        assertTrue(operator.getPreconditions().contains(mockConditionA));
+        assertTrue(operator.getPreconditions().contains(mockConditionB));
+        assertTrue(operator.getPreconditions().contains(mockConditionC));
+        assertTrue(operator.getPreconditions().contains(mockConditionD));
     }
 
     /**
@@ -196,14 +140,15 @@ public class SimpleOperatorTest {
      */
     @Test
     public void testAddEffect() {
-        Effect mockEffectA = mock(Effect.class);
-        Effect mockEffectB = mock(Effect.class);
-        ImmutableOperatorBuilder builder = new SimpleOperator.Builder()
+        ImmutableEffect mockEffectA = mock(ImmutableEffect.class);
+        ImmutableEffect mockEffectB = mock(ImmutableEffect.class);
+        ImmutableOperator operator = new SimpleOperator.Builder()
                 .addEffect(mockEffectA)
-                .addEffect(mockEffectB);
-        assertEquals(2, builder.getEffects().size());
-        assertTrue(builder.getEffects().contains(mockEffectA));
-        assertTrue(builder.getEffects().contains(mockEffectB));
+                .addEffect(mockEffectB)
+                .build();
+        assertEquals(2, operator.getEffects().size());
+        assertTrue(operator.getEffects().contains(mockEffectA));
+        assertTrue(operator.getEffects().contains(mockEffectB));
     }
 
     /**
@@ -211,25 +156,26 @@ public class SimpleOperatorTest {
      */
     @Test
     public void testAddEffects() {
-        Effect mockEffectA = mock(Effect.class);
-        Effect mockEffectB = mock(Effect.class);
-        Set<Effect> mockEffectsA = new HashSet<Effect>();
+        ImmutableEffect mockEffectA = mock(ImmutableEffect.class);
+        ImmutableEffect mockEffectB = mock(ImmutableEffect.class);
+        Set<ImmutableEffect> mockEffectsA = new HashSet<ImmutableEffect>();
         mockEffectsA.add(mockEffectA);
         mockEffectsA.add(mockEffectB);
-        Effect mockEffectC = mock(Effect.class);
-        Effect mockEffectD = mock(Effect.class);
-        Set<Effect> mockEffectsB = new HashSet<Effect>();
+        ImmutableEffect mockEffectC = mock(ImmutableEffect.class);
+        ImmutableEffect mockEffectD = mock(ImmutableEffect.class);
+        Set<ImmutableEffect> mockEffectsB = new HashSet<ImmutableEffect>();
         mockEffectsA.add(mockEffectC);
         mockEffectsA.add(mockEffectD);
         
-        ImmutableOperatorBuilder builder = new SimpleOperator.Builder()
+        ImmutableOperator operator = new SimpleOperator.Builder()
                 .addEffects(mockEffectsA)
-                .addEffects(mockEffectsB);
-        assertEquals(4, builder.getEffects().size());
-        assertTrue(builder.getEffects().contains(mockEffectA));
-        assertTrue(builder.getEffects().contains(mockEffectB));
-        assertTrue(builder.getEffects().contains(mockEffectC));
-        assertTrue(builder.getEffects().contains(mockEffectD));
+                .addEffects(mockEffectsB)
+                .build();
+        assertEquals(4, operator.getEffects().size());
+        assertTrue(operator.getEffects().contains(mockEffectA));
+        assertTrue(operator.getEffects().contains(mockEffectB));
+        assertTrue(operator.getEffects().contains(mockEffectC));
+        assertTrue(operator.getEffects().contains(mockEffectD));
     }
 
     /**
@@ -243,8 +189,8 @@ public class SimpleOperatorTest {
         ImmutableCondition mockCondition = mock(ImmutableCondition.class);
         Set<ImmutableCondition> mockConditions = new HashSet<ImmutableCondition>();
         mockConditions.add(mockCondition);
-        Effect mockEffect = mock(Effect.class);
-        Set<Effect> mockEffects = new HashSet<Effect>();
+        ImmutableEffect mockEffect = mock(ImmutableEffect.class);
+        Set<ImmutableEffect> mockEffects = new HashSet<ImmutableEffect>();
         mockEffects.add(mockEffect);
         
         ImmutableOperator operator = new SimpleOperator.Builder()

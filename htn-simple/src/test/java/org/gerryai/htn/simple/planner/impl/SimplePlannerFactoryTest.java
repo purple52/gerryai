@@ -21,6 +21,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 import org.gerryai.htn.simple.domain.ImmutableDomain;
+import org.gerryai.htn.simple.problem.ImmutableStateService;
 import org.junit.Test;
 
 /**
@@ -34,8 +35,11 @@ public class SimplePlannerFactoryTest {
 	 */
 	@Test
 	public void testCreate() {
+		
+	    ImmutableStateService mockStateService = mock(ImmutableStateService.class);
+		SimplePlannerFactory factory = new SimplePlannerFactory(mockStateService);
+		
 		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
-		SimplePlannerFactory factory = new SimplePlannerFactory();
 		
 		assertTrue(factory.create(mockDomain) instanceof SimplePlanner);
 	}

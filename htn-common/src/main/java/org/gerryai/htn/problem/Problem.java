@@ -20,6 +20,7 @@ package org.gerryai.htn.problem;
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.tasknetwork.Task;
@@ -29,7 +30,9 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface that a problem must implement.
- * @param <D> type of domain thsi problem uses
+ * @param <E> type of effect this problem uses
+ * @param <S> type of state this problem uses
+ * @param <D> type of domain this problem uses
  * @param <O> type of operator this problem uses
  * @param <M> type of method this problem uses
  * @param <T> type of logical term this problem uses
@@ -42,8 +45,10 @@ import org.gerryai.logic.Variable;
  *
  */
 public interface Problem<
-        D extends Domain<O, M, T, K, N, C, I, V>,
-		O extends Operator<T, I, V>,
+        E extends Effect<T>,
+        S extends State,
+        D extends Domain<E, O, M, T, K, N, C, I, V>,
+		O extends Operator<E, T, I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,
@@ -56,7 +61,7 @@ public interface Problem<
 	 * Get the state of the problem.
 	 * @return the state
 	 */
-	State getState();
+	S getState();
 	
 	/**
 	 * Get the task network for this problem.

@@ -17,11 +17,34 @@
  */
 package org.gerryai.htn.simple.logic;
 
-/**
- * @author David Edwards <david@more.fool.me.uk>
- *
- */
-public interface ImmutableLogicFactory extends LogicFactory<ImmutableVariable<?>, ImmutableConstant<?>,
-		ImmutableCondition, ImmutableTerm<?>> {
+import java.util.Map;
 
+/**
+ * Interface for a logic factory that handles immutable logical terms.
+ * @author David Edwards <david@more.fool.me.uk>
+ */
+public interface ImmutableLogicFactory extends LogicFactory<
+        ImmutableFunction,
+        ImmutableVariable<?>,
+        ImmutableConstant<?>,
+		ImmutablePredicate,
+		ImmutableTerm<?>> {
+
+    /**
+     * Apply a set of bindings to a condition.
+     * @param condition the original condition
+     * @param bindings the bindings to apply
+     * @return the ground condition
+     */
+    ImmutablePredicate copyApply(ImmutablePredicate condition,
+            Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings);
+
+    /**
+     * Apply a set of bindings to a function.
+     * @param function the original function
+     * @param bindings the bindings to apply
+     * @return the ground function
+     */
+    ImmutableFunction copyApply(ImmutableFunction function,
+            Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings);
 }

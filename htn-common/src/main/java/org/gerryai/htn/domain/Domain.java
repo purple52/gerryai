@@ -27,6 +27,7 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface that a domain must implement.
+ * @param <E> type of effect this domain uses
  * @param <O> type of operator this domain uses
  * @param <M> type of operator this domain uses
  * @param <T> type of logical term this domain uses
@@ -38,7 +39,8 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Domain<
-		O extends Operator<T, I, V>,
+        E extends Effect<T>,
+		O extends Operator<E, T, I, V>,
 		M extends Method<T, K, N, C>,
 		T extends Term,
 		K extends Task<T>,

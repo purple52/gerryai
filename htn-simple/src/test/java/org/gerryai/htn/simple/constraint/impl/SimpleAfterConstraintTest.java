@@ -28,8 +28,8 @@ import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ImmutableValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableConditionBuilder;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
+import org.gerryai.htn.simple.domain.ImmutableConditionBuilder;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -113,7 +113,7 @@ public class SimpleAfterConstraintTest {
      * Test construction using copy and apply
      */
     @Test
-    public <T extends ImmutableCondition> void testCopyApply() {
+    public void testCopyApply() {
         @SuppressWarnings("unchecked")
         Map<ImmutableTerm<?>, ImmutableTerm<?>> mockSubstitution = mock(Map.class);
         ImmutableTask mockTask = mock(ImmutableTask.class);

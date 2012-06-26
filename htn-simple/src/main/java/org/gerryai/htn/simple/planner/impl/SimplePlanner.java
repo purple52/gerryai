@@ -18,19 +18,13 @@
 package org.gerryai.htn.simple.planner.impl;
 
 import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.problem.State;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.DomainHelper;
-import org.gerryai.htn.simple.domain.ImmutableDomain;
+import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.ImmutablePlanner;
 import org.gerryai.htn.simple.planner.ImmutablePlannerHelper;
+import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -44,9 +38,7 @@ public class SimplePlanner implements ImmutablePlanner {
 	/**
 	 * Manager the domain being worked in.
 	 */
-	private DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
-			ImmutableTask, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>> domainHelper;
+	private ImmutableDomainHelper domainHelper;
 	
 	/**
 	 * Helper for off-loading some of the logic.
@@ -58,12 +50,8 @@ public class SimplePlanner implements ImmutablePlanner {
 	 * @param domainHelper the domain manager
 	 * @param plannerHelper the planner helper
 	 */
-	public SimplePlanner(
-			DomainHelper<ImmutableDomain, ImmutableOperator, ImmutableMethod, ImmutableTerm<?>,
-					ImmutableTask, ImmutableTaskNetwork,
-					ImmutableConstraint<?>,
-					ImmutableCondition, ImmutableVariable<?>> domainHelper,
-			ImmutablePlannerHelper plannerHelper) {
+	public SimplePlanner(ImmutableDomainHelper domainHelper,
+			             ImmutablePlannerHelper plannerHelper) {
 		this.domainHelper = domainHelper;
 		this.plannerHelper = plannerHelper;
 	}
@@ -71,7 +59,7 @@ public class SimplePlanner implements ImmutablePlanner {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutablePlan findPlan(State state, ImmutableTaskNetwork taskNetwork)
+	public final ImmutablePlan findPlan(ImmutableState state, ImmutableTaskNetwork taskNetwork)
 	        throws PlanNotFound {
 		
 		if (plannerHelper.isUnsolvable(taskNetwork)) {

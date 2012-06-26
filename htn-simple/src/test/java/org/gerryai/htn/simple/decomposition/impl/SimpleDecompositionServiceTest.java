@@ -28,8 +28,8 @@ import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
@@ -49,7 +49,7 @@ public class SimpleDecompositionServiceTest {
     public void testDecompose() throws InvalidConstraint {
     	
     	ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask,
-                ImmutableCondition> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
+    	        ImmutableCondition> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
 
     	SimpleDecompositionService decompositionService = new SimpleDecompositionService(mockConstraintValidatorFactory);
     	

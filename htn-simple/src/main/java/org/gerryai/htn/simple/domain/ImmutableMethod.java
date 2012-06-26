@@ -24,10 +24,13 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
- * Extension of the method interface that can be visited by a substituter.
+ * Extension of the method interface that uses immutable classes.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableMethod extends
-	Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>> {
+public interface ImmutableMethod extends Method<
+        ImmutableTerm<?>,
+        ImmutableTask,
+        ImmutableTaskNetwork,
+        ImmutableConstraint<?>> {
 
 }

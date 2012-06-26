@@ -18,7 +18,7 @@
 package org.gerryai.htn.simple.constraint;
 
 import org.gerryai.htn.constraint.Constraint;
-import org.gerryai.htn.simple.logic.ImmutableCondition;
+import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
@@ -30,7 +30,10 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 public interface ImmutableConstraint<C extends ImmutableConstraint<C>>
         extends
         Constraint<ImmutableTerm<?>>,
-        ValidatableConstraint<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> {
+        ValidatableConstraint<
+                ImmutableTerm<?>,
+                ImmutableTask,
+                ImmutableCondition> {
 
     /**
      * Create a new builder object that can build this type of constraint.
