@@ -25,10 +25,8 @@ import org.gerryai.htn.constraint.BetweenConstraint;
 import org.gerryai.htn.constraint.PrecedenceConstraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 /**
- * @param <T> type of logical term used by the constraints created by this factory
  * @param <K> type of task used by the constraints created by this factory
  * @param <I> type of condition used by the constraints created by this factory
  * @param <BF> type of BeforeConstraint this factory generates
@@ -38,13 +36,12 @@ import org.gerryai.logic.Term;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ConstraintFactory<
-        T extends Term,
-        K extends Task<T>,
-        I extends Condition<T>,
-        BF extends BeforeConstraint<T, K, I>,
-        AF extends AfterConstraint<T, K, I>,
-        BE extends BetweenConstraint<T, K, I>,
-        PR extends PrecedenceConstraint<T, K>> {
+        K extends Task,
+        I extends Condition,
+        BF extends BeforeConstraint<K, I>,
+        AF extends AfterConstraint<K, I>,
+        BE extends BetweenConstraint<K, I>,
+        PR extends PrecedenceConstraint<K>> {
 
     /**
      * Create a precedence constraint.

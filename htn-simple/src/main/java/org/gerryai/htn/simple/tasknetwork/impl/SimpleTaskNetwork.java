@@ -27,7 +27,7 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.logic.Term;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
@@ -78,7 +78,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
 	 */
 	public final boolean isPrimitive() {
 		
-		for (Task<ImmutableTerm<?>> task : getTasks()) {
+		for (Task task : getTasks()) {
 			if (!task.isPrimitive()) {
 				// If any of our tasks are non-primitive, the whole network is non-primitive
 				return false;
@@ -92,7 +92,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
 	/**
      * {@inheritDoc}
      */
-    public final Builder createCopyBuilder(ConstraintValidator<ImmutableTerm<?>, ImmutableTask,
+    public final Builder createCopyBuilder(ConstraintValidator<ImmutableTask,
             ImmutableCondition> constraintValidator) throws InvalidConstraint {
         return new Builder(constraintValidator)
             .copy(this);
@@ -117,13 +117,13 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
         /**
          * Constraint validator.
          */
-        private ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> constraintValidator;
+        private ConstraintValidator<ImmutableTask, ImmutableCondition> constraintValidator;
         
         /**
          * Constructor, taking a constraint validator to use.
          * @param constraintValidator the constraint validator
          */
-        public Builder(ConstraintValidator<ImmutableTerm<?>, ImmutableTask,
+        public Builder(ConstraintValidator<ImmutableTask,
                 ImmutableCondition> constraintValidator) {
             this.constraintValidator = constraintValidator;
             tasks = new HashSet<ImmutableTask>();
@@ -133,7 +133,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
         /**
          * @return the constraintValidator
          */
-        protected final ConstraintValidator<ImmutableTerm<?>, ImmutableTask,
+        protected final ConstraintValidator<ImmutableTask,
                 ImmutableCondition> getConstraintValidator() {
             return constraintValidator;
         }
@@ -191,7 +191,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
         /**
          * {@inheritDoc}
          */
-        public final Builder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
+        public final Builder apply(Map<Term, Term> substitution) {
         
             // Build a map of tasks to their replacements
             Map<ImmutableTask, ImmutableTask> taskReplacementMap =

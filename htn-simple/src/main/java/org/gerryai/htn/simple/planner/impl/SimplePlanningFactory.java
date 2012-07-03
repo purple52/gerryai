@@ -23,8 +23,7 @@ import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValida
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilderFactory;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
-import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.LogicFactory;
 import org.gerryai.htn.simple.logic.impl.SimpleLogicFactory;
 import org.gerryai.htn.simple.planner.ImmutablePlannerFactory;
 import org.gerryai.htn.simple.planner.ImmutablePlanningFactory;
@@ -46,7 +45,7 @@ public class SimplePlanningFactory implements ImmutablePlanningFactory {
     /**
      * The logic factory to use.
      */
-    private ImmutableLogicFactory logicFactory;
+    private LogicFactory logicFactory;
     
     /**
      * The domain builder factory to use.
@@ -92,11 +91,9 @@ public class SimplePlanningFactory implements ImmutablePlanningFactory {
         problemBuilderFactory = new SimpleProblemBuilderFactory();
         
         GenericConstraintValidatorFactory<
-                ImmutableTerm<?>,
                 ImmutableTask,
                 ImmutableCondition> constraintValidatorFactory
             = new GenericConstraintValidatorFactory<
-                ImmutableTerm<?>,
                 ImmutableTask,
                 ImmutableCondition>();
         taskNetworkFactory = new SimpleTaskNetworkFactory(constraintValidatorFactory, logicFactory);
@@ -110,7 +107,7 @@ public class SimplePlanningFactory implements ImmutablePlanningFactory {
     /**
      * {@inheritDoc}
      */
-    public final ImmutableLogicFactory getLogicFactory() {
+    public final LogicFactory getLogicFactory() {
         return logicFactory;
     }
 

@@ -25,8 +25,6 @@ import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.Term;
-import org.gerryai.logic.Variable;
 
 /**
  * Interface that a problem must implement.
@@ -35,27 +33,23 @@ import org.gerryai.logic.Variable;
  * @param <D> type of domain this problem uses
  * @param <O> type of operator this problem uses
  * @param <M> type of method this problem uses
- * @param <T> type of logical term this problem uses
  * @param <K> type of task this problem uses
  * @param <N> the type of task network this problem uses
  * @param <C> the type of constraint this problem uses
  * @param <I> the class of condition the problem will handle
- * @param <V> type of variable this problem uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface Problem<
-        E extends Effect<T>,
+        E extends Effect,
         S extends State,
-        D extends Domain<E, O, M, T, K, N, C, I, V>,
-		O extends Operator<E, T, I, V>,
-		M extends Method<T, K, N, C>,
-		T extends Term,
-		K extends Task<T>,
-		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>,
-		I extends Condition<T>,
-		V extends Variable> {
+        D extends Domain<E, O, M, K, N, C, I>,
+		O extends Operator<E, I>,
+		M extends Method<K, N, C>,
+		K extends Task,
+		N extends TaskNetwork<K, C>,
+		C extends Constraint,
+		I extends Condition> {
 	
 	/**
 	 * Get the state of the problem.

@@ -15,15 +15,17 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.logic;
-
-import org.gerryai.logic.Constant;
+package org.gerryai.logic;
 
 /**
- * Extended interface for immutable constants that use a builder to do modifications.
- * @param <T> type of constant being implemented
+ * Interface for a negated logical sentence.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableConstant<T extends ImmutableConstant<T>> extends Constant, ImmutableTerm<T> {
+public interface NegatedSentence extends ComplexSentence<NegatedSentence> {
 
+    /**
+     * Get the logical sentence being negated.
+     * @return the sentence being negated
+     */
+    Sentence<?> getSentence();
 }

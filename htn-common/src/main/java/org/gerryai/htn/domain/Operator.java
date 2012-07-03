@@ -20,22 +20,17 @@ package org.gerryai.htn.domain;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
  * Interface that an operator must implement.
  * @param <E> type of effect this operator uses
- * @param <T> type of term this operator uses
  * @param <I> type of condition this operator takes
- * @param <V> type of variable this operator uses
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Operator<
-        E extends Effect<T>,
-        T extends Term,
-        I extends Condition<T>,
-        V extends Variable> {
+        E extends Effect,
+        I extends Condition> {
 	
 	/**
 	 * Get the name of this operator.
@@ -47,7 +42,7 @@ public interface Operator<
 	 * Get the list of arguments for this operator.
 	 * @return the list of arguments
 	 */
-	List<V> getArguments();
+	List<Variable> getArguments();
 	
 	/**
 	 * Get the preconditions for this operator.

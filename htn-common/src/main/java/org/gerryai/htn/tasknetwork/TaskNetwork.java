@@ -20,16 +20,16 @@ package org.gerryai.htn.tasknetwork;
 import java.util.Set;
 
 import org.gerryai.htn.constraint.Constraint;
-import org.gerryai.logic.Term;
 
 /**
  * Interface that a task network must implement.
- * @param <T> type of logical term this network and its tasks work with
  * @param <K> type of task this network holds
  * @param <C> type of constraint this network uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface TaskNetwork<T extends Term, K extends Task<T>, C extends Constraint<T>> {
+public interface TaskNetwork<
+        K extends Task,
+        C extends Constraint> {
 
 	/**
 	 * Get the tasks that make up this network.

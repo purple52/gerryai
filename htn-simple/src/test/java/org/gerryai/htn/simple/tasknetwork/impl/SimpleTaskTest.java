@@ -27,10 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.LogicFactory;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
+import org.gerryai.logic.Term;
 import org.junit.Test;
 
 /**
@@ -59,9 +59,9 @@ public class SimpleTaskTest {
     @Test
     public void testArguments() {
         ImmutableTaskBuilder mockBuilder = mock(ImmutableTaskBuilder.class);
-        ImmutableTerm<?> mockTermA = mock(ImmutableTerm.class);
-        ImmutableTerm<?> mockTermB = mock(ImmutableTerm.class);
-        List<ImmutableTerm<?>> mockTerms = new ArrayList<ImmutableTerm<?>>();
+        Term mockTermA = mock(Term.class);
+        Term mockTermB = mock(Term.class);
+        List<Term> mockTerms = new ArrayList<Term>();
         mockTerms.add(mockTermA);
         mockTerms.add(mockTermB);
         when(mockBuilder.getArguments()).thenReturn(mockTerms);
@@ -98,7 +98,7 @@ public class SimpleTaskTest {
      */
     @Test
     public void testSimpleTaskBuilder() {
-        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
+        LogicFactory mockLogicFactory = mock(LogicFactory.class);
         
         // Create the builder under test
         ImmutableTaskBuilder builder = new SimpleTask.Builder(mockLogicFactory);
@@ -113,7 +113,7 @@ public class SimpleTaskTest {
      */
     @Test
     public void testSetName() {
-        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
+        LogicFactory mockLogicFactory = mock(LogicFactory.class);
         
         // Create the builder under test
         ImmutableTaskBuilder builder = new SimpleTask.Builder(mockLogicFactory)
@@ -130,10 +130,10 @@ public class SimpleTaskTest {
     @Test
     public void testAddArgument() {
 
-        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
+        LogicFactory mockLogicFactory = mock(LogicFactory.class);
         
-        ImmutableTerm<?> mockTermA = mock(ImmutableTerm.class);
-        ImmutableTerm<?> mockTermB = mock(ImmutableTerm.class);
+        Term mockTermA = mock(Term.class);
+        Term mockTermB = mock(Term.class);
         
         // Create the builder under test
         ImmutableTaskBuilder builder = new SimpleTask.Builder(mockLogicFactory)
@@ -153,17 +153,17 @@ public class SimpleTaskTest {
     @Test
     public void testAddArguments() {
         
-        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
+        LogicFactory mockLogicFactory = mock(LogicFactory.class);
         
-        ImmutableTerm<?> mockTermA = mock(ImmutableTerm.class);
-        ImmutableTerm<?> mockTermB = mock(ImmutableTerm.class);
-        List<ImmutableTerm<?>> mockTermsOne = new ArrayList<ImmutableTerm<?>>();
+        Term mockTermA = mock(Term.class);
+        Term mockTermB = mock(Term.class);
+        List<Term> mockTermsOne = new ArrayList<Term>();
         mockTermsOne.add(mockTermA);
         mockTermsOne.add(mockTermB);
 
-        ImmutableTerm<?> mockTermC = mock(ImmutableTerm.class);
-        ImmutableTerm<?> mockTermD = mock(ImmutableTerm.class);
-        List<ImmutableTerm<?>> mockTermsTwo = new ArrayList<ImmutableTerm<?>>();
+        Term mockTermC = mock(Term.class);
+        Term mockTermD = mock(Term.class);
+        List<Term> mockTermsTwo = new ArrayList<Term>();
         mockTermsTwo.add(mockTermC);
         mockTermsTwo.add(mockTermD);
         
@@ -186,8 +186,8 @@ public class SimpleTaskTest {
     @Test
     public void testBuildPrimitive() {
 
-        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
-        ImmutableTerm<?> mockTerm = mock(ImmutableTerm.class);
+        LogicFactory mockLogicFactory = mock(LogicFactory.class);
+        Term mockTerm = mock(Term.class);
         
         // Create the builder under test
         ImmutableTask primitiveTask = new SimpleTask.Builder(mockLogicFactory)
@@ -207,8 +207,8 @@ public class SimpleTaskTest {
     @Test
     public void testBuildNonPrimitive() {
 
-        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
-        ImmutableTerm<?> mockTerm = mock(ImmutableTerm.class);
+        LogicFactory mockLogicFactory = mock(LogicFactory.class);
+        Term mockTerm = mock(Term.class);
         
         // Create the builder under test
         ImmutableTask primitiveTask = new SimpleTask.Builder(mockLogicFactory)
@@ -228,10 +228,10 @@ public class SimpleTaskTest {
     @Test
     public void testCopy() {
         String name = "testname";
-        ImmutableTerm<?> mockTerm = mock(ImmutableTerm.class);
-        List<ImmutableTerm<?>> terms = new ArrayList<ImmutableTerm<?>>();
+        Term mockTerm = mock(Term.class);
+        List<Term> terms = new ArrayList<Term>();
         terms.add(mockTerm);
-        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
+        LogicFactory mockLogicFactory = mock(LogicFactory.class);
         ImmutableTask initialTask = new SimpleTask.Builder(mockLogicFactory)
                 .setName(name)
                 .addArguments(terms)
@@ -253,17 +253,17 @@ public class SimpleTaskTest {
     public void testBuilderApply() {
         String name = "testname";
         
-        ImmutableTerm<?> mockTermA = mock(ImmutableTerm.class);
-        List<ImmutableTerm<?>> termsA = new ArrayList<ImmutableTerm<?>>();
+        Term mockTermA = mock(Term.class);
+        List<Term> termsA = new ArrayList<Term>();
         termsA.add(mockTermA);
 
-        ImmutableTerm<?> mockTermB = mock(ImmutableTerm.class);
-        List<ImmutableTerm<?>> termsB = new ArrayList<ImmutableTerm<?>>();
+        Term mockTermB = mock(Term.class);
+        List<Term> termsB = new ArrayList<Term>();
         termsB.add(mockTermB);
         
         @SuppressWarnings("unchecked")
-        Map<ImmutableTerm<?>, ImmutableTerm<?>> mockSubstitution = mock(Map.class);
-        ImmutableLogicFactory mockLogicFactory = mock(ImmutableLogicFactory.class);
+        Map<Term, Term> mockSubstitution = mock(Map.class);
+        LogicFactory mockLogicFactory = mock(LogicFactory.class);
         when(mockLogicFactory.apply(termsA, mockSubstitution)).thenReturn(termsB);
         ImmutableTask initialTask = new SimpleTask.Builder(mockLogicFactory)
         .setName(name)

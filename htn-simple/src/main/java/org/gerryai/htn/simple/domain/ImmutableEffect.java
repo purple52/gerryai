@@ -17,31 +17,22 @@
  */
 package org.gerryai.htn.simple.domain;
 
+import java.util.Map;
+
 import org.gerryai.htn.domain.Effect;
-import org.gerryai.htn.simple.logic.ImmutableFunction;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.logic.Term;
 
 /**
  * Extended interface for immutable conditions that can only be modified via a builder.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableEffect extends Effect<ImmutableTerm<?>> {
+public interface ImmutableEffect extends Effect {
 
     /**
-     * Create a builder that will start with a copy of this effect.
-     * @return the builder
+     * Apply the given substitution to a copy of this effect.
+     * TODO: Move to Effect
+     * @param substitution the substitution to apply
+     * @return the new effect
      */
-    ImmutableEffectBuilder createCopyBuilder();
-    
-    /**
-     * Get the function that this effect applies to the current state.
-     * @return the function
-     */
-    ImmutableFunction getFunction();
-    
-    /**
-     * Get the value of this function.
-     * @return the value
-     */
-    Boolean getValue();
+    ImmutableEffect applyToCopy(Map<Term, Term> substitution);
 }

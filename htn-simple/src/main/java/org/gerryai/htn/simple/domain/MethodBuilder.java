@@ -23,13 +23,10 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.Term;
 
 /**
  * Interface for a class that can build methods.
  * 
- * @param <T>
- *            class of task the builder can handle
  * @param <K>
  *            type of task this builder can handle
  * @param <N>
@@ -41,11 +38,10 @@ import org.gerryai.logic.Term;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface MethodBuilder<
-        T extends Term,
-        K extends Task<T>,
-        N extends TaskNetwork<T, K, C>,
-        C extends Constraint<T>,
-        M extends Method<T, K, N, C>> {
+        K extends Task,
+        N extends TaskNetwork<K, C>,
+        C extends Constraint,
+        M extends Method<K, N, C>> {
 
     /**
      * Set the name of the operator.
@@ -54,7 +50,7 @@ public interface MethodBuilder<
      *            the name
      * @return the updated builder
      */
-    MethodBuilder<T, K, N, C, M> setName(String name);
+    MethodBuilder<K, N, C, M> setName(String name);
 
     /**
      * Add an argument to the operator.
@@ -63,7 +59,7 @@ public interface MethodBuilder<
      *            the task to add
      * @return the updated builder
      */
-    MethodBuilder<T, K, N, C, M> setTask(K task);
+    MethodBuilder<K, N, C, M> setTask(K task);
 
     /**
      * Add an argument to the operator.
@@ -72,7 +68,7 @@ public interface MethodBuilder<
      *            the task network to add
      * @return the updated builder
      */
-    MethodBuilder<T, K, N, C, M> setTaskNetwork(N taskNetwork);
+    MethodBuilder<K, N, C, M> setTaskNetwork(N taskNetwork);
 
     /**
      * Get the name of the method being built.

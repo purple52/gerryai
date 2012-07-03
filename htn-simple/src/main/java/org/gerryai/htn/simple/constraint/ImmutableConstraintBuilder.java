@@ -20,8 +20,8 @@ package org.gerryai.htn.simple.constraint;
 import java.util.Map;
 import java.util.Set;
 
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.logic.Term;
 
 /**
  * Interface for constraint builders used by this HTN implementation.
@@ -58,7 +58,7 @@ public interface ImmutableConstraintBuilder<C extends ImmutableConstraint<C>> {
      * @param substitution the substitution to apply
      * @return the updated builder
      */
-    ImmutableConstraintBuilder<C> apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution);
+    ImmutableConstraintBuilder<C> apply(Map<Term, Term> substitution);
     
     /**
      * Build the constraint.

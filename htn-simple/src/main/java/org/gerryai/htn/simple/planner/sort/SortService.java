@@ -25,16 +25,16 @@ import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 /**
  * Interface for a service that can sort tasks based on a set of constraints.
- * @param <T> type of term the service works with
  * @param <K> type of task this service works with
  * @param <C> type of constraint this service works with
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface SortService<T extends Term, K extends Task<T>, C extends Constraint<T>> {
+public interface SortService<
+        K extends Task,
+        C extends Constraint> {
     
     /**
      * Given a set of task and a set of constraints, return a sorted list of tasks.

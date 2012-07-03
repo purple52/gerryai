@@ -37,12 +37,12 @@ import org.gerryai.logic.Term;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface UnificationService<
-		M extends Method<T, K, N, C>,
+		M extends Method<K, N, C>,
 		T extends Term,
-		K extends Task<T>,
-		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>,
-		I extends Condition<T>> {
+		K extends Task,
+		N extends TaskNetwork<K, C>,
+		C extends Constraint,
+		I extends Condition> {
 	
 	/**
 	 * Given a task and a method, try and find the most general unifier (MGU).

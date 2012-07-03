@@ -18,8 +18,6 @@
 package org.gerryai.htn.simple.domain;
 
 import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 
 /**
  * Extended operator interface for immutable operators.
@@ -27,8 +25,6 @@ import org.gerryai.htn.simple.logic.ImmutableVariable;
  */
 public interface ImmutableOperator extends Operator<
         ImmutableEffect,
-        ImmutableTerm<?>,
-        ImmutableCondition,
-        ImmutableVariable<?>> {
+        ImmutableCondition> {
 
 }

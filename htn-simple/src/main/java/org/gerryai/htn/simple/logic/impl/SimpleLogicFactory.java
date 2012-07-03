@@ -22,24 +22,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.gerryai.htn.simple.logic.ImmutablePredicate;
-import org.gerryai.htn.simple.logic.ImmutableConstant;
-import org.gerryai.htn.simple.logic.ImmutableFunction;
-import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
+import org.gerryai.htn.simple.logic.LogicFactory;
+import org.gerryai.logic.Constant;
+import org.gerryai.logic.Function;
+import org.gerryai.logic.Predicate;
+import org.gerryai.logic.Sentence;
+import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
+import org.gerryai.logic.builder.SentenceBuilder;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleLogicFactory implements ImmutableLogicFactory {
+public class SimpleLogicFactory implements LogicFactory {
 
     /**
      * {@inheritDoc}
      */
-    public final ImmutableFunction createFunction(String name, ImmutableTerm<?> term) {
-        List<ImmutableTerm<?>> terms = new ArrayList<ImmutableTerm<?>>(1);
+    public final Function createFunction(String name, Term term) {
+        List<Term> terms = new ArrayList<Term>(1);
         terms.add(term);
         return createFunction(name, terms);
     }
@@ -47,7 +49,7 @@ public class SimpleLogicFactory implements ImmutableLogicFactory {
     /**
      * {@inheritDoc}
      */
-    public final ImmutableFunction createFunction(String name, List<ImmutableTerm<?>> terms) {
+    public final Function createFunction(String name, List<Term> terms) {
         return new SimpleFunction.Builder()
                 .setName(name)
                 .addTerm(terms)
@@ -57,22 +59,22 @@ public class SimpleLogicFactory implements ImmutableLogicFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableVariable<?> createVariable(String name) {
+	public final Variable createVariable(String name) {
 		return new SimpleVariable(name);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableConstant<?> createConstant(String name) {
+	public final Constant createConstant(String name) {
 		return new SimpleConstant(name);
 	}
     
     /**
      * {@inheritDoc}
      */
-    public final ImmutablePredicate createPredicate(String name, ImmutableTerm<?> term) {
-        List<ImmutableTerm<?>> terms = new ArrayList<ImmutableTerm<?>>(1);
+    public final Predicate createPredicate(String name, Term term) {
+        List<Term> terms = new ArrayList<Term>(1);
         terms.add(term);
         return createPredicate(name, terms);
     }
@@ -80,20 +82,19 @@ public class SimpleLogicFactory implements ImmutableLogicFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutablePredicate createPredicate(String name, List<ImmutableTerm<?>> terms) {
-		return new SimplePredicate.Builder()
-		        .setName(name)
-		        .addTerm(terms)
+	public final Predicate createPredicate(String name, List<Term> terms) {
+		return new SimplePredicate.Builder(name)
+		        .addTerms(terms)
 		        .build();
 	}
 	
     /**
      * {@inheritDoc}
      */
-	public final List<ImmutableTerm<?>> apply(List<ImmutableTerm<?>> oldTerms,
-	        Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
-        List<ImmutableTerm<?>> updatedTerms = new ArrayList<ImmutableTerm<?>>();        
-        for (ImmutableTerm<?> oldTerm : oldTerms) {
+	public final List<Term> apply(List<Term> oldTerms,
+	        Map<Term, Term> substitution) {
+        List<Term> updatedTerms = new ArrayList<Term>();        
+        for (Term oldTerm : oldTerms) {
             if (substitution.containsKey(oldTerm)) {
                 updatedTerms.add(substitution.get(oldTerm));
             } else {
@@ -107,28 +108,31 @@ public class SimpleLogicFactory implements ImmutableLogicFactory {
     /**
      * {@inheritDoc}
      */
-    public final ImmutablePredicate copyApply(ImmutablePredicate condition,
-            Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings) {
+    public final Sentence<?> copyApply(Sentence<?> sentence,
+            Map<Variable, Constant> bindings) {
         
-        Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution =
-                new HashMap<ImmutableTerm<?>, ImmutableTerm<?>>(bindings);
+        Map<Term, Term> substitution =
+                new HashMap<Term, Term>(bindings);
         
-        return condition.createCopyBuilder()
-                .apply(substitution)
-                .build();
+        return sentence.applyToCopy(substitution);
     }
 
     /**
      * {@inheritDoc}
      */
-    public final ImmutableFunction copyApply(ImmutableFunction function,
-            Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings) {
+    public final Term copyApply(Term function,
+            Map<Variable, Constant> bindings) {
         
-        Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution =
-                new HashMap<ImmutableTerm<?>, ImmutableTerm<?>>(bindings);
+        Map<Term, Term> substitution =
+                new HashMap<Term, Term>(bindings);
         
-        return function.createCopyBuilder()
-                .apply(substitution)
-                .build();
+        return function.applyToCopy(substitution);
+    }
+  
+    /**
+     * {@inheritDoc}
+     */
+    public final SentenceBuilder sentenceBuilder() {
+        return new SimpleSentenceBuilder();
     }
 }

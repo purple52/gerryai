@@ -27,7 +27,7 @@ import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.domain.ImmutableOperatorBuilder;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
+import org.gerryai.logic.Variable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -43,7 +43,7 @@ public class SimpleOperator implements ImmutableOperator {
 	/**
 	 * Arguments for this operator.
 	 */
-	private List<ImmutableVariable<?>> arguments;
+	private List<Variable> arguments;
 	
 	/**
 	 * Preconditions for this operator.
@@ -76,7 +76,7 @@ public class SimpleOperator implements ImmutableOperator {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<ImmutableVariable<?>> getArguments() {
+	public final List<Variable> getArguments() {
 		return Collections.unmodifiableList(arguments);
 	}
 
@@ -107,7 +107,7 @@ public class SimpleOperator implements ImmutableOperator {
 	    /**
 	     * List of arguments the operator takes.
 	     */
-	    private List<ImmutableVariable<?>> arguments;
+	    private List<Variable> arguments;
 	    
 	    /**
 	     * Set of preconditions that must hold for the operator to be valid.
@@ -123,7 +123,7 @@ public class SimpleOperator implements ImmutableOperator {
 	     * Default constructor.
 	     */
 	    protected Builder() {
-	        arguments = new ArrayList<ImmutableVariable<?>>();
+	        arguments = new ArrayList<Variable>();
 	        preconditions = new HashSet<ImmutableCondition>();
 	        effects = new HashSet<ImmutableEffect>();
 	    }
@@ -139,7 +139,7 @@ public class SimpleOperator implements ImmutableOperator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder addArgument(ImmutableVariable<?> argument) {
+	    public final ImmutableOperatorBuilder addArgument(Variable argument) {
 	        arguments.add(argument);
 	        return this;
 	    }
@@ -147,7 +147,7 @@ public class SimpleOperator implements ImmutableOperator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder addArguments(List<ImmutableVariable<?>> argument) {
+	    public final ImmutableOperatorBuilder addArguments(List<Variable> argument) {
 	        arguments.addAll(argument);
 	        return this;
 	    }

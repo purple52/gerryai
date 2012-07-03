@@ -19,16 +19,17 @@ package org.gerryai.htn.simple.logic.impl;
 
 import java.util.Map;
 
-import org.gerryai.htn.simple.logic.ImmutableConstant;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableTermBuilder;
+import org.gerryai.logic.Constant;
+import org.gerryai.logic.Term;
+
+import com.google.common.base.Objects;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant
-		implements ImmutableConstant<SimpleConstant> {
+public final class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant
+		implements Constant {
 
 	/**
 	 * Constructor.
@@ -41,23 +42,32 @@ public class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant
 	/**
 	 * {@inheritDoc}
 	 */
-	public final String getName() {
+	public String getName() {
 		return this.getSymbolicName();
 	}
-
+    
     /**
      * {@inheritDoc}
      */
-    public final ImmutableTermBuilder<SimpleConstant> createCopyBuilder() {
+    public Term applyToCopy(Map<Term, Term> substitution) {
         return new Builder()
-            .copy(this);
+            .copy(this)
+            .apply(substitution)
+            .build();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isGround() {
+        return true;
     }
     
     /**
      * Builder class for SimpleConstant.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder implements ImmutableTermBuilder<SimpleConstant> {
+    public static class Builder {
         
         /**
          * Name of the term to be built.
@@ -67,7 +77,7 @@ public class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant
         /**
          * {@inheritDoc}
          */
-        public final Builder copy(SimpleConstant term) {
+        public final Builder copy(Constant term) {
             this.name = term.getName();
             return this;
         }
@@ -75,9 +85,9 @@ public class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant
         /**
          * {@inheritDoc}
          */
-        public final Builder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
-            for (ImmutableTerm<?> oldTerm : substitution.keySet()) {
-                if (oldTerm instanceof ImmutableConstant && oldTerm.getName().equals(this.name)) {
+        public final Builder apply(Map<Term, Term> substitution) {
+            for (Term oldTerm : substitution.keySet()) {
+                if (oldTerm instanceof Constant && oldTerm.getName().equals(this.name)) {
                     this.name = substitution.get(oldTerm).getName();
                 }
             }
@@ -87,9 +97,23 @@ public class SimpleConstant extends aima.core.logic.fol.parsing.ast.Constant
         /**
          * {@inheritDoc}
          */
-        public final SimpleConstant build() {
+        public final Constant build() {
             return new SimpleConstant(this.name);
         }
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.getName());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Constant) {
+            final Constant other = (Constant) obj;
+            return Objects.equal(this.getName(), other.getName());
+        } else {
+            return false;
+        }
+    }
 }

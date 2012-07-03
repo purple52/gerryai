@@ -26,9 +26,9 @@ import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
+import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
@@ -42,11 +42,11 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class AIMAUnificationService<
-		O extends Operator<ImmutableEffect, ImmutableTerm<?>, I, V>,
-		M extends Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
-		I extends Condition<ImmutableTerm<?>>,
+		O extends Operator<ImmutableEffect, I>,
+		M extends Method<ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
+		I extends Condition,
 		V extends Variable>
-				implements UnificationService<M, ImmutableTerm<?>, ImmutableTask,
+				implements UnificationService<M, Term, ImmutableTask,
 				ImmutableTaskNetwork, ImmutableConstraint<?>, I> {
 
 	/**
@@ -57,7 +57,7 @@ public class AIMAUnificationService<
 	/**
 	 * Converter to convert between our classes and the AIMA FOL classes.
 	 */
-	private AIMAConverter<ImmutableTerm<?>, V, ImmutableTask> converter;
+	private AIMAConverter<Term, V, ImmutableTask> converter;
 	
 	/**
 	 * Constructor taking all required dependencies.
@@ -65,7 +65,7 @@ public class AIMAUnificationService<
 	 * @param converter converted to translate between the two class schemes
 	 */
 	public AIMAUnificationService(aima.core.logic.fol.Unifier unifier,
-			AIMAConverter<ImmutableTerm<?>, V, ImmutableTask> converter) {
+			AIMAConverter<Term, V, ImmutableTask> converter) {
 		this.unifier = unifier;
 		this.converter = converter;
 	}
@@ -73,7 +73,7 @@ public class AIMAUnificationService<
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Map<ImmutableTerm<?>, ImmutableTerm<?>> findUnifier(ImmutableTask task, M method) {
+	public final Map<Term, Term> findUnifier(ImmutableTask task, M method) {
 
 		Predicate taskPredicate = converter.convert(task);
 		Predicate methodTaskPredicate = converter.convert(method.getTask());

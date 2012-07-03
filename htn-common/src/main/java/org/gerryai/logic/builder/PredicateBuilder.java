@@ -15,19 +15,27 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.logic;
+package org.gerryai.logic.builder;
 
-import org.gerryai.logic.Function;
+import org.gerryai.logic.Predicate;
+import org.gerryai.logic.Term;
 
 /**
- * Interface for an immutable logical function.
+ * Interface for a builder class for logical predicates.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableFunction extends Function<ImmutableTerm<?>> {
+public interface PredicateBuilder {
 
     /**
-     * Create a builder that will start with a copy of this function.
-     * @return the builder
+     * Add a term to the predicate to be built.
+     * @param term the term to add
+     * @return an updated builder
      */
-    ImmutableFunctionBuilder createCopyBuilder();
+    PredicateBuilder addTerm(Term term);
+    
+    /**
+     * Build the finished predicate.
+     * @return the predicate
+     */
+    Predicate build();
 }

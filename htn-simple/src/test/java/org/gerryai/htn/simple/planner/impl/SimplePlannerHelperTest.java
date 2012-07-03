@@ -41,9 +41,6 @@ import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableConstant;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.plan.ImmutableActionFactory;
 import org.gerryai.htn.simple.plan.ImmutablePlan;
@@ -56,6 +53,9 @@ import org.gerryai.htn.simple.problem.ImmutableStateService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.logic.Constant;
+import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -69,13 +69,13 @@ public class SimplePlannerHelperTest {
 
     private ImmutablePlanBuilderFactory mockPlanBuilderFactory;
     private ImmutableActionFactory mockActionFactory;
-    private DecompositionService<ImmutableMethod, ImmutableTerm<?>,
+    private DecompositionService<ImmutableMethod,
             ImmutableTask, ImmutableTaskNetwork,
             ImmutableConstraint<?>> mockDecompositionService;
-    private UnificationService<ImmutableMethod, ImmutableTerm<?>,
+    private UnificationService<ImmutableMethod, Term,
             ImmutableTask, ImmutableTaskNetwork,
             ImmutableConstraint<?>, ImmutableCondition> mockUnificationService;
-    private SortService<ImmutableTerm<?>, ImmutableTask,
+    private SortService<ImmutableTask,
             ImmutableConstraint<?>> mockSortService;
     private ImmutableStateService mockStateService;
     private ImmutableDomainHelper mockDomainHelper;
@@ -242,7 +242,7 @@ public class SimplePlannerHelperTest {
 		ImmutableTask mockTask = mock(ImmutableTask.class);
 		ImmutableMethod mockMethod = mock(ImmutableMethod.class);
 		@SuppressWarnings("unchecked")
-		Map<ImmutableTerm<?>, ImmutableTerm<?>> mockSubstitution = mock(Map.class);
+		Map<Term, Term> mockSubstitution = mock(Map.class);
 		
         when(mockUnificationService.findUnifier(mockTask, mockMethod)).thenReturn(mockSubstitution);
         when(mockDecompositionService.decompose(mockSubstitution, mockTaskNetwork, mockTask, mockMethod)).thenReturn(mockDecomposedTaskNetwork);
@@ -357,7 +357,7 @@ public class SimplePlannerHelperTest {
 	
 	private ImmutableCondition linkCondition(ImmutableAction mockAction) {
 	    
-        Map<ImmutableVariable<?>, ImmutableConstant<?>> mockBindings = new HashMap<ImmutableVariable<?>, ImmutableConstant<?>>();
+        Map<Variable, Constant> mockBindings = new HashMap<Variable, Constant>();
         when(mockAction.getBindings()).thenReturn(mockBindings);
         
         ImmutableCondition mockCondition = mock(ImmutableCondition.class);

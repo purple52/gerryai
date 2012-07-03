@@ -21,8 +21,8 @@ import java.util.Map;
 
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableConditionBuilder;
-import org.gerryai.htn.simple.logic.ImmutablePredicate;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.logic.Sentence;
+import org.gerryai.logic.Term;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -31,31 +31,33 @@ import org.gerryai.htn.simple.logic.ImmutableTerm;
 public final class SimpleCondition implements ImmutableCondition {
 
     /**
-     * The predicate that this condition checks for.
+     * The sentence that this condition checks for.
      */
-    private ImmutablePredicate predicate;
+    private Sentence<?> sentence;
     
     /**
      * Constructor using a builder.
      * @param builder the builder to build from
      */
     private SimpleCondition(Builder builder) {
-        predicate = builder.predicate;
+        sentence = builder.sentence;
     }
 
     /**
      * {@inheritDoc}
      */
-    public ImmutablePredicate getPredicate() {
-        return predicate;
+    public Sentence<?> getSentence() {
+        return sentence;
     }
     
     /**
      * {@inheritDoc}
      */
-    public ImmutableConditionBuilder createCopyBuilder() {
+    public ImmutableCondition applyToCopy(Map<Term, Term> substitution) {
         return new Builder()
-            .copy(this);
+            .copy(this)
+            .apply(substitution)
+            .build();
     }
 
     /**
@@ -65,9 +67,9 @@ public final class SimpleCondition implements ImmutableCondition {
     public static final class Builder implements ImmutableConditionBuilder {
    
         /**
-         * The predicate that the condition being built will use.
+         * The sentence that the condition being built will use.
          */
-        private ImmutablePredicate predicate;
+        private Sentence<?> sentence;
         
         /**
          * Protected constructor.
@@ -77,8 +79,8 @@ public final class SimpleCondition implements ImmutableCondition {
         /**
          * {@inheritDoc}
          */
-        public ImmutableConditionBuilder setPredicate(ImmutablePredicate predicate) {
-            this.predicate = predicate;
+        public ImmutableConditionBuilder setSentence(Sentence<?> sentence) {
+            this.sentence = sentence;
             return this;
         }
         
@@ -86,18 +88,15 @@ public final class SimpleCondition implements ImmutableCondition {
          * {@inheritDoc}
          */
         public ImmutableConditionBuilder copy(ImmutableCondition condition) {
-            this.predicate = condition.getPredicate();
+            this.sentence = condition.getSentence();
             return this;
         }
 
         /**
          * {@inheritDoc}
          */
-        public ImmutableConditionBuilder apply(
-                Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
-            this.predicate = predicate.createCopyBuilder()
-                    .apply(substitution)
-                    .build();
+        public ImmutableConditionBuilder apply(Map<Term, Term> substitution) {
+            this.sentence = sentence.applyToCopy(substitution);
             return this;
         }
         

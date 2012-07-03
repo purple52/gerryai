@@ -21,16 +21,17 @@ import java.util.Set;
 
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 /**
  * Interface for a constraint that dictates the state immediately after this task.
- * @param <T> type of logical term this constraint works with
  * @param <K> type of task this constraint works with
  * @param <I> type of condition this constraint uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface AfterConstraint<T extends Term, K extends Task<T>, I extends Condition<T>> extends Constraint<T> {
+public interface AfterConstraint<
+        K extends Task,
+        I extends Condition>
+                extends Constraint {
 
 	/**
 	 * The set of tasks for which this constraint must hold.

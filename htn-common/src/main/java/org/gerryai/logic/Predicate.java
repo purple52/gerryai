@@ -21,10 +21,9 @@ import java.util.List;
 
 /**
  * Interface for a logical predicate.
- * @param <T> type of logical term this predicate uses.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Predicate<T extends Term> {
+public interface Predicate extends AtomicSentence<Predicate> {
 
     /**
      * Get the symbolic name of this predicate.
@@ -36,5 +35,5 @@ public interface Predicate<T extends Term> {
      * Get the list of terms that make up this predicate.
      * @return the terms
      */
-    List<T> getTerms();
+    List<Term> getTerms();
 }

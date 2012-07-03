@@ -28,7 +28,7 @@ import java.util.Set;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
+import org.gerryai.logic.Variable;
 import org.junit.Test;
 
 /**
@@ -53,8 +53,8 @@ public class SimpleOperatorTest {
      */
     @Test
     public void testAddArgument() {
-        ImmutableVariable<?> mockVariableA = mock(ImmutableVariable.class);
-        ImmutableVariable<?> mockVariableB = mock(ImmutableVariable.class);
+        Variable mockVariableA = mock(Variable.class);
+        Variable mockVariableB = mock(Variable.class);
         ImmutableOperator operator = new SimpleOperator.Builder()
                 .addArgument(mockVariableA)
                 .addArgument(mockVariableB)
@@ -69,15 +69,15 @@ public class SimpleOperatorTest {
      */
     @Test
     public void testAddArguments() {
-        ImmutableVariable<?> mockVariableA = mock(ImmutableVariable.class);
-        ImmutableVariable<?> mockVariableB = mock(ImmutableVariable.class);
-        List<ImmutableVariable<?>> mockVariablesA = new ArrayList<ImmutableVariable<?>>();
+        Variable mockVariableA = mock(Variable.class);
+        Variable mockVariableB = mock(Variable.class);
+        List<Variable> mockVariablesA = new ArrayList<Variable>();
         mockVariablesA.add(mockVariableA);
         mockVariablesA.add(mockVariableB);
 
-        ImmutableVariable<?> mockVariableC = mock(ImmutableVariable.class);
-        ImmutableVariable<?> mockVariableD = mock(ImmutableVariable.class);
-        List<ImmutableVariable<?>> mockVariablesB = new ArrayList<ImmutableVariable<?>>();
+        Variable mockVariableC = mock(Variable.class);
+        Variable mockVariableD = mock(Variable.class);
+        List<Variable> mockVariablesB = new ArrayList<Variable>();
         mockVariablesB.add(mockVariableC);
         mockVariablesB.add(mockVariableD);
         
@@ -183,8 +183,8 @@ public class SimpleOperatorTest {
      */
     @Test
     public void testBuild() {
-        ImmutableVariable<?> mockVariable = mock(ImmutableVariable.class);
-        List<ImmutableVariable<?>> mockArguments = new ArrayList<ImmutableVariable<?>>();
+        Variable mockVariable = mock(Variable.class);
+        List<Variable> mockArguments = new ArrayList<Variable>();
         mockArguments.add(mockVariable);
         ImmutableCondition mockCondition = mock(ImmutableCondition.class);
         Set<ImmutableCondition> mockConditions = new HashSet<ImmutableCondition>();

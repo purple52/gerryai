@@ -19,7 +19,7 @@ package org.gerryai.htn.simple.planner;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraintFactory;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilderFactory;
-import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
+import org.gerryai.htn.simple.logic.LogicFactory;
 import org.gerryai.htn.simple.problem.ImmutableProblemBuilderFactory;
 import org.gerryai.htn.simple.problem.ImmutableStateService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkFactory;
@@ -34,7 +34,7 @@ public interface ImmutablePlanningFactory {
      * Get a factory for creating logical terms.
      * @return the factory
      */
-    ImmutableLogicFactory getLogicFactory();
+    LogicFactory getLogicFactory();
     
     /**
      * Get a factory for generating domain-related builders.

@@ -29,10 +29,10 @@ import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableConstant;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.logic.Constant;
+import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -91,27 +91,27 @@ public class SimpleDomainHelper implements ImmutableDomainHelper {
      * {@inheritDoc}
      */
     public final ImmutableEffect getGroundedEffect(ImmutableEffect effect,
-            Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings) {
+            Map<Variable, Constant> bindings) {
         
-        Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution =
-                new HashMap<ImmutableTerm<?>, ImmutableTerm<?>>(bindings);
+        Map<Term, Term> substitution =
+                new HashMap<Term, Term>(bindings);
         
-        return effect.createCopyBuilder()
-                .apply(substitution)
-                .build();
+        return effect.applyToCopy(substitution);
     }
     
     /**
      * {@inheritDoc}
      */
     public final ImmutableCondition getGroundedCondition(ImmutableCondition condition,
-            Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings) {
+            Map<Variable, Constant> bindings) {
         
-        Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution =
-                new HashMap<ImmutableTerm<?>, ImmutableTerm<?>>(bindings);
+        Map<Term, Term> substitution =
+                new HashMap<Term, Term>(bindings);
         
-        return condition.createCopyBuilder()
-                .apply(substitution)
-                .build();
+        ImmutableCondition newCondition = condition.applyToCopy(substitution);
+        if (!newCondition.getSentence().isGround()) {
+            throw new IllegalArgumentException("Substitution does not produce a grounded condition");
+        }
+        return newCondition;
     }
 }

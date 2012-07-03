@@ -24,10 +24,10 @@ import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.logic.Term;
 
 /**
  * Simple implementation of a decomposition service, for decomposing a task
@@ -36,20 +36,20 @@ import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
  *
  */
 public class SimpleDecompositionService implements
-		DecompositionService<ImmutableMethod, ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
+		DecompositionService<ImmutableMethod, ImmutableTask, ImmutableTaskNetwork,
 		ImmutableConstraint<?>> {
 
     /**
      * Constraint validator factory.
      */
-    private ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask,
+    private ConstraintValidatorFactory<ImmutableTask,
             ImmutableCondition> constraintValidatorFactory;
 	
 	/**
 	 * Set the unification service.
 	 * @param constraintValidatorFactory the constraint validator factory to use
 	 */
-	public SimpleDecompositionService(ConstraintValidatorFactory<ImmutableTerm<?>,
+	public SimpleDecompositionService(ConstraintValidatorFactory<
 	        ImmutableTask, ImmutableCondition> constraintValidatorFactory) {
 		this.constraintValidatorFactory = constraintValidatorFactory;
 	}
@@ -57,7 +57,7 @@ public class SimpleDecompositionService implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableTaskNetwork decompose(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution,
+	public final ImmutableTaskNetwork decompose(Map<Term, Term> substitution,
 			ImmutableTaskNetwork taskNetwork, ImmutableTask task, ImmutableMethod method) throws InvalidConstraint {
 	    
 		// Apply unifier where relevant

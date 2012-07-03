@@ -17,26 +17,23 @@
  */
 package org.gerryai.htn.simple.domain;
 
+import java.util.Map;
+
 import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.simple.logic.ImmutablePredicate;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.logic.Term;
 
 /**
  * Extended interface for immutable conditions that can only be modified via a builder.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableCondition extends Condition<ImmutableTerm<?>> {
+public interface ImmutableCondition extends Condition {
 
     /**
-     * Create a builder that will start with a copy of this condition.
-     * @return the builder
+     * Apply the given substitution to a copy of this condition.
+     * TODO: Move to Condition
+     * @param substitution the substitution to apply
+     * @return the new condition
      */
-    ImmutableConditionBuilder createCopyBuilder();
-    
-    /**
-     * Get the predicate that this condition requires to be true.
-     * @return the predicate
-     */
-    ImmutablePredicate getPredicate();
+    ImmutableCondition applyToCopy(Map<Term, Term> substitution);
     
 }

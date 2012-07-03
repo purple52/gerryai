@@ -20,21 +20,18 @@ package org.gerryai.htn.simple.problem;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.problem.State;
-import org.gerryai.logic.Term;
 
 /**
  * Interface for a service that can handle states, conditional checks.
  * @param <S> type of state this service uses
- * @param <T> type of logical term this service uses
  * @param <I> type of condition this service uses
  * @param <E> type of effect this service uses
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface StateService<
         S extends State,
-        T extends Term,
-        I extends Condition<T>,
-        E extends Effect<T>> {
+        I extends Condition,
+        E extends Effect> {
 
     /**
      * Check if the given condition is satisfied by the given state.

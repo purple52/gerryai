@@ -25,11 +25,11 @@ import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableConstant;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ImmutableActionFactoryHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.logic.Constant;
+import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -69,26 +69,26 @@ public class SimpleActionFactoryHelper implements ImmutableActionFactoryHelper {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Map<ImmutableVariable<?>, ImmutableConstant<?>>
+	public final Map<Variable, Constant>
 	        getBindings(ImmutableTask task, ImmutableOperator operator) 
 	                throws TaskNotActionable {
 
-	    Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings =
-	            new HashMap<ImmutableVariable<?>, ImmutableConstant<?>>();
+	    Map<Variable, Constant> bindings =
+	            new HashMap<Variable, Constant>();
 		
-		List<ImmutableTerm<?>> taskArguments = task.getArguments();
-		List<ImmutableVariable<?>> operatorArguments = operator.getArguments();
+		List<Term> taskArguments = task.getArguments();
+		List<Variable> operatorArguments = operator.getArguments();
 		
 		if (taskArguments.size() != operatorArguments.size()) {
 			throw new TaskNotActionable("Task and operator arguments size does not match");
 		}
 		
 		for (int i = 0; i < taskArguments.size(); i++) {
-		    ImmutableVariable<?> variable = operatorArguments.get(i);
-			ImmutableTerm<?> taskArgument = taskArguments.get(i);
-			ImmutableConstant<?> constant;
+		    Variable variable = operatorArguments.get(i);
+		    Term taskArgument = taskArguments.get(i);
+		    Constant constant;
 			try {
-				constant = (ImmutableConstant<?>) taskArgument;
+				constant = (Constant) taskArgument;
 			} catch (ClassCastException e) {
 				throw new TaskNotActionable("Task argument is not a constant", e);
 			}

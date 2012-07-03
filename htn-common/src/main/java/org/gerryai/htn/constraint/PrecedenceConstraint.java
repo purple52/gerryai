@@ -20,15 +20,15 @@ package org.gerryai.htn.constraint;
 import java.util.Set;
 
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 /**
  * Interface for a constraint that dictates what order two tasks must be completed in.
- * @param <T> type of logical term this constraint works with
  * @param <K> type of task this constraint works with
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface PrecedenceConstraint<T extends Term, K extends Task<T>> extends Constraint<T> {
+public interface PrecedenceConstraint<
+        K extends Task>
+                extends Constraint {
 
 	/**
 	 * Get the task that must come first.

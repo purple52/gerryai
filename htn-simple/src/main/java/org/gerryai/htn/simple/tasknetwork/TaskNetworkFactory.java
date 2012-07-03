@@ -36,9 +36,9 @@ import org.gerryai.logic.Term;
  */
 public interface TaskNetworkFactory<
 		T extends Term,
-		K extends Task<T>,
-		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>> {
+		K extends Task,
+		N extends TaskNetwork<K, C>,
+		C extends Constraint> {
 
 	/**
 	 * Create a task network using the tasks and constraints provided.

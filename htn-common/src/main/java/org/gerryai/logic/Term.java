@@ -21,18 +21,12 @@ package org.gerryai.logic;
  * Interface for a logical term.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Term {
+public interface Term extends LogicalNode<Term> {
 
 	/**
 	 * Get the symbolic name of this term.
 	 * @return the name
 	 */
 	String getName();
-	
-	/**
-	 * Get whether this term is compound or not.
-	 * @return if the term is compound
-	 *
-	boolean isCompound();*/
 
 }

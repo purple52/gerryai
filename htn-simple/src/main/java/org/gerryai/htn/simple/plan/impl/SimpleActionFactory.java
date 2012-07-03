@@ -21,12 +21,12 @@ import java.util.Map;
 
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableConstant;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.plan.ImmutableActionFactory;
 import org.gerryai.htn.simple.plan.ImmutableActionFactoryHelper;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.logic.Constant;
+import org.gerryai.logic.Variable;
 
 /**
  * Factory for creating actions.
@@ -56,7 +56,7 @@ public class SimpleActionFactory implements ImmutableActionFactory {
 		ImmutableOperator operator = actionFactoryHelper.getOperator(task);
 		
 		// Try and get the bindings
-		Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings = actionFactoryHelper.getBindings(task, operator);
+		Map<Variable, Constant> bindings = actionFactoryHelper.getBindings(task, operator);
 		
 		// Finally create this action
 		return new SimpleAction.Builder()

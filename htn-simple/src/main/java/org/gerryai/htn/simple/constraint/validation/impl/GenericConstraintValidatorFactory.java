@@ -20,24 +20,24 @@ package org.gerryai.htn.simple.constraint.validation.impl;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 /**
  * Generic constraint validator factory.
- * @param <T> type of term the validator will handle
  * @param <K> type of task the validator will handle
  * @param <I> type of condition the validator will handle
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class GenericConstraintValidatorFactory<T extends Term, K extends Task<T>, I extends Condition<T>>
-		implements ConstraintValidatorFactory<T, K, I> {
+public class GenericConstraintValidatorFactory<
+        K extends Task,
+        I extends Condition>
+		        implements ConstraintValidatorFactory<K, I> {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final GenericConstraintValidator<T, K, I> create() {
-		return new GenericConstraintValidator<T, K, I>();
+	public final GenericConstraintValidator<K, I> create() {
+		return new GenericConstraintValidator<K, I>();
 	}
 
 }

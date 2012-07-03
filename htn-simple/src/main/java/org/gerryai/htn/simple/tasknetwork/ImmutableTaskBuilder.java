@@ -3,8 +3,8 @@ package org.gerryai.htn.simple.tasknetwork;
 import java.util.List;
 import java.util.Map;
 
-import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.LogicFactory;
+import org.gerryai.logic.Term;
 
 /**
  * Interface for a builder for creating immutable tasks.
@@ -31,14 +31,14 @@ public interface ImmutableTaskBuilder {
 	 * @param term the term to add
 	 * @return the updated builder
 	 */
-	ImmutableTaskBuilder addArgument(ImmutableTerm<?> term);
+	ImmutableTaskBuilder addArgument(Term term);
 	
 	/**
 	 * Add a list of arguments to the task.
 	 * @param terms the terms to add
 	 * @return the updated builder
 	 */
-	ImmutableTaskBuilder addArguments(List<ImmutableTerm<?>> terms);
+	ImmutableTaskBuilder addArguments(List<Term> terms);
 	
 	/**
 	 * Copy from the provided task, overwriting any values already set.
@@ -52,7 +52,7 @@ public interface ImmutableTaskBuilder {
 	 * @param substitution the substitution to apply
 	 * @return the updated builder
 	 */
-	ImmutableTaskBuilder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution);
+	ImmutableTaskBuilder apply(Map<Term, Term> substitution);
 	
 	/**
 	 * Get the name of the task to be built.
@@ -67,10 +67,10 @@ public interface ImmutableTaskBuilder {
 	boolean isPrimitive();
 	
 	/**
-	 * Get the arguments for the tack to be built.
+	 * Get the arguments for the task to be built.
 	 * @return the arguments
 	 */
-	List<ImmutableTerm<?>> getArguments();
+	List<Term> getArguments();
 	
 	/**
 	 * Build the task.
@@ -82,6 +82,6 @@ public interface ImmutableTaskBuilder {
 	 * Get the logic factory this builder can use.
 	 * @return the factory
 	 */
-	ImmutableLogicFactory getLogicFactory();
+	LogicFactory getLogicFactory();
 	
 }

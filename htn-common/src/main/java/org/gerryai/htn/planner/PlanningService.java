@@ -29,9 +29,6 @@ import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.Constant;
-import org.gerryai.logic.Term;
-import org.gerryai.logic.Variable;
 
 /**
  * Interface for a service that can solve problems.
@@ -43,32 +40,26 @@ import org.gerryai.logic.Variable;
  * @param <D> type of domain this service works with
  * @param <O> type of operator this service works with
  * @param <M> type of method this service works with
- * @param <T> type of logical term this service works with
  * @param <K> type of task this service works with
  * @param <N> type of task network this service works with
  * @param <C> type of constraint this service works with
  * @param <I> the class of condition this service will handle
- * @param <V> type of variable this service will handle
- * @param <S> type of constant this service will handle
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface PlanningService<
-        E extends Effect<T>,
+        E extends Effect,
         St extends State,
-        Pl extends Plan<E, T, A, O, I, V, S>,
-        Pr extends Problem<E, St, D, O, M, T, K, N, C, I, V>,
-        A extends Action<E, T, O, I, V, S>,
-        D extends Domain<E, O, M, T, K, N, C, I, V>,
-		O extends Operator<E, T, I, V>,
-		M extends Method<T, K, N, C>,
-		T extends Term,
-		K extends Task<T>,
-		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>,
-		I extends Condition<T>,
-		V extends Variable,
-		S extends Constant> {
+        Pl extends Plan<E, A, O, I>,
+        Pr extends Problem<E, St, D, O, M, K, N, C, I>,
+        A extends Action<E, O, I>,
+        D extends Domain<E, O, M, K, N, C, I>,
+		O extends Operator<E, I>,
+		M extends Method<K, N, C>,
+		K extends Task,
+		N extends TaskNetwork<K, C>,
+		C extends Constraint,
+		I extends Condition> {
 	
 	/**
 	 * Find a plan that solve the given problem.

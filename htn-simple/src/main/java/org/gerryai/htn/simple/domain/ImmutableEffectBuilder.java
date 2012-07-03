@@ -19,8 +19,8 @@ package org.gerryai.htn.simple.domain;
 
 import java.util.Map;
 
-import org.gerryai.htn.simple.logic.ImmutableFunction;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.logic.Sentence;
+import org.gerryai.logic.Term;
 
 /**
  * Interface for a builder for immutable effects.
@@ -29,19 +29,12 @@ import org.gerryai.htn.simple.logic.ImmutableTerm;
 public interface ImmutableEffectBuilder {
 
     /**
-     * Set the function for the effect being built.
-     * @param function the function
+     * Set the logical sentence for the effect being built.
+     * @param sentence the sentence
      * @return an updated builder
      */
-    ImmutableEffectBuilder setFunction(ImmutableFunction function);
-        
-    /**
-     * Set the value returned by the function for the effect being built.
-     * @param value the value
-     * @return an updated builder
-     */
-    ImmutableEffectBuilder setValue(Boolean value);
-        
+    ImmutableEffectBuilder setSentence(Sentence<?> sentence);
+
     /**
      * Copy from the provided effect, overwriting any values already set.
      * @param effect the effect to copy
@@ -54,7 +47,7 @@ public interface ImmutableEffectBuilder {
      * @param substitution the substitution to apply
      * @return the updated builder
      */
-    ImmutableEffectBuilder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution);
+    ImmutableEffectBuilder apply(Map<Term, Term> substitution);
     
     
     /**

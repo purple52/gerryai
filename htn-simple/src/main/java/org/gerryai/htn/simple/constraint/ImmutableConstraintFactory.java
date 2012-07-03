@@ -18,7 +18,6 @@
 package org.gerryai.htn.simple.constraint;
 
 import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
@@ -26,7 +25,6 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutableConstraintFactory extends ConstraintFactory<
-        ImmutableTerm<?>,
         ImmutableTask,
         ImmutableCondition,
         ImmutableValidatableBeforeConstraint,

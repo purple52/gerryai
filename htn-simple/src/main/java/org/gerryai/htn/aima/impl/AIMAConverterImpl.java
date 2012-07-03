@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.aima.AIMAConverter;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.logic.impl.SimpleConstant;
 import org.gerryai.htn.simple.logic.impl.SimpleVariable;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -38,7 +36,7 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  * @author David Edwards <david@more.fool.me.uk>
  * 
  */
-public class AIMAConverterImpl implements AIMAConverter<ImmutableTerm<?>, ImmutableVariable<?>, ImmutableTask> {
+public class AIMAConverterImpl implements AIMAConverter<Term, Variable, ImmutableTask> {
 
 	/**
 	 * {@inheritDoc}
@@ -54,7 +52,7 @@ public class AIMAConverterImpl implements AIMAConverter<ImmutableTerm<?>, Immuta
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<aima.core.logic.fol.parsing.ast.Term> convert(List<ImmutableTerm<?>> terms) {
+	public final List<aima.core.logic.fol.parsing.ast.Term> convert(List<Term> terms) {
 		List<aima.core.logic.fol.parsing.ast.Term> aimaTerms = new ArrayList<aima.core.logic.fol.parsing.ast.Term>();
 		for (Term taskTerm : terms) {
 			aima.core.logic.fol.parsing.ast.Term term = convert(taskTerm);
@@ -82,16 +80,16 @@ public class AIMAConverterImpl implements AIMAConverter<ImmutableTerm<?>, Immuta
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Map<ImmutableTerm<?>, ImmutableTerm<?>> convert(Map<aima.core.logic.fol.parsing.ast.Variable,
+	public final Map<Term, Term> convert(Map<aima.core.logic.fol.parsing.ast.Variable,
 			aima.core.logic.fol.parsing.ast.Term> map) {
 		
-		Map<ImmutableTerm<?>, ImmutableTerm<?>> substitutionMap = new HashMap<ImmutableTerm<?>, ImmutableTerm<?>>();
+		Map<Term, Term> substitutionMap = new HashMap<Term, Term>();
 
 		for (aima.core.logic.fol.parsing.ast.Variable variable : map.keySet()) {
 
 			// TODO: Avoid cast
-			ImmutableVariable<?> key = (ImmutableVariable<?>) convert(variable);
-			ImmutableTerm<?> value = convert(map.get(variable));
+		    Term key = convert(variable);
+			Term value = convert(map.get(variable));
 			substitutionMap.put(key, value);
 		}
 
@@ -119,9 +117,9 @@ public class AIMAConverterImpl implements AIMAConverter<ImmutableTerm<?>, Immuta
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableTerm<?> convert(aima.core.logic.fol.parsing.ast.Term aimaTerm) {
+	public final Term convert(aima.core.logic.fol.parsing.ast.Term aimaTerm) {
 		 // TODO Implement properly
-	    ImmutableTerm<?> term;
+	    Term term;
 		if (aimaTerm instanceof aima.core.logic.fol.parsing.ast.Constant) {
 			term = new SimpleConstant(aimaTerm.getSymbolicName());
 		} else if (aimaTerm instanceof aima.core.logic.fol.parsing.ast.Variable) {

@@ -15,15 +15,33 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.logic;
+package org.gerryai.htn.simple.logic.impl;
 
-import org.gerryai.logic.Variable;
+import org.gerryai.logic.NegatedSentence;
+import org.gerryai.logic.Sentence;
+import org.gerryai.logic.builder.PredicateBuilder;
+import org.gerryai.logic.builder.SentenceBuilder;
 
 /**
- * Extended interface for immutable variables that use a builder to do modifications.
- * @param <T> type of variable implemented
+ * Simple implementation of an immutable sentence.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableVariable<T extends ImmutableVariable<T>> extends Variable, ImmutableTerm<T> {
+public final class SimpleSentenceBuilder implements SentenceBuilder {
+
+    /**
+     * {@inheritDoc}
+     */
+    public NegatedSentence negate(Sentence<?> sentence) {
+        return new SimpleNegatedSentence.Builder()
+            .sentence(sentence);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public PredicateBuilder predicate(String name) {
+        // TODO Auto-generated method stub
+        return new SimplePredicate.Builder(name);
+    }
 
 }

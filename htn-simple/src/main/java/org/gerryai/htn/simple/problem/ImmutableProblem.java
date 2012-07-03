@@ -24,8 +24,6 @@ import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -39,11 +37,9 @@ public interface ImmutableProblem extends Problem<
         ImmutableDomain,
         ImmutableOperator,
         ImmutableMethod,
-		ImmutableTerm<?>,
 		ImmutableTask,
 		ImmutableTaskNetwork,
 		ImmutableConstraint<?>,
-		ImmutableCondition,
-		ImmutableVariable<?>> {
+		ImmutableCondition> {
 
 }

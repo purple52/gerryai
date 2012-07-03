@@ -24,14 +24,14 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableLogicFactory;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.htn.simple.logic.LogicFactory;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkFactory;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.logic.Term;
 
 /**
  * Factory for SimpleTask and SimpleTaskNetwork objects.
@@ -42,12 +42,12 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
     /**
      * Factory used for creating and copying logical terms.
      */
-    private ImmutableLogicFactory logicFactory;
+    private LogicFactory logicFactory;
     
 	/**
 	 * Factory for creating constraint validators, as used by the task network builders.
 	 */
-	private ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask,
+	private ConstraintValidatorFactory<ImmutableTask,
 	        ImmutableCondition> constraintValidatorFactory;
 	
 	/**
@@ -55,9 +55,9 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
 	 * @param constraintValidatorFactory the constraint validator factory
 	 * @param logicFactory the logic factory
 	 */
-	public SimpleTaskNetworkFactory(ConstraintValidatorFactory<ImmutableTerm<?>,
+	public SimpleTaskNetworkFactory(ConstraintValidatorFactory<
 			ImmutableTask, ImmutableCondition> constraintValidatorFactory,
-			ImmutableLogicFactory logicFactory) {
+			LogicFactory logicFactory) {
 		this.constraintValidatorFactory = constraintValidatorFactory;
 		this.logicFactory = logicFactory;
 	}
@@ -77,7 +77,7 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
      * {@inheritDoc}
      */
 	public final ImmutableTaskNetwork copyApply(ImmutableTaskNetwork taskNetwork,
-	        Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) throws InvalidConstraint {
+	        Map<Term, Term> substitution) throws InvalidConstraint {
 	    return taskNetwork.createCopyBuilder(constraintValidatorFactory.create())
 	        .apply(substitution)
 	        .build();
@@ -87,7 +87,7 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
      * {@inheritDoc}
      */
 	public final ImmutableTaskNetwork copy(ImmutableTaskNetwork taskNetwork,
-	        Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution,
+	        Map<Term, Term> substitution,
 	        ImmutableTask oldTask, ImmutableTaskNetwork replacementNetwork) throws InvalidConstraint {
 	    //TODO: Replace!
         return taskNetwork.createCopyBuilder(constraintValidatorFactory.create())
@@ -105,7 +105,7 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
     /**
      * {@inheritDoc}
      */
-	public final ImmutableTask createTask(String name, List<ImmutableTerm<?>> arguments, boolean isPrimitive) {
+	public final ImmutableTask createTask(String name, List<Term> arguments, boolean isPrimitive) {
 	    return new SimpleTask.Builder(logicFactory)
 	            .setName(name)
 	            .addArguments(arguments)
@@ -123,7 +123,7 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
     /**
      * {@inheritDoc}
      */
-	public final ImmutableTask copy(ImmutableTask task, Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
+	public final ImmutableTask copy(ImmutableTask task, Map<Term, Term> substitution) {
 	    return task.createCopyBuilder()
 	            .apply(substitution)
 	            .build();

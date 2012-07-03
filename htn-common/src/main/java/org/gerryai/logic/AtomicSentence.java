@@ -15,12 +15,13 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.constraint;
+package org.gerryai.logic;
 
 /**
- * Interface that constraints must implement.
+ * Interface for an atomic logical sentence.
+ * @param <T> the type of atomic sentence being implemented
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Constraint {
+public interface AtomicSentence<T extends AtomicSentence<?>> extends Sentence<T> {
 
 }

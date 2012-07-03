@@ -19,7 +19,6 @@ package org.gerryai.htn.simple.domain;
 
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -28,7 +27,6 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutableMethod extends Method<
-        ImmutableTerm<?>,
         ImmutableTask,
         ImmutableTaskNetwork,
         ImmutableConstraint<?>> {

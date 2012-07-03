@@ -29,10 +29,9 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.domain.ImmutableConditionBuilder;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.logic.Term;
 import org.junit.Test;
 
 /**
@@ -79,7 +78,7 @@ public class SimpleBetweenConstraintTest {
         mockProcedingTasks.add(mockProcedingTask);
         ImmutableCondition mockCondition = mock(ImmutableCondition.class);
         @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
  
         ImmutableValidatableBetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(mockPrecedingTasks)
@@ -109,7 +108,7 @@ public class SimpleBetweenConstraintTest {
         mockProcedingTasks.add(mockProcedingTask);
         ImmutableCondition mockCondition = mock(ImmutableCondition.class);
         @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
  
         ImmutableValidatableBetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(mockPrecedingTasks)
@@ -136,14 +135,10 @@ public class SimpleBetweenConstraintTest {
         mockProcedingTasks.add(mockProcedingTask);
         
         @SuppressWarnings("unchecked")
-        Map<ImmutableTerm<?>, ImmutableTerm<?>> mockSubstitution = mock(Map.class);
-        ImmutableConditionBuilder mockConditionBuilderA = mock(ImmutableConditionBuilder.class);
-        ImmutableConditionBuilder mockConditionBuilderB = mock(ImmutableConditionBuilder.class);
+        Map<Term, Term> mockSubstitution = mock(Map.class);
         ImmutableCondition mockConditionA = mock(ImmutableCondition.class);
         ImmutableCondition mockConditionB = mock(ImmutableCondition.class);
-        when(mockConditionA.createCopyBuilder()).thenReturn(mockConditionBuilderA);
-        when(mockConditionBuilderA.apply(mockSubstitution)).thenReturn(mockConditionBuilderB);
-        when(mockConditionBuilderB.build()).thenReturn(mockConditionB);
+        when(mockConditionA.applyToCopy(mockSubstitution)).thenReturn(mockConditionB);
 
         ImmutableValidatableBetweenConstraint initialConstraint = new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(mockPrecedingTasks)

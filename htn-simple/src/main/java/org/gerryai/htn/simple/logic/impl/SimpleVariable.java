@@ -19,16 +19,17 @@ package org.gerryai.htn.simple.logic.impl;
 
 import java.util.Map;
 
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableTermBuilder;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
+import org.gerryai.logic.Term;
+import org.gerryai.logic.Variable;
+
+import com.google.common.base.Objects;
 
 /**
+ * Simple implementation of a logical variable.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable
-		implements ImmutableVariable<SimpleVariable> {
+public final class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable
+		implements Variable {
 
 	/**
 	 * @param name name of the variable
@@ -40,23 +41,33 @@ public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable
 	/**
 	 * {@inheritDoc}
 	 */
-	public final String getName() {
+	public String getName() {
 		return this.getSymbolicName();
 	}
 	
     /**
      * {@inheritDoc}
      */
-    public final ImmutableTermBuilder<SimpleVariable> createCopyBuilder() {
-        return new Builder()
-            .copy(this);
+	public Term applyToCopy(Map<Term, Term> substitution) {
+        if (substitution.containsKey(this)) {
+            return substitution.get(this);
+        } else {
+            return this;
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isGround() {
+        return false;
     }
     
     /**
      * Builder class for SimpleVariable.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder implements ImmutableTermBuilder<SimpleVariable> {
+    public static final class Builder {
         
         /**
          * Name of the term to be built.
@@ -66,7 +77,7 @@ public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable
         /**
          * {@inheritDoc}
          */
-        public final Builder copy(SimpleVariable term) {
+        public Builder copy(SimpleVariable term) {
             this.name = term.getName();
             return this;
         }
@@ -74,9 +85,9 @@ public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable
         /**
          * {@inheritDoc}
          */
-        public final Builder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
-            for (ImmutableTerm<?> oldTerm : substitution.keySet()) {
-                if (oldTerm instanceof ImmutableVariable && oldTerm.getName().equals(this.name)) {
+        public Builder apply(Map<Term, Term> substitution) {
+            for (Term oldTerm : substitution.keySet()) {
+                if (oldTerm.equals(this)) {
                     this.name = substitution.get(oldTerm).getName();
                 }
             }
@@ -86,8 +97,23 @@ public class SimpleVariable extends aima.core.logic.fol.parsing.ast.Variable
         /**
          * {@inheritDoc}
          */
-        public final SimpleVariable build() {
+        public SimpleVariable build() {
             return new SimpleVariable(this.name);
+        }
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.getName());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Variable) {
+            final Variable other = (Variable) obj;
+            return Objects.equal(this.getName(), other.getName());
+        } else {
+            return false;
         }
     }
 }

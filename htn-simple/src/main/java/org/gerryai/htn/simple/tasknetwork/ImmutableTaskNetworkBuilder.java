@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.logic.Term;
 
 /**
  * Interface for a builder that creates immutable task networks.
@@ -76,7 +76,7 @@ public interface ImmutableTaskNetworkBuilder {
      * @param substitution the substitution to apply
      * @return the updated builder
      */
-	ImmutableTaskNetworkBuilder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution);
+	ImmutableTaskNetworkBuilder apply(Map<Term, Term> substitution);
 	
 	/**
 	 * Replace the given task with the network of tasks and constraints provided.

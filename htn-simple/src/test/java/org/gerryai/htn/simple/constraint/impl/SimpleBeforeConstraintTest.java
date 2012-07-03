@@ -29,10 +29,9 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.domain.ImmutableConditionBuilder;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.logic.Term;
 import org.junit.Test;
 
 /**
@@ -71,7 +70,7 @@ public class SimpleBeforeConstraintTest {
         ImmutableCondition mockCondition = mock(ImmutableCondition.class);
 
         @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
         ImmutableValidatableBeforeConstraint constraint = new SimpleBeforeConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockCondition)
@@ -97,7 +96,7 @@ public class SimpleBeforeConstraintTest {
         ImmutableCondition mockCondition = mock(ImmutableCondition.class);
 
         @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
         ImmutableValidatableBeforeConstraint constraint = new SimpleBeforeConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockCondition)
@@ -113,18 +112,14 @@ public class SimpleBeforeConstraintTest {
     @Test
     public void testCopyApply() {
         @SuppressWarnings("unchecked")
-        Map<ImmutableTerm<?>, ImmutableTerm<?>> mockSubstitution = mock(Map.class);
+        Map<Term, Term> mockSubstitution = mock(Map.class);
         ImmutableTask mockTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
         mockTasks.add(mockTask);
-        ImmutableConditionBuilder mockConditionBuilderA = mock(ImmutableConditionBuilder.class);
-        ImmutableConditionBuilder mockConditionBuilderB = mock(ImmutableConditionBuilder.class);
         ImmutableCondition mockConditionA = mock(ImmutableCondition.class);
         ImmutableCondition mockConditionB = mock(ImmutableCondition.class);
-        when(mockConditionA.createCopyBuilder()).thenReturn(mockConditionBuilderA);
-        when(mockConditionBuilderA.apply(mockSubstitution)).thenReturn(mockConditionBuilderB);
-        when(mockConditionBuilderB.build()).thenReturn(mockConditionB);
-
+        when(mockConditionA.applyToCopy(mockSubstitution)).thenReturn(mockConditionB);
+        
         ImmutableValidatableBeforeConstraint initialConstraint = new SimpleBeforeConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockConditionA)

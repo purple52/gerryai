@@ -22,32 +22,26 @@ import java.util.Set;
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.Term;
-import org.gerryai.logic.Variable;
 
 /**
  * Interface that a domain must implement.
  * @param <E> type of effect this domain uses
  * @param <O> type of operator this domain uses
  * @param <M> type of operator this domain uses
- * @param <T> type of logical term this domain uses
  * @param <K> type of task this domain uses
  * @param <N> type of task network this domain uses
  * @param <C> type of constraint this domain uses
  * @param <I> the class of condition the domain will handle
- * @param <V> type of variable this domain uses
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Domain<
-        E extends Effect<T>,
-		O extends Operator<E, T, I, V>,
-		M extends Method<T, K, N, C>,
-		T extends Term,
-		K extends Task<T>,
-		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>,
-		I extends Condition<T>,
-		V extends Variable> {
+        E extends Effect,
+		O extends Operator<E, I>,
+		M extends Method<K, N, C>,
+		K extends Task,
+		N extends TaskNetwork<K, C>,
+		C extends Constraint,
+		I extends Condition> {
 
 	/**
 	 * Get the full set of available operators for this domain.

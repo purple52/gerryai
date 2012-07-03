@@ -33,7 +33,7 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  * @param <K> type of task the converter can handle
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface AIMAConverter<T extends Term, V extends Variable, K extends Task<T>> {
+public interface AIMAConverter<T extends Term, V extends Variable, K extends Task> {
 
 	/**
 	 * Convert a Gerry AI Task into an AIMA Predicate.

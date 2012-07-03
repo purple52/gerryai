@@ -17,14 +17,13 @@
  */
 package org.gerryai.htn.simple.tasknetwork;
 
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * Extension of the task interface for tasks that are immutable and can only be altered via a builder.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableTask extends Task<ImmutableTerm<?>> {
+public interface ImmutableTask extends Task {
 
     /**
      * Create a new builder object that can build a copy of this immutable task.

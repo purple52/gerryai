@@ -19,8 +19,8 @@ package org.gerryai.logic;
 
 
 /**
+ * Interface for a logical variable.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public interface Variable extends Term {
 

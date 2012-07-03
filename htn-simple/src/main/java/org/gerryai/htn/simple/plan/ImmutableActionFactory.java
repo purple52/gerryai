@@ -20,9 +20,6 @@ package org.gerryai.htn.simple.plan;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableConstant;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
@@ -32,11 +29,8 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 public interface ImmutableActionFactory extends ActionFactory<
         ImmutableEffect,
         ImmutableOperator,
-        ImmutableTerm<?>,
         ImmutableTask,
         ImmutableCondition,
-        ImmutableVariable<?>,
-        ImmutableConstant<?>,
         ImmutableAction> {
 
 }

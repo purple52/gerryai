@@ -21,9 +21,9 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableConstant;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ImmutableAction;
+import org.gerryai.logic.Constant;
+import org.gerryai.logic.Variable;
 
 /**
  * An immutable implementation of an action that provides a builder for construction.
@@ -39,7 +39,7 @@ public class SimpleAction implements ImmutableAction {
 	/**
 	 * Bindings that ground the operator.
 	 */
-	private Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings;
+	private Map<Variable, Constant> bindings;
 	
 	/**
 	 * Constructor only called by the builder class.
@@ -59,7 +59,7 @@ public class SimpleAction implements ImmutableAction {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Map<ImmutableVariable<?>, ImmutableConstant<?>> getBindings() {
+	public final Map<Variable, Constant> getBindings() {
 		return Collections.unmodifiableMap(bindings);
 	}
 	
@@ -77,7 +77,7 @@ public class SimpleAction implements ImmutableAction {
 	    /**
 	     * Bindings that ground the operator.
 	     */
-	    private Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings;
+	    private Map<Variable, Constant> bindings;
 	    
 	    /**
 	     * Set the operator the action to be built will implement.
@@ -94,7 +94,7 @@ public class SimpleAction implements ImmutableAction {
 	     * @param bindings the bindings
 	     * @return an updated builder
 	     */
-	    public final Builder setBindings(Map<ImmutableVariable<?>, ImmutableConstant<?>> bindings) {
+	    public final Builder setBindings(Map<Variable, Constant> bindings) {
 	        this.bindings = bindings;
 	        return this;
 	    }
@@ -111,7 +111,7 @@ public class SimpleAction implements ImmutableAction {
 	     * Get the bindings that the action to be built will be grounded with.
 	     * @return the bindings
 	     */
-	    protected final Map<ImmutableVariable<?>, ImmutableConstant<?>> getBindings() {
+	    protected final Map<Variable, Constant> getBindings() {
 	        return bindings;
 	    }
 	    

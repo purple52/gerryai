@@ -21,9 +21,6 @@ import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableConstant;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 
 /**
  * Interface for an immutable action.
@@ -31,10 +28,7 @@ import org.gerryai.htn.simple.logic.ImmutableVariable;
  */
 public interface ImmutableAction extends Action<
         ImmutableEffect,
-        ImmutableTerm<?>,
         ImmutableOperator,
-        ImmutableCondition,
-        ImmutableVariable<?>,
-        ImmutableConstant<?>> {
+        ImmutableCondition> {
 
 }

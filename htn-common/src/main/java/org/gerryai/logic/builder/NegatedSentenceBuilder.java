@@ -15,19 +15,22 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.logic;
+package org.gerryai.logic.builder;
 
-import org.gerryai.logic.Predicate;
+import org.gerryai.logic.NegatedSentence;
+import org.gerryai.logic.Sentence;
 
 /**
- * Extended interface for immutable predicate that can only be modified via a builder.
+ * Builder class for making negated sentences.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutablePredicate extends Predicate<ImmutableTerm<?>> {
+public interface NegatedSentenceBuilder {
 
     /**
-     * Create a builder that will start with a copy if this condition.
-     * @return the builder
+     * Create a sentence that negates the sentence provided.
+     * @param sentence the sentence to negate
+     * @return the negated sentence
      */
-    ImmutablePredicateBuilder createCopyBuilder();
+    NegatedSentence sentence(Sentence<?> sentence);
+
 }

@@ -20,21 +20,18 @@ package org.gerryai.htn.domain;
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.Term;
 
 /**
  * Interface that a method must implement.
- * @param <T> type of logical term this method works with
  * @param <K> the type of task this method works with
  * @param <N> the type of task network this method works with
  * @param <C> the type of constraint this method works with
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Method<
-		T extends Term,
-		K extends Task<T>,
-		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>> {
+		K extends Task,
+		N extends TaskNetwork<K, C>,
+		C extends Constraint> {
 
 	/**
 	 * Get the name of this method.

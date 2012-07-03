@@ -23,9 +23,6 @@ import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.ImmutableConstant;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.problem.ImmutableState;
@@ -43,12 +40,9 @@ public interface ImmutablePlanner extends Planner<
         ImmutableAction,
         ImmutableOperator,
         ImmutableMethod,
-        ImmutableTerm<?>,
 		ImmutableTask,
 		ImmutableTaskNetwork,
 		ImmutableConstraint<?>,
-		ImmutableCondition,
-		ImmutableVariable<?>,
-		ImmutableConstant<?>> {
+		ImmutableCondition> {
 
 }

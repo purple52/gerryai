@@ -30,9 +30,9 @@ import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
+import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 import org.junit.Test;
@@ -52,20 +52,20 @@ public class AIMAUnificationServiceTest {
 	public void testFindUnifier() {
 		aima.core.logic.fol.Unifier aimaUnifier = mock(aima.core.logic.fol.Unifier.class);
 		@SuppressWarnings("unchecked")
-		AIMAConverter<ImmutableTerm<?>, Variable, ImmutableTask> aimaConverter
+		AIMAConverter<Term, Variable, ImmutableTask> aimaConverter
 				= mock(AIMAConverter.class);
-		AIMAUnificationService<Operator<ImmutableEffect, ImmutableTerm<?>, Condition<ImmutableTerm<?>>, Variable>, Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
-		            Condition<ImmutableTerm<?>>, Variable> unificationService
+		AIMAUnificationService<Operator<ImmutableEffect, Condition>, Method<ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
+		            Condition, Variable> unificationService
 					= new AIMAUnificationService<
-					        Operator<ImmutableEffect, ImmutableTerm<?>, Condition<ImmutableTerm<?>>, Variable>,
-					        Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
-					        Condition<ImmutableTerm<?>>, Variable>(
+					        Operator<ImmutableEffect, Condition>,
+					        Method<ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
+					        Condition, Variable>(
 					aimaUnifier, aimaConverter);
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
 		ImmutableTask mockTaskB = mock(ImmutableTask.class);
 		@SuppressWarnings("unchecked")
-		Method<ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>> mockMethod = mock(Method.class);
+		Method<ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>> mockMethod = mock(Method.class);
 		when(mockMethod.getTask()).thenReturn(mockTaskB);
 		Predicate mockPredicateA = mock(Predicate.class);
 		Predicate mockPredicateB = mock(Predicate.class);
@@ -76,9 +76,9 @@ public class AIMAUnificationServiceTest {
 		when(aimaUnifier.unify(mockPredicateA, mockPredicateB)).thenReturn(mockMap);
 		
 		@SuppressWarnings("unchecked")
-		Map<ImmutableTerm<?>, ImmutableTerm<?>> mockSubstitution = mock(Map.class);
+		Map<Term, Term> mockSubstitution = mock(Map.class);
 		when(aimaConverter.convert(mockMap)).thenReturn(mockSubstitution);
-		Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution = unificationService.findUnifier(mockTaskA, mockMethod);
+		Map<Term, Term> substitution = unificationService.findUnifier(mockTaskA, mockMethod);
 		assertEquals(mockSubstitution, substitution);
 	}
 

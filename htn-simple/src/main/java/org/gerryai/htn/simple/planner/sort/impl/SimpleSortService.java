@@ -25,7 +25,6 @@ import java.util.Set;
 import org.gerryai.htn.constraint.PrecedenceConstraint;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
@@ -37,7 +36,7 @@ import org.jgrapht.traverse.TopologicalOrderIterator;
  * Simple implementation of the SortService interface.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleSortService implements SortService<ImmutableTerm<?>, ImmutableTask, ImmutableConstraint<?>> {
+public class SimpleSortService implements SortService<ImmutableTask, ImmutableConstraint<?>> {
 
     /**
      * {@inheritDoc}
@@ -46,11 +45,11 @@ public class SimpleSortService implements SortService<ImmutableTerm<?>, Immutabl
             Set<ImmutableConstraint<?>> constraints) throws PlanNotFound {
         
         // TODO: Inject this list rather than compute it unsafely at runtime
-        Set<PrecedenceConstraint<ImmutableTerm<?>, ImmutableTask>> precedenceConstraints =
-                new HashSet<PrecedenceConstraint<ImmutableTerm<?>, ImmutableTask>>();
+        Set<PrecedenceConstraint<ImmutableTask>> precedenceConstraints =
+                new HashSet<PrecedenceConstraint<ImmutableTask>>();
         for (ImmutableConstraint<?> constraint : constraints) {
-            if ( constraint instanceof PrecedenceConstraint<?, ?>) {
-                precedenceConstraints.add((PrecedenceConstraint<ImmutableTerm<?>, ImmutableTask>) constraint);
+            if (constraint instanceof PrecedenceConstraint<?>) {
+                precedenceConstraints.add((PrecedenceConstraint<ImmutableTask>) constraint);
             }
         }
 
@@ -59,7 +58,7 @@ public class SimpleSortService implements SortService<ImmutableTerm<?>, Immutabl
         for (ImmutableTask task : tasks) {
             taskGraph.addVertex(task);
         }
-        for (PrecedenceConstraint<ImmutableTerm<?>, ImmutableTask> constraint : precedenceConstraints) {
+        for (PrecedenceConstraint<ImmutableTask> constraint : precedenceConstraints) {
             for (ImmutableTask precedingTask : constraint.getPrecedingTasks()) {
                 for (ImmutableTask procedingTask : constraint.getProcedingTasks()) {
                     taskGraph.addEdge(precedingTask, procedingTask);                

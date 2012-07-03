@@ -21,8 +21,8 @@ import java.util.Map;
 
 import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableEffectBuilder;
-import org.gerryai.htn.simple.logic.ImmutableFunction;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.logic.Sentence;
+import org.gerryai.logic.Term;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -31,44 +31,33 @@ import org.gerryai.htn.simple.logic.ImmutableTerm;
 public final class SimpleEffect implements ImmutableEffect {
 
     /**
-     * The function that this effect applies to the a state.
+     * The sentence that this effect asserts.
      */
-    private ImmutableFunction function;
-    
-    /**
-     * The value that the function returns.
-     */
-    private Boolean value;
+    private Sentence<?> sentence;
     
     /**
      * Constructor using a builder.
      * @param builder the builder to build from
      */
     private SimpleEffect(Builder builder) {
-        function = builder.function;
-        value = builder.value;
+        sentence = builder.sentence;
     }
 
     /**
      * {@inheritDoc}
      */
-    public ImmutableFunction getFunction() {
-        return function;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Boolean getValue() {
-        return value;
+    public Sentence<?> getSentence() {
+        return sentence;
     }
     
     /**
      * {@inheritDoc}
      */
-    public ImmutableEffectBuilder createCopyBuilder() {
+    public ImmutableEffect applyToCopy(Map<Term, Term> substitution) {
         return new Builder()
-            .copy(this);
+            .copy(this)
+            .apply(substitution)
+            .build();
     }
 
     /**
@@ -78,14 +67,9 @@ public final class SimpleEffect implements ImmutableEffect {
     public static final class Builder implements ImmutableEffectBuilder {
    
         /**
-         * The function that the effect being built will use.
+         * The sentence that the effect being built will use.
          */
-        private ImmutableFunction function;
-        
-        /**
-         * The value that the function returns.
-         */
-        private Boolean value;
+        private Sentence<?> sentence;
         
         /**
          * Protected constructor.
@@ -95,16 +79,8 @@ public final class SimpleEffect implements ImmutableEffect {
         /**
          * {@inheritDoc}
          */
-        public ImmutableEffectBuilder setFunction(ImmutableFunction function) {
-            this.function = function;
-            return this;
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public ImmutableEffectBuilder setValue(Boolean value) {
-            this.value = value;
+        public ImmutableEffectBuilder setSentence(Sentence<?> sentence) {
+            this.sentence = sentence;
             return this;
         }
         
@@ -112,19 +88,15 @@ public final class SimpleEffect implements ImmutableEffect {
          * {@inheritDoc}
          */
         public ImmutableEffectBuilder copy(ImmutableEffect effect) {
-            this.function = effect.getFunction();
-            this.value = effect.getValue();
+            this.sentence = effect.getSentence();
             return this;
         }
 
         /**
          * {@inheritDoc}
          */
-        public ImmutableEffectBuilder apply(
-                Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
-            this.function = function.createCopyBuilder()
-                    .apply(substitution)
-                    .build();
+        public ImmutableEffectBuilder apply(Map<Term, Term> substitution) {
+            this.sentence = sentence.applyToCopy(substitution);
             return null;
         }
         
@@ -136,4 +108,5 @@ public final class SimpleEffect implements ImmutableEffect {
             return new SimpleEffect(this);
         }
     }
+
 }

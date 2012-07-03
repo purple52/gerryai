@@ -25,36 +25,30 @@ import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.Term;
-import org.gerryai.logic.Variable;
 
 /**
  * Interface for a factory that creates domain and operator builders.
  * @param <D> the class of domain that the builder will handle
  * @param <O> the class of operator the builder will handle
  * @param <M> the class of method the builder will handle
- * @param <T> the class of logical term the builders will handle
  * @param <K> the class of task the builders can handle
  * @param <N> the class of task network the builders will handle
  * @param <C> the class of constraint the builder will handle
  * @param <I> the class of condition the builder will handle
- * @param <V> type of variable this factory will handle
  * @param <E> the class of effect the builder will handle
  * @param <B> the class of operator builder being used
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface DomainBuilderFactory<
-		D extends Domain<E, O, M, T, K, N, C, I, V>,
-		O extends Operator<E, T, I, V>,
-		M extends Method<T, K, N, C>,
-		T extends Term,
-		K extends Task<T>,
-		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>,
-		I extends Condition<T>,
-		V extends Variable,
-		E extends Effect<T>,
-		B extends OperatorBuilder<T, I, V, E, O, B>> {
+		D extends Domain<E, O, M, K, N, C, I>,
+		O extends Operator<E, I>,
+		M extends Method<K, N, C>,
+		K extends Task,
+		N extends TaskNetwork<K, C>,
+		C extends Constraint,
+		I extends Condition,
+		E extends Effect,
+		B extends OperatorBuilder<I, E, O, B>> {
 
 	/**
 	 * Create a domain builder of the required type.
@@ -72,7 +66,7 @@ public interface DomainBuilderFactory<
 	 * Create a method builder of the required type.
 	 * @return the method builder
 	 */
-	MethodBuilder<T, K, N, C, M> createMethodBuilder();
+	MethodBuilder<K, N, C, M> createMethodBuilder();
 	
 	/**
 	 * Create an effect builder of the required type.

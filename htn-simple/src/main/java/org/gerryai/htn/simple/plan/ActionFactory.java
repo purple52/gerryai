@@ -23,31 +23,22 @@ import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Constant;
-import org.gerryai.logic.Term;
-import org.gerryai.logic.Variable;
 
 /**
  * Interface for a factory that can generate actions.
  * @param <E> type of effect this action uses
  * @param <O> type of operator this action uses
  * @param <I> type of condition the action uses
- * @param <T> type of logical term this factory has to deal with
  * @param <K> type of task this factory works with
- * @param <V> type of variable this factory works with
- * @param <C> type of constant this factory works with
  * @param <A> type of action this factory generates
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ActionFactory<
-        E extends Effect<T>,
-        O extends Operator<E, T, I, V>,
-        T extends Term,
-        K extends Task<T>,
-        I extends Condition<T>,
-        V extends Variable,
-        C extends Constant,
-        A extends Action<E, T, O, I, V, C>> {
+        E extends Effect,
+        O extends Operator<E, I>,
+        K extends Task,
+        I extends Condition,
+        A extends Action<E, O, I>> {
 
 	/**
 	 * Convert a task into an action.

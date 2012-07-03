@@ -17,14 +17,17 @@
  */
 package org.gerryai.htn.domain;
 
-import org.gerryai.logic.Predicate;
-import org.gerryai.logic.Term;
+import org.gerryai.logic.Sentence;
 
 /**
  * Interface for classes that represent a logical condition, or predicate.
- * @param <T> type of logical term this condition uses.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Condition<T extends Term> {
+public interface Condition {
 
+    /**
+     * Get the logical sentence that this condition requires to be true.
+     * @return the sentence
+     */
+    Sentence<?> getSentence();
 }

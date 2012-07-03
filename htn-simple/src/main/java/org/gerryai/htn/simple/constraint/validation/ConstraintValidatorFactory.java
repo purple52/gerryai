@@ -19,21 +19,21 @@ package org.gerryai.htn.simple.constraint.validation;
 
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.logic.Term;
 
 /**
  * Interface for factories that create constraint validators.
- * @param <T> type of term the validator will work with
  * @param <K> type of task the validator will work with
  * @param <I> type of condition the validator will work with
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ConstraintValidatorFactory<T extends Term, K extends Task<T>, I extends Condition<T>> {
+public interface ConstraintValidatorFactory<
+        K extends Task,
+        I extends Condition> {
 
 	/**
 	 * Create a validator.
 	 * @return the validator
 	 */
-	ConstraintValidator<T, K, I> create();
+	ConstraintValidator<K, I> create();
 }

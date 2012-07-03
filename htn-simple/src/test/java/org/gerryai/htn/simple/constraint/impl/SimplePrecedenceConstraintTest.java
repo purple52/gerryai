@@ -28,9 +28,9 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ImmutableValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.logic.Term;
 import org.junit.Test;
 
 /**
@@ -72,7 +72,7 @@ public class SimplePrecedenceConstraintTest {
         Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
         @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
         ImmutableValidatablePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
                 .setPrecedingTasks(mockPrecedingTasks)
                 .setProcedingTasks(mockProcedingTasks)
@@ -97,7 +97,7 @@ public class SimplePrecedenceConstraintTest {
         Set<ImmutableTask> mockProcedingTasks = new HashSet<ImmutableTask>();
         mockProcedingTasks.add(mockProcedingTask);
         @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
         ImmutableValidatablePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
                 .setPrecedingTasks(mockPrecedingTasks)
                 .setProcedingTasks(mockProcedingTasks)
@@ -120,7 +120,7 @@ public class SimplePrecedenceConstraintTest {
         mockProcedingTasks.add(mockProcedingTask);
 
         @SuppressWarnings("unchecked")
-        Map<ImmutableTerm<?>, ImmutableTerm<?>> mockSubstitution = mock(Map.class);
+        Map<Term, Term> mockSubstitution = mock(Map.class);
         
         ImmutableValidatablePrecedenceConstraint initialConstraint = new SimplePrecedenceConstraint.Builder()
                 .setPrecedingTasks(mockPrecedingTasks)

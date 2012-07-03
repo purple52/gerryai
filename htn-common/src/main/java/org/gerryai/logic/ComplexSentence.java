@@ -15,20 +15,13 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.logic;
-
-import org.gerryai.logic.Term;
+package org.gerryai.logic;
 
 /**
- * Extended interface for immutable terms that use a builder for modification.
- * @param <T> type of term being implemented
+ * Interface for a complex logical sentence.
+ * @param <T> the type of complex sentence being implemented
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableTerm<T extends ImmutableTerm<T>> extends Term {
+public interface ComplexSentence<T extends ComplexSentence<?>> extends Sentence<T> {
 
-    /**
-     * Create a new builder object that can build a copy of this immutable term.
-     * @return the builder
-     */
-    ImmutableTermBuilder<T> createCopyBuilder();
 }

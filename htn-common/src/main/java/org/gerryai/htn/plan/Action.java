@@ -23,7 +23,6 @@ import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.logic.Constant;
-import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
@@ -31,21 +30,15 @@ import org.gerryai.logic.Variable;
  * An action must an specify an operator that it actions and
  * a set of bindings to ground the operator.
  * @param <E> type of effect this action uses
- * @param <T> type of term this action uses
  * @param <O> type of operator this action uses
  * @param <I> type of condition the action uses
- * @param <V> type of variable the action uses
- * @param <C> type of constant the action uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface Action<
-        E extends Effect<T>,
-        T extends Term,
-        O extends Operator<E, T, I, V>,
-        I extends Condition<T>,
-        V extends Variable,
-        C extends Constant> {
+        E extends Effect,
+        O extends Operator<E, I>,
+        I extends Condition> {
 
 	/**
 	 * Get the operator that this action uses.
@@ -57,6 +50,6 @@ public interface Action<
 	 * Get the bindings for this action.
 	 * @return the bindings
 	 */
-	Map<V, C> getBindings();
+	Map<Variable, Constant> getBindings();
 	
 }

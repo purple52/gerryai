@@ -25,9 +25,9 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.logic.Term;
 
 import com.google.common.base.Objects;
 
@@ -79,7 +79,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
      * {@inheritDoc}
      */
     public final boolean validate(
-            ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> validator) {
+            ConstraintValidator<ImmutableTask, ImmutableCondition> validator) {
         return validator.validate(this);
     }
 
@@ -87,7 +87,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
      * {@inheritDoc}
      */
     public final void add(
-            ConstraintValidator<ImmutableTerm<?>, ImmutableTask, ImmutableCondition> validator)
+            ConstraintValidator<ImmutableTask, ImmutableCondition> validator)
             throws InvalidConstraint {
         validator.add(this);
     }
@@ -197,10 +197,9 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
         /**
          * {@inheritDoc}
          */
-        public final Builder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
-            ImmutableCondition newCondition = this.condition.createCopyBuilder()
-                    .apply(substitution)
-                    .build();
+        public final Builder apply(Map<Term, Term> substitution) {
+            ImmutableCondition newCondition = this.condition
+                    .applyToCopy(substitution);
             this.condition = newCondition;
             return this;
         }  

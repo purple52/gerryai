@@ -19,7 +19,6 @@ package org.gerryai.htn.simple.problem;
 
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 
 /**
  * State service interface for immutable terms and conditions.
@@ -27,7 +26,6 @@ import org.gerryai.htn.simple.logic.ImmutableTerm;
  */
 public interface ImmutableStateService extends StateService<
         ImmutableState,
-        ImmutableTerm<?>,
         ImmutableCondition,
         ImmutableEffect> {
 

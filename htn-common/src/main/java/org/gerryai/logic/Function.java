@@ -21,14 +21,13 @@ import java.util.List;
 
 /**
  * Interface for a logical function.
- * @param <T> type of logical term this function uses.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Function<T extends Term> extends Term {
+public interface Function extends Term {
 
     /**
      * Get the list of arguments passed to the function.
      * @return the terms
      */
-    List<T> getTerms();
+    List<Term> getTerms();
 }

@@ -29,9 +29,6 @@ import org.gerryai.htn.planner.Planner;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.Constant;
-import org.gerryai.logic.Term;
-import org.gerryai.logic.Variable;
 
 /**
  * Interface for factories that create planners.
@@ -43,32 +40,26 @@ import org.gerryai.logic.Variable;
  * @param <D> type of domain this planner factory creates
  * @param <O> type of operator this planner factory uses
  * @param <M> type of method this planner factory uses
- * @param <T> type of logical term this planner factory uses
  * @param <K> type of task this planner factory uses
  * @param <N> type of task network this planner factory uses
  * @param <C> type of constraint this planner factory uses
  * @param <I> type of condition this factory uses
- * @param <V> type of variable this factory uses
- * @param <S> type of constant this factory uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface PlannerFactory<
-        E extends Effect<T>,
+        E extends Effect,
         St extends State,
-        L extends Planner<E, St, P, A, O, M, T, K, N, C, I, V, S>,
-        P extends Plan<E, T, A, O, I, V, S>,
-        A extends Action<E, T, O, I, V, S>,
-        D extends Domain<E, O, M, T, K, N, C, I, V>,
-		O extends Operator<E, T, I, V>,
-		M extends Method<T, K, N, C>,
-		T extends Term,
-		K extends Task<T>,
-		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>,
-		I extends Condition<T>,
-		V extends Variable,
-		S extends Constant> {
+        L extends Planner<E, St, P, A, O, M, K, N, C, I>,
+        P extends Plan<E, A, O, I>,
+        A extends Action<E, O, I>,
+        D extends Domain<E, O, M, K, N, C, I>,
+		O extends Operator<E, I>,
+		M extends Method<K, N, C>,
+		K extends Task,
+		N extends TaskNetwork<K, C>,
+		C extends Constraint,
+		I extends Condition> {
 
 	/**
 	 * Create a planner instance using the domain provided.

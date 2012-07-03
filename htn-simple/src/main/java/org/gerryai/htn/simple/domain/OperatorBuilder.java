@@ -23,14 +23,11 @@ import java.util.Set;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Operator;
-import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
  * Interface for a class that can build operators.
- * @param <T> type of logical term this operator builder can handle
  * @param <I> class of condition the builder can handle
- * @param <V> type of variable this builder can handle
  * @param <E> class of effect the builder can handle
  * @param <O> type of operator the builder creates
  * @param <B> class of builder being advertised
@@ -38,12 +35,10 @@ import org.gerryai.logic.Variable;
  *
  */
 public interface OperatorBuilder<
-        T extends Term,
-        I extends Condition<T>,
-        V extends Variable,
-        E extends Effect<T>,
-        O extends Operator<E, T, I, V>,
-        B extends OperatorBuilder<T, I, V, E, O, B>> {
+        I extends Condition,
+        E extends Effect,
+        O extends Operator<E, I>,
+        B extends OperatorBuilder<I, E, O, B>> {
 
 	/**
 	 * Set the name of the operator.
@@ -57,14 +52,14 @@ public interface OperatorBuilder<
 	 * @param argument the variable to add
 	 * @return the updated builder
 	 */
-	B addArgument(V argument);
+	B addArgument(Variable argument);
 
 	/**
 	 * Add a list of arguments to the operator.
 	 * @param arguments the variables to add
 	 * @return the updated builder
 	 */
-	B addArguments(List<V> arguments);
+	B addArguments(List<Variable> arguments);
 
 	/**
 	 * Add an argument to the operator.

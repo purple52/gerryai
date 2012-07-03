@@ -30,7 +30,6 @@ import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Constant;
-import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
@@ -39,27 +38,21 @@ import org.gerryai.logic.Variable;
  * @param <D> type of domain this helper uses
  * @param <O> type of operator this domain helper uses
  * @param <M> type of method this domain helpers uses
- * @param <T> type of logical term this domain helper uses
  * @param <K> type of task this domain helper uses
  * @param <N> type of task network this domain helper uses
  * @param <C> type of constraint this domain helper uses
  * @param <I> the class of condition the domain will handle
- * @param <V> type of variable this domain will handle
- * @param <Const> type of constant this domain with handle
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface DomainHelper<
-        E extends Effect<T>,
-        D extends Domain<E, O, M, T, K, N, C, I, V>,
-		O extends Operator<E, T, I, V>,
-		M extends Method<T, K, N, C>,
-		T extends Term,
-		K extends Task<T>,
-		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>,
-		I extends Condition<T>,
-		V extends Variable,
-		Const extends Constant> {
+        E extends Effect,
+        D extends Domain<E, O, M, K, N, C, I>,
+		O extends Operator<E, I>,
+		M extends Method<K, N, C>,
+		K extends Task,
+		N extends TaskNetwork<K, C>,
+		C extends Constraint,
+		I extends Condition> {
 	
 	/**
 	 * Get the domain that this service is managing.
@@ -88,7 +81,7 @@ public interface DomainHelper<
 	 * @param bindings the bindings to apply
 	 * @return the grounded effect
 	 */
-	E getGroundedEffect(E effect, Map<V, Const> bindings);
+	E getGroundedEffect(E effect, Map<Variable, Constant> bindings);
 	
 	/**
 	 * Get a grounded version of the supplied condition by applying the given bindings.
@@ -96,6 +89,6 @@ public interface DomainHelper<
 	 * @param bindings the bindings to apply
 	 * @return the grounded condition
 	 */
-	I getGroundedCondition(I condition, Map<V, Const> bindings);
+	I getGroundedCondition(I condition, Map<Variable, Constant> bindings);
 	
 }

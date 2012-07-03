@@ -22,15 +22,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.gerryai.htn.simple.logic.ImmutablePredicate;
-import org.gerryai.htn.simple.logic.ImmutablePredicateBuilder;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.logic.Predicate;
+import org.gerryai.logic.Term;
+import org.gerryai.logic.builder.PredicateBuilder;
+
+import com.google.common.base.Objects;
 
 /**
  * Simple implementation of an immutable condition.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public final class SimplePredicate implements ImmutablePredicate {
+public final class SimplePredicate implements Predicate {
     
     /**
      * Symbolic name of the underlying predicate.
@@ -40,7 +42,7 @@ public final class SimplePredicate implements ImmutablePredicate {
 	/**
 	 * List of terms belonging to the underlying predicate.
 	 */
-	private List<ImmutableTerm<?>> terms;
+	private List<Term> terms;
 	
 	/**
 	 * {@inheritDoc}
@@ -52,7 +54,7 @@ public final class SimplePredicate implements ImmutablePredicate {
 	/**
      * {@inheritDoc}
      */
-	public List<ImmutableTerm<?>> getTerms() {
+	public List<Term> getTerms() {
 	    return Collections.unmodifiableList(terms);
 	}
 	
@@ -68,16 +70,30 @@ public final class SimplePredicate implements ImmutablePredicate {
     /**
      * {@inheritDoc}
      */
-    public ImmutablePredicateBuilder createCopyBuilder() {
-        return new Builder()
-            .copy(this);
+    public Predicate applyToCopy(Map<Term, Term> substitution) {
+        return new Builder(this.name)
+            .copy(this)
+            .apply(substitution)
+            .build();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isGround() {
+        for (Term term : terms) {
+            if (!term.isGround()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Builder class for SimplePredicate.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder implements ImmutablePredicateBuilder {
+    public static class Builder implements PredicateBuilder {
         
         /**
          * Name of the term to be built.
@@ -87,27 +103,21 @@ public final class SimplePredicate implements ImmutablePredicate {
         /**
          * List of terms belonging to the condition to be built.
          */
-        private List<ImmutableTerm<?>> terms;
+        private List<Term> terms;
         
         /**
          * Constructor.
+         * @param name the name of the predicate to be built
          */
-        protected Builder() {
-            this.terms = new ArrayList<ImmutableTerm<?>>();
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public final ImmutablePredicateBuilder setName(String name) {
+        protected Builder(String name) {
             this.name = name;
-            return this;
+            this.terms = new ArrayList<Term>();
         }
 
         /**
          * {@inheritDoc}
          */
-        public final ImmutablePredicateBuilder addTerm(ImmutableTerm<?> term) {
+        public final Builder addTerm(Term term) {
             this.terms.add(term);
             return this;
         }
@@ -115,7 +125,7 @@ public final class SimplePredicate implements ImmutablePredicate {
         /**
          * {@inheritDoc}
          */
-        public final ImmutablePredicateBuilder addTerm(List<ImmutableTerm<?>> terms) {
+        public final Builder addTerms(List<Term> terms) {
             this.terms.addAll(terms);
             return this;
         }
@@ -123,32 +133,46 @@ public final class SimplePredicate implements ImmutablePredicate {
         /**
          * {@inheritDoc}
          */
-        public final Builder copy(ImmutablePredicate condition) {
-            this.setName(condition.getName());
-            this.terms.addAll(condition.getTerms());
+        public final Builder copy(Predicate predicate) {
+            this.name = predicate.getName();
+            this.terms.addAll(predicate.getTerms());
             return this;
         }
         
         /**
          * {@inheritDoc}
          */
-        public final Builder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
-            List<ImmutableTerm<?>> newTerms = new ArrayList<ImmutableTerm<?>>(terms.size());
-            for (ImmutableTerm<?> oldTerm : terms) {
-                ImmutableTerm<?> newTerm = oldTerm.createCopyBuilder()
-                        .apply(substitution)
-                        .build();
-                newTerms.add(newTerm);
+        public final Builder apply(Map<Term, Term> substitution) {
+            List<Term> newTerms = new ArrayList<Term>(terms.size());
+            for (Term oldTerm : terms) {
+                newTerms.add(oldTerm.applyToCopy(substitution));
             }
+            terms = newTerms;
             return this;
         }
         
         /**
          * {@inheritDoc}
          */
-        public final ImmutablePredicate build() {
+        public final Predicate build() {
             return new SimplePredicate(this);
         }
 
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name, terms);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Predicate) {
+            final Predicate other = (Predicate) obj;
+            return Objects.equal(name, other.getName())
+                && Objects.equal(terms, other.getTerms());
+        } else {
+            return false;
+        }
     }
 }

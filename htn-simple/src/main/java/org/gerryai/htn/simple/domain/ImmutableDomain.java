@@ -19,8 +19,6 @@ package org.gerryai.htn.simple.domain;
 
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
-import org.gerryai.htn.simple.logic.ImmutableVariable;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -32,7 +30,9 @@ public interface ImmutableDomain extends Domain<
         ImmutableEffect,
         ImmutableOperator,
         ImmutableMethod,
-            ImmutableTerm<?>, ImmutableTask, ImmutableTaskNetwork,
-            ImmutableConstraint<?>, ImmutableCondition, ImmutableVariable<?>> {
+        ImmutableTask,
+        ImmutableTaskNetwork,
+        ImmutableConstraint<?>,
+        ImmutableCondition> {
 
 }

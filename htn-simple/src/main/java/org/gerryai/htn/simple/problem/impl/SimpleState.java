@@ -17,18 +17,18 @@
  */
 package org.gerryai.htn.simple.problem.impl;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
-import org.gerryai.htn.simple.logic.ImmutablePredicate;
-import org.gerryai.htn.simple.logic.ImmutableFunction;
 import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.problem.ImmutableStateBuilder;
+import org.gerryai.logic.Sentence;
 
 /**
  * Implementation of an immutable state representation.
+ * TODO: COMPLETE IMPLEMENTATION!
  * @author David Edwards <david@more.fool.me.uk>
  */
 public final class SimpleState implements ImmutableState {
@@ -36,23 +36,21 @@ public final class SimpleState implements ImmutableState {
     /**
      * Map of all functions this state knows about, and whether they are true.
      */
-    private Map<ImmutableFunction, Boolean> booleanFunctionMap;
+    private Set<Sentence<?>> sentences;
     
     /**
      * Private constructor taking a builder to build from.
      * @param builder the builder to build from
      */
     private SimpleState(Builder builder) {
-        booleanFunctionMap = builder.booleanFunctionMap;
+        sentences = builder.sentences;
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean ask(ImmutableCondition condition) {
-        ImmutablePredicate predicate = condition.getPredicate();
-        return booleanFunctionMap.containsKey(predicate)
-            && booleanFunctionMap.get(predicate).booleanValue();
+        return sentences.contains(condition.getSentence());
     }
 
     /**
@@ -71,13 +69,13 @@ public final class SimpleState implements ImmutableState {
         /**
          * Map of all functions this state knows about, and whether they are true.
          */
-        private Map<ImmutableFunction, Boolean> booleanFunctionMap;
+        private Set<Sentence<?>> sentences;
         
         /**
          * Constructor.
          */
         protected Builder() {
-            booleanFunctionMap = new HashMap<ImmutableFunction, Boolean>();
+            sentences = new HashSet<Sentence<?>>();
         }
 
         /**
@@ -92,7 +90,7 @@ public final class SimpleState implements ImmutableState {
          * {@inheritDoc}
          */
         public final ImmutableStateBuilder tell(ImmutableEffect effect) {
-            booleanFunctionMap.put(effect.getFunction(), effect.getValue());
+            sentences.add(effect.getSentence());
             return this;
         }
         
@@ -102,8 +100,6 @@ public final class SimpleState implements ImmutableState {
         public final ImmutableState build() {
             return new SimpleState(this);
         }
-
-
         
     }
 }

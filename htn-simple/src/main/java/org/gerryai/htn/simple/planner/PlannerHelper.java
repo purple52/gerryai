@@ -30,9 +30,6 @@ import org.gerryai.htn.simple.planner.impl.NonPrimitiveTaskNotFound;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
-import org.gerryai.logic.Constant;
-import org.gerryai.logic.Term;
-import org.gerryai.logic.Variable;
 
 /**
  * Interface for a helper class to support a planner.
@@ -42,29 +39,23 @@ import org.gerryai.logic.Variable;
  * @param <A> type of action this planner works with
  * @param <O> type of operator this planner helper uses
  * @param <M> type of method the planner helper works with
- * @param <T> type of term the planner works with
  * @param <K> type of task this planner works with
  * @param <N> type of task network this planner works with
  * @param <C> type of constraint this planner works with
  * @param <I> type of condition the planner uses
- * @param <V> type of variable the planner uses
- * @param <S> type of constant the planner works with
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface PlannerHelper<
-        E extends Effect<T>,
+        E extends Effect,
         ST extends State,
-        P extends Plan<E, T, A, O, I, V, S>,
-        A extends Action<E, T, O, I, V, S>,
-		O extends Operator<E, T, I, V>,
-		M extends Method<T, K, N, C>,
-		T extends Term,
-		K extends Task<T>,
-		N extends TaskNetwork<T, K, C>,
-		C extends Constraint<T>,
-		I extends Condition<T>,
-		V extends Variable,
-		S extends Constant> {
+        P extends Plan<E, A, O, I>,
+        A extends Action<E, O, I>,
+		O extends Operator<E, I>,
+		M extends Method<K, N, C>,
+		K extends Task,
+		N extends TaskNetwork<K, C>,
+		C extends Constraint,
+		I extends Condition> {
 	
 	/**
 	 * Check for obvious reasons why the given task network is unsolvable.

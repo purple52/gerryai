@@ -15,34 +15,28 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.simple.logic;
+package org.gerryai.logic.builder;
 
-import java.util.Map;
+import org.gerryai.logic.NegatedSentence;
+import org.gerryai.logic.Sentence;
 
 /**
- * Interface for builders for immutable terms.
- * @param <T> type of term being built
+ * Builder class for making logical sentences.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableTermBuilder<T extends ImmutableTerm<T>> {
+public interface SentenceBuilder {
 
     /**
-     * Copy the provided term as a basis for a new one.
-     * @param term the term to copy
-     * @return the updated builder
+     * Create a negated sentence.
+     * @param sentence the sentence to negate
+     * @return the negated sentence
      */
-    ImmutableTermBuilder<T> copy(T term);
+    NegatedSentence negate(Sentence<?> sentence);
     
     /**
-     * Apply the substituter provided to the term.
-     * @param substitution the substitution to apply
-     * @return the updated builder
+     * Start building a predicate using the symbolic name provided.
+     * @param name the symbolic name for the predicate
+     * @return a predicate builder
      */
-    ImmutableTermBuilder<T> apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution);
-    
-    /**
-     * Build the term.
-     * @return the finished constraint
-     */
-    ImmutableTerm<T> build();
+    PredicateBuilder predicate(String name);
 }

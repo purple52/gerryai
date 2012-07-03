@@ -25,31 +25,21 @@ import org.gerryai.logic.Function;
 import org.gerryai.logic.Predicate;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
+import org.gerryai.logic.builder.SentenceBuilder;
 
 /**
- * Interface for a variable factory.
- * @param <F> type of function this factory produces
- * @param <V> the type of variable this factory produces
- * @param <C> type of constant this factory produces
- * @param <P> type of condition this factory produces
- * @param <T> type of term this factory uses
+ * Interface for a logical term factory.
  * @author David Edwards <david@more.fool.me.uk>
- * TODO: Switch condition for predicate
  */
-public interface LogicFactory<
-        F extends Function<T>,
-        V extends Variable,
-        C extends Constant,
-        P extends Predicate<T>,
-        T extends Term> {
+public interface LogicFactory {
 
     /**
      * Create a function.
      * @param name the name of the function
-     * @param terms list of terms for the function
+     * @param term single term for the function
      * @return the function
      */
-    F createFunction(String name, T terms);
+    Function createFunction(String name, Term term);
  
     /**
      * Create a function.
@@ -57,29 +47,29 @@ public interface LogicFactory<
      * @param terms list of terms for the function
      * @return the function
      */
-    F createFunction(String name, List<T> terms);
+    Function createFunction(String name, List<Term> terms);
     
 	/**
 	 * Create a variable.
 	 * @param name the name of the variable
 	 * @return the variable
 	 */
-	V createVariable(String name);
+	Variable createVariable(String name);
 	
 	/**
 	 * Create a constant.
 	 * @param name the name of the variable
 	 * @return the variable
 	 */
-	C createConstant(String name);
+	Constant createConstant(String name);
 
 	/**
      * Create a predicate.
      * @param name the name of the predicate
-     * @param terms a single term for the predicate
+     * @param term a single term for the predicate
      * @return the condition
      */
-    P createPredicate(String name, T terms);
+    Predicate createPredicate(String name, Term term);
     
 	/**
 	 * Create a predicate.
@@ -87,7 +77,7 @@ public interface LogicFactory<
 	 * @param terms list of terms for the predicate
 	 * @return the condition
 	 */
-	P createPredicate(String name, List<T> terms);
+	Predicate createPredicate(String name, List<Term> terms);
 	
 	/**
 	 * Copy the supplied terms and apply the substitution provided.
@@ -95,6 +85,11 @@ public interface LogicFactory<
 	 * @param substitution substitution to apply
 	 * @return the new terms
 	 */
-	List<T> apply(List<T> oldTerms, Map<T, T> substitution);
+	List<Term> apply(List<Term> oldTerms, Map<Term, Term> substitution);
 	
+	/**
+	 * Get a builder to build a logical sentence.
+	 * @return a fresh builder
+	 */
+	SentenceBuilder sentenceBuilder();
 }

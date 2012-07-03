@@ -15,12 +15,27 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gerryai.htn.constraint;
+package org.gerryai.logic;
+
+import java.util.Map;
 
 /**
- * Interface that constraints must implement.
+ * Interface that all logical terms and sentences must extend.
+ * @param <T> the type of logical node being implemented
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Constraint {
+public interface LogicalNode<T extends LogicalNode<?>> {
 
+    /**
+     * Apply the given substitution to a copy of this node.
+     * @param substitution the substitution to apply
+     * @return the new logical node
+     */
+    T applyToCopy(Map<Term, Term> substitution);
+    
+    /**
+     * Check if the logical node is grounded - ie, all its terms are constants.
+     * @return true if the node is grounded
+     */
+    boolean isGround();
 }

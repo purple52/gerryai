@@ -30,11 +30,11 @@ import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.logic.Term;
 import org.junit.Test;
 
 /**
@@ -48,7 +48,7 @@ public class SimpleDecompositionServiceTest {
     @SuppressWarnings("unchecked")
     public void testDecompose() throws InvalidConstraint {
     	
-    	ConstraintValidatorFactory<ImmutableTerm<?>, ImmutableTask,
+    	ConstraintValidatorFactory<ImmutableTask,
     	        ImmutableCondition> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
 
     	SimpleDecompositionService decompositionService = new SimpleDecompositionService(mockConstraintValidatorFactory);
@@ -89,7 +89,7 @@ public class SimpleDecompositionServiceTest {
     	when(mockMethod.getTaskNetwork()).thenReturn(mockMethodSubTasks);
     	
     	// Mock unifier to make no changes
-    	Map<ImmutableTerm<?>, ImmutableTerm<?>> mockSubstitution = mock(Map.class);
+    	Map<Term, Term> mockSubstitution = mock(Map.class);
         
     	when(mockMethodSubTasks.createCopyBuilder(any(ConstraintValidator.class))).thenReturn(mockTaskNetworkBuilderA);
         when(mockTaskNetworkBuilderA.apply(mockSubstitution)).thenReturn(mockTaskNetworkBuilderB);

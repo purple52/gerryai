@@ -22,15 +22,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.gerryai.htn.simple.logic.ImmutableFunction;
-import org.gerryai.htn.simple.logic.ImmutableFunctionBuilder;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.logic.Function;
+import org.gerryai.logic.Term;
 
 /**
  * Implementation of a function that uses a map to describe its return values.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public final class SimpleFunction implements ImmutableFunction {
+public final class SimpleFunction implements Function {
 
     /**
      * Symbolic function name.
@@ -40,7 +39,7 @@ public final class SimpleFunction implements ImmutableFunction {
     /**
      * List of arguments passed to this function.
      */
-    private List<ImmutableTerm<?>> terms;
+    private List<Term> terms;
 
     /**
      * {@inheritDoc}
@@ -52,7 +51,7 @@ public final class SimpleFunction implements ImmutableFunction {
     /**
      * {@inheritDoc}
      */
-    public List<ImmutableTerm<?>> getTerms() {
+    public List<Term> getTerms() {
         return Collections.unmodifiableList(terms);
     }
 
@@ -68,16 +67,30 @@ public final class SimpleFunction implements ImmutableFunction {
     /**
      * {@inheritDoc}
      */
-    public ImmutableFunctionBuilder createCopyBuilder() {
+    public Function applyToCopy(Map<Term, Term> substitution) {
         return new Builder()
-            .copy(this);
+            .copy(this)
+            .apply(substitution)
+            .build();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isGround() {
+        for (Term term : terms) {
+            if (!term.isGround()) {
+                return false;
+            }
+        }
+        return true;
     }
     
     /**
      * Builder class for SimplePredicate.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static final class Builder implements ImmutableFunctionBuilder {
+    public static final class Builder {
         
         /**
          * Name of the term to be built.
@@ -87,19 +100,19 @@ public final class SimpleFunction implements ImmutableFunction {
         /**
          * List of terms belonging to the condition to be built.
          */
-        private List<ImmutableTerm<?>> terms;
+        private List<Term> terms;
         
         /**
          * Constructor.
          */
         protected Builder() {
-            this.terms = new ArrayList<ImmutableTerm<?>>();
+            this.terms = new ArrayList<Term>();
         }
         
         /**
          * {@inheritDoc}
          */
-        public ImmutableFunctionBuilder setName(String name) {
+        public Builder setName(String name) {
             this.name = name;
             return this;
         }
@@ -107,7 +120,7 @@ public final class SimpleFunction implements ImmutableFunction {
         /**
          * {@inheritDoc}
          */
-        public ImmutableFunctionBuilder addTerm(ImmutableTerm<?> term) {
+        public Builder addTerm(Term term) {
             this.terms.add(term);
             return this;
         }
@@ -115,7 +128,7 @@ public final class SimpleFunction implements ImmutableFunction {
         /**
          * {@inheritDoc}
          */
-        public ImmutableFunctionBuilder addTerm(List<ImmutableTerm<?>> terms) {
+        public Builder addTerm(List<Term> terms) {
             this.terms.addAll(terms);
             return this;
         }
@@ -123,7 +136,7 @@ public final class SimpleFunction implements ImmutableFunction {
         /**
          * {@inheritDoc}
          */
-        public ImmutableFunctionBuilder copy(ImmutableFunction condition) {
+        public Builder copy(Function condition) {
             this.setName(condition.getName());
             this.terms.addAll(condition.getTerms());
             return this;
@@ -132,12 +145,11 @@ public final class SimpleFunction implements ImmutableFunction {
         /**
          * {@inheritDoc}
          */
-        public ImmutableFunctionBuilder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution) {
-            List<ImmutableTerm<?>> newTerms = new ArrayList<ImmutableTerm<?>>(terms.size());
-            for (ImmutableTerm<?> oldTerm : terms) {
-                ImmutableTerm<?> newTerm = oldTerm.createCopyBuilder()
-                        .apply(substitution)
-                        .build();
+        public Builder apply(
+                Map<Term, Term> substitution) {
+            List<Term> newTerms = new ArrayList<Term>(terms.size());
+            for (Term oldTerm : terms) {
+                Term newTerm = oldTerm.applyToCopy(substitution);
                 newTerms.add(newTerm);
             }
             return this;
@@ -146,7 +158,7 @@ public final class SimpleFunction implements ImmutableFunction {
         /**
          * {@inheritDoc}
          */
-        public ImmutableFunction build() {
+        public Function build() {
             return new SimpleFunction(this);
         }
     }

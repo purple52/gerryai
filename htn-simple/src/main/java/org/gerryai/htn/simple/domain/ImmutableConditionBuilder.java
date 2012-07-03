@@ -19,8 +19,8 @@ package org.gerryai.htn.simple.domain;
 
 import java.util.Map;
 
-import org.gerryai.htn.simple.logic.ImmutablePredicate;
-import org.gerryai.htn.simple.logic.ImmutableTerm;
+import org.gerryai.logic.Sentence;
+import org.gerryai.logic.Term;
 
 /**
  * Interface for a builder for immutable conditions.
@@ -29,11 +29,11 @@ import org.gerryai.htn.simple.logic.ImmutableTerm;
 public interface ImmutableConditionBuilder {
 
     /**
-     * Set the predicate for the condition being built.
-     * @param predicate the predicate
+     * Set the logical sentence for the condition being built.
+     * @param sentence the sentence
      * @return an updated builder
      */
-    ImmutableConditionBuilder setPredicate(ImmutablePredicate predicate);
+    ImmutableConditionBuilder setSentence(Sentence<?> sentence);
         
     /**
      * Copy from the provided condition, overwriting any values already set.
@@ -47,7 +47,7 @@ public interface ImmutableConditionBuilder {
      * @param substitution the substitution to apply
      * @return the updated builder
      */
-    ImmutableConditionBuilder apply(Map<ImmutableTerm<?>, ImmutableTerm<?>> substitution);
+    ImmutableConditionBuilder apply(Map<Term, Term> substitution);
     
     /**
      * Build the finished effect.
