@@ -116,4 +116,11 @@ public final class SimpleNegatedSentence implements NegatedSentence {
         
     }
 
+    @Override
+    public String toString() {
+        return new StringBuilder()
+            .append("!")
+            .append(sentence.toString())
+            .toString();
+    }
 }

@@ -107,4 +107,9 @@ public final class SimpleCondition implements ImmutableCondition {
             return new SimpleCondition(this);
         }
     }
+    
+    @Override
+    public String toString() {
+        return sentence.toString();
+    }
 }

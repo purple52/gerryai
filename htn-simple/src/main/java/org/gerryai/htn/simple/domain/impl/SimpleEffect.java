@@ -109,4 +109,8 @@ public final class SimpleEffect implements ImmutableEffect {
         }
     }
 
+    @Override
+    public String toString() {
+        return sentence.toString();
+    }
 }

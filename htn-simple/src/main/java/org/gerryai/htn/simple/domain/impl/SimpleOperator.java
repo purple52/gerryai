@@ -191,4 +191,16 @@ public class SimpleOperator implements ImmutableOperator {
 	        return new SimpleOperator(this);
 	    }
 	}
+	
+	@Override
+	public final String toString() {
+	    return new StringBuilder()
+	        .append(name)
+	        .append(arguments.toString())
+	        .append(',')
+	        .append(preconditions.toString())
+	        .append(',')
+	        .append(effects.toString())
+	        .toString();
+	}
 }

@@ -175,4 +175,12 @@ public final class SimplePredicate implements Predicate {
             return false;
         }
     }
+    
+    @Override
+    public String toString() {
+        return new StringBuilder()
+            .append(name)
+            .append(terms.toString())
+            .toString();
+    }
 }

@@ -229,4 +229,12 @@ public class SimpleTask implements ImmutableTask {
 	        return logicFactory;
 	    }
 	}
+	
+	@Override
+	public final String toString() {
+	    return new StringBuilder()
+	            .append(name)
+	            .append(arguments.toString())
+	            .toString();
+	}
 }

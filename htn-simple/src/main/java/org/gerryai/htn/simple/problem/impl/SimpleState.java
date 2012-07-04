@@ -17,6 +17,7 @@
  */
 package org.gerryai.htn.simple.problem.impl;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +25,7 @@ import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.problem.ImmutableStateBuilder;
+import org.gerryai.logic.NegatedSentence;
 import org.gerryai.logic.Sentence;
 
 /**
@@ -50,14 +52,33 @@ public final class SimpleState implements ImmutableState {
      * {@inheritDoc}
      */
     public boolean ask(ImmutableCondition condition) {
-        return sentences.contains(condition.getSentence());
+        return ask(condition.getSentence());
     }
 
+    /**
+     * Check if the underlying sentence is true or false.
+     * @param sentence the sentence to check
+     * @return the truth of the sentence
+     */
+    private boolean ask(Sentence sentence) {
+        if (sentence instanceof NegatedSentence) {
+            return !ask(((NegatedSentence) sentence).getSentence());
+        } else {
+            return sentences.contains(sentence);
+        }
+    }
     /**
      * {@inheritDoc}
      */
     public ImmutableStateBuilder createCopyBuilder() {
         return new Builder().copy(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Set<Sentence> getAssertions() {
+        return Collections.unmodifiableSet(sentences);
     }
 
     /**
@@ -82,7 +103,7 @@ public final class SimpleState implements ImmutableState {
          * {@inheritDoc}
          */
         public final ImmutableStateBuilder copy(ImmutableState state) {
-            //TODO: Implement
+            sentences = new HashSet<Sentence>(state.getAssertions());
             return this;
         }
  
@@ -90,7 +111,26 @@ public final class SimpleState implements ImmutableState {
          * {@inheritDoc}
          */
         public final ImmutableStateBuilder tell(ImmutableEffect effect) {
-            sentences.add(effect.getSentence());
+            return this.tell(effect.getSentence());
+        }
+ 
+        /**
+         * {@inheritDoc}
+         */
+        public final ImmutableStateBuilder tell(Sentence sentence) {
+            if (sentence instanceof NegatedSentence) {
+                return this.revoke(((NegatedSentence) sentence).getSentence());
+            } else {
+                sentences.add(sentence);
+            }
+            return this;
+        }
+     
+        /**
+         * {@inheritDoc}
+         */
+        public final ImmutableStateBuilder revoke(Sentence sentence) {
+            sentences.remove(sentence);
             return this;
         }
         
@@ -101,5 +141,10 @@ public final class SimpleState implements ImmutableState {
             return new SimpleState(this);
         }
         
+    }
+    
+    @Override
+    public String toString() {
+        return sentences.toString();
     }
 }

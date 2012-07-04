@@ -153,7 +153,7 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 			    } else {
 			        for (ImmutableEffect effect : action.getOperator().getEffects()) {
 			            ImmutableEffect groundEffect = domainHelper.getGroundedEffect(effect, action.getBindings());
-			            stateService.tell(state, groundEffect);
+			            state = stateService.tell(state, groundEffect);
 			        }
 			    }
 			}

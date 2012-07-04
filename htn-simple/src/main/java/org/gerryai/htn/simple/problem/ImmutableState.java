@@ -17,8 +17,11 @@
  */
 package org.gerryai.htn.simple.problem;
 
+import java.util.Set;
+
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
+import org.gerryai.logic.Sentence;
 
 /**
  * Interface for immutable implementations of state.
@@ -38,5 +41,11 @@ public interface ImmutableState extends State {
      * @return true if the condition is true in this state
      */
     boolean ask(ImmutableCondition condition);
+    
+    /**
+     * Get a complete set of assertions that this state knows to be true.
+     * @return the assertions
+     */
+    Set<Sentence> getAssertions();
     
 }

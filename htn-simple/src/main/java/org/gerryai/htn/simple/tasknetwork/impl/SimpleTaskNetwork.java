@@ -292,4 +292,13 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
             }
         }
 	}
+	
+	@Override
+	public final String toString() {
+	    return new StringBuilder()
+	        .append(tasks.toString())
+	        .append(',')
+	        .append(constraints.toString())
+	        .toString();
+	}
 }

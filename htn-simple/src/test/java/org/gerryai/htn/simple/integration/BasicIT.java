@@ -26,7 +26,6 @@ import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.logic.LogicFactory;
 import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.planner.ImmutablePlanningFactory;
 import org.gerryai.htn.simple.planner.impl.SimplePlanningFactory;
@@ -36,10 +35,9 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.logic.Constant;
-import org.gerryai.logic.Predicate;
 import org.gerryai.logic.Variable;
 import org.gerryai.logic.builder.SentenceBuilder;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -48,13 +46,18 @@ import org.junit.Test;
  */
 public class BasicIT {
 
+    private ImmutablePlanningFactory planningFactory;
+    
+    @Before
+    public void init() {
+        planningFactory = new SimplePlanningFactory();
+    }
+    
 	//@Ignore
 	@Test
 	public void testKiwiBanjo() throws PlanNotFound, InvalidConstraint {
-		
-	    ImmutablePlanningFactory planningFactory = new SimplePlanningFactory();
-		
-	    ImmutableDomain domain = createDomain(planningFactory);
+
+	    ImmutableDomain domain = createDomain();
 	    
 		// Build the task network to be solved
 		Constant constantKiwi = planningFactory.getLogicFactory().createConstant("kiwi");
@@ -87,7 +90,7 @@ public class BasicIT {
 		        .setTaskNetwork(taskNetwork)
 		        .build();
 		
-		
+		// Solve the problem
 		ImmutablePlan plan = planningFactory.getPlanningService().solve(problem);
 		
 		assertEquals(2,plan.getActions().size());
@@ -108,7 +111,7 @@ public class BasicIT {
         
         ImmutablePlanningFactory planningFactory = new SimplePlanningFactory();
         
-        ImmutableDomain domain = createDomain(planningFactory);
+        ImmutableDomain domain = createDomain();
         
         // Build the task network to be solved
         Constant constantKiwi = planningFactory.getLogicFactory().createConstant("kiwi");
@@ -124,7 +127,14 @@ public class BasicIT {
                 .build();
         
         // Create the initial state
+        ImmutableEffect effect = planningFactory.getDomainBuilderFactory().createEffectBuilder()
+                .setSentence(planningFactory.getLogicFactory().sentenceBuilder()
+                        .predicate("have")
+                        .addTerm(constantBanjo)
+                        .build())
+                .build();
         ImmutableState state = planningFactory.getStateService().createStateBuilder()
+                .tell(effect)
                 .build();
                 
         // Create the problem by putting together the domain and network to be solved;
@@ -134,7 +144,7 @@ public class BasicIT {
                 .setTaskNetwork(taskNetwork)
                 .build();
         
-        
+        // Solve the problem
         ImmutablePlan plan = planningFactory.getPlanningService().solve(problem);
         
         assertEquals(2,plan.getActions().size());
@@ -149,44 +159,46 @@ public class BasicIT {
 
     }
     
-	ImmutableDomain createDomain(ImmutablePlanningFactory planningFactory) throws PlanNotFound, InvalidConstraint {
+	private ImmutableDomain createDomain() throws PlanNotFound, InvalidConstraint {
 	    
-	    LogicFactory logicFactory = planningFactory.getLogicFactory();
-	    SentenceBuilder builder = logicFactory.sentenceBuilder();
+	    
         Variable variableA = planningFactory.getLogicFactory().createVariable("a");
-        ImmutableEffect effectA = planningFactory.getDomainBuilderFactory().createEffectBuilder()
-                .setSentence(builder.predicate("have")
+        ImmutableEffect effectHaveA = planningFactory.getDomainBuilderFactory().createEffectBuilder()
+                .setSentence(getSentenceBuilder().predicate("have")
                         .addTerm(variableA)
                         .build())
                 .build();
-        // TODO: Should be a NOT
-        ImmutableEffect effectB = planningFactory.getDomainBuilderFactory().createEffectBuilder()
-                .setSentence(builder.negate(
-                        builder.predicate("have")
+        ImmutableEffect effectNotHaveA = planningFactory.getDomainBuilderFactory().createEffectBuilder()
+                .setSentence(
+                    getSentenceBuilder().negate(
+                        getSentenceBuilder().predicate("have")
                             .addTerm(variableA)
                             .build()))
                 .build();
-        Predicate PredicateA = planningFactory.getLogicFactory().createPredicate("have", variableA);
-        ImmutableCondition conditionA = planningFactory.getDomainBuilderFactory().createConditionBuilder()
-                .setSentence(PredicateA)
+        ImmutableCondition conditionHaveA = planningFactory.getDomainBuilderFactory().createConditionBuilder()
+                .setSentence(getSentenceBuilder().predicate("have")
+                        .addTerm(variableA)
+                        .build())
                 .build();
-        //TODO: Should be NOT!
-        Predicate PredicateB = planningFactory.getLogicFactory().createPredicate("have", variableA);
-        ImmutableCondition conditionB = planningFactory.getDomainBuilderFactory().createConditionBuilder()
-                .setSentence(PredicateB)
+        ImmutableCondition conditionNotHaveA = planningFactory.getDomainBuilderFactory().createConditionBuilder()
+                .setSentence(
+                    getSentenceBuilder().negate(
+                        getSentenceBuilder().predicate("have")
+                            .addTerm(variableA)
+                            .build()))
                 .build();
         
         ImmutableOperator operatorA = planningFactory.getDomainBuilderFactory().createOperatorBuilder()
                 .setName("pickup")
                 .addArgument(variableA)
-                .addEffect(effectA)
-                .addPrecondition(conditionA)
+                .addEffect(effectHaveA)
+                .addPrecondition(conditionNotHaveA)
                 .build();
         ImmutableOperator operatorB = planningFactory.getDomainBuilderFactory().createOperatorBuilder()
                 .setName("drop")
                 .addArgument(variableA)
-                .addEffect(effectB)
-                .addPrecondition(conditionB)
+                .addEffect(effectNotHaveA)
+                .addPrecondition(conditionHaveA)
                 .build();
         
         Variable variableX = planningFactory.getLogicFactory().createVariable("x");
@@ -208,17 +220,31 @@ public class BasicIT {
                 .addArgument(variableY)
                 .setIsPrimitive(true)
                 .build();
-        Predicate beforePredicateA = planningFactory.getLogicFactory().createPredicate("have", variableX);
-        ImmutableCondition beforeConditionA = planningFactory.getDomainBuilderFactory().createConditionBuilder()
-                .setSentence(beforePredicateA)
+        ImmutableCondition beforeConditionHaveX = planningFactory.getDomainBuilderFactory().createConditionBuilder()
+                .setSentence(
+                    getSentenceBuilder().predicate("have")
+                        .addTerm(variableX)
+                        .build())
                 .build();
-        ImmutableConstraint<?> beforeConstraintA = planningFactory.getConstraintFactory().createBeforeConstraint(methodASubTask1, beforeConditionA);
-        ImmutableConstraint<?> precedenceConstraintA = planningFactory.getConstraintFactory().createPrecedenceConstraint(methodASubTask1, methodASubTask2);
+        ImmutableCondition beforeConditionNotHaveY = planningFactory.getDomainBuilderFactory().createConditionBuilder()
+                .setSentence(
+                    getSentenceBuilder().negate(
+                        getSentenceBuilder().predicate("have")
+                            .addTerm(variableY)
+                            .build()))
+                .build();
+        ImmutableConstraint<?> beforeConstraintHaveX = planningFactory.getConstraintFactory()
+                .createBeforeConstraint(methodASubTask1, beforeConditionHaveX);
+        ImmutableConstraint<?> beforeConstraintNotHaveY = planningFactory.getConstraintFactory()
+                .createBeforeConstraint(methodASubTask1, beforeConditionNotHaveY);
+        ImmutableConstraint<?> precedenceConstraintA = planningFactory.getConstraintFactory()
+                .createPrecedenceConstraint(methodASubTask1, methodASubTask2);
         ImmutableTaskNetwork methodATaskNetwork = planningFactory.getTaskNetworkFactory().createTaskNetworkBuilder()
                 .addTask(methodASubTask1)
                 .addTask(methodASubTask2)
                 .addConstraint(precedenceConstraintA)
-                .addConstraint(beforeConstraintA)
+                .addConstraint(beforeConstraintHaveX)
+                .addConstraint(beforeConstraintNotHaveY)
                 .build();
         
         ImmutableTask methodBTask  = planningFactory.getTaskNetworkFactory().createTaskBuilder()
@@ -237,18 +263,31 @@ public class BasicIT {
                 .addArgument(variableX)
                 .setIsPrimitive(true)
                 .build();
-        //TODO: SHould be NOT!
-        Predicate beforePredicateB = planningFactory.getLogicFactory().createPredicate("have", variableX);
-        ImmutableCondition beforeConditionB = planningFactory.getDomainBuilderFactory().createConditionBuilder()
-                .setSentence(beforePredicateB)
+        ImmutableCondition beforeConditionNotHaveX = planningFactory.getDomainBuilderFactory().createConditionBuilder()
+                .setSentence(
+                    getSentenceBuilder().negate(
+                        getSentenceBuilder().predicate("have")
+                            .addTerm(variableX)
+                            .build()))
                 .build();
-        ImmutableConstraint<?> beforeConstraintB = planningFactory.getConstraintFactory().createBeforeConstraint(methodBSubTask1, beforeConditionB);
-        ImmutableConstraint<?> precedenceConstraintB = planningFactory.getConstraintFactory().createPrecedenceConstraint(methodBSubTask1, methodBSubTask2);
+        ImmutableCondition beforeConditionHaveY = planningFactory.getDomainBuilderFactory().createConditionBuilder()
+                .setSentence(
+                    getSentenceBuilder().predicate("have")
+                        .addTerm(variableY)
+                        .build())
+                .build();
+        ImmutableConstraint<?> beforeConstraintNotHaveX = planningFactory.getConstraintFactory()
+                .createBeforeConstraint(methodBSubTask1, beforeConditionNotHaveX);
+        ImmutableConstraint<?> beforeConstraintHaveY = planningFactory.getConstraintFactory()
+                .createBeforeConstraint(methodBSubTask1, beforeConditionHaveY);
+        ImmutableConstraint<?> precedenceConstraintB = planningFactory.getConstraintFactory()
+                .createPrecedenceConstraint(methodBSubTask1, methodBSubTask2);
         ImmutableTaskNetwork methodBTaskNetwork = planningFactory.getTaskNetworkFactory().createTaskNetworkBuilder()
                 .addTask(methodBSubTask1)
                 .addTask(methodBSubTask2)
                 .addConstraint(precedenceConstraintB)
-                .addConstraint(beforeConstraintB)
+                .addConstraint(beforeConstraintNotHaveX)
+                .addConstraint(beforeConstraintHaveY)
                 .build();
         
         ImmutableMethod methodA = planningFactory.getDomainBuilderFactory().createMethodBuilder()
@@ -269,5 +308,8 @@ public class BasicIT {
                 .addMethod(methodB)
                 .build();
 	}
-
+	
+	private SentenceBuilder getSentenceBuilder() {
+	    return planningFactory.getLogicFactory().sentenceBuilder();
+	}
 }
