@@ -18,6 +18,7 @@
 package org.gerryai.logic;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Interface for a logical function.
@@ -30,4 +31,9 @@ public interface Function extends Term {
      * @return the terms
      */
     List<Term> getTerms();
+    
+    /**
+     * {@inheritDoc}
+     */
+    Function applyToCopy(Map<Term, Term> substitution);
 }

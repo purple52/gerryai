@@ -19,9 +19,8 @@ package org.gerryai.logic;
 
 /**
  * Interface for a logical sentence.
- * @param <T> the type of logical sentence being implemented
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Sentence<T extends Sentence<?>> extends LogicalNode<T> {
+public interface Sentence extends LogicalNode<Sentence> {
 
 }

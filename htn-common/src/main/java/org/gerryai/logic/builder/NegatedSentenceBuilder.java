@@ -31,6 +31,6 @@ public interface NegatedSentenceBuilder {
      * @param sentence the sentence to negate
      * @return the negated sentence
      */
-    NegatedSentence sentence(Sentence<?> sentence);
+    NegatedSentence sentence(Sentence sentence);
 
 }

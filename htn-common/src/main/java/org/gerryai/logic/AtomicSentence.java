@@ -17,11 +17,16 @@
  */
 package org.gerryai.logic;
 
+import java.util.Map;
+
 /**
  * Interface for an atomic logical sentence.
- * @param <T> the type of atomic sentence being implemented
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface AtomicSentence<T extends AtomicSentence<?>> extends Sentence<T> {
+public interface AtomicSentence extends Sentence {
 
+    /**
+     * {@inheritDoc}
+     */
+    AtomicSentence applyToCopy(Map<Term, Term> substitution);
 }

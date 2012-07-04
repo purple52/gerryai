@@ -29,6 +29,6 @@ public interface Effect {
      * Get the sentence that this effect asserts.
      * @return the sentence
      */
-    Sentence<?> getSentence();
+    Sentence getSentence();
 
 }

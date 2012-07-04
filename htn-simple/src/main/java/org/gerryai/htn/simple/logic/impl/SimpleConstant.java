@@ -50,10 +50,12 @@ public final class SimpleConstant extends aima.core.logic.fol.parsing.ast.Consta
      * {@inheritDoc}
      */
     public Term applyToCopy(Map<Term, Term> substitution) {
-        return new Builder()
-            .copy(this)
-            .apply(substitution)
-            .build();
+        if (substitution.containsKey(this)) {
+            return substitution.get(this);
+        } else {
+            return this;
+        }
+            
     }
     
     /**
@@ -61,45 +63,6 @@ public final class SimpleConstant extends aima.core.logic.fol.parsing.ast.Consta
      */
     public boolean isGround() {
         return true;
-    }
-    
-    /**
-     * Builder class for SimpleConstant.
-     * @author David Edwards <david@more.fool.me.uk>
-     */
-    public static class Builder {
-        
-        /**
-         * Name of the term to be built.
-         */
-        private String name;
-        
-        /**
-         * {@inheritDoc}
-         */
-        public final Builder copy(Constant term) {
-            this.name = term.getName();
-            return this;
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public final Builder apply(Map<Term, Term> substitution) {
-            for (Term oldTerm : substitution.keySet()) {
-                if (oldTerm instanceof Constant && oldTerm.getName().equals(this.name)) {
-                    this.name = substitution.get(oldTerm).getName();
-                }
-            }
-            return this;
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public final Constant build() {
-            return new SimpleConstant(this.name);
-        }
     }
 
     @Override

@@ -17,15 +17,22 @@
  */
 package org.gerryai.logic;
 
+import java.util.Map;
+
 /**
  * Interface for a negated logical sentence.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface NegatedSentence extends ComplexSentence<NegatedSentence> {
+public interface NegatedSentence extends ComplexSentence {
 
     /**
      * Get the logical sentence being negated.
      * @return the sentence being negated
      */
-    Sentence<?> getSentence();
+    Sentence getSentence();
+    
+    /**
+     * {@inheritDoc}
+     */
+    NegatedSentence applyToCopy(Map<Term, Term> substitution);
 }

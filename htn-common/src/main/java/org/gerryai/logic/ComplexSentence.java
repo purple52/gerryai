@@ -17,11 +17,16 @@
  */
 package org.gerryai.logic;
 
+import java.util.Map;
+
 /**
  * Interface for a complex logical sentence.
- * @param <T> the type of complex sentence being implemented
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ComplexSentence<T extends ComplexSentence<?>> extends Sentence<T> {
+public interface ComplexSentence extends Sentence {
 
+    /**
+     * {@inheritDoc}
+     */
+    ComplexSentence applyToCopy(Map<Term, Term> substitution);
 }

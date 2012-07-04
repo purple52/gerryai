@@ -31,7 +31,7 @@ public final class SimpleSentenceBuilder implements SentenceBuilder {
     /**
      * {@inheritDoc}
      */
-    public NegatedSentence negate(Sentence<?> sentence) {
+    public NegatedSentence negate(Sentence sentence) {
         return new SimpleNegatedSentence.Builder()
             .sentence(sentence);
     }

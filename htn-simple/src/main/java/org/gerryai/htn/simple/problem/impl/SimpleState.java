@@ -36,7 +36,7 @@ public final class SimpleState implements ImmutableState {
     /**
      * Map of all functions this state knows about, and whether they are true.
      */
-    private Set<Sentence<?>> sentences;
+    private Set<Sentence> sentences;
     
     /**
      * Private constructor taking a builder to build from.
@@ -69,13 +69,13 @@ public final class SimpleState implements ImmutableState {
         /**
          * Map of all functions this state knows about, and whether they are true.
          */
-        private Set<Sentence<?>> sentences;
+        private Set<Sentence> sentences;
         
         /**
          * Constructor.
          */
         protected Builder() {
-            sentences = new HashSet<Sentence<?>>();
+            sentences = new HashSet<Sentence>();
         }
 
         /**

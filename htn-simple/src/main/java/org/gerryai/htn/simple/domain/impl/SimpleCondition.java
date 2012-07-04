@@ -33,7 +33,7 @@ public final class SimpleCondition implements ImmutableCondition {
     /**
      * The sentence that this condition checks for.
      */
-    private Sentence<?> sentence;
+    private Sentence sentence;
     
     /**
      * Constructor using a builder.
@@ -46,7 +46,7 @@ public final class SimpleCondition implements ImmutableCondition {
     /**
      * {@inheritDoc}
      */
-    public Sentence<?> getSentence() {
+    public Sentence getSentence() {
         return sentence;
     }
     
@@ -69,7 +69,7 @@ public final class SimpleCondition implements ImmutableCondition {
         /**
          * The sentence that the condition being built will use.
          */
-        private Sentence<?> sentence;
+        private Sentence sentence;
         
         /**
          * Protected constructor.
@@ -79,7 +79,7 @@ public final class SimpleCondition implements ImmutableCondition {
         /**
          * {@inheritDoc}
          */
-        public ImmutableConditionBuilder setSentence(Sentence<?> sentence) {
+        public ImmutableConditionBuilder setSentence(Sentence sentence) {
             this.sentence = sentence;
             return this;
         }

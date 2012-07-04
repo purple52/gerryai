@@ -68,8 +68,8 @@ public final class SimpleFunction implements Function {
      * {@inheritDoc}
      */
     public Function applyToCopy(Map<Term, Term> substitution) {
-        return new Builder()
-            .copy(this)
+        return new Builder(this.name)
+            .copyTerms(this)
             .apply(substitution)
             .build();
     }
@@ -104,17 +104,11 @@ public final class SimpleFunction implements Function {
         
         /**
          * Constructor.
+         * @param name the symbolic name for the function
          */
-        protected Builder() {
-            this.terms = new ArrayList<Term>();
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public Builder setName(String name) {
+        protected Builder(String name) {
             this.name = name;
-            return this;
+            this.terms = new ArrayList<Term>();
         }
 
         /**
@@ -136,8 +130,7 @@ public final class SimpleFunction implements Function {
         /**
          * {@inheritDoc}
          */
-        public Builder copy(Function condition) {
-            this.setName(condition.getName());
+        public Builder copyTerms(Function condition) {
             this.terms.addAll(condition.getTerms());
             return this;
         }
@@ -145,13 +138,12 @@ public final class SimpleFunction implements Function {
         /**
          * {@inheritDoc}
          */
-        public Builder apply(
-                Map<Term, Term> substitution) {
+        public Builder apply(Map<Term, Term> substitution) {
             List<Term> newTerms = new ArrayList<Term>(terms.size());
             for (Term oldTerm : terms) {
-                Term newTerm = oldTerm.applyToCopy(substitution);
-                newTerms.add(newTerm);
+                newTerms.add(oldTerm.applyToCopy(substitution));
             }
+            terms = newTerms;
             return this;
         }
         

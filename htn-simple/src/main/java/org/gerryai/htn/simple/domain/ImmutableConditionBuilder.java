@@ -33,7 +33,7 @@ public interface ImmutableConditionBuilder {
      * @param sentence the sentence
      * @return an updated builder
      */
-    ImmutableConditionBuilder setSentence(Sentence<?> sentence);
+    ImmutableConditionBuilder setSentence(Sentence sentence);
         
     /**
      * Copy from the provided condition, overwriting any values already set.

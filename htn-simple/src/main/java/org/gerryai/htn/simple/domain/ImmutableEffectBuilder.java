@@ -33,7 +33,7 @@ public interface ImmutableEffectBuilder {
      * @param sentence the sentence
      * @return an updated builder
      */
-    ImmutableEffectBuilder setSentence(Sentence<?> sentence);
+    ImmutableEffectBuilder setSentence(Sentence sentence);
 
     /**
      * Copy from the provided effect, overwriting any values already set.

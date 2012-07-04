@@ -33,7 +33,7 @@ public final class SimpleEffect implements ImmutableEffect {
     /**
      * The sentence that this effect asserts.
      */
-    private Sentence<?> sentence;
+    private Sentence sentence;
     
     /**
      * Constructor using a builder.
@@ -46,7 +46,7 @@ public final class SimpleEffect implements ImmutableEffect {
     /**
      * {@inheritDoc}
      */
-    public Sentence<?> getSentence() {
+    public Sentence getSentence() {
         return sentence;
     }
     
@@ -69,7 +69,7 @@ public final class SimpleEffect implements ImmutableEffect {
         /**
          * The sentence that the effect being built will use.
          */
-        private Sentence<?> sentence;
+        private Sentence sentence;
         
         /**
          * Protected constructor.
@@ -79,7 +79,7 @@ public final class SimpleEffect implements ImmutableEffect {
         /**
          * {@inheritDoc}
          */
-        public ImmutableEffectBuilder setSentence(Sentence<?> sentence) {
+        public ImmutableEffectBuilder setSentence(Sentence sentence) {
             this.sentence = sentence;
             return this;
         }

@@ -50,8 +50,7 @@ public class SimpleLogicFactory implements LogicFactory {
      * {@inheritDoc}
      */
     public final Function createFunction(String name, List<Term> terms) {
-        return new SimpleFunction.Builder()
-                .setName(name)
+        return new SimpleFunction.Builder(name)
                 .addTerm(terms)
                 .build();
     }
@@ -108,7 +107,7 @@ public class SimpleLogicFactory implements LogicFactory {
     /**
      * {@inheritDoc}
      */
-    public final Sentence<?> copyApply(Sentence<?> sentence,
+    public final Sentence copyApply(Sentence sentence,
             Map<Variable, Constant> bindings) {
         
         Map<Term, Term> substitution =

@@ -31,7 +31,7 @@ public interface SentenceBuilder {
      * @param sentence the sentence to negate
      * @return the negated sentence
      */
-    NegatedSentence negate(Sentence<?> sentence);
+    NegatedSentence negate(Sentence sentence);
     
     /**
      * Start building a predicate using the symbolic name provided.

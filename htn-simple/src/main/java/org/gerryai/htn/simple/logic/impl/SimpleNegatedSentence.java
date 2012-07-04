@@ -33,12 +33,12 @@ public final class SimpleNegatedSentence implements NegatedSentence {
     /**
      * The sentence being negated.
      */
-    private Sentence<?> sentence;
+    private Sentence sentence;
     
     /**
      * {@inheritDoc}
      */
-    public Sentence<?> getSentence() {
+    public Sentence getSentence() {
         return sentence;
     }
     
@@ -76,15 +76,15 @@ public final class SimpleNegatedSentence implements NegatedSentence {
         /**
          * The sentence being negated.
          */
-        private Sentence<?> sentence;
+        private Sentence sentence;
  
         /**
          * Use the provided negated sentence as a base.
          * @param sentence the sentence to copy
-         * @return an updtaed builder
+         * @return an updated builder
          */
         private Builder copy(NegatedSentence sentence) {
-            this.sentence = sentence;
+            this.sentence = sentence.getSentence();
             return this;
         }
         
@@ -94,7 +94,7 @@ public final class SimpleNegatedSentence implements NegatedSentence {
          * @return an updated builder
          */
         private Builder apply(Map<Term, Term> substitution) {
-            this.sentence = sentence.applyToCopy(substitution);
+            this.sentence = this.sentence.applyToCopy(substitution);
             return this;
         }
         
@@ -109,7 +109,7 @@ public final class SimpleNegatedSentence implements NegatedSentence {
         /**
          * {@inheritDoc}
          */
-        public NegatedSentence sentence(Sentence<?> sentence) {
+        public NegatedSentence sentence(Sentence sentence) {
             this.sentence = sentence;
             return new SimpleNegatedSentence(this);
         }

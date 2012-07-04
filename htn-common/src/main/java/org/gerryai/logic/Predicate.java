@@ -18,12 +18,13 @@
 package org.gerryai.logic;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Interface for a logical predicate.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Predicate extends AtomicSentence<Predicate> {
+public interface Predicate extends AtomicSentence {
 
     /**
      * Get the symbolic name of this predicate.
@@ -36,4 +37,9 @@ public interface Predicate extends AtomicSentence<Predicate> {
      * @return the terms
      */
     List<Term> getTerms();
+    
+    /**
+     * {@inheritDoc}
+     */
+    Predicate applyToCopy(Map<Term, Term> substitution);
 }

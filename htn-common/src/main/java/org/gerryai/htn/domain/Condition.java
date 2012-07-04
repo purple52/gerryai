@@ -29,5 +29,5 @@ public interface Condition {
      * Get the logical sentence that this condition requires to be true.
      * @return the sentence
      */
-    Sentence<?> getSentence();
+    Sentence getSentence();
 }
