@@ -17,7 +17,10 @@
  */
 package org.gerryai.htn.domain;
 
+import java.util.Map;
+
 import org.gerryai.logic.Sentence;
+import org.gerryai.logic.Term;
 
 /**
  * Interface that an effect must implement.
@@ -31,4 +34,10 @@ public interface Effect {
      */
     Sentence getSentence();
 
+    /**
+     * Apply the given substitution to a copy of this effect.
+     * @param substitution the substitution to apply
+     * @return the new effect
+     */
+    Effect applyToCopy(Map<Term, Term> substitution);
 }

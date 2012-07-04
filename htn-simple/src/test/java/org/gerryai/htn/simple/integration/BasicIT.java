@@ -70,7 +70,14 @@ public class BasicIT {
 				.build();
 		
 		// Create the initial state
+		ImmutableEffect effect = planningFactory.getDomainBuilderFactory().createEffectBuilder()
+		        .setSentence(planningFactory.getLogicFactory().sentenceBuilder()
+		                .predicate("have")
+                        .addTerm(constantKiwi)
+                        .build())
+                .build();
 		ImmutableState state = planningFactory.getStateService().createStateBuilder()
+		        .tell(effect)
 		        .build();
 		        
 		// Create the problem by putting together the domain and network to be solved;

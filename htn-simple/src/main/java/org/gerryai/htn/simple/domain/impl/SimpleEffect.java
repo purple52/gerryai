@@ -97,7 +97,7 @@ public final class SimpleEffect implements ImmutableEffect {
          */
         public ImmutableEffectBuilder apply(Map<Term, Term> substitution) {
             this.sentence = sentence.applyToCopy(substitution);
-            return null;
+            return this;
         }
         
         /**
