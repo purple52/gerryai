@@ -17,7 +17,8 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -41,7 +42,7 @@ public class SimpleDomainHelperTest {
 	 * Test that the helper can give us back correct domain.
 	 */
 	@Test
-	public void testGetDomain() {
+	public final void testGetDomain() {
 		
 		ImmutableDomain	mockDomain = mock(ImmutableDomain.class);
 		
@@ -49,14 +50,15 @@ public class SimpleDomainHelperTest {
 		SimpleDomainHelper domainHelper = new SimpleDomainHelper(mockDomain);
 		
 		// Check that the helper gives back the correct domain
-		assertEquals(mockDomain,domainHelper.getDomain());
+		assertEquals(mockDomain, domainHelper.getDomain());
 	}
 	
 	/**
-	 * Test that no operator is found if operator list is empty
+	 * Test that no operator is found if operator list is empty.
+	 * @throws OperatorNotFound if test passes
 	 */
-	@Test(expected=OperatorNotFound.class)
-	public void testGetOperatorByNameEmptyList() throws OperatorNotFound {
+	@Test(expected = OperatorNotFound.class)
+	public final void testGetOperatorByNameEmptyList() throws OperatorNotFound {
 		
 		ImmutableDomain	mockDomain = mock(ImmutableDomain.class);
 		when(mockDomain.getOperators()).thenReturn(new HashSet<ImmutableOperator>());
@@ -192,9 +194,9 @@ public class SimpleDomainHelperTest {
 		SimpleDomainHelper domainHelper = new SimpleDomainHelper(mockDomain);
 		
 		// Try and find an existing method
-		assertEquals(1,domainHelper.getMethodsByTask(mockTaskA).size());
+		assertEquals(1, domainHelper.getMethodsByTask(mockTaskA).size());
 		assertTrue(domainHelper.getMethodsByTask(mockTaskA).contains(mockMethodA));
-		assertEquals(1,domainHelper.getMethodsByTask(mockTaskB).size());
+		assertEquals(1, domainHelper.getMethodsByTask(mockTaskB).size());
 		assertTrue(domainHelper.getMethodsByTask(mockTaskB).contains(mockMethodB));
 	}
 	

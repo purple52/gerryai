@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.constraint.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
 import java.util.HashSet;
@@ -74,8 +74,8 @@ public class SimpleConstraintFactoryTest {
 		//Try and create the constraint
 		ImmutableValidatableBeforeConstraint constraint = factory.createBeforeConstraint(mockTasks, mockCondition);
 		
-		assertEquals(mockTasks,constraint.getTasks());
-		assertEquals(mockCondition,constraint.getCondition());
+		assertEquals(mockTasks, constraint.getTasks());
+		assertEquals(mockCondition, constraint.getCondition());
 	}
 
 	/**
@@ -92,15 +92,15 @@ public class SimpleConstraintFactoryTest {
 		//Try and create the constraint
 		ImmutableValidatableAfterConstraint constraint = factory.createAfterConstraint(mockTasks, mockCondition);
 		
-		assertEquals(mockTasks,constraint.getTasks());
-		assertEquals(mockCondition,constraint.getCondition());
+		assertEquals(mockTasks, constraint.getTasks());
+		assertEquals(mockCondition, constraint.getCondition());
 	}
 
 	/**
 	 * Test the creation of a between constraint.
 	 */
 	@Test
-	public void testCreateBetweenConstraint() {
+	public final void testCreateBetweenConstraint() {
 		Set<ImmutableTask> mockTasksA = new HashSet<ImmutableTask>();
 		Set<ImmutableTask> mockTasksB = new HashSet<ImmutableTask>();
 		ImmutableCondition mockCondition = mock(ImmutableCondition.class);
@@ -109,11 +109,12 @@ public class SimpleConstraintFactoryTest {
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
 		
 		//Try and create the constraint
-		ImmutableValidatableBetweenConstraint constraint = factory.createBetweenConstraint(mockTasksA, mockTasksB, mockCondition);
+		ImmutableValidatableBetweenConstraint constraint =
+				factory.createBetweenConstraint(mockTasksA, mockTasksB, mockCondition);
 		
-		assertEquals(mockTasksA,constraint.getPrecedingTasks());
-		assertEquals(mockTasksB,constraint.getProcedingTasks());
-		assertEquals(mockCondition,constraint.getCondition());
+		assertEquals(mockTasksA, constraint.getPrecedingTasks());
+		assertEquals(mockTasksB, constraint.getProcedingTasks());
+		assertEquals(mockCondition, constraint.getCondition());
 	}
 
 }

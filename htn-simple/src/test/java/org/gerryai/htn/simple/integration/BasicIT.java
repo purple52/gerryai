@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.integration;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
@@ -46,16 +46,26 @@ import org.junit.Test;
  */
 public class BasicIT {
 
+	/**
+	 * Planning factory used by the test.
+	 */
     private ImmutablePlanningFactory planningFactory;
     
+    /**
+     * Initialise the planning factory.
+     */
     @Before
-    public void init() {
+    public final void init() {
         planningFactory = new SimplePlanningFactory();
     }
     
-	//@Ignore
+	/**
+	 * Test basic domain with basic problem.
+	 * @throws PlanNotFound only if the test fails
+	 * @throws InvalidConstraint only if the test fails
+	 */
 	@Test
-	public void testKiwiBanjo() throws PlanNotFound, InvalidConstraint {
+	public final void testKiwiBanjo() throws PlanNotFound, InvalidConstraint {
 
 	    ImmutableDomain domain = createDomain();
 	    
@@ -93,21 +103,25 @@ public class BasicIT {
 		// Solve the problem
 		ImmutablePlan plan = planningFactory.getPlanningService().solve(problem);
 		
-		assertEquals(2,plan.getActions().size());
+		assertEquals(2, plan.getActions().size());
 		assertEquals("drop", plan.getActions().get(0).getOperator().getName());
-		assertEquals(plan.getActions().get(0).getBindings().size(),1);
+		assertEquals(plan.getActions().get(0).getBindings().size(), 1);
 		assertEquals(plan.getActions().get(0).getBindings()
 				.get(plan.getActions().get(0).getOperator().getArguments().get(0)), constantKiwi);
-		assertEquals(plan.getActions().get(1).getOperator().getName(),"pickup");
-		assertEquals(plan.getActions().get(1).getBindings().size(),1);
+		assertEquals(plan.getActions().get(1).getOperator().getName(), "pickup");
+		assertEquals(plan.getActions().get(1).getBindings().size(), 1);
 		assertEquals(plan.getActions().get(1).getBindings()
 				.get(plan.getActions().get(1).getOperator().getArguments().get(0)), constantBanjo);
 
 	}
 	
-	//@Ignore
+	/**
+	 * Test basic domain with reverse problem.
+	 * @throws PlanNotFound only if the test fails
+	 * @throws InvalidConstraint only if the test fails
+	 */
     @Test
-    public void testBanjoKiwi() throws PlanNotFound, InvalidConstraint {
+    public final void testBanjoKiwi() throws PlanNotFound, InvalidConstraint {
         
         ImmutablePlanningFactory planningFactory = new SimplePlanningFactory();
         
@@ -147,18 +161,24 @@ public class BasicIT {
         // Solve the problem
         ImmutablePlan plan = planningFactory.getPlanningService().solve(problem);
         
-        assertEquals(2,plan.getActions().size());
+        assertEquals(2, plan.getActions().size());
         assertEquals("drop", plan.getActions().get(0).getOperator().getName());
-        assertEquals(plan.getActions().get(0).getBindings().size(),1);
+        assertEquals(plan.getActions().get(0).getBindings().size(), 1);
         assertEquals(plan.getActions().get(0).getBindings()
                 .get(plan.getActions().get(0).getOperator().getArguments().get(0)), constantBanjo);
-        assertEquals(plan.getActions().get(1).getOperator().getName(),"pickup");
-        assertEquals(plan.getActions().get(1).getBindings().size(),1);
+        assertEquals(plan.getActions().get(1).getOperator().getName(), "pickup");
+        assertEquals(plan.getActions().get(1).getBindings().size(), 1);
         assertEquals(plan.getActions().get(1).getBindings()
                 .get(plan.getActions().get(1).getOperator().getArguments().get(0)), constantKiwi);
 
     }
     
+    /**
+     * Create the basic domain.
+     * @return the domain
+     * @throws PlanNotFound only if test fails
+     * @throws InvalidConstraint only if test fails
+     */
 	private ImmutableDomain createDomain() throws PlanNotFound, InvalidConstraint {
 	    
 	    
@@ -309,6 +329,10 @@ public class BasicIT {
                 .build();
 	}
 	
+	/**
+	 * Utility method to get a sentence builder.
+	 * @return a sentence builder
+	 */
 	private SentenceBuilder getSentenceBuilder() {
 	    return planningFactory.getLogicFactory().sentenceBuilder();
 	}

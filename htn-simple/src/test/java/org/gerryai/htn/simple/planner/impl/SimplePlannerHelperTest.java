@@ -17,12 +17,13 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -335,7 +336,7 @@ public class SimplePlannerHelperTest {
 	    ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 	    Set<ImmutableTask> tasks = new HashSet<ImmutableTask>(mockActions.size());
         List<ImmutableTask> sortedTasks = new ArrayList<ImmutableTask>(mockActions.size());	    
-	    for (ImmutableAction mockAction : mockActions ) {
+	    for (ImmutableAction mockAction : mockActions) {
 	        ImmutableTask mockTask = mock(ImmutableTask.class);
             tasks.add(mockTask);
         
