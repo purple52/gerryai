@@ -17,7 +17,9 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -39,7 +41,7 @@ public class SimpleNegatedSentenceTest {
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleNegatedSentence#getSentence()}.
      */
     @Test
-    public void testGetSentence() {
+    public final void testGetSentence() {
         Sentence mockSentence = mock(Sentence.class);
         NegatedSentence negatedSentence = new SimpleNegatedSentence.Builder()
                 .sentence(mockSentence);
@@ -51,7 +53,7 @@ public class SimpleNegatedSentenceTest {
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleNegatedSentence#applyToCopy(java.util.Map)}.
      */
     @Test
-    public void testApplyToCopy() {
+    public final void testApplyToCopy() {
         Map<Term, Term> mockSubstitution = new HashMap<Term, Term>();
         Sentence mockSentenceA = mock(Sentence.class);
         Sentence mockSentenceB = mock(Sentence.class);
@@ -65,9 +67,10 @@ public class SimpleNegatedSentenceTest {
 
     /**
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleNegatedSentence#isGround()}.
+     * Check that the sentence is ground if the underlying sentence is ground.
      */
     @Test
-    public void testIsGroundTrue() {
+    public final void testIsGroundTrue() {
         Sentence mockSentence = mock(Sentence.class);
         when(mockSentence.isGround()).thenReturn(true);
         NegatedSentence negatedSentence = new SimpleNegatedSentence.Builder()
@@ -78,9 +81,10 @@ public class SimpleNegatedSentenceTest {
 
     /**
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleNegatedSentence#isGround()}.
+	 * Check that the sentence is not ground if the underlying sentence is not ground.
      */
     @Test
-    public void testIsGroundFalse() {
+    public final void testIsGroundFalse() {
         Sentence mockSentence = mock(Sentence.class);
         when(mockSentence.isGround()).thenReturn(false);
         NegatedSentence negatedSentence = new SimpleNegatedSentence.Builder()

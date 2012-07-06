@@ -68,26 +68,67 @@ import org.mockito.stubbing.Answer;
  */
 public class SimplePlannerHelperTest {
 
+	/**
+	 * Mock plan builder factory.
+	 */
     private ImmutablePlanBuilderFactory mockPlanBuilderFactory;
+    
+    /**
+     * Mock action factory.
+     */
     private ImmutableActionFactory mockActionFactory;
+    
+    /**
+     * Mock decomposition service.
+     */
     private DecompositionService<ImmutableMethod,
             ImmutableTask, ImmutableTaskNetwork,
             ImmutableConstraint<?>> mockDecompositionService;
+    
+    /**
+     * Mock unification service.
+     */
     private UnificationService<ImmutableMethod, Term,
             ImmutableTask, ImmutableTaskNetwork,
             ImmutableConstraint<?>, ImmutableCondition> mockUnificationService;
+    
+    /**
+     * Mock sort service.
+     */
     private SortService<ImmutableTask,
             ImmutableConstraint<?>> mockSortService;
+    
+    /**
+     * Mock state service.
+     */
     private ImmutableStateService mockStateService;
+    
+    /**
+     * Mock domain helper.
+     */
     private ImmutableDomainHelper mockDomainHelper;
     
+    /**
+     * Map of plan builders to actions for mocking plan builders.
+     */
     private Map<ImmutablePlanBuilder, List<ImmutableAction>> builderActionMap;
+    
+    /**
+     * Map of plan builders to target actions for mocking plan builders.
+     */
     private Map<ImmutablePlanBuilder, List<ImmutableAction>> builderTargetActionMap;
+    
+    /**
+     * Map of plan builders to plans for mocking plan builders.
+     */
     private Map<ImmutablePlanBuilder, ImmutablePlan> builderReturnMap;
     
+    /**
+     * Set up factories.
+     */
     @SuppressWarnings("unchecked")
     @Before
-    public void setup() {
+    public final void setup() {
         mockPlanBuilderFactory = mock(ImmutablePlanBuilderFactory.class);
         mockActionFactory = mock(ImmutableActionFactory.class);
         mockDecompositionService = mock(DecompositionService.class);
@@ -100,8 +141,12 @@ public class SimplePlannerHelperTest {
         builderReturnMap = new HashMap<ImmutablePlanBuilder, ImmutablePlan>();
     }
 
-	@Test(expected=NonPrimitiveTaskNotFound.class)
-	public void testGetNonPrimitiveTask() throws NonPrimitiveTaskNotFound {
+    /**
+     * Test finding a non-primitive task when none exists.
+     * @throws NonPrimitiveTaskNotFound if the test passes
+     */
+	@Test(expected = NonPrimitiveTaskNotFound.class)
+	public final void testGetNonPrimitiveTask() throws NonPrimitiveTaskNotFound {
 		
 	    SimplePlannerHelper plannerHelper = createHelper();
 		
@@ -114,8 +159,13 @@ public class SimplePlannerHelperTest {
 		
 	}
 	
+	/**
+	 * Test finding a plan for an empty task network.
+	 * @throws PlanNotFound only if test fails
+	 * @throws TaskNotActionable only if test fails
+	 */
 	@Test
-	public void testFindPlanForPrimitiveEmptyTaskNetwork() throws PlanNotFound, TaskNotActionable {
+	public final void testFindPlanForPrimitiveEmptyTaskNetwork() throws PlanNotFound, TaskNotActionable {
 
         List<ImmutableAction> mockActions = setupPlanBuilderFactory(0);
         ImmutableTaskNetwork mockTaskNetwork = setupTaskNetwork(mockActions);
@@ -129,8 +179,13 @@ public class SimplePlannerHelperTest {
 		assertTrue(plan.getActions().isEmpty());
 	}
 	
+	/**
+	 * Test finding a plan for a network containing a single primitive task.
+	 * @throws PlanNotFound only of test fails
+	 * @throws TaskNotActionable only if test fails
+	 */
 	@Test
-	public void testFindPlanForPrimitiveOneTask() throws PlanNotFound, TaskNotActionable {
+	public final void testFindPlanForPrimitiveOneTask() throws PlanNotFound, TaskNotActionable {
 
 		List<ImmutableAction> mockActions = setupPlanBuilderFactory(1);
         ImmutableTaskNetwork mockTaskNetwork = setupTaskNetwork(mockActions);
@@ -145,8 +200,13 @@ public class SimplePlannerHelperTest {
 		assertTrue(plan.getActions().contains(mockActions.get(0)));
 	}
 	
+	/**
+	 * Test finding a plan for a task network containing two primitive tasks.
+	 * @throws PlanNotFound only if test fails
+	 * @throws TaskNotActionable only if test fails
+	 */
 	@Test
-	public void testFindPlanForPrimitiveTwoTasks() throws PlanNotFound, TaskNotActionable {
+	public final void testFindPlanForPrimitiveTwoTasks() throws PlanNotFound, TaskNotActionable {
 
         List<ImmutableAction> mockActions = setupPlanBuilderFactory(2);
         ImmutableTaskNetwork mockTaskNetwork = setupTaskNetwork(mockActions);
@@ -162,8 +222,13 @@ public class SimplePlannerHelperTest {
 		assertTrue(plan.getActions().contains(mockActions.get(1)));
 	}
 
-    @Test(expected=PlanNotFound.class)
-    public void testFindPlanForPrimitiveTwoTasksFirstFailsPreconditions() throws PlanNotFound, TaskNotActionable {
+	/**
+	 * Test finding a plan for a task network where the preconditions of the first task are not met.
+	 * @throws PlanNotFound if the test passes
+	 * @throws TaskNotActionable only if the test fails
+	 */
+    @Test(expected = PlanNotFound.class)
+    public final void testFindPlanForPrimitiveTwoTasksFirstFailsPreconditions() throws PlanNotFound, TaskNotActionable {
 
         List<ImmutableAction> mockActions = setupPlanBuilderFactory(2);
         ImmutableTaskNetwork mockTaskNetwork = setupTaskNetwork(mockActions);
@@ -179,8 +244,14 @@ public class SimplePlannerHelperTest {
         plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);
     }
 
-    @Test(expected=PlanNotFound.class)
-    public void testFindPlanForPrimitiveTwoTasksSecondFailsPreconditions() throws PlanNotFound, TaskNotActionable {
+    /**
+     * Test finding a plan for two primitive tasks where the second task's preconditions are not met.
+     * @throws PlanNotFound if the test passes
+     * @throws TaskNotActionable only if the test fails
+     */
+    @Test(expected = PlanNotFound.class)
+    public final void testFindPlanForPrimitiveTwoTasksSecondFailsPreconditions()
+    		throws PlanNotFound, TaskNotActionable {
 
         List<ImmutableAction> mockActions = setupPlanBuilderFactory(2);
         ImmutableTaskNetwork mockTaskNetwork = setupTaskNetwork(mockActions);
@@ -196,8 +267,13 @@ public class SimplePlannerHelperTest {
         plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);
     }
     
-	@Test(expected=PlanNotFound.class)
-	public void testFindPlanForPrimitiveTaskNotActionable() throws PlanNotFound, TaskNotActionable {
+    /**
+     * Test finding a plan for an unactionable primitive task.
+     * @throws PlanNotFound if the test passes
+     * @throws TaskNotActionable only if the test fails
+     */
+	@Test(expected = PlanNotFound.class)
+	public final void testFindPlanForPrimitiveTaskNotActionable() throws PlanNotFound, TaskNotActionable {
 
         List<ImmutableAction> mockActions = setupPlanBuilderFactory(1);
         ImmutableTaskNetwork mockTaskNetwork = setupTaskNetwork(mockActions);
@@ -212,12 +288,13 @@ public class SimplePlannerHelperTest {
 	}
 	
 	/**
-	 * Test that a task and method that cannot be unified cannot be decomposed
-	 * @throws DecompositionNotFound
-	 * @throws UnifierNotFound
+	 * Test that a task and method that cannot be unified cannot be decomposed.
+	 * @throws DecompositionNotFound if the test passes
+	 * @throws UnifierNotFound only if the test fails
+	 * @throws InvalidConstraint only if the test fails
 	 */
-	@Test(expected=DecompositionNotFound.class)
-	public void testDecomposeNoUnifier() throws DecompositionNotFound, UnifierNotFound, InvalidConstraint {
+	@Test(expected = DecompositionNotFound.class)
+	public final void testDecomposeNoUnifier() throws DecompositionNotFound, UnifierNotFound, InvalidConstraint {
 		
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		ImmutableTask mockTask = mock(ImmutableTask.class);
@@ -232,11 +309,12 @@ public class SimplePlannerHelperTest {
 	
 	/**
 	 * Test that a unifiable task and method can be decomposed.
-	 * @throws DecompositionNotFound
-	 * @throws UnifierNotFound
+	 * @throws DecompositionNotFound only if the test fails
+	 * @throws UnifierNotFound only if the test fails
+	 * @throws InvalidConstraint only if the test fails
 	 */
 	@Test
-	public void testDecompose() throws DecompositionNotFound, UnifierNotFound, InvalidConstraint {
+	public final void testDecompose() throws DecompositionNotFound, UnifierNotFound, InvalidConstraint {
 		
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		ImmutableTaskNetwork mockDecomposedTaskNetwork = mock(ImmutableTaskNetwork.class);
@@ -245,8 +323,10 @@ public class SimplePlannerHelperTest {
 		@SuppressWarnings("unchecked")
 		Map<Term, Term> mockSubstitution = mock(Map.class);
 		
-        when(mockUnificationService.findUnifier(mockTask, mockMethod)).thenReturn(mockSubstitution);
-        when(mockDecompositionService.decompose(mockSubstitution, mockTaskNetwork, mockTask, mockMethod)).thenReturn(mockDecomposedTaskNetwork);
+        when(mockUnificationService.findUnifier(mockTask, mockMethod))
+        		.thenReturn(mockSubstitution);
+        when(mockDecompositionService.decompose(mockSubstitution, mockTaskNetwork, mockTask, mockMethod))
+        		.thenReturn(mockDecomposedTaskNetwork);
          
         SimplePlannerHelper plannerHelper = createHelper();
         
@@ -254,6 +334,10 @@ public class SimplePlannerHelperTest {
 		        plannerHelper.decompose(mockTaskNetwork, mockTask, mockMethod));
 	}
 	
+	/**
+	 * Create a planner helper.
+	 * @return the helper
+	 */
 	private SimplePlannerHelper createHelper() {
         return new SimplePlannerHelper(mockActionFactory,
                 mockPlanBuilderFactory, mockDecompositionService,
@@ -268,7 +352,7 @@ public class SimplePlannerHelperTest {
 	private List<ImmutableAction> createMockActions(int howMany) {
 	    List<ImmutableAction> mockActions = new ArrayList<ImmutableAction>();
         
-	    for(int i = 0; i < howMany; i++) {
+	    for (int i = 0; i < howMany; i++) {
 	        ImmutableAction mockAction = mock(ImmutableAction.class);
 	        mockActions.add(mockAction);
 	        ImmutableOperator mockOperator = mock(ImmutableOperator.class);
@@ -325,13 +409,14 @@ public class SimplePlannerHelperTest {
 	}
 	
 	/**
-	 * Set up a mock task network and prime the action factory and sort service
+	 * Set up a mock task network and prime the action factory and sort service.
 	 * @param mockActions the mock actions to map to
 	 * @return the mock task network
 	 * @throws PlanNotFound only if the test is broken
 	 * @throws TaskNotActionable only if the test is broken
 	 */
-	private ImmutableTaskNetwork setupTaskNetwork(List<ImmutableAction> mockActions) throws PlanNotFound, TaskNotActionable {
+	private ImmutableTaskNetwork setupTaskNetwork(List<ImmutableAction> mockActions)
+			throws PlanNotFound, TaskNotActionable {
 	    
 	    ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 	    Set<ImmutableTask> tasks = new HashSet<ImmutableTask>(mockActions.size());
@@ -356,6 +441,11 @@ public class SimplePlannerHelperTest {
         return mockTaskNetwork;
 	}
 	
+	/**
+	 * Create a mock condition that will be returned by the domain helper when working on the given action.
+	 * @param mockAction the action being worked on
+	 * @return the mock condition
+	 */
 	private ImmutableCondition linkCondition(ImmutableAction mockAction) {
 	    
         Map<Variable, Constant> mockBindings = new HashMap<Variable, Constant>();

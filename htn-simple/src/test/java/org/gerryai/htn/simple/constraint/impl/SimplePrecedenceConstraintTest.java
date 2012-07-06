@@ -34,8 +34,8 @@ import org.gerryai.logic.Term;
 import org.junit.Test;
 
 /**
+ * Unit tests for SimplePrecedenceConstraint.
  * @author David Edwards <david@more.fool.me.uk>
- * 
  */
 public class SimplePrecedenceConstraintTest {
 
@@ -43,7 +43,7 @@ public class SimplePrecedenceConstraintTest {
      * Test get/set preceding task.
      */
     @Test
-    public void testConstructor() {
+    public final void testConstructor() {
         ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);
@@ -64,7 +64,7 @@ public class SimplePrecedenceConstraintTest {
      * Test validate is called.
      */
     @Test
-    public void testValidate() {
+    public final void testValidate() {
         ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);
@@ -84,12 +84,10 @@ public class SimplePrecedenceConstraintTest {
 
     /**
      * Test add is called.
-     * 
-     * @throws InvalidConstraint
-     *             only if test fails
+     * @throws InvalidConstraint only if test fails
      */
     @Test
-    public void testAdd() throws InvalidConstraint {
+    public final void testAdd() throws InvalidConstraint {
         ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);
@@ -108,10 +106,10 @@ public class SimplePrecedenceConstraintTest {
     }
 
     /**
-     * Test construction using copy and apply
+     * Test construction using copy and apply.
      */
     @Test
-    public void testCopyApply() {
+    public final void testCopyApply() {
         ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);
@@ -138,10 +136,10 @@ public class SimplePrecedenceConstraintTest {
     }
 
     /**
-     * Test construction using copy and replace
+     * Test construction using copy and replace.
      */
     @Test
-    public void testCopyReplace() {
+    public final void testCopyReplace() {
         ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);

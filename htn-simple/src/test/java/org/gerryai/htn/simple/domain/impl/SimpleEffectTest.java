@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -36,10 +36,10 @@ import org.junit.Test;
 public class SimpleEffectTest {
 
     /**
-     * Test method for {@link org.gerryai.htn.simple.domain.impl.SimpleEffect#getSentence()}.
+     * Test for getting a teh assertion for an effect.
      */
     @Test
-    public void testGetSentence() {
+    public final void testGetSentence() {
         Sentence mockSentence = mock(Sentence.class);
         
         Effect effect = new SimpleEffect.Builder()
@@ -50,10 +50,10 @@ public class SimpleEffectTest {
     }
 
     /**
-     * Test method for {@link org.gerryai.htn.simple.domain.impl.SimpleEffect#applyToCopy(java.util.Map)}.
+     * Test applying a substitution to a copy of an effect.
      */
     @Test
-    public void testApplyToCopy() {
+    public final void testApplyToCopy() {
         Map<Term, Term> mockSubstitution = new HashMap<Term, Term>();
         Sentence mockSentenceA = mock(Sentence.class);
         Sentence mockSentenceB = mock(Sentence.class);

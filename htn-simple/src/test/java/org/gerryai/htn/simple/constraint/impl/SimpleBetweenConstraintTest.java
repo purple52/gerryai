@@ -44,7 +44,7 @@ public class SimpleBetweenConstraintTest {
      * Test get/set preceding tasks.
      */
     @Test
-    public void testConstructor() {
+    public final void testConstructor() {
         ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);
@@ -66,10 +66,10 @@ public class SimpleBetweenConstraintTest {
 
    
     /**
-     * Test validate is called
+     * Test validate is called.
      */
     @Test
-    public void testValidate() {
+    public final void testValidate() {
         ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);
@@ -91,15 +91,11 @@ public class SimpleBetweenConstraintTest {
     }
 
     /**
-     * Test method for
-     * {@link org.gerryai.htn.simple.constraint.impl.SimpleAfterConstraint#add(org.gerryai.htn.simple.constraint.validation.ConstraintValidator)}
-     * .
-     * 
-     * @throws InvalidConstraint
-     *             only if test fails
+     * Test that constraint is added to validator.
+     * @throws InvalidConstraint only if test fails
      */
     @Test
-    public void testAdd() throws InvalidConstraint {
+    public final void testAdd() throws InvalidConstraint {
         ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);
@@ -122,10 +118,10 @@ public class SimpleBetweenConstraintTest {
     }
 
     /**
-     * Test construction using copy and apply
+     * Test construction using copy and apply.
      */
     @Test
-    public void testCopyApply() {
+    public final void testCopyApply() {
         
         ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
@@ -157,10 +153,10 @@ public class SimpleBetweenConstraintTest {
     }
 
     /**
-     * Test construction using copy and replace
+     * Test construction using copy and replace.
      */
     @Test
-    public void testCopyReplace() {
+    public final void testCopyReplace() {
         ImmutableTask mockPrecedingTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockPrecedingTasks = new HashSet<ImmutableTask>();
         mockPrecedingTasks.add(mockPrecedingTask);

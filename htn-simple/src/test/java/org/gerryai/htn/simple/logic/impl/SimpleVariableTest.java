@@ -17,7 +17,9 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import java.util.HashMap;
@@ -37,7 +39,7 @@ public class SimpleVariableTest {
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleVariable#getName()}.
      */
     @Test
-    public void testGetName() {
+    public final void testGetName() {
         String name = "testname";
         Variable variable = new SimpleVariable(name);
         assertEquals(name, variable.getName());
@@ -45,9 +47,10 @@ public class SimpleVariableTest {
 
     /**
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleVariable#applyToCopy(java.util.Map)}.
+	 * Check that an empty substitution does nothing.
      */
     @Test
-    public void testApplyToCopyEmpty() {
+    public final void testApplyToCopyEmpty() {
         
         Map<Term, Term> substitution = new HashMap<Term, Term>();
         
@@ -60,9 +63,10 @@ public class SimpleVariableTest {
 
     /**
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleVariable#applyToCopy(java.util.Map)}.
+	 * Check that a substitution that does nothing has no effect.
      */
     @Test
-    public void testApplyToCopyNotSubstituted() {
+    public final void testApplyToCopyNotSubstituted() {
  
         String nameA = "testnameA";
         String nameB = "testnameB";
@@ -79,9 +83,10 @@ public class SimpleVariableTest {
  
     /**
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleVariable#applyToCopy(java.util.Map)}.
+     * Check that a substitution that replaces this variable is applied correctly.
      */
     @Test
-    public void testApplyToCopySubstituted() {
+    public final void testApplyToCopySubstituted() {
  
         String nameA = "testnameA";
         Variable variableA = new SimpleVariable(nameA);
@@ -98,7 +103,7 @@ public class SimpleVariableTest {
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleVariable#isGround()}.
      */
     @Test
-    public void testIsGround() {
+    public final void testIsGround() {
         String name = "testname";
         Variable variable = new SimpleVariable(name);
         assertFalse(variable.isGround());
@@ -108,7 +113,7 @@ public class SimpleVariableTest {
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleVariable#equals(java.lang.Object)}.
      */
     @Test
-    public void testEqualsObject() {
+    public final void testEqualsObject() {
         String nameA = "testname";
         String nameB = "testname";
         Variable variableA = new SimpleVariable(nameA);

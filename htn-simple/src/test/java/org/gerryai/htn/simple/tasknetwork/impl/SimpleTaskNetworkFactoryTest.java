@@ -17,16 +17,18 @@
  */
 package org.gerryai.htn.simple.tasknetwork.impl;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
+import org.gerryai.htn.simple.logic.LogicFactory;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.junit.Test;
 
 /**
+ * Unit tests for SimpleTaskNetworkFactory.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public class SimpleTaskNetworkFactoryTest {
 
@@ -34,22 +36,31 @@ public class SimpleTaskNetworkFactoryTest {
 	 * Test task builder creation.
 	 */
 	@Test
-	public void testCreateTaskBuilder() {
+	public final void testCreateTaskBuilder() {
 		@SuppressWarnings("unchecked")
-		ConstraintValidatorFactory<ImmutableTask, ImmutableCondition> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
-		//SimpleTaskNetworkFactory factory = new SimpleTaskNetworkFactory(mockConstraintValidatorFactory);
-		//assertTrue(factory.createTask() instanceof SimpleTask.Builder);
+		ConstraintValidatorFactory<ImmutableTask, ImmutableCondition> mockConstraintValidatorFactory
+				= mock(ConstraintValidatorFactory.class);
+		LogicFactory mockLogicFactory = mock(LogicFactory.class);
+		
+		SimpleTaskNetworkFactory factory
+				= new SimpleTaskNetworkFactory(mockConstraintValidatorFactory, mockLogicFactory);
+		
+		assertTrue(factory.createTaskBuilder() instanceof SimpleTask.Builder);
 	}
 	
 	/**
 	 * Test task network builder creation.
 	 */
 	@Test
-	public void testCreateTaskNetworkBuilder() {
+	public final void testCreateTaskNetworkBuilder() {
 		@SuppressWarnings("unchecked")
-		ConstraintValidatorFactory<ImmutableTask, ImmutableCondition> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
-		//SimpleTaskNetworkFactory factory = new SimpleTaskNetworkFactory(mockConstraintValidatorFactory);
-		//assertTrue(factory.createTaskNetworkBuilder() instanceof SimpleTaskNetwork.Builder);
+		ConstraintValidatorFactory<ImmutableTask, ImmutableCondition> mockConstraintValidatorFactory
+				= mock(ConstraintValidatorFactory.class);
+		LogicFactory mockLogicFactory = mock(LogicFactory.class);
+		
+		SimpleTaskNetworkFactory factory =
+				new SimpleTaskNetworkFactory(mockConstraintValidatorFactory, mockLogicFactory);
+		assertTrue(factory.createTaskNetworkBuilder() instanceof SimpleTaskNetwork.Builder);
 	}
 
 }

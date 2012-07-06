@@ -17,7 +17,8 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class SimpleOperatorTest {
      * Test setting the name.
      */
     @Test
-    public void testSetName() {
+    public final void testSetName() {
         ImmutableOperator operator = new SimpleOperator.Builder()
                 .setName("testname")
                 .build();
@@ -52,7 +53,7 @@ public class SimpleOperatorTest {
      * Test adding single arguments.
      */
     @Test
-    public void testAddArgument() {
+    public final void testAddArgument() {
         Variable mockVariableA = mock(Variable.class);
         Variable mockVariableB = mock(Variable.class);
         ImmutableOperator operator = new SimpleOperator.Builder()
@@ -68,7 +69,7 @@ public class SimpleOperatorTest {
      * Test adding sets of arguments. 
      */
     @Test
-    public void testAddArguments() {
+    public final void testAddArguments() {
         Variable mockVariableA = mock(Variable.class);
         Variable mockVariableB = mock(Variable.class);
         List<Variable> mockVariablesA = new ArrayList<Variable>();
@@ -85,18 +86,21 @@ public class SimpleOperatorTest {
                 .addArguments(mockVariablesA)
                 .addArguments(mockVariablesB)
                 .build();
-        assertEquals(4, operator.getArguments().size());
-        assertEquals(operator.getArguments().get(0), mockVariableA);
-        assertEquals(operator.getArguments().get(1), mockVariableB);
-        assertEquals(operator.getArguments().get(2), mockVariableC);
-        assertEquals(operator.getArguments().get(3), mockVariableD);
-        }
+        
+        List<Variable> expectedList = new ArrayList<Variable>();
+        expectedList.add(mockVariableA);
+        expectedList.add(mockVariableB);
+        expectedList.add(mockVariableC);
+        expectedList.add(mockVariableD);
+        
+        assertEquals(expectedList, operator.getArguments());
+    }
 
     /**
      * Test adding single preconditions.
      */
     @Test
-    public void testAddPrecondition() {
+    public final void testAddPrecondition() {
         ImmutableCondition mockConditionA = mock(ImmutableCondition.class);
         ImmutableCondition mockConditionB = mock(ImmutableCondition.class);
         ImmutableOperator operator = new SimpleOperator.Builder()
@@ -112,7 +116,7 @@ public class SimpleOperatorTest {
      * Test adding sets of arguments.
      */
     @Test
-    public void testAddPreconditions() {
+    public final void testAddPreconditions() {
         ImmutableCondition mockConditionA = mock(ImmutableCondition.class);
         ImmutableCondition mockConditionB = mock(ImmutableCondition.class);
         Set<ImmutableCondition> mockConditionsA = new HashSet<ImmutableCondition>();
@@ -128,18 +132,21 @@ public class SimpleOperatorTest {
                 .addPreconditions(mockConditionsA)
                 .addPreconditions(mockConditionsB)
                 .build();
-        assertEquals(4, operator.getPreconditions().size());
-        assertTrue(operator.getPreconditions().contains(mockConditionA));
-        assertTrue(operator.getPreconditions().contains(mockConditionB));
-        assertTrue(operator.getPreconditions().contains(mockConditionC));
-        assertTrue(operator.getPreconditions().contains(mockConditionD));
+        
+        Set<ImmutableCondition> expectedConditions = new HashSet<ImmutableCondition>();
+        expectedConditions.add(mockConditionA);
+        expectedConditions.add(mockConditionB);
+        expectedConditions.add(mockConditionC);
+        expectedConditions.add(mockConditionD);
+        
+        assertEquals(expectedConditions, operator.getPreconditions());
     }
 
     /**
      * Test adding single effects.
      */
     @Test
-    public void testAddEffect() {
+    public final void testAddEffect() {
         ImmutableEffect mockEffectA = mock(ImmutableEffect.class);
         ImmutableEffect mockEffectB = mock(ImmutableEffect.class);
         ImmutableOperator operator = new SimpleOperator.Builder()
@@ -155,7 +162,7 @@ public class SimpleOperatorTest {
      * Test adding sets of effects.
      */
     @Test
-    public void testAddEffects() {
+    public final void testAddEffects() {
         ImmutableEffect mockEffectA = mock(ImmutableEffect.class);
         ImmutableEffect mockEffectB = mock(ImmutableEffect.class);
         Set<ImmutableEffect> mockEffectsA = new HashSet<ImmutableEffect>();
@@ -171,18 +178,21 @@ public class SimpleOperatorTest {
                 .addEffects(mockEffectsA)
                 .addEffects(mockEffectsB)
                 .build();
-        assertEquals(4, operator.getEffects().size());
-        assertTrue(operator.getEffects().contains(mockEffectA));
-        assertTrue(operator.getEffects().contains(mockEffectB));
-        assertTrue(operator.getEffects().contains(mockEffectC));
-        assertTrue(operator.getEffects().contains(mockEffectD));
+        
+        Set<ImmutableEffect> expectedEffects = new HashSet<ImmutableEffect>();
+        expectedEffects.add(mockEffectA);
+        expectedEffects.add(mockEffectB);
+        expectedEffects.add(mockEffectC);
+        expectedEffects.add(mockEffectD);
+        
+        assertEquals(expectedEffects, operator.getEffects());
     }
 
     /**
      * Test build.
      */
     @Test
-    public void testBuild() {
+    public final void testBuild() {
         Variable mockVariable = mock(Variable.class);
         List<Variable> mockArguments = new ArrayList<Variable>();
         mockArguments.add(mockVariable);

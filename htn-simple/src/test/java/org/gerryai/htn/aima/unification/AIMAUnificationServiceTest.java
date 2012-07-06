@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.aima.unification;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -34,7 +34,6 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
-
 import org.junit.Test;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
@@ -49,12 +48,13 @@ public class AIMAUnificationServiceTest {
 	 * Test for the finUnifier() method.
 	 */
 	@Test
-	public void testFindUnifier() {
+	public final void testFindUnifier() {
 		aima.core.logic.fol.Unifier aimaUnifier = mock(aima.core.logic.fol.Unifier.class);
 		@SuppressWarnings("unchecked")
 		AIMAConverter<Term, Variable, ImmutableTask> aimaConverter
 				= mock(AIMAConverter.class);
-		AIMAUnificationService<Operator<ImmutableEffect, Condition>, Method<ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
+		AIMAUnificationService<Operator<ImmutableEffect, Condition>, Method<ImmutableTask,
+				ImmutableTaskNetwork, ImmutableConstraint<?>>,
 		            Condition, Variable> unificationService
 					= new AIMAUnificationService<
 					        Operator<ImmutableEffect, Condition>,
@@ -72,7 +72,8 @@ public class AIMAUnificationServiceTest {
 		when(aimaConverter.convert(mockTaskA)).thenReturn(mockPredicateA);
 		when(aimaConverter.convert(mockTaskB)).thenReturn(mockPredicateB);
 		
-		Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> mockMap = new HashMap<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term>();
+		Map<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term> mockMap
+				= new HashMap<aima.core.logic.fol.parsing.ast.Variable, aima.core.logic.fol.parsing.ast.Term>();
 		when(aimaUnifier.unify(mockPredicateA, mockPredicateB)).thenReturn(mockMap);
 		
 		@SuppressWarnings("unchecked")

@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -31,8 +31,11 @@ import org.junit.Test;
  */
 public class SimpleMethodTest {
 	
+	/**
+	 * Test for method name.
+	 */
 	@Test
-	public void testName() {
+	public final void testName() {
 		String name = "testname";
 		ImmutableMethodBuilder mockBuilder = mock(ImmutableMethodBuilder.class);
 		when(mockBuilder.getName()).thenReturn(name);
@@ -40,8 +43,11 @@ public class SimpleMethodTest {
 		assertEquals(name, method.getName());
 	}
 
+	/**
+	 * Test for set/get task.
+	 */
 	@Test
-	public void testTask() {
+	public final void testTask() {
 		ImmutableTask task = mock(ImmutableTask.class);
 		ImmutableMethodBuilder mockBuilder = mock(ImmutableMethodBuilder.class);
 		when(mockBuilder.getTask()).thenReturn(task);
@@ -49,8 +55,11 @@ public class SimpleMethodTest {
 		assertEquals(task, method.getTask());
 	}
 
+	/**
+	 * Test for set/get task network.
+	 */
 	@Test
-	public void testTaskNetwork() {
+	public final void testTaskNetwork() {
 		ImmutableTaskNetwork taskNetwork = mock(ImmutableTaskNetwork.class);
 		ImmutableMethodBuilder mockBuilder = mock(ImmutableMethodBuilder.class);
 		when(mockBuilder.getTaskNetwork()).thenReturn(taskNetwork);

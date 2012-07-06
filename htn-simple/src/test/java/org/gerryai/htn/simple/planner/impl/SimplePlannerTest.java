@@ -17,7 +17,8 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -47,11 +48,11 @@ public class SimplePlannerTest {
 
 	/**
 	 * Test that an empty problem results in an empty plan.
-	 * @throws PlanNotFound
-	 * @throws NonPrimitiveTaskNotFound
+	 * @throws PlanNotFound only if the test is broken
+	 * @throws NonPrimitiveTaskNotFound only if the test is broken
 	 */
 	@Test
-	public void testEmptyProblem() throws PlanNotFound, NonPrimitiveTaskNotFound {
+	public final void testEmptyProblem() throws PlanNotFound, NonPrimitiveTaskNotFound {
 		
 		ImmutableState mockState = mock(ImmutableState.class);
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
@@ -77,11 +78,11 @@ public class SimplePlannerTest {
 	
 	/**
 	 * Test that a problem with a simple primitive task that cannot be achieved throws an exception.
-	 * @throws NonPrimitiveTaskNotFound
-	 * @throws PlanNotFound
+	 * @throws NonPrimitiveTaskNotFound only if the test is broken
+	 * @throws PlanNotFound if the test passes
 	 */
-	@Test(expected=PlanNotFound.class)
-	public void testOneUnactionablePrimitiveTaskNo() throws NonPrimitiveTaskNotFound, PlanNotFound {
+	@Test(expected = PlanNotFound.class)
+	public final void testOneUnactionablePrimitiveTaskNo() throws NonPrimitiveTaskNotFound, PlanNotFound {
 		
 	    ImmutableState mockState = mock(ImmutableState.class);
 		
@@ -106,12 +107,12 @@ public class SimplePlannerTest {
 	}
 	
 	/**
-	 * Test that a problem with a non-primitive task that cannot be decomposed because no methods exist throws an exception.
-	 * @throws NonPrimitiveTaskNotFound
-	 * @throws PlanNotFound
+	 * Test a problem with a non-primitive task that cannot be decomposed because no methods exist.
+	 * @throws NonPrimitiveTaskNotFound only if the test is broken
+	 * @throws PlanNotFound if the test passes
 	 */
-	@Test(expected=PlanNotFound.class)
-	public void testOneUndecomposableNonPrimitiveTaskNoMethods() throws NonPrimitiveTaskNotFound, PlanNotFound {
+	@Test(expected = PlanNotFound.class)
+	public final void testOneUndecomposableNonPrimitiveTaskNoMethods() throws NonPrimitiveTaskNotFound, PlanNotFound {
 		
 	    ImmutableState mockState = mock(ImmutableState.class);
 		
@@ -137,13 +138,15 @@ public class SimplePlannerTest {
 	}
 
 	/**
-	 * Test that a problem with a non-primitive task that cannot be decomposed because methods failed throws an exception.
-	 * @throws NonPrimitiveTaskNotFound
-	 * @throws PlanNotFound
-	 * @throws DecompositionNotFound 
+	 * Test a problem with a non-primitive task that cannot be decomposed because methods failed.
+	 * @throws NonPrimitiveTaskNotFound only if the test is broken
+	 * @throws PlanNotFound if the test passes
+	 * @throws DecompositionNotFound only if the test fails
+	 * @throws InvalidConstraint only if the test fails
 	 */
-	@Test(expected=PlanNotFound.class)
-	public void testOneUndecomposableNonPrimitiveTaskMethodsFailed() throws NonPrimitiveTaskNotFound, PlanNotFound, DecompositionNotFound, InvalidConstraint  {
+	@Test(expected = PlanNotFound.class)
+	public final void testOneUndecomposableNonPrimitiveTaskMethodsFailed()
+			throws NonPrimitiveTaskNotFound, PlanNotFound, DecompositionNotFound, InvalidConstraint  {
 		
 	    ImmutableState mockState = mock(ImmutableState.class);
 		
@@ -166,8 +169,10 @@ public class SimplePlannerTest {
 		// and an exception when trying to action the primitive task
 		ImmutablePlannerHelper mockPlannerHelper = mock(ImmutablePlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenReturn(mockTaskA);
-		when(mockPlannerHelper.decompose(mockTaskNetwork, mockTaskA, mockMethodA)).thenThrow(new DecompositionNotFound());
-		when(mockPlannerHelper.decompose(mockTaskNetwork, mockTaskA, mockMethodB)).thenThrow(new DecompositionNotFound());
+		when(mockPlannerHelper.decompose(mockTaskNetwork, mockTaskA, mockMethodA))
+				.thenThrow(new DecompositionNotFound());
+		when(mockPlannerHelper.decompose(mockTaskNetwork, mockTaskA, mockMethodB))
+				.thenThrow(new DecompositionNotFound());
 		
 		// Create the planner to be tested
 		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
@@ -178,11 +183,11 @@ public class SimplePlannerTest {
 	
 	/**
 	 * Test that a problem with a simple primitive task to solve results in plan with a single action.
-	 * @throws NonPrimitiveTaskNotFound
-	 * @throws PlanNotFound
+	 * @throws NonPrimitiveTaskNotFound only if the test is broken
+	 * @throws PlanNotFound only if the test is broken
 	 */
 	@Test
-	public void testOnePrimitiveTask() throws NonPrimitiveTaskNotFound, PlanNotFound {
+	public final void testOnePrimitiveTask() throws NonPrimitiveTaskNotFound, PlanNotFound {
 		
 	    ImmutableState mockState = mock(ImmutableState.class);
 		
@@ -217,12 +222,14 @@ public class SimplePlannerTest {
 	
 	/**
 	 * Test that a simple non-primitive task gets decomposed.
-	 * @throws NonPrimitiveTaskNotFound
-	 * @throws PlanNotFound
-	 * @throws DecompositionNotFound
+	 * @throws NonPrimitiveTaskNotFound only if the test is broken
+	 * @throws PlanNotFound only if the test is broken
+	 * @throws DecompositionNotFound only if the test is broken
+	 * @throws InvalidConstraint only if the test is broken
 	 */
 	@Test
-	public void testOneNonPrimitiveTask() throws NonPrimitiveTaskNotFound, PlanNotFound, DecompositionNotFound, InvalidConstraint {
+	public final void testOneNonPrimitiveTask()
+			throws NonPrimitiveTaskNotFound, PlanNotFound, DecompositionNotFound, InvalidConstraint {
 		
 	    ImmutableState mockState = mock(ImmutableState.class);
 		
@@ -259,9 +266,11 @@ public class SimplePlannerTest {
 		// Task A is primitive
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenReturn(mockTaskA);
 		// Method A will decompose task A into task B
-		when(mockPlannerHelper.decompose(mockTaskNetwork, mockTaskA, mockMethodA)).thenReturn(mockDecomposedTaskNetwork);	
+		when(mockPlannerHelper.decompose(mockTaskNetwork, mockTaskA, mockMethodA))
+				.thenReturn(mockDecomposedTaskNetwork);	
 		// There are no non-primitive tasks in the decomposed network
-		when(mockPlannerHelper.getNonPrimitiveTask(mockDecomposedTaskNetwork)).thenThrow(new NonPrimitiveTaskNotFound());
+		when(mockPlannerHelper.getNonPrimitiveTask(mockDecomposedTaskNetwork))
+				.thenThrow(new NonPrimitiveTaskNotFound());
 		// Plan for the decomposed network is the mock plan containing action B
 		when(mockPlannerHelper.findPlanForPrimitive(mockState, mockDecomposedTaskNetwork)).thenReturn(mockPlan);
 		

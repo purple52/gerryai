@@ -17,7 +17,9 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -40,7 +42,7 @@ public class SimpleFunctionTest {
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimplePredicate#getName()}.
      */
     @Test
-    public void testGetName() {
+    public final void testGetName() {
         String name = "testname";
         Function function = new SimpleFunction.Builder(name)
                 .build();
@@ -51,7 +53,7 @@ public class SimpleFunctionTest {
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimplePredicate#getTerms()}.
      */
     @Test
-    public void testGetTerms() {
+    public final void testGetTerms() {
         Term mockTermA = mock(Term.class);
         Term mockTermB = mock(Term.class);
         List<Term> mockTerms = new ArrayList<Term>();
@@ -71,7 +73,7 @@ public class SimpleFunctionTest {
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimplePredicate#applyToCopy(java.util.Map)}.
      */
     @Test
-    public void testApplyToCopy() {
+    public final void testApplyToCopy() {
         
         Map<Term, Term> mockSubstitution = new HashMap<Term, Term>();
 
@@ -100,9 +102,10 @@ public class SimpleFunctionTest {
 
     /**
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimplePredicate#isGround()}.
+     * Check that the function is ground when all its terms are ground.
      */
     @Test
-    public void testIsGroundTrue() {
+    public final void testIsGroundTrue() {
         Term mockTermA = mock(Term.class);
         Term mockTermB = mock(Term.class);
         when(mockTermA.isGround()).thenReturn(true);
@@ -122,9 +125,10 @@ public class SimpleFunctionTest {
 
     /**
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimplePredicate#isGround()}.
+     * Check that a function is not ground if any of its terms are not ground.
      */
     @Test
-    public void testIsGroundFalse() {
+    public final void testIsGroundFalse() {
         Term mockTermA = mock(Term.class);
         Term mockTermB = mock(Term.class);
         when(mockTermA.isGround()).thenReturn(true);

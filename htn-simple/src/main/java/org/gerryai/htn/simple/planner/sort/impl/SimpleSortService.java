@@ -41,7 +41,9 @@ public class SimpleSortService implements SortService<ImmutableTask, ImmutableCo
     /**
      * {@inheritDoc}
      */
-    public final List<ImmutableTask> sortByConstaints(Set<ImmutableTask> tasks,
+	// TODO: Remove this suppression!
+    @SuppressWarnings("unchecked")
+	public final List<ImmutableTask> sortByConstaints(Set<ImmutableTask> tasks,
             Set<ImmutableConstraint<?>> constraints) throws PlanNotFound {
         
         // TODO: Inject this list rather than compute it unsafely at runtime

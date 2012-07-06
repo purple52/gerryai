@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -30,13 +30,16 @@ import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.junit.Test;
 
 /**
+ * Unit tests for SimpleDomain.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public class SimpleDomainTest {
 
+	/**
+	 * Test for set/get operators.
+	 */
 	@Test
-	public void testOperators() {
+	public final void testOperators() {
 		Set<ImmutableOperator> operators = new HashSet<ImmutableOperator>();
 		
 		ImmutableDomainBuilder mockBuilder = mock(ImmutableDomainBuilder.class);
@@ -46,8 +49,11 @@ public class SimpleDomainTest {
 		assertEquals(operators, domain.getOperators());
 	}
 
+	/**
+	 * Test for set/get methods.
+	 */
 	@Test
-	public void testMethods() {
+	public final void testMethods() {
 		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
 		
 		ImmutableDomainBuilder mockBuilder = mock(ImmutableDomainBuilder.class);

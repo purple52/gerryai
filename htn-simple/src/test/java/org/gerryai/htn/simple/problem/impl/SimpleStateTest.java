@@ -17,7 +17,8 @@
  */
 package org.gerryai.htn.simple.problem.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -35,10 +36,10 @@ import org.junit.Test;
 public class SimpleStateTest {
 
     /**
-     * Test method for {@link org.gerryai.htn.simple.problem.impl.SimpleState#ask(org.gerryai.htn.simple.domain.ImmutableCondition)}.
+     * Test for simple tell/ask.
      */
     @Test
-    public void testAsk() {
+    public final void testAsk() {
         
         Sentence mockSentenceA = mock(Sentence.class);
         
@@ -55,8 +56,11 @@ public class SimpleStateTest {
         assertTrue(state.ask(mockConditionA));
     }
 
+    /**
+     * Test asking a negated sentence on an empty state.
+     */
     @Test
-    public void testAskNegatedEmpty() {
+    public final void testAskNegatedEmpty() {
         
         Sentence mockSentence = mock(Sentence.class);
         NegatedSentence mockNegatedSentence = mock(NegatedSentence.class);
@@ -73,10 +77,10 @@ public class SimpleStateTest {
         assertTrue(state.ask(mockConditionA));
     }
     /**
-     * Test method for {@link org.gerryai.htn.simple.problem.impl.SimpleState#createCopyBuilder()}.
+     * Test adding a new assertion remembers old and new assertions.
      */
     @Test
-    public void testCopyTell() {
+    public final void testCopyTell() {
         
         Sentence mockSentenceA = mock(Sentence.class);
         Sentence mockSentenceB = mock(Sentence.class);
@@ -103,8 +107,11 @@ public class SimpleStateTest {
         assertTrue(newState.ask(mockConditionB));
     }
 
+    /**
+     * Test that asserting a negated sentence revokes the negated assertion.
+     */
     @Test
-    public void testTellRevoke() {
+    public final void testTellRevoke() {
         
         Sentence mockSentence = mock(Sentence.class);
         NegatedSentence mockNegatedSentence = mock(NegatedSentence.class);

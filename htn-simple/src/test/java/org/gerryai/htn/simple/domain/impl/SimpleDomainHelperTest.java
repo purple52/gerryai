@@ -71,10 +71,11 @@ public class SimpleDomainHelperTest {
 	}
 	
 	/**
-	 * Test that no operator is found if the operator really doesn't exist
+	 * Test that no operator is found if the operator really doesn't exist.
+	 * @throws OperatorNotFound if test passes
 	 */
-	@Test(expected=OperatorNotFound.class)
-	public void testGetOperatorByNameNotFound() throws OperatorNotFound {
+	@Test(expected = OperatorNotFound.class)
+	public final void testGetOperatorByNameNotFound() throws OperatorNotFound {
 
 		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
 		ImmutableOperator mockOperatorA = mock(ImmutableOperator.class);
@@ -94,10 +95,11 @@ public class SimpleDomainHelperTest {
 	}
 
 	/**
-	 * Test that operator is found if the operator does exist
+	 * Test that operator is found if the operator does exist.
+	 * @throws OperatorNotFound only if test fails
 	 */
 	@Test
-	public void testGetOperatorByNameFound() throws OperatorNotFound {
+	public final void testGetOperatorByNameFound() throws OperatorNotFound {
 
 		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
 		ImmutableOperator mockOperatorA = mock(ImmutableOperator.class);
@@ -118,10 +120,10 @@ public class SimpleDomainHelperTest {
 	}
 	
 	/**
-	 * Test that no method is found if method list is empty
+	 * Test that no method is found if method list is empty.
 	 */
 	@Test
-	public void testGetMethodByTaskEmptyList() {
+	public final void testGetMethodByTaskEmptyList() {
 
 		ImmutableDomain	mockDomain = mock(ImmutableDomain.class);
 		when(mockDomain.getMethods()).thenReturn(new HashSet<ImmutableMethod>());
@@ -136,10 +138,10 @@ public class SimpleDomainHelperTest {
 	}
 	
 	/**
-	 * Test that no methods are found if there really are no methods that decompose a task
+	 * Test that no methods are found if there really are no methods that decompose a task.
 	 */
 	@Test
-	public void testGetMethodByTaskNotFound() {
+	public final void testGetMethodByTaskNotFound() {
 
 		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
 		
@@ -168,10 +170,10 @@ public class SimpleDomainHelperTest {
 	}
 	
 	/**
-	 * Test that a method is found if is a single method that decompose a task
+	 * Test that a method is found if is a single method that decompose a task.
 	 */
 	@Test
-	public void testGetMethodByTaskOneFound() {
+	public final void testGetMethodByTaskOneFound() {
 
 		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
 		
@@ -201,10 +203,10 @@ public class SimpleDomainHelperTest {
 	}
 	
 	/**
-	 * Test that more than one methods are found if more than one methods decompose a task
+	 * Test that more than one methods are found if more than one methods decompose a task.
 	 */
 	@Test
-	public void testGetMethodByTaskTwoFound() {
+	public final void testGetMethodByTaskTwoFound() {
 
 		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
 		
@@ -230,9 +232,9 @@ public class SimpleDomainHelperTest {
 		SimpleDomainHelper domainHelper = new SimpleDomainHelper(mockDomain);
 		
 		// Try and find methods
-		assertEquals(1,domainHelper.getMethodsByTask(mockTaskA).size());
+		assertEquals(1, domainHelper.getMethodsByTask(mockTaskA).size());
 		assertTrue(domainHelper.getMethodsByTask(mockTaskA).contains(mockMethodA));
-		assertEquals(2,domainHelper.getMethodsByTask(mockTaskB).size());
+		assertEquals(2, domainHelper.getMethodsByTask(mockTaskB).size());
 		assertTrue(domainHelper.getMethodsByTask(mockTaskB).contains(mockMethodB));
 		assertTrue(domainHelper.getMethodsByTask(mockTaskB).contains(mockMethodC));
 	}

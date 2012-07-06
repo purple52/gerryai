@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -31,7 +31,7 @@ public class SimpleOperatorBuilderFactoryTest {
 	 * Test builder creation.
 	 */
 	@Test
-	public void testCreate() {
+	public final void testCreate() {
 		SimpleDomainBuilderFactory factory = new SimpleDomainBuilderFactory();
 		assertTrue(factory.createOperatorBuilder() instanceof SimpleOperator.Builder);
 	}

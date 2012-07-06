@@ -41,7 +41,7 @@ public class SimpleConstraintFactoryTest {
 	 * Test the creation of a precedence constraint.
 	 */
 	@Test
-	public void testCreatePrecedenceConstraint() {
+	public final void testCreatePrecedenceConstraint() {
 		
 		ImmutableTask mockTaskA = mock(ImmutableTask.class);
 		ImmutableTask mockTaskB = mock(ImmutableTask.class);
@@ -54,7 +54,8 @@ public class SimpleConstraintFactoryTest {
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
 		
 		//Try and create the constraint
-		ImmutableValidatablePrecedenceConstraint constraint = factory.createPrecedenceConstraint(mockTasksOne, mockTasksTwo);
+		ImmutableValidatablePrecedenceConstraint constraint
+				= factory.createPrecedenceConstraint(mockTasksOne, mockTasksTwo);
 		
 		assertEquals(mockTasksOne, constraint.getPrecedingTasks());
 		assertEquals(mockTasksTwo, constraint.getProcedingTasks());
@@ -64,7 +65,7 @@ public class SimpleConstraintFactoryTest {
 	 * Test the creation of a before constraint.
 	 */
 	@Test
-	public void testCreateBeforeConstraint() {
+	public final void testCreateBeforeConstraint() {
 		Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
 		ImmutableCondition mockCondition = mock(ImmutableCondition.class);
 		
@@ -82,7 +83,7 @@ public class SimpleConstraintFactoryTest {
 	 * Test the creation of an after constraint.
 	 */
 	@Test
-	public void testCreateAfterConstraint() {
+	public final void testCreateAfterConstraint() {
 		Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
 		ImmutableCondition mockCondition = mock(ImmutableCondition.class);
 		

@@ -17,7 +17,8 @@
  */
 package org.gerryai.htn.simple.logic.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import java.util.HashMap;
@@ -37,7 +38,7 @@ public class SimpleConstantTest {
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleConstant#getName()}.
      */
     @Test
-    public void testGetName() {
+    public final void testGetName() {
         String name = "testname";
         Constant constant = new SimpleConstant(name);
         assertEquals(name, constant.getName());
@@ -45,9 +46,10 @@ public class SimpleConstantTest {
 
     /**
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleConstant#applyToCopy(java.util.Map)}.
+	 * Check that an empty substitution is correctly applied.
      */
     @Test
-    public void testApplyToCopyEmpty() {
+    public final void testApplyToCopyEmpty() {
         
         Map<Term, Term> substitution = new HashMap<Term, Term>();
         
@@ -60,9 +62,10 @@ public class SimpleConstantTest {
 
     /**
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleConstant#applyToCopy(java.util.Map)}.
+	 * Check that a substitution that does nothing results in the original constant.
      */
     @Test
-    public void testApplyToCopyNotSubstituted() {
+    public final void testApplyToCopyNotSubstituted() {
  
         String nameA = "testnameA";
         String nameB = "testnameB";
@@ -79,9 +82,10 @@ public class SimpleConstantTest {
  
     /**
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleConstant#applyToCopy(java.util.Map)}.
+ 	 * Check that a substitution that includes thsi constant replaces it correctly.
      */
     @Test
-    public void testApplyToCopySubstituted() {
+    public final void testApplyToCopySubstituted() {
  
         String nameA = "testnameA";
         Constant constantA = new SimpleConstant(nameA);
@@ -98,7 +102,7 @@ public class SimpleConstantTest {
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleConstant#isGround()}.
      */
     @Test
-    public void testIsGround() {
+    public final void testIsGround() {
         String name = "testname";
         Constant constant = new SimpleConstant(name);
         assertTrue(constant.isGround());
@@ -108,7 +112,7 @@ public class SimpleConstantTest {
      * Test method for {@link org.gerryai.htn.simple.logic.impl.SimpleConstant#equals(java.lang.Object)}.
      */
     @Test
-    public void testEqualsObject() {
+    public final void testEqualsObject() {
         String nameA = "testname";
         String nameB = "testname";
         Constant constantA = new SimpleConstant(nameA);

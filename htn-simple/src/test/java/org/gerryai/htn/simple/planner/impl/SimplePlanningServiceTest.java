@@ -17,11 +17,11 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
@@ -44,7 +44,7 @@ public class SimplePlanningServiceTest {
 	 * @throws PlanNotFound only if the test fails
 	 */
 	@Test
-	public void testSolvePlanFound() throws PlanNotFound {
+	public final void testSolvePlanFound() throws PlanNotFound {
 		
 		ImmutablePlan mockPlan = mock(ImmutablePlan.class);
 		ImmutableProblem mockProblem = createMockProblem();
@@ -69,8 +69,8 @@ public class SimplePlanningServiceTest {
 	 * Test that the service throws a PlanNotFound exception if no plan is found.
 	 * @throws PlanNotFound if the test passes
 	 */
-	@Test(expected=PlanNotFound.class)
-	public void testSolvePlanNotFound() throws PlanNotFound {
+	@Test(expected = PlanNotFound.class)
+	public final void testSolvePlanNotFound() throws PlanNotFound {
 		
 		ImmutableProblem mockProblem = createMockProblem();
 		ImmutablePlanner mockPlanner = mock(ImmutablePlanner.class);

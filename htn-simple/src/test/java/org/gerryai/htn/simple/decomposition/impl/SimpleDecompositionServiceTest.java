@@ -17,10 +17,12 @@
  */
 package org.gerryai.htn.simple.decomposition.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.Matchers.any;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -43,15 +45,19 @@ import org.junit.Test;
  */
 public class SimpleDecompositionServiceTest {
 	
-  
+	/**
+	 * Test decomposition of a task network using a method.
+	 * @throws InvalidConstraint only if test fails
+	 */
     @Test
     @SuppressWarnings("unchecked")
-    public void testDecompose() throws InvalidConstraint {
+    public final void testDecompose() throws InvalidConstraint {
     	
     	ConstraintValidatorFactory<ImmutableTask,
     	        ImmutableCondition> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
 
-    	SimpleDecompositionService decompositionService = new SimpleDecompositionService(mockConstraintValidatorFactory);
+    	SimpleDecompositionService decompositionService
+    			= new SimpleDecompositionService(mockConstraintValidatorFactory);
     	
     	// TaskA will be decomposed into TaskB and TaskC
     	ImmutableTask mockTaskA = mock(ImmutableTask.class);
@@ -101,7 +107,8 @@ public class SimpleDecompositionServiceTest {
         when(mockTaskNetworkBuilderE.build()).thenReturn(mockUnifiedMethodSubTasks);
 
     	//Make the decompose call
-    	ImmutableTaskNetwork decomposedTaskNetwork = decompositionService.decompose(mockSubstitution, mockTaskNetwork, mockTaskA, mockMethod);
+    	ImmutableTaskNetwork decomposedTaskNetwork
+    			= decompositionService.decompose(mockSubstitution, mockTaskNetwork, mockTaskA, mockMethod);
 
     	// Verify that the original task network and the method's sub tasks got the unifier applied
     	//verify(mockUnificationService).apply(mockUnifier, mockMethodSubTasks);

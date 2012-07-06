@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import org.gerryai.htn.simple.domain.ImmutableDomain;
@@ -34,7 +34,7 @@ public class SimplePlannerFactoryTest {
 	 * Test that the factory can create a simple planner.
 	 */
 	@Test
-	public void testCreate() {
+	public final void testCreate() {
 		
 	    ImmutableStateService mockStateService = mock(ImmutableStateService.class);
 		SimplePlannerFactory factory = new SimplePlannerFactory(mockStateService);

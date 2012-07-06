@@ -1,6 +1,7 @@
 package org.gerryai.htn.simple.constraint.validation.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -16,6 +17,10 @@ import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.junit.Test;
 
+/**
+ * Unit tests for GenericConstraintValidatorImpl class.
+ * @author David Edwards <david@more.fool.me.uk>
+ */
 public class GenericConstraintValidatorImplTest {
 
 	/**
@@ -23,7 +28,7 @@ public class GenericConstraintValidatorImplTest {
 	 * @throws InvalidConstraint only if test fails
 	 */
 	@Test
-	public void testValidatePrecedenceNoExistingConstraints() throws InvalidConstraint {
+	public final void testValidatePrecedenceNoExistingConstraints() throws InvalidConstraint {
 	
 		Task mockTaskA = mock(Task.class);
         Set<Task> mockPrecedingTasks = new HashSet<Task>();
@@ -48,7 +53,7 @@ public class GenericConstraintValidatorImplTest {
 	 * Test that the first constraint is invalid if a task is missing.
 	 */
 	@Test
-	public void testValidatePrecedenceNoExistingConstraintsMissingTaskA() {
+	public final void testValidatePrecedenceNoExistingConstraintsMissingTaskA() {
 		
         Task mockTaskA = mock(Task.class);
         Set<Task> mockPrecedingTasks = new HashSet<Task>();
@@ -72,7 +77,7 @@ public class GenericConstraintValidatorImplTest {
 	 * Test that the first constraint is invalid if a task is missing.
 	 */
 	@Test
-	public void testValidatePrecedenceNoExistingConstraintsMissingTaskB() {
+	public final void testValidatePrecedenceNoExistingConstraintsMissingTaskB() {
 		
         Task mockTaskA = mock(Task.class);
         Set<Task> mockPrecedingTasks = new HashSet<Task>();
@@ -97,7 +102,7 @@ public class GenericConstraintValidatorImplTest {
 	 * @throws InvalidConstraint 
 	 */
 	@Test
-	public void testValidatePrecedenceOneExistingConstraint() throws InvalidConstraint {
+	public final void testValidatePrecedenceOneExistingConstraint() throws InvalidConstraint {
 		
 		Task mockTaskA = mock(Task.class);
         Set<Task> mockTasksA = new HashSet<Task>();
@@ -131,10 +136,10 @@ public class GenericConstraintValidatorImplTest {
 	
 	/**
 	 * Test that adding the same constraint twice fails.
-	 * @throws InvalidConstraint if test succeeds
+	 * @throws InvalidConstraint if test passes
 	 */
-	@Test(expected=InvalidConstraint.class)
-	public void testValidatePrecedenceOneExistingIdenticalConstraint() throws InvalidConstraint {
+	@Test(expected = InvalidConstraint.class)
+	public final void testValidatePrecedenceOneExistingIdenticalConstraint() throws InvalidConstraint {
 		
         Task mockTaskA = mock(Task.class);
         Set<Task> mockTasksA = new HashSet<Task>();
@@ -162,10 +167,10 @@ public class GenericConstraintValidatorImplTest {
 
 	/**
 	 * Test that adding a cyclic set of constraints fails, cycle of one.
-	 * @throws InvalidConstraint if test succeeds
+	 * @throws InvalidConstraint if test passes
 	 */
-	@Test(expected=InvalidConstraint.class)
-	public void testValidatePrecedenceSingleCycle() throws InvalidConstraint {
+	@Test(expected = InvalidConstraint.class)
+	public final void testValidatePrecedenceSingleCycle() throws InvalidConstraint {
 		
 		Task mockTaskA = mock(Task.class);
         Set<Task> mockTasksA = new HashSet<Task>();
@@ -187,8 +192,8 @@ public class GenericConstraintValidatorImplTest {
 	 * Test that adding a cyclic set of constraints fails, cycle of two.
 	 * @throws InvalidConstraint if test succeeds
 	 */
-	@Test(expected=InvalidConstraint.class)
-	public void testValidatePrecedenceDoubleCycle() throws InvalidConstraint {
+	@Test(expected = InvalidConstraint.class)
+	public final void testValidatePrecedenceDoubleCycle() throws InvalidConstraint {
 		
         Task mockTaskA = mock(Task.class);
         Set<Task> mockTasksA = new HashSet<Task>();
@@ -220,8 +225,8 @@ public class GenericConstraintValidatorImplTest {
 	 * Test that adding a cyclic set of constraints fails, cycle of three.
 	 * @throws InvalidConstraint if test succeeds
 	 */
-	@Test(expected=InvalidConstraint.class)
-	public void testValidatePrecedenceTripleCycle() throws InvalidConstraint {
+	@Test(expected = InvalidConstraint.class)
+	public final void testValidatePrecedenceTripleCycle() throws InvalidConstraint {
 		
         Task mockTaskA = mock(Task.class);
         Set<Task> mockTasksA = new HashSet<Task>();
@@ -263,8 +268,8 @@ public class GenericConstraintValidatorImplTest {
 	 * Test that adding a cyclic set of constraints fails, cycle of three with extra .
 	 * @throws InvalidConstraint if test succeeds
 	 */
-	@Test(expected=InvalidConstraint.class)
-	public void testValidatePrecedenceTripleCyclePlusExtras() throws InvalidConstraint {
+	@Test(expected = InvalidConstraint.class)
+	public final void testValidatePrecedenceTripleCyclePlusExtras() throws InvalidConstraint {
 		
         Task mockTaskA = mock(Task.class);
         Set<Task> mockTasksA = new HashSet<Task>();
@@ -338,7 +343,7 @@ public class GenericConstraintValidatorImplTest {
 	 * @throws InvalidConstraint only if test fails
 	 */
 	@Test
-	public void testValidateBeforeNoExistingConstraints() throws InvalidConstraint {
+	public final void testValidateBeforeNoExistingConstraints() throws InvalidConstraint {
 	
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -362,7 +367,7 @@ public class GenericConstraintValidatorImplTest {
 	 * Test that the first constraint is invalid if a task is missing.
 	 */
 	@Test
-	public void testValidateBeforeNoExistingConstraintsMissingTaskA() {
+	public final void testValidateBeforeNoExistingConstraintsMissingTaskA() {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -384,7 +389,7 @@ public class GenericConstraintValidatorImplTest {
 	 * Test that the first constraint is invalid if a task is missing.
 	 */
 	@Test
-	public void testValidateBeforeNoExistingConstraintsMissingTaskB() {
+	public final void testValidateBeforeNoExistingConstraintsMissingTaskB() {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -407,7 +412,7 @@ public class GenericConstraintValidatorImplTest {
 	 * @throws InvalidConstraint 
 	 */
 	@Test
-	public void testValidateBeforeOneExistingConstraint() throws InvalidConstraint {
+	public final void testValidateBeforeOneExistingConstraint() throws InvalidConstraint {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -437,8 +442,8 @@ public class GenericConstraintValidatorImplTest {
 	 * Test that adding the same constraint twice fails.
 	 * @throws InvalidConstraint if test succeeds
 	 */
-	@Test(expected=InvalidConstraint.class)
-	public void testValidateBeforeOneExistingIdenticalConstraint() throws InvalidConstraint {
+	@Test(expected = InvalidConstraint.class)
+	public final void testValidateBeforeOneExistingIdenticalConstraint() throws InvalidConstraint {
 		
 		Task mockTaskA = mock(Task.class);
 		Set<Task> mockTasksA = new HashSet<Task>();
@@ -464,7 +469,7 @@ public class GenericConstraintValidatorImplTest {
 	 * @throws InvalidConstraint only if test fails
 	 */
 	@Test
-	public void testValidateAfterNoExistingConstraints() throws InvalidConstraint {
+	public final void testValidateAfterNoExistingConstraints() throws InvalidConstraint {
 	
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -488,7 +493,7 @@ public class GenericConstraintValidatorImplTest {
 	 * Test that the first constraint is invalid if a task is missing.
 	 */
 	@Test
-	public void testValidateAfterNoExistingConstraintsMissingTaskA() {
+	public final void testValidateAfterNoExistingConstraintsMissingTaskA() {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -510,7 +515,7 @@ public class GenericConstraintValidatorImplTest {
 	 * Test that the first constraint is invalid if a task is missing.
 	 */
 	@Test
-	public void testValidateAfterNoExistingConstraintsMissingTaskB() {
+	public final void testValidateAfterNoExistingConstraintsMissingTaskB() {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -533,7 +538,7 @@ public class GenericConstraintValidatorImplTest {
 	 * @throws InvalidConstraint 
 	 */
 	@Test
-	public void testValidateAfterOneExistingConstraint() throws InvalidConstraint {
+	public final void testValidateAfterOneExistingConstraint() throws InvalidConstraint {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -563,8 +568,8 @@ public class GenericConstraintValidatorImplTest {
 	 * Test that adding the same constraint twice fails.
 	 * @throws InvalidConstraint if test succeeds
 	 */
-	@Test(expected=InvalidConstraint.class)
-	public void testValidateAfterOneExistingIdenticalConstraint() throws InvalidConstraint {
+	@Test(expected = InvalidConstraint.class)
+	public final void testValidateAfterOneExistingIdenticalConstraint() throws InvalidConstraint {
 		
 		Task mockTaskA = mock(Task.class);
 		Set<Task> mockTasksA = new HashSet<Task>();
@@ -590,7 +595,7 @@ public class GenericConstraintValidatorImplTest {
 	 * @throws InvalidConstraint only if test fails
 	 */
 	@Test
-	public void testValidateBetweenNoExistingConstraints() throws InvalidConstraint {
+	public final void testValidateBetweenNoExistingConstraints() throws InvalidConstraint {
 	
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -622,7 +627,7 @@ public class GenericConstraintValidatorImplTest {
 	 * Test that the first constraint is invalid if a task is missing.
 	 */
 	@Test
-	public void testValidateBetweenNoExistingConstraintsMissingTaskA() {
+	public final void testValidateBetweenNoExistingConstraintsMissingTaskA() {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -653,7 +658,7 @@ public class GenericConstraintValidatorImplTest {
 	 * Test that the first constraint is invalid if a task is missing.
 	 */
 	@Test
-	public void testValidateAfterNoExistingConstraintsMissingTaskD() {
+	public final void testValidateAfterNoExistingConstraintsMissingTaskD() {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -685,7 +690,7 @@ public class GenericConstraintValidatorImplTest {
 	 * @throws InvalidConstraint 
 	 */
 	@Test
-	public void testValidateBetweenOneExistingConstraint() throws InvalidConstraint {
+	public final void testValidateBetweenOneExistingConstraint() throws InvalidConstraint {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
@@ -726,8 +731,8 @@ public class GenericConstraintValidatorImplTest {
 	 * Test that adding the same constraint twice fails.
 	 * @throws InvalidConstraint if test succeeds
 	 */
-	@Test(expected=InvalidConstraint.class)
-	public void testValidateBetweenOneExistingIdenticalConstraint() throws InvalidConstraint {
+	@Test(expected = InvalidConstraint.class)
+	public final void testValidateBetweenOneExistingIdenticalConstraint() throws InvalidConstraint {
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);

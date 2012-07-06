@@ -35,7 +35,6 @@ import org.junit.Test;
 
 /**
  * Unit tests for the SimpleTask class.
- * 
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class SimpleTaskTest {
@@ -44,7 +43,7 @@ public class SimpleTaskTest {
      * Test name field.
      */
     @Test
-    public void testName() {
+    public final void testName() {
         ImmutableTaskBuilder mockBuilder = mock(ImmutableTaskBuilder.class);
         when(mockBuilder.getName()).thenReturn("testname");
 
@@ -57,7 +56,7 @@ public class SimpleTaskTest {
      * Test arguments field.
      */
     @Test
-    public void testArguments() {
+    public final void testArguments() {
         ImmutableTaskBuilder mockBuilder = mock(ImmutableTaskBuilder.class);
         Term mockTermA = mock(Term.class);
         Term mockTermB = mock(Term.class);
@@ -79,7 +78,7 @@ public class SimpleTaskTest {
      * Test isPrimitive field.
      */
     @Test
-    public void testIsPrimitive() {
+    public final void testIsPrimitive() {
         ImmutableTaskBuilder mockBuilder = mock(ImmutableTaskBuilder.class);
 
         when(mockBuilder.isPrimitive()).thenReturn(true);
@@ -97,7 +96,7 @@ public class SimpleTaskTest {
      * Test builder construction.
      */
     @Test
-    public void testSimpleTaskBuilder() {
+    public final void testSimpleTaskBuilder() {
         LogicFactory mockLogicFactory = mock(LogicFactory.class);
         
         // Create the builder under test
@@ -112,7 +111,7 @@ public class SimpleTaskTest {
      * Implicitly tests getName()
      */
     @Test
-    public void testSetName() {
+    public final void testSetName() {
         LogicFactory mockLogicFactory = mock(LogicFactory.class);
         
         // Create the builder under test
@@ -128,7 +127,7 @@ public class SimpleTaskTest {
      * Implicitly tests getArguments()
      */
     @Test
-    public void testAddArgument() {
+    public final void testAddArgument() {
 
         LogicFactory mockLogicFactory = mock(LogicFactory.class);
         
@@ -151,7 +150,7 @@ public class SimpleTaskTest {
      * Implicitly tests getArguments()
      */
     @Test
-    public void testAddArguments() {
+    public final void testAddArguments() {
         
         LogicFactory mockLogicFactory = mock(LogicFactory.class);
         
@@ -172,19 +171,21 @@ public class SimpleTaskTest {
                 .addArguments(mockTermsOne)
                 .addArguments(mockTermsTwo);
         
+        List<Term> expectedTerms = new ArrayList<Term>();
+        expectedTerms.add(mockTermA);
+        expectedTerms.add(mockTermB);
+        expectedTerms.add(mockTermC);
+        expectedTerms.add(mockTermD);
+               
         // Check that the arguments have been added in the correct order
-        assertEquals(4, builder.getArguments().size());
-        assertEquals(mockTermA, builder.getArguments().get(0));
-        assertEquals(mockTermB, builder.getArguments().get(1));
-        assertEquals(mockTermC, builder.getArguments().get(2));
-        assertEquals(mockTermD, builder.getArguments().get(3));
+        assertEquals(expectedTerms, builder.getArguments());
     }
 
     /**
      * Test building a primitive task.
      */
     @Test
-    public void testBuildPrimitive() {
+    public final void testBuildPrimitive() {
 
         LogicFactory mockLogicFactory = mock(LogicFactory.class);
         Term mockTerm = mock(Term.class);
@@ -195,7 +196,7 @@ public class SimpleTaskTest {
                 .addArgument(mockTerm)
                 .setIsPrimitive(true)
                 .build();
-        assertEquals("testname",primitiveTask.getName());
+        assertEquals("testname", primitiveTask.getName());
         assertEquals(1, primitiveTask.getArguments().size());
         assertTrue(primitiveTask.getArguments().contains(mockTerm));
         assertTrue(primitiveTask.isPrimitive());
@@ -205,7 +206,7 @@ public class SimpleTaskTest {
      * Test building a non-primitive task.
      */
     @Test
-    public void testBuildNonPrimitive() {
+    public final void testBuildNonPrimitive() {
 
         LogicFactory mockLogicFactory = mock(LogicFactory.class);
         Term mockTerm = mock(Term.class);
@@ -216,7 +217,7 @@ public class SimpleTaskTest {
                 .addArgument(mockTerm)
                 .setIsPrimitive(false)
                 .build();
-        assertEquals("testname",primitiveTask.getName());
+        assertEquals("testname", primitiveTask.getName());
         assertEquals(1, primitiveTask.getArguments().size());
         assertTrue(primitiveTask.getArguments().contains(mockTerm));
         assertFalse(primitiveTask.isPrimitive());
@@ -226,7 +227,7 @@ public class SimpleTaskTest {
      * Test a simple build just copying a base task.
      */
     @Test
-    public void testCopy() {
+    public final void testCopy() {
         String name = "testname";
         Term mockTerm = mock(Term.class);
         List<Term> terms = new ArrayList<Term>();
@@ -250,7 +251,7 @@ public class SimpleTaskTest {
      * Test a copying a base task and applying a substituter.
      */
     @Test
-    public void testBuilderApply() {
+    public final void testBuilderApply() {
         String name = "testname";
         
         Term mockTermA = mock(Term.class);

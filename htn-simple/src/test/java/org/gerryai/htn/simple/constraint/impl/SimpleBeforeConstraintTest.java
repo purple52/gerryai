@@ -44,7 +44,7 @@ public class SimpleBeforeConstraintTest {
      * Test get/set tasks.
      */
     @Test
-    public void testConstructor() {
+    public final void testConstructor() {
         ImmutableTask mockTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
         mockTasks.add(mockTask);
@@ -60,10 +60,10 @@ public class SimpleBeforeConstraintTest {
     }
 
     /**
-     * Test validate is called
+     * Test validate is called.
      */
     @Test
-    public void testValidate() {
+    public final void testValidate() {
         ImmutableTask mockTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
         mockTasks.add(mockTask);
@@ -81,15 +81,11 @@ public class SimpleBeforeConstraintTest {
     }
 
     /**
-     * Test method for
-     * {@link org.gerryai.htn.simple.constraint.impl.SimpleAfterConstraint#add(org.gerryai.htn.simple.constraint.validation.ConstraintValidator)}
-     * .
-     * 
-     * @throws InvalidConstraint
-     *             only if test fails
+     * Test that constraint is added to the validator.
+     * @throws InvalidConstraint only if test fails
      */
     @Test
-    public void testAdd() throws InvalidConstraint {
+    public final void testAdd() throws InvalidConstraint {
         ImmutableTask mockTask = mock(ImmutableTask.class);
         Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
         mockTasks.add(mockTask);
@@ -107,10 +103,10 @@ public class SimpleBeforeConstraintTest {
     }
 
     /**
-     * Test construction using copy and apply
+     * Test construction using copy and apply.
      */
     @Test
-    public void testCopyApply() {
+    public final void testCopyApply() {
         @SuppressWarnings("unchecked")
         Map<Term, Term> mockSubstitution = mock(Map.class);
         ImmutableTask mockTask = mock(ImmutableTask.class);
@@ -131,14 +127,14 @@ public class SimpleBeforeConstraintTest {
 
         assertEquals(mockTasks, constraint.getTasks());
         assertEquals(mockConditionB, constraint.getCondition());
-        //TODO: check substitution reuslts properly
+        //TODO: check substitution results properly
     }
 
     /**
-     * Test construction using copy and replace
+     * Test construction using copy and replace.
      */
     @Test
-    public void testCopyReplace() {
+    public final void testCopyReplace() {
         ImmutableTask mockTaskA = mock(ImmutableTask.class);
         Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
         mockTasks.add(mockTaskA);
