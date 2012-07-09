@@ -20,7 +20,6 @@ package org.gerryai.htn.simple.constraint.validation.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.ValidatableBetweenConstraint;
@@ -34,11 +33,9 @@ import com.google.common.collect.Multimap;
 
 /**
  * Class for validating precedence constraints.
- * @param <I> type of condition being used by the constraints being validated
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class GenericConstraintValidator<I extends Condition>
-		implements ConstraintValidator<I> {
+public class GenericConstraintValidator implements ConstraintValidator {
 
 	/**
 	 * Set of tasks that have been added to the validator so far.
@@ -48,45 +45,45 @@ public class GenericConstraintValidator<I extends Condition>
 	/**
 	 * Set of precedence constraints that have been added so far.
 	 */
-	private Set<ValidatablePrecedenceConstraint<I>> precedenceConstraints;
+	private Set<ValidatablePrecedenceConstraint> precedenceConstraints;
 	
 	/**
 	 * Set of before constraints that have been added so far.
 	 */
-	private Set<ValidatableBeforeConstraint<I>> beforeConstraints;
+	private Set<ValidatableBeforeConstraint> beforeConstraints;
 
 	/**
 	 * Set of after constraints that have been added so far.
 	 */
-	private Set<ValidatableAfterConstraint<I>> afterConstraints;
+	private Set<ValidatableAfterConstraint> afterConstraints;
 
 	/**
 	 * Set of between constraints that have been added so far.
 	 */
-	private Set<ValidatableBetweenConstraint<I>> betweenConstraints;
+	private Set<ValidatableBetweenConstraint> betweenConstraints;
 	
 	/**
 	 * Map of precedence constraints, using their preceding task as the key.
 	 * Used to simplify looking for cycles.
 	 */
-	private Multimap<Task, ValidatablePrecedenceConstraint<I>> precedingTasks;
+	private Multimap<Task, ValidatablePrecedenceConstraint> precedingTasks;
 	
 	/**
 	 * Default constructor.
 	 */
 	public GenericConstraintValidator() {
 		tasks = new HashSet<Task>();
-		precedenceConstraints = new HashSet<ValidatablePrecedenceConstraint<I>>();
+		precedenceConstraints = new HashSet<ValidatablePrecedenceConstraint>();
 		precedingTasks = HashMultimap.create();
-		beforeConstraints = new HashSet<ValidatableBeforeConstraint<I>>();
-		afterConstraints = new HashSet<ValidatableAfterConstraint<I>>();
-		betweenConstraints = new HashSet<ValidatableBetweenConstraint<I>>();
+		beforeConstraints = new HashSet<ValidatableBeforeConstraint>();
+		afterConstraints = new HashSet<ValidatableAfterConstraint>();
+		betweenConstraints = new HashSet<ValidatableBetweenConstraint>();
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ValidatablePrecedenceConstraint<I> constraint) {
+	public final boolean validate(ValidatablePrecedenceConstraint constraint) {
 		
 		// Check tasks have already been added
 	    for (Task task : constraint.getPrecedingTasks()) {
@@ -101,7 +98,7 @@ public class GenericConstraintValidator<I extends Condition>
         }
         
 		// Check if an existing identical constraint exists
-		for (ValidatablePrecedenceConstraint<I> existingConstraint : precedenceConstraints) {	
+		for (ValidatablePrecedenceConstraint existingConstraint : precedenceConstraints) {	
 			if (existingConstraint.equals(constraint)) {
 				return false;
 			}
@@ -122,7 +119,7 @@ public class GenericConstraintValidator<I extends Condition>
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ValidatableBeforeConstraint<I> constraint) {
+	public final boolean validate(ValidatableBeforeConstraint constraint) {
 		// Check tasks have already been added
 		for (Task task : constraint.getTasks()) {
 			if (!tasks.contains(task)) {
@@ -130,7 +127,7 @@ public class GenericConstraintValidator<I extends Condition>
 			}
 		}
 		// Check if an existing identical constraint exists
-		for (ValidatableBeforeConstraint<I> existingConstraint : beforeConstraints) {	
+		for (ValidatableBeforeConstraint existingConstraint : beforeConstraints) {	
 			if (existingConstraint.equals(constraint)) {
 				return false;
 			}
@@ -141,7 +138,7 @@ public class GenericConstraintValidator<I extends Condition>
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ValidatableAfterConstraint<I> constraint) {
+	public final boolean validate(ValidatableAfterConstraint constraint) {
 		// Check tasks have already been added
 		for (Task task : constraint.getTasks()) {
 			if (!tasks.contains(task)) {
@@ -149,7 +146,7 @@ public class GenericConstraintValidator<I extends Condition>
 			}
 		}
 		// Check if an existing identical constraint exists
-		for (ValidatableAfterConstraint<I> existingConstraint : afterConstraints) {	
+		for (ValidatableAfterConstraint existingConstraint : afterConstraints) {	
 			if (existingConstraint.equals(constraint)) {
 				return false;
 			}
@@ -160,7 +157,7 @@ public class GenericConstraintValidator<I extends Condition>
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ValidatableBetweenConstraint<I> constraint) {
+	public final boolean validate(ValidatableBetweenConstraint constraint) {
 		// Check tasks have already been added
 		for (Task task : constraint.getPrecedingTasks()) {
 			if (!tasks.contains(task)) {
@@ -173,7 +170,7 @@ public class GenericConstraintValidator<I extends Condition>
 			}
 		}
 		// Check if an existing identical constraint exists
-		for (ValidatableBetweenConstraint<I> existingConstraint : betweenConstraints) {	
+		for (ValidatableBetweenConstraint existingConstraint : betweenConstraints) {	
 			if (existingConstraint.equals(constraint)) {
 				return false;
 			}
@@ -184,7 +181,7 @@ public class GenericConstraintValidator<I extends Condition>
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ValidatablePrecedenceConstraint<I> constraint)
+	public final void add(ValidatablePrecedenceConstraint constraint)
 			throws InvalidConstraint {
 		if (validate(constraint)) {
 			precedenceConstraints.add(constraint);
@@ -199,7 +196,7 @@ public class GenericConstraintValidator<I extends Condition>
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ValidatableBeforeConstraint<I> constraint)
+	public final void add(ValidatableBeforeConstraint constraint)
 			throws InvalidConstraint {
 		if (validate(constraint)) {
 			beforeConstraints.add(constraint);
@@ -211,7 +208,7 @@ public class GenericConstraintValidator<I extends Condition>
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ValidatableAfterConstraint<I> constraint)
+	public final void add(ValidatableAfterConstraint constraint)
 			throws InvalidConstraint {
 		if (validate(constraint)) {
 			afterConstraints.add(constraint);
@@ -223,7 +220,7 @@ public class GenericConstraintValidator<I extends Condition>
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ValidatableBetweenConstraint<I> constraint)
+	public final void add(ValidatableBetweenConstraint constraint)
 			throws InvalidConstraint {
 		if (validate(constraint)) {
 			betweenConstraints.add(constraint);
@@ -252,7 +249,7 @@ public class GenericConstraintValidator<I extends Condition>
 		} else if (!precedingTasks.containsKey(nextTask)) {
 			return false;
 		} else {
-			for (ValidatablePrecedenceConstraint<I> constraint : precedingTasks.get(nextTask)) {
+			for (ValidatablePrecedenceConstraint constraint : precedingTasks.get(nextTask)) {
 				for (Task task : constraint.getProcedingTasks()) {
 				    if (checkForPrecedenceConstraintCycle(initialTask, task)) {
 				        return true;

@@ -19,8 +19,6 @@ package org.gerryai.htn.plan;
 
 import java.util.Map;
 
-import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Variable;
@@ -29,22 +27,16 @@ import org.gerryai.logic.Variable;
  * Interface to be implemented by an action within a plan.
  * An action must an specify an operator that it actions and
  * a set of bindings to ground the operator.
- * @param <E> type of effect this action uses
- * @param <O> type of operator this action uses
- * @param <I> type of condition the action uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface Action<
-        E extends Effect,
-        O extends Operator<E, I>,
-        I extends Condition> {
+public interface Action {
 
 	/**
 	 * Get the operator that this action uses.
 	 * @return the operator
 	 */
-	O getOperator();
+	Operator getOperator();
 	
 	/**
 	 * Get the bindings for this action.

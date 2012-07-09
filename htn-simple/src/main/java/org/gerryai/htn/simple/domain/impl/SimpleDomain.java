@@ -21,10 +21,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.domain.ImmutableDomainBuilder;
+import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
+import org.gerryai.htn.simple.domain.ImmutableDomainBuilder;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
 
 /**
  * Simple representation of a domain.
@@ -36,7 +36,7 @@ public class SimpleDomain implements ImmutableDomain {
 	/**
 	 * Operators available in this domain.
 	 */
-	private Set<ImmutableOperator> operators;
+	private Set<Operator> operators;
 	
 	/**
 	 * Methods available in this domain.
@@ -55,7 +55,7 @@ public class SimpleDomain implements ImmutableDomain {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<ImmutableOperator> getOperators() {
+	public final Set<Operator> getOperators() {
 		return Collections.unmodifiableSet(operators);
 	}
 
@@ -75,7 +75,7 @@ public class SimpleDomain implements ImmutableDomain {
 	    /**
 	     * Set of operators the domain uses.
 	     */
-	    private Set<ImmutableOperator> operators;
+	    private Set<Operator> operators;
 	    
 	    /**
 	     * Set of methods that the domain uses.
@@ -86,14 +86,14 @@ public class SimpleDomain implements ImmutableDomain {
 	     * Default constructor.
 	     */
 	    public Builder() {
-	        operators = new HashSet<ImmutableOperator>();
+	        operators = new HashSet<Operator>();
 	        methods = new HashSet<ImmutableMethod>();
 	    }
 
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final Builder addOperator(ImmutableOperator operator) {
+	    public final Builder addOperator(Operator operator) {
 	        operators.add(operator);
 	        return this;
 	    }
@@ -116,7 +116,7 @@ public class SimpleDomain implements ImmutableDomain {
 	    /**
 	     * @return the operators
 	     */
-	    public final Set<ImmutableOperator> getOperators() {
+	    public final Set<Operator> getOperators() {
 	        return operators;
 	    }
 

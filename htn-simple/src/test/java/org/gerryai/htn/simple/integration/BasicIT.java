@@ -19,15 +19,15 @@ package org.gerryai.htn.simple.integration;
 
 import static org.junit.Assert.assertEquals;
 
+import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Effect;
+import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilder;
-import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.problem.ImmutableProblem;
 import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
@@ -65,7 +65,7 @@ public class BasicIT extends BaseIT {
 				.build();
 		
 		// Create the initial state
-		ImmutableEffect effect = getPlanningFactory().getDomainBuilderFactory().createEffectBuilder()
+		Effect effect = getPlanningFactory().getDomainBuilderFactory().createEffectBuilder()
 		        .setSentence(getPlanningFactory().getLogicFactory().sentenceBuilder()
 		                .predicate("have")
                         .addTerm(constantKiwi)
@@ -83,7 +83,7 @@ public class BasicIT extends BaseIT {
 		        .build();
 		
 		// Solve the problem
-		ImmutablePlan plan = getPlanningFactory().getPlanningService().solve(problem);
+		Plan plan = getPlanningFactory().getPlanningService().solve(problem);
 		
 		assertEquals(2, plan.getActions().size());
 		assertEquals("drop", plan.getActions().get(0).getOperator().getName());
@@ -119,7 +119,7 @@ public class BasicIT extends BaseIT {
                 .build();
         
         // Create the initial state
-        ImmutableEffect effect = getPlanningFactory().getDomainBuilderFactory().createEffectBuilder()
+        Effect effect = getPlanningFactory().getDomainBuilderFactory().createEffectBuilder()
                 .setSentence(getPlanningFactory().getLogicFactory().sentenceBuilder()
                         .predicate("have")
                         .addTerm(constantBanjo)
@@ -137,7 +137,7 @@ public class BasicIT extends BaseIT {
                 .build();
         
         // Solve the problem
-        ImmutablePlan plan = getPlanningFactory().getPlanningService().solve(problem);
+        Plan plan = getPlanningFactory().getPlanningService().solve(problem);
         
         assertEquals(2, plan.getActions().size());
         assertEquals("drop", plan.getActions().get(0).getOperator().getName());
@@ -173,14 +173,14 @@ public class BasicIT extends BaseIT {
                 .addArgument(variableY)
                 .setIsPrimitive(true)
                 .build();
-        ImmutableCondition beforeConditionHaveX = getPlanningFactory()
+        Condition beforeConditionHaveX = getPlanningFactory()
         		.getDomainBuilderFactory().createConditionBuilder()
                 .setSentence(
                     getSentenceBuilder().predicate("have")
                         .addTerm(variableX)
                         .build())
                 .build();
-        ImmutableCondition beforeConditionNotHaveY = getPlanningFactory()
+        Condition beforeConditionNotHaveY = getPlanningFactory()
         		.getDomainBuilderFactory().createConditionBuilder()
                 .setSentence(
                     getSentenceBuilder().negate(
@@ -219,7 +219,7 @@ public class BasicIT extends BaseIT {
                 .addArgument(variableX)
                 .setIsPrimitive(true)
                 .build();
-        ImmutableCondition beforeConditionNotHaveX = getPlanningFactory()
+        Condition beforeConditionNotHaveX = getPlanningFactory()
         		.getDomainBuilderFactory().createConditionBuilder()
                 .setSentence(
                     getSentenceBuilder().negate(
@@ -227,7 +227,7 @@ public class BasicIT extends BaseIT {
                             .addTerm(variableX)
                             .build()))
                 .build();
-        ImmutableCondition beforeConditionHaveY = getPlanningFactory()
+        Condition beforeConditionHaveY = getPlanningFactory()
         		.getDomainBuilderFactory().createConditionBuilder()
                 .setSentence(
                     getSentenceBuilder().predicate("have")
@@ -274,24 +274,24 @@ public class BasicIT extends BaseIT {
 	private ImmutableDomainBuilder addOperators(ImmutableDomainBuilder builder) {
 		
         Variable variableA = getPlanningFactory().getLogicFactory().createVariable("a");
-        ImmutableEffect effectHaveA = getPlanningFactory().getDomainBuilderFactory().createEffectBuilder()
+        Effect effectHaveA = getPlanningFactory().getDomainBuilderFactory().createEffectBuilder()
                 .setSentence(getSentenceBuilder().predicate("have")
                         .addTerm(variableA)
                         .build())
                 .build();
-        ImmutableEffect effectNotHaveA = getPlanningFactory().getDomainBuilderFactory().createEffectBuilder()
+        Effect effectNotHaveA = getPlanningFactory().getDomainBuilderFactory().createEffectBuilder()
                 .setSentence(
                     getSentenceBuilder().negate(
                         getSentenceBuilder().predicate("have")
                             .addTerm(variableA)
                             .build()))
                 .build();
-        ImmutableCondition conditionHaveA = getPlanningFactory().getDomainBuilderFactory().createConditionBuilder()
+        Condition conditionHaveA = getPlanningFactory().getDomainBuilderFactory().createConditionBuilder()
                 .setSentence(getSentenceBuilder().predicate("have")
                         .addTerm(variableA)
                         .build())
                 .build();
-        ImmutableCondition conditionNotHaveA = getPlanningFactory().getDomainBuilderFactory().createConditionBuilder()
+        Condition conditionNotHaveA = getPlanningFactory().getDomainBuilderFactory().createConditionBuilder()
                 .setSentence(
                     getSentenceBuilder().negate(
                         getSentenceBuilder().predicate("have")
@@ -299,13 +299,13 @@ public class BasicIT extends BaseIT {
                             .build()))
                 .build();
         
-        ImmutableOperator operatorA = getPlanningFactory().getDomainBuilderFactory().createOperatorBuilder()
+        Operator operatorA = getPlanningFactory().getDomainBuilderFactory().createOperatorBuilder()
                 .setName("pickup")
                 .addArgument(variableA)
                 .addEffect(effectHaveA)
                 .addPrecondition(conditionNotHaveA)
                 .build();
-        ImmutableOperator operatorB = getPlanningFactory().getDomainBuilderFactory().createOperatorBuilder()
+        Operator operatorB = getPlanningFactory().getDomainBuilderFactory().createOperatorBuilder()
                 .setName("drop")
                 .addArgument(variableA)
                 .addEffect(effectNotHaveA)

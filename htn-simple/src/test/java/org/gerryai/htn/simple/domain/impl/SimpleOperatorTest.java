@@ -26,9 +26,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.domain.ImmutableEffect;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
+import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Effect;
+import org.gerryai.htn.domain.Operator;
 import org.gerryai.logic.Variable;
 import org.junit.Test;
 
@@ -43,7 +43,7 @@ public class SimpleOperatorTest {
      */
     @Test
     public final void testSetName() {
-        ImmutableOperator operator = new SimpleOperator.Builder()
+        Operator operator = new SimpleOperator.Builder()
                 .setName("testname")
                 .build();
         assertEquals("testname", operator.getName());
@@ -56,7 +56,7 @@ public class SimpleOperatorTest {
     public final void testAddArgument() {
         Variable mockVariableA = mock(Variable.class);
         Variable mockVariableB = mock(Variable.class);
-        ImmutableOperator operator = new SimpleOperator.Builder()
+        Operator operator = new SimpleOperator.Builder()
                 .addArgument(mockVariableA)
                 .addArgument(mockVariableB)
                 .build();
@@ -82,7 +82,7 @@ public class SimpleOperatorTest {
         mockVariablesB.add(mockVariableC);
         mockVariablesB.add(mockVariableD);
         
-        ImmutableOperator operator = new SimpleOperator.Builder()
+        Operator operator = new SimpleOperator.Builder()
                 .addArguments(mockVariablesA)
                 .addArguments(mockVariablesB)
                 .build();
@@ -101,9 +101,9 @@ public class SimpleOperatorTest {
      */
     @Test
     public final void testAddPrecondition() {
-        ImmutableCondition mockConditionA = mock(ImmutableCondition.class);
-        ImmutableCondition mockConditionB = mock(ImmutableCondition.class);
-        ImmutableOperator operator = new SimpleOperator.Builder()
+        Condition mockConditionA = mock(Condition.class);
+        Condition mockConditionB = mock(Condition.class);
+        Operator operator = new SimpleOperator.Builder()
                 .addPrecondition(mockConditionA)
                 .addPrecondition(mockConditionB)
                 .build();
@@ -117,23 +117,23 @@ public class SimpleOperatorTest {
      */
     @Test
     public final void testAddPreconditions() {
-        ImmutableCondition mockConditionA = mock(ImmutableCondition.class);
-        ImmutableCondition mockConditionB = mock(ImmutableCondition.class);
-        Set<ImmutableCondition> mockConditionsA = new HashSet<ImmutableCondition>();
+        Condition mockConditionA = mock(Condition.class);
+        Condition mockConditionB = mock(Condition.class);
+        Set<Condition> mockConditionsA = new HashSet<Condition>();
         mockConditionsA.add(mockConditionA);
         mockConditionsA.add(mockConditionB);
-        ImmutableCondition mockConditionC = mock(ImmutableCondition.class);
-        ImmutableCondition mockConditionD = mock(ImmutableCondition.class);
-        Set<ImmutableCondition> mockConditionsB = new HashSet<ImmutableCondition>();
+        Condition mockConditionC = mock(Condition.class);
+        Condition mockConditionD = mock(Condition.class);
+        Set<Condition> mockConditionsB = new HashSet<Condition>();
         mockConditionsB.add(mockConditionC);
         mockConditionsB.add(mockConditionD);
         
-        ImmutableOperator operator = new SimpleOperator.Builder()
+        Operator operator = new SimpleOperator.Builder()
                 .addPreconditions(mockConditionsA)
                 .addPreconditions(mockConditionsB)
                 .build();
         
-        Set<ImmutableCondition> expectedConditions = new HashSet<ImmutableCondition>();
+        Set<Condition> expectedConditions = new HashSet<Condition>();
         expectedConditions.add(mockConditionA);
         expectedConditions.add(mockConditionB);
         expectedConditions.add(mockConditionC);
@@ -147,9 +147,9 @@ public class SimpleOperatorTest {
      */
     @Test
     public final void testAddEffect() {
-        ImmutableEffect mockEffectA = mock(ImmutableEffect.class);
-        ImmutableEffect mockEffectB = mock(ImmutableEffect.class);
-        ImmutableOperator operator = new SimpleOperator.Builder()
+        Effect mockEffectA = mock(Effect.class);
+        Effect mockEffectB = mock(Effect.class);
+        Operator operator = new SimpleOperator.Builder()
                 .addEffect(mockEffectA)
                 .addEffect(mockEffectB)
                 .build();
@@ -163,23 +163,23 @@ public class SimpleOperatorTest {
      */
     @Test
     public final void testAddEffects() {
-        ImmutableEffect mockEffectA = mock(ImmutableEffect.class);
-        ImmutableEffect mockEffectB = mock(ImmutableEffect.class);
-        Set<ImmutableEffect> mockEffectsA = new HashSet<ImmutableEffect>();
+        Effect mockEffectA = mock(Effect.class);
+        Effect mockEffectB = mock(Effect.class);
+        Set<Effect> mockEffectsA = new HashSet<Effect>();
         mockEffectsA.add(mockEffectA);
         mockEffectsA.add(mockEffectB);
-        ImmutableEffect mockEffectC = mock(ImmutableEffect.class);
-        ImmutableEffect mockEffectD = mock(ImmutableEffect.class);
-        Set<ImmutableEffect> mockEffectsB = new HashSet<ImmutableEffect>();
+        Effect mockEffectC = mock(Effect.class);
+        Effect mockEffectD = mock(Effect.class);
+        Set<Effect> mockEffectsB = new HashSet<Effect>();
         mockEffectsA.add(mockEffectC);
         mockEffectsA.add(mockEffectD);
         
-        ImmutableOperator operator = new SimpleOperator.Builder()
+        Operator operator = new SimpleOperator.Builder()
                 .addEffects(mockEffectsA)
                 .addEffects(mockEffectsB)
                 .build();
         
-        Set<ImmutableEffect> expectedEffects = new HashSet<ImmutableEffect>();
+        Set<Effect> expectedEffects = new HashSet<Effect>();
         expectedEffects.add(mockEffectA);
         expectedEffects.add(mockEffectB);
         expectedEffects.add(mockEffectC);
@@ -196,14 +196,14 @@ public class SimpleOperatorTest {
         Variable mockVariable = mock(Variable.class);
         List<Variable> mockArguments = new ArrayList<Variable>();
         mockArguments.add(mockVariable);
-        ImmutableCondition mockCondition = mock(ImmutableCondition.class);
-        Set<ImmutableCondition> mockConditions = new HashSet<ImmutableCondition>();
+        Condition mockCondition = mock(Condition.class);
+        Set<Condition> mockConditions = new HashSet<Condition>();
         mockConditions.add(mockCondition);
-        ImmutableEffect mockEffect = mock(ImmutableEffect.class);
-        Set<ImmutableEffect> mockEffects = new HashSet<ImmutableEffect>();
+        Effect mockEffect = mock(Effect.class);
+        Set<Effect> mockEffects = new HashSet<Effect>();
         mockEffects.add(mockEffect);
         
-        ImmutableOperator operator = new SimpleOperator.Builder()
+        Operator operator = new SimpleOperator.Builder()
                 .setName("testname")
                 .addArguments(mockArguments)
                 .addPreconditions(mockConditions)

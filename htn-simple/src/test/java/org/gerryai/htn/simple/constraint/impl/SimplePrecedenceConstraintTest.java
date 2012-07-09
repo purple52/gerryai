@@ -27,7 +27,6 @@ import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ImmutableValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
@@ -71,8 +70,7 @@ public class SimplePrecedenceConstraintTest {
         Task mockProcedingTask = mock(Task.class);
         Set<Task> mockProcedingTasks = new HashSet<Task>();
         mockProcedingTasks.add(mockProcedingTask);
-        @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator mockValidator = mock(ConstraintValidator.class);
         ImmutableValidatablePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
                 .setPrecedingTasks(mockPrecedingTasks)
                 .setProcedingTasks(mockProcedingTasks)
@@ -94,8 +92,7 @@ public class SimplePrecedenceConstraintTest {
         Task mockProcedingTask = mock(Task.class);
         Set<Task> mockProcedingTasks = new HashSet<Task>();
         mockProcedingTasks.add(mockProcedingTask);
-        @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator mockValidator = mock(ConstraintValidator.class);
         ImmutableValidatablePrecedenceConstraint constraint = new SimplePrecedenceConstraint.Builder()
                 .setPrecedingTasks(mockPrecedingTasks)
                 .setProcedingTasks(mockProcedingTasks)

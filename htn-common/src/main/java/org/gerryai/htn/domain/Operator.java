@@ -24,13 +24,9 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface that an operator must implement.
- * @param <E> type of effect this operator uses
- * @param <I> type of condition this operator takes
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Operator<
-        E extends Effect,
-        I extends Condition> {
+public interface Operator {
 	
 	/**
 	 * Get the name of this operator.
@@ -48,12 +44,12 @@ public interface Operator<
 	 * Get the preconditions for this operator.
 	 * @return the preconditions
 	 */
-	Set<I> getPreconditions();
+	Set<Condition> getPreconditions();
 	
 	/**
 	 * Get the effects of this operator.
 	 * @return the effects
 	 */
-	Set<E> getEffects();
+	Set<Effect> getEffects();
 
 }

@@ -17,23 +17,20 @@
  */
 package org.gerryai.htn.simple.constraint.validation.impl;
 
-import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 
 /**
  * Generic constraint validator factory.
- * @param <I> type of condition the validator will handle
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class GenericConstraintValidatorFactory<I extends Condition>
-		        implements ConstraintValidatorFactory<I> {
+public class GenericConstraintValidatorFactory implements ConstraintValidatorFactory {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final GenericConstraintValidator<I> create() {
-		return new GenericConstraintValidator<I>();
+	public final GenericConstraintValidator create() {
+		return new GenericConstraintValidator();
 	}
 
 }

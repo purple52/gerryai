@@ -22,9 +22,6 @@ package org.gerryai.htn.simple.domain;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutableOperatorBuilder extends OperatorBuilder<
-        ImmutableCondition,
-        ImmutableEffect,
-        ImmutableOperator,
         ImmutableOperatorBuilder> {
 
 }

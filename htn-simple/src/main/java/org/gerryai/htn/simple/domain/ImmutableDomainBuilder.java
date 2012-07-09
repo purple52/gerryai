@@ -19,6 +19,8 @@ package org.gerryai.htn.simple.domain;
 
 import java.util.Set;
 
+import org.gerryai.htn.domain.Operator;
+
 /**
  * Builder interface for an immutable domain.
  * @author David Edwards <david@more.fool.me.uk>
@@ -30,7 +32,7 @@ public interface ImmutableDomainBuilder {
 	 * @param operator the operator to add
 	 * @return the updated builder
 	 */
-	ImmutableDomainBuilder addOperator(ImmutableOperator operator);
+	ImmutableDomainBuilder addOperator(Operator operator);
 	
 	/**
 	 * Add a method to the domain.
@@ -43,7 +45,7 @@ public interface ImmutableDomainBuilder {
 	 * Get the set of operators added to this builder.
      * @return the operators
      */
-    Set<ImmutableOperator> getOperators();
+    Set<Operator> getOperators();
 
     /**
      * Get the methods added to this builder.

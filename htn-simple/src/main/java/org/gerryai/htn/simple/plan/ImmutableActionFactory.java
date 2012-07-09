@@ -17,18 +17,11 @@
  */
 package org.gerryai.htn.simple.plan;
 
-import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.domain.ImmutableEffect;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
 
 /**
  * Interface for a factory that creates immutable actions.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableActionFactory extends ActionFactory<
-        ImmutableEffect,
-        ImmutableOperator,
-        ImmutableCondition,
-        ImmutableAction> {
+public interface ImmutableActionFactory extends ActionFactory {
 
 }

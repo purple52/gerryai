@@ -18,7 +18,6 @@
 package org.gerryai.htn.simple.constraint;
 
 import org.gerryai.htn.constraint.Constraint;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 
 /**
  * Interface for constraints that support the operations required by this HTN implementation.
@@ -26,9 +25,7 @@ import org.gerryai.htn.simple.domain.ImmutableCondition;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutableConstraint<C extends ImmutableConstraint<C>>
-        extends
-        Constraint,
-        ValidatableConstraint<ImmutableCondition> {
+        extends Constraint, ValidatableConstraint {
 
     /**
      * Create a new builder object that can build this type of constraint.

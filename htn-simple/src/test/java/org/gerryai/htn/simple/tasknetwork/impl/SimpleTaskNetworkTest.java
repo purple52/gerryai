@@ -30,7 +30,6 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -154,9 +153,7 @@ public class SimpleTaskNetworkTest {
     @Test
     public final void testSimpleTaskNetworkBuilder() {
         // Create the builder under test
-        @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableCondition> mockConstraintValidator
-        		= mock(ConstraintValidator.class);
+        ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
         ImmutableTaskNetworkBuilder builder = new SimpleTaskNetwork.Builder(mockConstraintValidator);
         
         // Check that the argument and constraint lists have been initialised
@@ -173,9 +170,7 @@ public class SimpleTaskNetworkTest {
         Task mockTaskB = mock(Task.class);
         
         // Create the builder under test
-        @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableCondition> mockConstraintValidator
-        		= mock(ConstraintValidator.class);
+        ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
         ImmutableTaskNetworkBuilder builder = new SimpleTaskNetwork.Builder(mockConstraintValidator)
                 .addTask(mockTaskA)
                 .addTask(mockTaskB);
@@ -204,9 +199,7 @@ public class SimpleTaskNetworkTest {
         mockTasksTwo.add(mockTaskD);
         
         // Create the builder under test
-        @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableCondition> mockConstraintValidator
-        		= mock(ConstraintValidator.class);
+        ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
         ImmutableTaskNetworkBuilder builder = new SimpleTaskNetwork.Builder(mockConstraintValidator)
                 .addTasks(mockTasksOne)
                 .addTasks(mockTasksTwo);
@@ -227,9 +220,7 @@ public class SimpleTaskNetworkTest {
      */
     @Test
     public final void testAddConstraint() throws InvalidConstraint {
-        @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableCondition> mockConstraintValidator
-        		= mock(ConstraintValidator.class);
+        ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
         
         ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
         when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
@@ -253,9 +244,7 @@ public class SimpleTaskNetworkTest {
      */
     @Test
     public final void testAddConstraints() throws InvalidConstraint {
-        @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableCondition> mockConstraintValidator
-        		= mock(ConstraintValidator.class);
+        ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
         
         ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
         when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
@@ -299,9 +288,7 @@ public class SimpleTaskNetworkTest {
         
         Task mockTaskA = mock(Task.class);
         ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
-        @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableCondition> mockConstraintValidator
-        		= mock(ConstraintValidator.class);
+        ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
         when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
         
         ImmutableTaskNetwork taskNetwork = new SimpleTaskNetwork.Builder(mockConstraintValidator)
@@ -332,9 +319,7 @@ public class SimpleTaskNetworkTest {
         when(mockTaskNetwork.getTasks()).thenReturn(mockTasks);
         when(mockTaskNetwork.getConstraints()).thenReturn(mockConstraints);
         
-        @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableCondition> mockConstraintValidator
-        		= mock(ConstraintValidator.class);
+        ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
         
         ImmutableTaskNetwork taskNetwork = new SimpleTaskNetwork.Builder(mockConstraintValidator)
                 .copy(mockTaskNetwork)
@@ -370,7 +355,7 @@ public class SimpleTaskNetworkTest {
         mockConstraints.add(mockConstraintA);
         mockConstraints.add(mockConstraintB);
  
-        ConstraintValidator<ImmutableCondition> mockConstraintValidator
+        ConstraintValidator mockConstraintValidator
         		= mock(ConstraintValidator.class);
         when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
         when(mockConstraintB.validate(mockConstraintValidator)).thenReturn(true);

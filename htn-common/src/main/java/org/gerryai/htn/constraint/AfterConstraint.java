@@ -24,11 +24,9 @@ import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * Interface for a constraint that dictates the state immediately after this task.
- * @param <I> type of condition this constraint uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface AfterConstraint<I extends Condition>
-                extends Constraint {
+public interface AfterConstraint extends Constraint {
 
 	/**
 	 * The set of tasks for which this constraint must hold.
@@ -40,5 +38,5 @@ public interface AfterConstraint<I extends Condition>
 	 * The condition that must be true just after the last of the tasks is achieved.
 	 * @return the literal
 	 */
-	I getCondition();
+	Condition getCondition();
 }

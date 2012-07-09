@@ -20,19 +20,19 @@ package org.gerryai.htn.simple.planner.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Effect;
+import org.gerryai.htn.plan.Action;
+import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.decomposition.UnifierNotFound;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
-import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.plan.ImmutableActionFactory;
-import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.plan.ImmutablePlanBuilder;
 import org.gerryai.htn.simple.plan.ImmutablePlanBuilderFactory;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
@@ -76,8 +76,7 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 	 * Service for finding unifiers.
 	 */
 	private UnificationService<ImmutableMethod,
-			ImmutableTaskNetwork, ImmutableConstraint<?>,
-			ImmutableCondition>  unificationService;
+			ImmutableTaskNetwork, ImmutableConstraint<?>>  unificationService;
 
 	/**
 	 * Service for sorting tasks by precedence constraints.
@@ -105,7 +104,7 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 			DecompositionService<ImmutableMethod, ImmutableTaskNetwork,
 			ImmutableConstraint<?>> decompositionservice,
 			UnificationService<ImmutableMethod, ImmutableTaskNetwork,
-			ImmutableConstraint<?>, ImmutableCondition>  unificationService,
+			ImmutableConstraint<?>>  unificationService,
 			SortService<ImmutableConstraint<?>> sortService,
 			ImmutableStateService stateService,
 			ImmutableDomainHelper domainHelper) {
@@ -129,7 +128,7 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutablePlan findPlanForPrimitive(ImmutableState state,
+	public final Plan findPlanForPrimitive(ImmutableState state,
 	        ImmutableTaskNetwork taskNetwork) throws PlanNotFound {
 		// TODO: Confirm implementation
 		// TODO: Enforce constraints from task network completely
@@ -139,19 +138,19 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 		ImmutablePlanBuilder planBuilder = planBuilderFactory.createBuilder();
 		
 		for (Task task : sortedTasks) {
-			ImmutableAction action;
+			Action action;
 			try {
 				action = actionFactory.create(task);
 			} catch (TaskNotActionable e) {
 				throw new PlanNotFound("Could not turn task into action", e);
 			}
-			for (ImmutableCondition condition : action.getOperator().getPreconditions()) {
-			    ImmutableCondition groundCondition = domainHelper.getGroundedCondition(condition, action.getBindings());
+			for (Condition condition : action.getOperator().getPreconditions()) {
+			    Condition groundCondition = domainHelper.getGroundedCondition(condition, action.getBindings());
 			    if (!stateService.ask(state, groundCondition)) {
 			        throw new PlanNotFound("Preconditions of operator not satisfied");
 			    } else {
-			        for (ImmutableEffect effect : action.getOperator().getEffects()) {
-			            ImmutableEffect groundEffect = domainHelper.getGroundedEffect(effect, action.getBindings());
+			        for (Effect effect : action.getOperator().getEffects()) {
+			            Effect groundEffect = domainHelper.getGroundedEffect(effect, action.getBindings());
 			            state = stateService.tell(state, groundEffect);
 			        }
 			    }

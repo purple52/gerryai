@@ -20,12 +20,12 @@ package org.gerryai.htn.simple.constraint.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintFactory;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableValidatablePrecedenceConstraint;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.tasknetwork.Task;
 
 /**
@@ -62,7 +62,7 @@ public class SimpleConstraintFactory implements ImmutableConstraintFactory {
      * {@inheritDoc}
      */
     public final ImmutableValidatableBeforeConstraint createBeforeConstraint(Task task,
-            ImmutableCondition condition) {
+    		Condition condition) {
         Set<Task> tasks = new HashSet<Task>(1);
         tasks.add(task);
         return createBeforeConstraint(tasks, condition);
@@ -72,7 +72,7 @@ public class SimpleConstraintFactory implements ImmutableConstraintFactory {
 	 * {@inheritDoc}
 	 */
 	public final ImmutableValidatableBeforeConstraint createBeforeConstraint(Set<Task> tasks,
-	        ImmutableCondition condition) {
+			Condition condition) {
         return new SimpleBeforeConstraint.Builder()
                 .addTasks(tasks)
                 .setCondition(condition)
@@ -83,7 +83,7 @@ public class SimpleConstraintFactory implements ImmutableConstraintFactory {
 	 * {@inheritDoc}
 	 */
 	public final ImmutableValidatableAfterConstraint createAfterConstraint(Set<Task> tasks,
-	        ImmutableCondition condition) {
+			Condition condition) {
 		return new SimpleAfterConstraint.Builder()
 		        .addTasks(tasks)
 		        .setCondition(condition)
@@ -94,7 +94,7 @@ public class SimpleConstraintFactory implements ImmutableConstraintFactory {
 	 * {@inheritDoc}
 	 */
 	public final ImmutableValidatableBetweenConstraint createBetweenConstraint(Set<Task> precedingTasks,
-			Set<Task> procedingTasks, ImmutableCondition condition) {
+			Set<Task> procedingTasks, Condition condition) {
         return new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(precedingTasks)
                 .addProcedingTasks(procedingTasks)

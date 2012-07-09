@@ -24,11 +24,9 @@ import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * Interface for a constraint that dictates the state immediately after this task.
- * @param <I> type of condition this constraint uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface BetweenConstraint<I extends Condition>
-                extends Constraint {
+public interface BetweenConstraint extends Constraint {
 
 	/**
 	 * The set of tasks after which this constraint must hold.
@@ -47,5 +45,5 @@ public interface BetweenConstraint<I extends Condition>
 	 * The condition that must be true between the two sets of tasks.
 	 * @return the literal
 	 */
-	I getCondition();
+	Condition getCondition();
 }

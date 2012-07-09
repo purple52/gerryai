@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.problem;
 
-import org.gerryai.htn.simple.domain.ImmutableEffect;
+import org.gerryai.htn.domain.Effect;
 
 /**
  * Interface for a builder class for immutable state objects.
@@ -37,7 +37,7 @@ public interface ImmutableStateBuilder {
      * @param effect the effect to apply
      * @return an updated builder
      */
-    ImmutableStateBuilder tell(ImmutableEffect effect);
+    ImmutableStateBuilder tell(Effect effect);
     
     /**
      * Build the finished state.

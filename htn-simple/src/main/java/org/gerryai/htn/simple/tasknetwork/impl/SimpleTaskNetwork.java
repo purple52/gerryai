@@ -26,16 +26,15 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.logic.Term;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
+import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Term;
 
 /**
+ * Simple immutable implementation of a task network.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public class SimpleTaskNetwork implements ImmutableTaskNetwork {
 
@@ -91,8 +90,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
 	/**
      * {@inheritDoc}
      */
-    public final Builder createCopyBuilder(ConstraintValidator<ImmutableCondition>
-    		constraintValidator) throws InvalidConstraint {
+    public final Builder createCopyBuilder(ConstraintValidator constraintValidator) throws InvalidConstraint {
         return new Builder(constraintValidator)
             .copy(this);
     }
@@ -116,13 +114,13 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
         /**
          * Constraint validator.
          */
-        private ConstraintValidator<ImmutableCondition> constraintValidator;
+        private ConstraintValidator constraintValidator;
         
         /**
          * Constructor, taking a constraint validator to use.
          * @param constraintValidator the constraint validator
          */
-        public Builder(ConstraintValidator<ImmutableCondition> constraintValidator) {
+        public Builder(ConstraintValidator constraintValidator) {
             this.constraintValidator = constraintValidator;
             tasks = new HashSet<Task>();
             constraints = new HashSet<ImmutableConstraint<?>>();
@@ -131,7 +129,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
         /**
          * @return the constraintValidator
          */
-        protected final ConstraintValidator<ImmutableCondition> getConstraintValidator() {
+        protected final ConstraintValidator getConstraintValidator() {
             return constraintValidator;
         }
         

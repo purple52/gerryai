@@ -18,12 +18,8 @@
 package org.gerryai.htn.planner;
 
 import org.gerryai.htn.constraint.Constraint;
-import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Domain;
-import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.problem.State;
@@ -31,32 +27,22 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Interface for a service that can solve problems.
- * @param <E> type of effect this service works with
- * @param <St> type of state this service works with
- * @param <Pl> type of plan this service generates
- * @param <Pr> type of problem this service handles
- * @param <A> type of action this service works with
+ * @param <S> type of state this service works with
+ * @param <P> type of problem this service handles
  * @param <D> type of domain this service works with
- * @param <O> type of operator this service works with
  * @param <M> type of method this service works with
  * @param <N> type of task network this service works with
  * @param <C> type of constraint this service works with
- * @param <I> the class of condition this service will handle
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface PlanningService<
-        E extends Effect,
-        St extends State,
-        Pl extends Plan<E, A, O, I>,
-        Pr extends Problem<E, St, D, O, M, N, C, I>,
-        A extends Action<E, O, I>,
-        D extends Domain<E, O, M, N, C, I>,
-		O extends Operator<E, I>,
+        S extends State,
+        P extends Problem<S, D, M, N, C>,
+        D extends Domain<M, N, C>,
 		M extends Method<N, C>,
 		N extends TaskNetwork<C>,
-		C extends Constraint,
-		I extends Condition> {
+		C extends Constraint> {
 	
 	/**
 	 * Find a plan that solve the given problem.
@@ -64,6 +50,6 @@ public interface PlanningService<
 	 * @return a solution
 	 * @throws PlanNotFound if no plan exists for the given problem
 	 */
-	Pl solve(Pr problem) throws PlanNotFound;
+	Plan solve(P problem) throws PlanNotFound;
 	
 }

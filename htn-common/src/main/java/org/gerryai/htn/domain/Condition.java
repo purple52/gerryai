@@ -17,10 +17,13 @@
  */
 package org.gerryai.htn.domain;
 
+import java.util.Map;
+
 import org.gerryai.logic.Sentence;
+import org.gerryai.logic.Term;
 
 /**
- * Interface for classes that represent a logical condition, or predicate.
+ * Interface for classes that represent a logical condition.
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Condition {
@@ -30,4 +33,11 @@ public interface Condition {
      * @return the sentence
      */
     Sentence getSentence();
+    
+    /**
+     * Apply the given substitution to a copy of this condition.
+     * @param substitution the substitution to apply
+     * @return the new condition
+     */
+    Condition applyToCopy(Map<Term, Term> substitution);
 }

@@ -18,15 +18,11 @@
 package org.gerryai.htn.simple.constraint;
 
 import org.gerryai.htn.constraint.AfterConstraint;
-import org.gerryai.htn.domain.Condition;
 
 /**
  * Extension of validatable and precedence constraint interfaces.
- * @param <I> type of condition this constraint uses
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface ValidatableAfterConstraint<I extends Condition>
-		        extends ValidatableConstraint<I>, AfterConstraint<I> {
+public interface ValidatableAfterConstraint extends ValidatableConstraint, AfterConstraint {
 
 }

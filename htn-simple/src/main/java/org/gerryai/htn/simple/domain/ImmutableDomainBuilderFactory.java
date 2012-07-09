@@ -26,12 +26,9 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  */
 public interface ImmutableDomainBuilderFactory extends DomainBuilderFactory<
         ImmutableDomain,
-        ImmutableOperator,
         ImmutableMethod,
 		ImmutableTaskNetwork,
 		ImmutableConstraint<?>,
-		ImmutableCondition,
-		ImmutableEffect,
 		ImmutableOperatorBuilder> {
 
 }

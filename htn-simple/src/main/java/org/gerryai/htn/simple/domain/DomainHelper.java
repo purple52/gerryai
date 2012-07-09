@@ -34,23 +34,17 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface for a service that manages a domain.
- * @param <E> type of effect this domain helper uses
  * @param <D> type of domain this helper uses
- * @param <O> type of operator this domain helper uses
  * @param <M> type of method this domain helpers uses
  * @param <N> type of task network this domain helper uses
  * @param <C> type of constraint this domain helper uses
- * @param <I> the class of condition the domain will handle
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface DomainHelper<
-        E extends Effect,
-        D extends Domain<E, O, M, N, C, I>,
-		O extends Operator<E, I>,
+        D extends Domain<M, N, C>,
 		M extends Method<N, C>,
 		N extends TaskNetwork<C>,
-		C extends Constraint,
-		I extends Condition> {
+		C extends Constraint> {
 	
 	/**
 	 * Get the domain that this service is managing.
@@ -64,7 +58,7 @@ public interface DomainHelper<
 	 * @return the operator
 	 * @throws OperatorNotFound if no such operator exists
 	 */
-	O getOperatorByName(String name) throws OperatorNotFound;
+	Operator getOperatorByName(String name) throws OperatorNotFound;
 	
 	/**
 	 * Get a set of methods that match the given task.
@@ -79,7 +73,7 @@ public interface DomainHelper<
 	 * @param bindings the bindings to apply
 	 * @return the grounded effect
 	 */
-	E getGroundedEffect(E effect, Map<Variable, Constant> bindings);
+	Effect getGroundedEffect(Effect effect, Map<Variable, Constant> bindings);
 	
 	/**
 	 * Get a grounded version of the supplied condition by applying the given bindings.
@@ -87,6 +81,6 @@ public interface DomainHelper<
 	 * @param bindings the bindings to apply
 	 * @return the grounded condition
 	 */
-	I getGroundedCondition(I condition, Map<Variable, Constant> bindings);
+	Condition getGroundedCondition(Condition condition, Map<Variable, Constant> bindings);
 	
 }

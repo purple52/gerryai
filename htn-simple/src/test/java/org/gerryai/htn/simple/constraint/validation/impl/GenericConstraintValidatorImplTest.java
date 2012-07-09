@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.ValidatableBetweenConstraint;
@@ -36,13 +35,11 @@ public class GenericConstraintValidatorImplTest {
 		Task mockTaskB = mock(Task.class);
         Set<Task> mockProcedingTasks = new HashSet<Task>();
         mockProcedingTasks.add(mockTaskB);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraint = mock(ValidatablePrecedenceConstraint.class);
+		ValidatablePrecedenceConstraint mockConstraint = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraint.getPrecedingTasks()).thenReturn(mockPrecedingTasks);
 		when(mockConstraint.getProcedingTasks()).thenReturn(mockProcedingTasks);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator = new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		
@@ -61,13 +58,12 @@ public class GenericConstraintValidatorImplTest {
         Task mockTaskB = mock(Task.class);
         Set<Task> mockProcedingTasks = new HashSet<Task>();
         mockProcedingTasks.add(mockTaskB);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraint = mock(ValidatablePrecedenceConstraint.class);
+		ValidatablePrecedenceConstraint mockConstraint = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraint.getPrecedingTasks()).thenReturn(mockPrecedingTasks);
 		when(mockConstraint.getProcedingTasks()).thenReturn(mockProcedingTasks);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskB);
 		
 		assertFalse(validator.validate(mockConstraint));
@@ -85,13 +81,13 @@ public class GenericConstraintValidatorImplTest {
         Task mockTaskB = mock(Task.class);
         Set<Task> mockProcedingTasks = new HashSet<Task>();
         mockProcedingTasks.add(mockTaskB);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraint = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraint = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraint.getPrecedingTasks()).thenReturn(mockPrecedingTasks);
 		when(mockConstraint.getProcedingTasks()).thenReturn(mockProcedingTasks);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		
 		assertFalse(validator.validate(mockConstraint));
@@ -113,17 +109,17 @@ public class GenericConstraintValidatorImplTest {
         Task mockTaskC = mock(Task.class);
         Set<Task> mockTasksC = new HashSet<Task>();
         mockTasksC.add(mockTaskC);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintA = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraintA = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintA.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraintA.getProcedingTasks()).thenReturn(mockTasksB);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintB = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraintB = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintB.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraintB.getProcedingTasks()).thenReturn(mockTasksC);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		assertTrue(validator.validate(mockConstraintA));
@@ -147,13 +143,13 @@ public class GenericConstraintValidatorImplTest {
         Task mockTaskB = mock(Task.class);
         Set<Task> mockTasksB = new HashSet<Task>();
         mockTasksB.add(mockTaskB);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintA = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraintA = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintA.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraintA.getProcedingTasks()).thenReturn(mockTasksB);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		
@@ -175,13 +171,13 @@ public class GenericConstraintValidatorImplTest {
 		Task mockTaskA = mock(Task.class);
         Set<Task> mockTasksA = new HashSet<Task>();
         mockTasksA.add(mockTaskA);
-        @SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintA = mock(ValidatablePrecedenceConstraint.class);
+        
+		ValidatablePrecedenceConstraint mockConstraintA = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintA.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraintA.getProcedingTasks()).thenReturn(mockTasksA);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		
 		assertFalse(validator.validate(mockConstraintA));
@@ -201,17 +197,17 @@ public class GenericConstraintValidatorImplTest {
         Task mockTaskB = mock(Task.class);
         Set<Task> mockTasksB = new HashSet<Task>();
         mockTasksB.add(mockTaskB);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintA = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraintA = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintA.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraintA.getProcedingTasks()).thenReturn(mockTasksB);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintB = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraintB = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintB.getPrecedingTasks()).thenReturn(mockTasksB);
 		when(mockConstraintB.getProcedingTasks()).thenReturn(mockTasksA);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		
@@ -237,21 +233,21 @@ public class GenericConstraintValidatorImplTest {
         Task mockTaskC = mock(Task.class);
         Set<Task> mockTasksC = new HashSet<Task>();
         mockTasksC.add(mockTaskC);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintA = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraintA = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintA.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraintA.getProcedingTasks()).thenReturn(mockTasksB);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintB = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraintB = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintB.getPrecedingTasks()).thenReturn(mockTasksB);
 		when(mockConstraintB.getProcedingTasks()).thenReturn(mockTasksC);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintC = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraintC = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintC.getPrecedingTasks()).thenReturn(mockTasksC);
 		when(mockConstraintC.getProcedingTasks()).thenReturn(mockTasksA);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		validator.add(mockTaskC);
@@ -289,33 +285,33 @@ public class GenericConstraintValidatorImplTest {
         Task mockTaskF = mock(Task.class);
         Set<Task> mockTasksF = new HashSet<Task>();
         mockTasksF.add(mockTaskF);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintA = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraintA = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintA.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraintA.getProcedingTasks()).thenReturn(mockTasksB);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintB = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraintB = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintB.getPrecedingTasks()).thenReturn(mockTasksB);
 		when(mockConstraintB.getProcedingTasks()).thenReturn(mockTasksC);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintC = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraintC = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintC.getPrecedingTasks()).thenReturn(mockTasksC);
 		when(mockConstraintC.getProcedingTasks()).thenReturn(mockTasksA);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintD = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraintD = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintD.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraintD.getProcedingTasks()).thenReturn(mockTasksD);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintE = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraintE = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintE.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraintE.getProcedingTasks()).thenReturn(mockTasksE);
-		@SuppressWarnings("unchecked")
-		ValidatablePrecedenceConstraint<Condition> mockConstraintF = mock(ValidatablePrecedenceConstraint.class);
+		
+		ValidatablePrecedenceConstraint mockConstraintF = mock(ValidatablePrecedenceConstraint.class);
 		when(mockConstraintF.getPrecedingTasks()).thenReturn(mockTasksB);
 		when(mockConstraintF.getProcedingTasks()).thenReturn(mockTasksE);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		validator.add(mockTaskC);
@@ -350,12 +346,12 @@ public class GenericConstraintValidatorImplTest {
 		Set<Task> mockTasks = new HashSet<Task>();
 		mockTasks.add(mockTaskA);
 		mockTasks.add(mockTaskB);
-		@SuppressWarnings("unchecked")
-		ValidatableBeforeConstraint<Condition> mockConstraint = mock(ValidatableBeforeConstraint.class);
+		
+		ValidatableBeforeConstraint mockConstraint = mock(ValidatableBeforeConstraint.class);
 		when(mockConstraint.getTasks()).thenReturn(mockTasks);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		
@@ -374,12 +370,12 @@ public class GenericConstraintValidatorImplTest {
 		Set<Task> mockTasks = new HashSet<Task>();
 		mockTasks.add(mockTaskA);
 		mockTasks.add(mockTaskB);
-		@SuppressWarnings("unchecked")
-		ValidatableBeforeConstraint<Condition> mockConstraint = mock(ValidatableBeforeConstraint.class);
+		
+		ValidatableBeforeConstraint mockConstraint = mock(ValidatableBeforeConstraint.class);
 		when(mockConstraint.getTasks()).thenReturn(mockTasks);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskB);
 		
 		assertFalse(validator.validate(mockConstraint));
@@ -396,12 +392,12 @@ public class GenericConstraintValidatorImplTest {
 		Set<Task> mockTasks = new HashSet<Task>();
 		mockTasks.add(mockTaskA);
 		mockTasks.add(mockTaskB);
-		@SuppressWarnings("unchecked")
-		ValidatableBeforeConstraint<Condition> mockConstraint = mock(ValidatableBeforeConstraint.class);
+		
+		ValidatableBeforeConstraint mockConstraint = mock(ValidatableBeforeConstraint.class);
 		when(mockConstraint.getTasks()).thenReturn(mockTasks);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		
 		assertFalse(validator.validate(mockConstraint));
@@ -420,15 +416,15 @@ public class GenericConstraintValidatorImplTest {
 		mockTasksA.add(mockTaskA);
 		Set<Task> mockTasksB = new HashSet<Task>();
 		mockTasksB.add(mockTaskB);
-		@SuppressWarnings("unchecked")
-		ValidatableBeforeConstraint<Condition> mockConstraintA = mock(ValidatableBeforeConstraint.class);
+		
+		ValidatableBeforeConstraint mockConstraintA = mock(ValidatableBeforeConstraint.class);
 		when(mockConstraintA.getTasks()).thenReturn(mockTasksA);
-		@SuppressWarnings("unchecked")
-		ValidatableBeforeConstraint<Condition> mockConstraintB = mock(ValidatableBeforeConstraint.class);
+		
+		ValidatableBeforeConstraint mockConstraintB = mock(ValidatableBeforeConstraint.class);
 		when(mockConstraintB.getTasks()).thenReturn(mockTasksB);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		assertTrue(validator.validate(mockConstraintA));
@@ -448,12 +444,12 @@ public class GenericConstraintValidatorImplTest {
 		Task mockTaskA = mock(Task.class);
 		Set<Task> mockTasksA = new HashSet<Task>();
 		mockTasksA.add(mockTaskA);
-		@SuppressWarnings("unchecked")
-		ValidatableBeforeConstraint<Condition> mockConstraintA = mock(ValidatableBeforeConstraint.class);
+		
+		ValidatableBeforeConstraint mockConstraintA = mock(ValidatableBeforeConstraint.class);
 		when(mockConstraintA.getTasks()).thenReturn(mockTasksA);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		
 		assertTrue(validator.validate(mockConstraintA));
@@ -476,12 +472,12 @@ public class GenericConstraintValidatorImplTest {
 		Set<Task> mockTasks = new HashSet<Task>();
 		mockTasks.add(mockTaskA);
 		mockTasks.add(mockTaskB);
-		@SuppressWarnings("unchecked")
-		ValidatableAfterConstraint<Condition> mockConstraint = mock(ValidatableAfterConstraint.class);
+		
+		ValidatableAfterConstraint mockConstraint = mock(ValidatableAfterConstraint.class);
 		when(mockConstraint.getTasks()).thenReturn(mockTasks);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		
@@ -500,12 +496,12 @@ public class GenericConstraintValidatorImplTest {
 		Set<Task> mockTasks = new HashSet<Task>();
 		mockTasks.add(mockTaskA);
 		mockTasks.add(mockTaskB);
-		@SuppressWarnings("unchecked")
-		ValidatableAfterConstraint<Condition> mockConstraint = mock(ValidatableAfterConstraint.class);
+		
+		ValidatableAfterConstraint mockConstraint = mock(ValidatableAfterConstraint.class);
 		when(mockConstraint.getTasks()).thenReturn(mockTasks);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskB);
 		
 		assertFalse(validator.validate(mockConstraint));
@@ -522,12 +518,12 @@ public class GenericConstraintValidatorImplTest {
 		Set<Task> mockTasks = new HashSet<Task>();
 		mockTasks.add(mockTaskA);
 		mockTasks.add(mockTaskB);
-		@SuppressWarnings("unchecked")
-		ValidatableAfterConstraint<Condition> mockConstraint = mock(ValidatableAfterConstraint.class);
+		
+		ValidatableAfterConstraint mockConstraint = mock(ValidatableAfterConstraint.class);
 		when(mockConstraint.getTasks()).thenReturn(mockTasks);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		
 		assertFalse(validator.validate(mockConstraint));
@@ -546,15 +542,15 @@ public class GenericConstraintValidatorImplTest {
 		mockTasksA.add(mockTaskA);
 		Set<Task> mockTasksB = new HashSet<Task>();
 		mockTasksB.add(mockTaskB);
-		@SuppressWarnings("unchecked")
-		ValidatableAfterConstraint<Condition> mockConstraintA = mock(ValidatableAfterConstraint.class);
+		
+		ValidatableAfterConstraint mockConstraintA = mock(ValidatableAfterConstraint.class);
 		when(mockConstraintA.getTasks()).thenReturn(mockTasksA);
-		@SuppressWarnings("unchecked")
-		ValidatableAfterConstraint<Condition> mockConstraintB = mock(ValidatableAfterConstraint.class);
+		
+		ValidatableAfterConstraint mockConstraintB = mock(ValidatableAfterConstraint.class);
 		when(mockConstraintB.getTasks()).thenReturn(mockTasksB);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		assertTrue(validator.validate(mockConstraintA));
@@ -574,12 +570,12 @@ public class GenericConstraintValidatorImplTest {
 		Task mockTaskA = mock(Task.class);
 		Set<Task> mockTasksA = new HashSet<Task>();
 		mockTasksA.add(mockTaskA);
-		@SuppressWarnings("unchecked")
-		ValidatableAfterConstraint<Condition> mockConstraintA = mock(ValidatableAfterConstraint.class);
+		
+		ValidatableAfterConstraint mockConstraintA = mock(ValidatableAfterConstraint.class);
 		when(mockConstraintA.getTasks()).thenReturn(mockTasksA);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		
 		assertTrue(validator.validate(mockConstraintA));
@@ -607,13 +603,13 @@ public class GenericConstraintValidatorImplTest {
 		Set<Task> mockTasksB = new HashSet<Task>();
 		mockTasksB.add(mockTaskC);
 		mockTasksB.add(mockTaskD);
-		@SuppressWarnings("unchecked")
-		ValidatableBetweenConstraint<Condition> mockConstraint = mock(ValidatableBetweenConstraint.class);
+		
+		ValidatableBetweenConstraint mockConstraint = mock(ValidatableBetweenConstraint.class);
 		when(mockConstraint.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraint.getProcedingTasks()).thenReturn(mockTasksB);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		validator.add(mockTaskC);
@@ -640,13 +636,13 @@ public class GenericConstraintValidatorImplTest {
 		Set<Task> mockTasksB = new HashSet<Task>();
 		mockTasksB.add(mockTaskC);
 		mockTasksB.add(mockTaskD);
-		@SuppressWarnings("unchecked")
-		ValidatableBetweenConstraint<Condition> mockConstraint = mock(ValidatableBetweenConstraint.class);
+		
+		ValidatableBetweenConstraint mockConstraint = mock(ValidatableBetweenConstraint.class);
 		when(mockConstraint.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraint.getProcedingTasks()).thenReturn(mockTasksB);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskB);
 		validator.add(mockTaskC);
 		validator.add(mockTaskD);
@@ -671,13 +667,13 @@ public class GenericConstraintValidatorImplTest {
 		Set<Task> mockTasksB = new HashSet<Task>();
 		mockTasksB.add(mockTaskC);
 		mockTasksB.add(mockTaskD);
-		@SuppressWarnings("unchecked")
-		ValidatableBetweenConstraint<Condition> mockConstraint = mock(ValidatableBetweenConstraint.class);
+		
+		ValidatableBetweenConstraint mockConstraint = mock(ValidatableBetweenConstraint.class);
 		when(mockConstraint.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraint.getProcedingTasks()).thenReturn(mockTasksB);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		validator.add(mockTaskC);
@@ -704,17 +700,17 @@ public class GenericConstraintValidatorImplTest {
 		mockTasksC.add(mockTaskC);
 		Set<Task> mockTasksD = new HashSet<Task>();
 		mockTasksD.add(mockTaskD);
-		@SuppressWarnings("unchecked")
-		ValidatableBetweenConstraint<Condition> mockConstraintA = mock(ValidatableBetweenConstraint.class);
+		
+		ValidatableBetweenConstraint mockConstraintA = mock(ValidatableBetweenConstraint.class);
 		when(mockConstraintA.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraintA.getProcedingTasks()).thenReturn(mockTasksB);
-		@SuppressWarnings("unchecked")
-		ValidatableBetweenConstraint<Condition> mockConstraintB = mock(ValidatableBetweenConstraint.class);
+		
+		ValidatableBetweenConstraint mockConstraintB = mock(ValidatableBetweenConstraint.class);
 		when(mockConstraintB.getPrecedingTasks()).thenReturn(mockTasksC);
 		when(mockConstraintB.getProcedingTasks()).thenReturn(mockTasksD);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		validator.add(mockTaskC);
@@ -740,13 +736,12 @@ public class GenericConstraintValidatorImplTest {
 		mockTasksA.add(mockTaskA);
 		Set<Task> mockTasksB = new HashSet<Task>();
 		mockTasksB.add(mockTaskB);
-		@SuppressWarnings("unchecked")
-		ValidatableBetweenConstraint<Condition> mockConstraintA = mock(ValidatableBetweenConstraint.class);
+		ValidatableBetweenConstraint mockConstraintA = mock(ValidatableBetweenConstraint.class);
 		when(mockConstraintA.getPrecedingTasks()).thenReturn(mockTasksA);
 		when(mockConstraintA.getProcedingTasks()).thenReturn(mockTasksB);
 		
-		GenericConstraintValidator<Condition> validator
-				= new GenericConstraintValidator<Condition>();
+		GenericConstraintValidator validator
+				= new GenericConstraintValidator();
 		validator.add(mockTaskA);
 		validator.add(mockTaskB);
 		

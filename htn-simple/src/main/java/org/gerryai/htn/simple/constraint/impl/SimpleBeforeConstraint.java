@@ -21,10 +21,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
@@ -45,7 +45,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
     /**
      * The condition that must be true directly before the first of these tasks.
      */
-    private ImmutableCondition condition;
+    private Condition condition;
 
     /**
      * Constructor.
@@ -71,23 +71,21 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
      * 
      * @return the condition
      */
-    public final ImmutableCondition getCondition() {
+    public final Condition getCondition() {
         return condition;
     }
 
     /**
      * {@inheritDoc}
      */
-    public final boolean validate(
-            ConstraintValidator<ImmutableCondition> validator) {
+    public final boolean validate(ConstraintValidator validator) {
         return validator.validate(this);
     }
 
     /**
      * {@inheritDoc}
      */
-    public final void add(
-            ConstraintValidator<ImmutableCondition> validator)
+    public final void add(ConstraintValidator validator)
             throws InvalidConstraint {
         validator.add(this);
     }
@@ -122,7 +120,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
         /**
          * The condition that must be true directly after the last of these tasks.
          */
-        private ImmutableCondition condition;
+        private Condition condition;
         
         /**
          * Default constructor.
@@ -144,7 +142,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
          * @param condition the condition to set
          * @return the updated builder
          */
-        public final Builder setCondition(ImmutableCondition condition) {
+        public final Builder setCondition(Condition condition) {
             this.condition = condition;
             return this;
         }
@@ -159,7 +157,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
         /**
          * @return the condition
          */
-        protected final ImmutableCondition getCondition() {
+        protected final Condition getCondition() {
             return condition;
         }
         
@@ -198,8 +196,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
          * {@inheritDoc}
          */
         public final Builder apply(Map<Term, Term> substitution) {
-            ImmutableCondition newCondition = this.condition
-                    .applyToCopy(substitution);
+        	Condition newCondition = this.condition.applyToCopy(substitution);
             this.condition = newCondition;
             return this;
         }  

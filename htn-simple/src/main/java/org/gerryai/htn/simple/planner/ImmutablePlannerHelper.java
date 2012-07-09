@@ -18,12 +18,7 @@
 package org.gerryai.htn.simple.planner;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.plan.ImmutableAction;
-import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
@@ -32,14 +27,9 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutablePlannerHelper extends PlannerHelper<
-        ImmutableEffect,
         ImmutableState,
-        ImmutablePlan,
-        ImmutableAction,
-        ImmutableOperator,
         ImmutableMethod,
         ImmutableTaskNetwork,
-		ImmutableConstraint<?>,
-		ImmutableCondition> {
+		ImmutableConstraint<?>> {
 
 }

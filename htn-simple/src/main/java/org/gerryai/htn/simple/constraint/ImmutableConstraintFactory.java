@@ -17,14 +17,11 @@
  */
 package org.gerryai.htn.simple.constraint;
 
-import org.gerryai.htn.simple.domain.ImmutableCondition;
-
 /**
  * Interface for a constraint factory that handles immutable classes.
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutableConstraintFactory extends ConstraintFactory<
-        ImmutableCondition,
         ImmutableValidatableBeforeConstraint,
         ImmutableValidatableAfterConstraint,
         ImmutableValidatableBetweenConstraint,

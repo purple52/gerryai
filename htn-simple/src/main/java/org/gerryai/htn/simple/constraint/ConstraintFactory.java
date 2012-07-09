@@ -28,7 +28,6 @@ import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * Factory for creating constraints.
- * @param <I> type of condition used by the constraints created by this factory
  * @param <BF> type of BeforeConstraint this factory generates
  * @param <AF> type of AfterConstraint this factory generates
  * @param <BE> type of BetweenConstraint this factory generates
@@ -36,10 +35,9 @@ import org.gerryai.htn.tasknetwork.Task;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ConstraintFactory<
-        I extends Condition,
-        BF extends BeforeConstraint<I>,
-        AF extends AfterConstraint<I>,
-        BE extends BetweenConstraint<I>,
+        BF extends BeforeConstraint,
+        AF extends AfterConstraint,
+        BE extends BetweenConstraint,
         PR extends PrecedenceConstraint> {
 
     /**
@@ -64,7 +62,7 @@ public interface ConstraintFactory<
      * @param condition the condition that must be true directly before the first task in the set
      * @return the constraint
      */
-    BF createBeforeConstraint(Task task, I condition);
+    BF createBeforeConstraint(Task task, Condition condition);
 
     /**
 	 * Create a before constraint.
@@ -72,7 +70,7 @@ public interface ConstraintFactory<
 	 * @param condition the condition that must be true directly before the first task in the set
 	 * @return the constraint
 	 */
-	BF createBeforeConstraint(Set<Task> tasks, I condition);
+	BF createBeforeConstraint(Set<Task> tasks, Condition condition);
 	
 	/**
 	 * Create an after constraint.
@@ -80,7 +78,7 @@ public interface ConstraintFactory<
 	 * @param condition the condition that must be true directly after the last task in the set
 	 * @return the constraint
 	 */
-	AF createAfterConstraint(Set<Task> tasks, I condition);
+	AF createAfterConstraint(Set<Task> tasks, Condition condition);
 	
 	/**
 	 * Create a between constraint.
@@ -89,6 +87,6 @@ public interface ConstraintFactory<
 	 * @param condition the condition that must be true between the two sets of tasks
 	 * @return the constraint
 	 */
-	BE createBetweenConstraint(Set<Task> precedingTasks, Set<Task> procedingTasks, I condition);
+	BE createBetweenConstraint(Set<Task> precedingTasks, Set<Task> procedingTasks, Condition condition);
 
 }

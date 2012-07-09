@@ -21,32 +21,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.gerryai.htn.simple.plan.ImmutableAction;
-import org.gerryai.htn.simple.plan.ImmutablePlan;
+import org.gerryai.htn.plan.Action;
+import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.simple.plan.ImmutablePlanBuilder;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimplePlan implements ImmutablePlan {
+public class SimplePlan implements Plan {
 
 	/**
 	 * List of actions that implement this plan.
 	 */
-	private List<ImmutableAction> actions;
+	private List<Action> actions;
 	
 	/**
 	 * Constructor.
 	 * @param builder the builder to build from
 	 */
 	protected SimplePlan(Builder builder) {
-	    actions = new ArrayList<ImmutableAction>(builder.getActions());
+	    actions = new ArrayList<Action>(builder.getActions());
 	}
 	/**
 	 * {@inheritDoc}
 	 */
-	public final List<ImmutableAction> getActions() {
+	public final List<Action> getActions() {
 		return Collections.unmodifiableList(actions);
 	}
 	
@@ -59,19 +59,19 @@ public class SimplePlan implements ImmutablePlan {
 	    /**
 	     * The actions to use when building the plan.
 	     */
-	    private List<ImmutableAction> actions;
+	    private List<Action> actions;
 	    
 	    /**
 	     * Constructor.
 	     */
 	    protected Builder() {
-	        actions = new ArrayList<ImmutableAction>();
+	        actions = new ArrayList<Action>();
 	    }
 	    
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutablePlanBuilder addAction(ImmutableAction action) {
+	    public final ImmutablePlanBuilder addAction(Action action) {
 	        actions.add(action);
 	        return this;
 	    }
@@ -79,7 +79,7 @@ public class SimplePlan implements ImmutablePlan {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutablePlan build() {
+	    public final Plan build() {
 	        return new SimplePlan(this);
 	    }
 	    
@@ -87,7 +87,7 @@ public class SimplePlan implements ImmutablePlan {
 	     * Get the actions added to this builder.
 	     * @return the actions
 	     */
-	    protected final List<ImmutableAction> getActions() {
+	    protected final List<Action> getActions() {
 	        return Collections.unmodifiableList(actions);
 	    }
 	}

@@ -20,8 +20,8 @@ package org.gerryai.htn.simple.plan.impl;
 import java.util.Collections;
 import java.util.Map;
 
-import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.plan.ImmutableAction;
+import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.plan.Action;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Variable;
 
@@ -29,12 +29,12 @@ import org.gerryai.logic.Variable;
  * An immutable implementation of an action that provides a builder for construction.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleAction implements ImmutableAction {
+public class SimpleAction implements Action {
 
 	/**
 	 * Operator that this action is a grounded instance of.
 	 */
-	private ImmutableOperator operator;
+	private Operator operator;
 	
 	/**
 	 * Bindings that ground the operator.
@@ -52,7 +52,7 @@ public class SimpleAction implements ImmutableAction {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableOperator getOperator() {
+	public final Operator getOperator() {
 		return operator;
 	}
 
@@ -72,7 +72,7 @@ public class SimpleAction implements ImmutableAction {
 	    /**
 	     * Operator that this action is a grounded instance of.
 	     */
-	    private ImmutableOperator operator;
+	    private Operator operator;
 	    
 	    /**
 	     * Bindings that ground the operator.
@@ -84,7 +84,7 @@ public class SimpleAction implements ImmutableAction {
 	     * @param operator the operator
 	     * @return an updated builder
 	     */
-	    public final Builder setOperator(ImmutableOperator operator) {
+	    public final Builder setOperator(Operator operator) {
 	        this.operator = operator;
 	        return this;
 	    }
@@ -103,7 +103,7 @@ public class SimpleAction implements ImmutableAction {
 	     * Get the operator the action to be built will implement.
 	     * @return the operator
 	     */
-	    protected final ImmutableOperator getOperator() {
+	    protected final Operator getOperator() {
 	        return operator;
 	    }
 
@@ -119,7 +119,7 @@ public class SimpleAction implements ImmutableAction {
 	     * Build the action.
 	     * @return the action
 	     */
-	    public final ImmutableAction build() {
+	    public final Action build() {
 	        return new SimpleAction(this);
 	    }
 	}

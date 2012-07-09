@@ -21,8 +21,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.domain.ImmutableEffect;
+import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.problem.ImmutableStateBuilder;
 import org.gerryai.logic.NegatedSentence;
@@ -51,7 +51,7 @@ public final class SimpleState implements ImmutableState {
     /**
      * {@inheritDoc}
      */
-    public boolean ask(ImmutableCondition condition) {
+    public boolean ask(Condition condition) {
         return ask(condition.getSentence());
     }
 
@@ -110,7 +110,7 @@ public final class SimpleState implements ImmutableState {
         /**
          * {@inheritDoc}
          */
-        public final ImmutableStateBuilder tell(ImmutableEffect effect) {
+        public final ImmutableStateBuilder tell(Effect effect) {
             return this.tell(effect.getSentence());
         }
  

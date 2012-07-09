@@ -23,13 +23,12 @@ import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.logic.LogicFactory;
-import org.gerryai.htn.simple.tasknetwork.TaskBuilder;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkFactory;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.simple.tasknetwork.TaskBuilder;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
@@ -47,7 +46,7 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
 	/**
 	 * Factory for creating constraint validators, as used by the task network builders.
 	 */
-	private ConstraintValidatorFactory<ImmutableCondition> constraintValidatorFactory;
+	private ConstraintValidatorFactory constraintValidatorFactory;
 	
 	/**
 	 * Constructor, requiring a factory for creating constraint validators.
@@ -55,7 +54,7 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
 	 * @param logicFactory the logic factory
 	 */
 	public SimpleTaskNetworkFactory(
-			ConstraintValidatorFactory<ImmutableCondition> constraintValidatorFactory,
+			ConstraintValidatorFactory constraintValidatorFactory,
 			LogicFactory logicFactory) {
 		this.constraintValidatorFactory = constraintValidatorFactory;
 		this.logicFactory = logicFactory;

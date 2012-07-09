@@ -17,8 +17,8 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
+import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.planner.ImmutablePlanner;
 import org.gerryai.htn.simple.planner.ImmutablePlannerFactory;
 import org.gerryai.htn.simple.planner.ImmutablePlanningService;
@@ -46,7 +46,7 @@ public class SimplePlanningService implements ImmutablePlanningService {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutablePlan solve(ImmutableProblem problem) throws PlanNotFound {
+	public final Plan solve(ImmutableProblem problem) throws PlanNotFound {
 		
 		// Create a planner that will work in the domain of the given problem
 		ImmutablePlanner planner = plannerFactory.create(problem.getDomain());

@@ -24,14 +24,9 @@ import org.gerryai.htn.problem.State;
 /**
  * Interface for a service that can handle states, conditional checks.
  * @param <S> type of state this service uses
- * @param <I> type of condition this service uses
- * @param <E> type of effect this service uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface StateService<
-        S extends State,
-        I extends Condition,
-        E extends Effect> {
+public interface StateService<S extends State> {
 
     /**
      * Check if the given condition is satisfied by the given state.
@@ -39,7 +34,7 @@ public interface StateService<
      * @param condition the condition to check for
      * @return true if the predicate is satisfied
      */
-    boolean ask(S state, I condition);
+    boolean ask(S state, Condition condition);
     
     /**
      * Get an updated state where the supplied effect has been applied to the knowledge base.
@@ -47,5 +42,5 @@ public interface StateService<
      * @param effect the effect to be applied
      * @return an updated state
      */
-    S tell(S state, E effect);
+    S tell(S state, Effect effect);
 }

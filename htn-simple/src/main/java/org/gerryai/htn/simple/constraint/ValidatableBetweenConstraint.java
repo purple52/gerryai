@@ -18,15 +18,12 @@
 package org.gerryai.htn.simple.constraint;
 
 import org.gerryai.htn.constraint.BetweenConstraint;
-import org.gerryai.htn.domain.Condition;
 
 /**
  * Extension of validatable and precedence constraint interfaces.
- * @param <I> type of condition this constraint uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ValidatableBetweenConstraint<I extends Condition>
-		        extends ValidatableConstraint<I>, BetweenConstraint<I> {
+public interface ValidatableBetweenConstraint extends ValidatableConstraint, BetweenConstraint {
 
 }

@@ -19,6 +19,7 @@ package org.gerryai.htn.simple.domain;
 
 import java.util.Map;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.logic.Sentence;
 import org.gerryai.logic.Term;
 
@@ -40,7 +41,7 @@ public interface ImmutableConditionBuilder {
      * @param condition the condition to copy
      * @return the updated builder
      */
-    ImmutableConditionBuilder copy(ImmutableCondition condition);
+    ImmutableConditionBuilder copy(Condition condition);
     
     /**
      * Apply the provided substituter to the arguments provided so far.
@@ -50,8 +51,8 @@ public interface ImmutableConditionBuilder {
     ImmutableConditionBuilder apply(Map<Term, Term> substitution);
     
     /**
-     * Build the finished effect.
+     * Build the finished condition.
      * @return an updated builder
      */
-    ImmutableCondition build();
+    Condition build();
 }

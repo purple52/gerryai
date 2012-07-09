@@ -24,27 +24,21 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Interface that a domain must implement.
- * @param <E> type of effect this domain uses
- * @param <O> type of operator this domain uses
  * @param <M> type of operator this domain uses
  * @param <N> type of task network this domain uses
  * @param <C> type of constraint this domain uses
- * @param <I> the class of condition the domain will handle
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Domain<
-        E extends Effect,
-		O extends Operator<E, I>,
-		M extends Method<N, C>,
+        M extends Method<N, C>,
 		N extends TaskNetwork<C>,
-		C extends Constraint,
-		I extends Condition> {
+		C extends Constraint> {
 
 	/**
 	 * Get the full set of available operators for this domain.
 	 * @return the operators
 	 */
-	Set<O> getOperators();
+	Set<Operator> getOperators();
 	
 	/**
 	 * Get the set of methods available for this domain.

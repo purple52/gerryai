@@ -19,8 +19,6 @@ package org.gerryai.htn.simple.plan;
 
 import java.util.Map;
 
-import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.tasknetwork.Task;
@@ -29,15 +27,9 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface for a helper class for action factories.
- * @param <E> type of effect this action uses
- * @param <O> type of operator this action uses
- * @param <I> type of condition the action uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ActionFactoryHelper<
-        E extends Effect,
-        O extends Operator<E, I>,
-        I extends Condition> {
+public interface ActionFactoryHelper {
 	
 	/**
 	 * Get the operator for the given task.
@@ -45,7 +37,7 @@ public interface ActionFactoryHelper<
 	 * @return the operator
 	 * @throws TaskNotActionable if an operator does not exist for this task
 	 */
-	O getOperator(Task task) throws TaskNotActionable;
+	Operator getOperator(Task task) throws TaskNotActionable;
 	
 	/**
 	 * Get the bindings for grounding this task.
@@ -54,6 +46,6 @@ public interface ActionFactoryHelper<
 	 * @return a set of bindings that ground this operator to implement this task
 	 * @throws TaskNotActionable if a set of bindings cannot be generated
 	 */
-	Map<Variable, Constant> getBindings(Task task, O operator) throws TaskNotActionable;
+	Map<Variable, Constant> getBindings(Task task, Operator operator) throws TaskNotActionable;
 
 }

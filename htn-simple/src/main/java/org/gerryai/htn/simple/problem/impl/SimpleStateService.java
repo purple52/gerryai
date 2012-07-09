@@ -17,8 +17,8 @@
  */
 package org.gerryai.htn.simple.problem.impl;
 
-import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.domain.ImmutableEffect;
+import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.problem.ImmutableStateBuilder;
 import org.gerryai.htn.simple.problem.ImmutableStateService;
@@ -39,14 +39,14 @@ public class SimpleStateService implements ImmutableStateService {
     /**
      * {@inheritDoc}
      */
-    public final boolean ask(ImmutableState state, ImmutableCondition condition) {
+    public final boolean ask(ImmutableState state, Condition condition) {
         return state.ask(condition);
     }
 
     /**
      * {@inheritDoc}
      */
-    public final ImmutableState tell(ImmutableState state, ImmutableEffect effect) {
+    public final ImmutableState tell(ImmutableState state, Effect effect) {
         return state.createCopyBuilder()
                 .tell(effect)
                 .build();

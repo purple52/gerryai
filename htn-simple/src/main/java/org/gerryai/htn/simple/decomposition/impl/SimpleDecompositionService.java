@@ -22,7 +22,6 @@ import java.util.Map;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
@@ -42,13 +41,13 @@ public class SimpleDecompositionService implements
     /**
      * Constraint validator factory.
      */
-    private ConstraintValidatorFactory<ImmutableCondition> constraintValidatorFactory;
+    private ConstraintValidatorFactory constraintValidatorFactory;
 	
 	/**
 	 * Set the unification service.
 	 * @param constraintValidatorFactory the constraint validator factory to use
 	 */
-	public SimpleDecompositionService(ConstraintValidatorFactory<ImmutableCondition> constraintValidatorFactory) {
+	public SimpleDecompositionService(ConstraintValidatorFactory constraintValidatorFactory) {
 		this.constraintValidatorFactory = constraintValidatorFactory;
 	}
 	

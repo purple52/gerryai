@@ -19,6 +19,7 @@ package org.gerryai.htn.simple.domain;
 
 import java.util.Map;
 
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.logic.Sentence;
 import org.gerryai.logic.Term;
 
@@ -40,7 +41,7 @@ public interface ImmutableEffectBuilder {
      * @param effect the effect to copy
      * @return the updated builder
      */
-    ImmutableEffectBuilder copy(ImmutableEffect effect);
+    ImmutableEffectBuilder copy(Effect effect);
     
     /**
      * Apply the provided substituter to the arguments provided so far.
@@ -54,5 +55,5 @@ public interface ImmutableEffectBuilder {
      * Build the finished effect.
      * @return an updated builder
      */
-    ImmutableEffect build();
+    Effect build();
 }

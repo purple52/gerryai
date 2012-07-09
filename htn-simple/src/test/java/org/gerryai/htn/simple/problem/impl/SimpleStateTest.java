@@ -22,8 +22,8 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.domain.ImmutableEffect;
+import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.logic.NegatedSentence;
 import org.gerryai.logic.Sentence;
@@ -43,10 +43,10 @@ public class SimpleStateTest {
         
         Sentence mockSentenceA = mock(Sentence.class);
         
-        ImmutableEffect mockEffectA = mock(ImmutableEffect.class);
+        Effect mockEffectA = mock(Effect.class);
         when(mockEffectA.getSentence()).thenReturn(mockSentenceA);
 
-        ImmutableCondition mockConditionA = mock(ImmutableCondition.class);
+        Condition mockConditionA = mock(Condition.class);
         when(mockConditionA.getSentence()).thenReturn(mockSentenceA);
         
         ImmutableState state = new SimpleState.Builder()
@@ -65,10 +65,10 @@ public class SimpleStateTest {
         Sentence mockSentence = mock(Sentence.class);
         NegatedSentence mockNegatedSentence = mock(NegatedSentence.class);
         when(mockNegatedSentence.getSentence()).thenReturn(mockSentence);
-        ImmutableEffect mockEffectA = mock(ImmutableEffect.class);
+        Effect mockEffectA = mock(Effect.class);
         when(mockEffectA.getSentence()).thenReturn(mockSentence);
 
-        ImmutableCondition mockConditionA = mock(ImmutableCondition.class);
+        Condition mockConditionA = mock(Condition.class);
         when(mockConditionA.getSentence()).thenReturn(mockNegatedSentence);
         
         ImmutableState state = new SimpleState.Builder()
@@ -85,13 +85,13 @@ public class SimpleStateTest {
         Sentence mockSentenceA = mock(Sentence.class);
         Sentence mockSentenceB = mock(Sentence.class);
         
-        ImmutableEffect mockEffectA = mock(ImmutableEffect.class);
-        ImmutableEffect mockEffectB = mock(ImmutableEffect.class);
+        Effect mockEffectA = mock(Effect.class);
+        Effect mockEffectB = mock(Effect.class);
         when(mockEffectA.getSentence()).thenReturn(mockSentenceA);
         when(mockEffectB.getSentence()).thenReturn(mockSentenceB);
 
-        ImmutableCondition mockConditionA = mock(ImmutableCondition.class);
-        ImmutableCondition mockConditionB = mock(ImmutableCondition.class);
+        Condition mockConditionA = mock(Condition.class);
+        Condition mockConditionB = mock(Condition.class);
         when(mockConditionA.getSentence()).thenReturn(mockSentenceA);
         when(mockConditionB.getSentence()).thenReturn(mockSentenceB);
         
@@ -117,12 +117,12 @@ public class SimpleStateTest {
         NegatedSentence mockNegatedSentence = mock(NegatedSentence.class);
         when(mockNegatedSentence.getSentence()).thenReturn(mockSentence);
 
-        ImmutableEffect mockEffectA = mock(ImmutableEffect.class);
-        ImmutableEffect mockEffectB = mock(ImmutableEffect.class);
+        Effect mockEffectA = mock(Effect.class);
+        Effect mockEffectB = mock(Effect.class);
         when(mockEffectA.getSentence()).thenReturn(mockSentence);
         when(mockEffectB.getSentence()).thenReturn(mockNegatedSentence);
 
-        ImmutableCondition mockCondition = mock(ImmutableCondition.class);
+        Condition mockCondition = mock(Condition.class);
         when(mockCondition.getSentence()).thenReturn(mockSentence);
         
         ImmutableState oldState = new SimpleState.Builder()

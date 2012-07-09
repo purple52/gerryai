@@ -19,8 +19,8 @@ package org.gerryai.htn.simple.problem;
 
 import java.util.Set;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.problem.State;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.logic.Sentence;
 
 /**
@@ -40,7 +40,7 @@ public interface ImmutableState extends State {
      * @param condition the condition to check
      * @return true if the condition is true in this state
      */
-    boolean ask(ImmutableCondition condition);
+    boolean ask(Condition condition);
     
     /**
      * Get a complete set of assertions that this state knows to be true.

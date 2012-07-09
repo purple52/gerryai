@@ -25,11 +25,9 @@ import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.impl.SimpleDecompositionService;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
 import org.gerryai.htn.simple.plan.ImmutableActionFactory;
 import org.gerryai.htn.simple.plan.ImmutableActionFactoryHelper;
@@ -42,7 +40,6 @@ import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.planner.sort.impl.SimpleSortService;
 import org.gerryai.htn.simple.problem.ImmutableStateService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.logic.Variable;
 
 /**
  * Simple factory for creating planners that generate imutable plans.
@@ -76,12 +73,10 @@ public class SimplePlannerFactory implements ImmutablePlannerFactory {
 		
 		aima.core.logic.fol.Unifier unifier = new aima.core.logic.fol.Unifier();
 		AIMAConverter converter = new AIMAConverterImpl();
-		ConstraintValidatorFactory<ImmutableCondition> constraintValidatorFactory
-				= new GenericConstraintValidatorFactory<ImmutableCondition>();
-		AIMAUnificationService<ImmutableOperator, ImmutableMethod, 
-		        ImmutableCondition, Variable> unificationService =
-		        new AIMAUnificationService<ImmutableOperator, ImmutableMethod,
-		        ImmutableCondition, Variable>(unifier, converter);
+		ConstraintValidatorFactory constraintValidatorFactory
+				= new GenericConstraintValidatorFactory();
+		AIMAUnificationService<ImmutableMethod> unificationService =
+		        new AIMAUnificationService<ImmutableMethod>(unifier, converter);
 		
 		DecompositionService<ImmutableMethod, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>> decompositionService =

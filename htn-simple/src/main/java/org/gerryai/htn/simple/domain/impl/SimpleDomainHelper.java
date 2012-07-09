@@ -22,13 +22,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Effect;
+import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.domain.OperatorNotFound;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
-import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
@@ -63,9 +63,9 @@ public class SimpleDomainHelper implements ImmutableDomainHelper {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableOperator getOperatorByName(String name) throws OperatorNotFound {
+	public final Operator getOperatorByName(String name) throws OperatorNotFound {
 		// TODO Ensure that two operators cannot have the same name and arguments match
-		for (ImmutableOperator operator : domain.getOperators()) {
+		for (Operator operator : domain.getOperators()) {
 			if (operator.getName().equals(name)) {
 				return operator;
 			}
@@ -90,7 +90,7 @@ public class SimpleDomainHelper implements ImmutableDomainHelper {
     /**
      * {@inheritDoc}
      */
-    public final ImmutableEffect getGroundedEffect(ImmutableEffect effect,
+    public final Effect getGroundedEffect(Effect effect,
             Map<Variable, Constant> bindings) {
         
         Map<Term, Term> substitution =
@@ -102,13 +102,13 @@ public class SimpleDomainHelper implements ImmutableDomainHelper {
     /**
      * {@inheritDoc}
      */
-    public final ImmutableCondition getGroundedCondition(ImmutableCondition condition,
+    public final Condition getGroundedCondition(Condition condition,
             Map<Variable, Constant> bindings) {
         
         Map<Term, Term> substitution =
                 new HashMap<Term, Term>(bindings);
         
-        ImmutableCondition newCondition = condition.applyToCopy(substitution);
+        Condition newCondition = condition.applyToCopy(substitution);
         if (!newCondition.getSentence().isGround()) {
             throw new IllegalArgumentException("Substitution does not produce a grounded condition");
         }

@@ -23,11 +23,11 @@ import static org.mockito.Mockito.mock;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableValidatablePrecedenceConstraint;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.tasknetwork.Task;
 import org.junit.Test;
 
@@ -67,7 +67,7 @@ public class SimpleConstraintFactoryTest {
 	@Test
 	public final void testCreateBeforeConstraint() {
 		Set<Task> mockTasks = new HashSet<Task>();
-		ImmutableCondition mockCondition = mock(ImmutableCondition.class);
+		Condition mockCondition = mock(Condition.class);
 		
 		// Create factory under test
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
@@ -85,7 +85,7 @@ public class SimpleConstraintFactoryTest {
 	@Test
 	public final void testCreateAfterConstraint() {
 		Set<Task> mockTasks = new HashSet<Task>();
-		ImmutableCondition mockCondition = mock(ImmutableCondition.class);
+		Condition mockCondition = mock(Condition.class);
 		
 		// Create factory under test
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();
@@ -104,7 +104,7 @@ public class SimpleConstraintFactoryTest {
 	public final void testCreateBetweenConstraint() {
 		Set<Task> mockTasksA = new HashSet<Task>();
 		Set<Task> mockTasksB = new HashSet<Task>();
-		ImmutableCondition mockCondition = mock(ImmutableCondition.class);
+		Condition mockCondition = mock(Condition.class);
 		
 		// Create factory under test
 		SimpleConstraintFactory factory = new SimpleConstraintFactory();

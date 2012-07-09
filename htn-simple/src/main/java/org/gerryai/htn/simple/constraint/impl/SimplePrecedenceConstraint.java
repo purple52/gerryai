@@ -24,7 +24,6 @@ import java.util.Set;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.ImmutableValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
@@ -73,14 +72,14 @@ public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenc
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<ImmutableCondition> validator) {
+	public final boolean validate(ConstraintValidator validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<ImmutableCondition> validator) throws InvalidConstraint {
+	public final void add(ConstraintValidator validator) throws InvalidConstraint {
 		validator.add(this);
 	}
 	

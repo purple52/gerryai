@@ -19,7 +19,6 @@ package org.gerryai.htn.simple.tasknetwork;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
@@ -34,6 +33,5 @@ public interface ImmutableTaskNetwork extends TaskNetwork<ImmutableConstraint<?>
      * @return the builder
      * @throws InvalidConstraint if one of the constraints is invalid
      */
-    ImmutableTaskNetworkBuilder createCopyBuilder(ConstraintValidator<
-            ImmutableCondition> constraintValidator) throws InvalidConstraint;
+    ImmutableTaskNetworkBuilder createCopyBuilder(ConstraintValidator constraintValidator) throws InvalidConstraint;
 }

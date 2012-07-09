@@ -21,7 +21,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.logic.LogicFactory;
 import org.junit.Test;
 
@@ -36,8 +35,7 @@ public class SimpleTaskNetworkFactoryTest {
 	 */
 	@Test
 	public final void testCreateTaskBuilder() {
-		@SuppressWarnings("unchecked")
-		ConstraintValidatorFactory<ImmutableCondition> mockConstraintValidatorFactory
+		ConstraintValidatorFactory mockConstraintValidatorFactory
 				= mock(ConstraintValidatorFactory.class);
 		LogicFactory mockLogicFactory = mock(LogicFactory.class);
 		
@@ -52,8 +50,7 @@ public class SimpleTaskNetworkFactoryTest {
 	 */
 	@Test
 	public final void testCreateTaskNetworkBuilder() {
-		@SuppressWarnings("unchecked")
-		ConstraintValidatorFactory<ImmutableCondition> mockConstraintValidatorFactory
+		ConstraintValidatorFactory mockConstraintValidatorFactory
 				= mock(ConstraintValidatorFactory.class);
 		LogicFactory mockLogicFactory = mock(LogicFactory.class);
 		

@@ -27,11 +27,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.gerryai.htn.plan.Action;
+import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.plan.ImmutableAction;
-import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.ImmutablePlannerHelper;
 import org.gerryai.htn.simple.problem.ImmutableState;
@@ -56,8 +56,8 @@ public class SimplePlannerTest {
 		
 		ImmutableState mockState = mock(ImmutableState.class);
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
-		ImmutablePlan mockPlan = mock(ImmutablePlan.class);
-		List<ImmutableAction> actions = new ArrayList<ImmutableAction>();
+		Plan mockPlan = mock(Plan.class);
+		List<Action> actions = new ArrayList<Action>();
 		when(mockPlan.getActions()).thenReturn(actions);
 		
 		// Create a mock planner helper that will throw an exception if no primitive tasks were found
@@ -71,7 +71,7 @@ public class SimplePlannerTest {
 		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
 		
 		// Try and find a plan
-		ImmutablePlan plan = planner.findPlan(mockState, mockTaskNetwork);
+		Plan plan = planner.findPlan(mockState, mockTaskNetwork);
 		
 		assertTrue(plan.getActions().isEmpty());
 	}
@@ -197,9 +197,9 @@ public class SimplePlannerTest {
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
 		
-		ImmutablePlan mockPlan = mock(ImmutablePlan.class);
-		List<ImmutableAction> actions = new ArrayList<ImmutableAction>();
-		ImmutableAction mockActionA = mock(ImmutableAction.class);
+		Plan mockPlan = mock(Plan.class);
+		List<Action> actions = new ArrayList<Action>();
+		Action mockActionA = mock(Action.class);
 		actions.add(mockActionA);
 		when(mockPlan.getActions()).thenReturn(actions);
 		
@@ -214,7 +214,7 @@ public class SimplePlannerTest {
 		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
 		
 		// Try and find a plan
-		ImmutablePlan plan = planner.findPlan(mockState, mockTaskNetwork);
+		Plan plan = planner.findPlan(mockState, mockTaskNetwork);
 		
 		assertEquals(1, plan.getActions().size());
 		assertEquals(mockActionA, plan.getActions().get(0));
@@ -248,9 +248,9 @@ public class SimplePlannerTest {
 		when(mockDecomposedTaskNetwork.getTasks()).thenReturn(decomposedTasks);
 		
 		// The target plan containing action B
-		ImmutablePlan mockPlan = mock(ImmutablePlan.class);
-		List<ImmutableAction> actions = new ArrayList<ImmutableAction>();
-		ImmutableAction mockActionB = mock(ImmutableAction.class);
+		Plan mockPlan = mock(Plan.class);
+		List<Action> actions = new ArrayList<Action>();
+		Action mockActionB = mock(Action.class);
 		actions.add(mockActionB);
 		when(mockPlan.getActions()).thenReturn(actions);
 		
@@ -278,7 +278,7 @@ public class SimplePlannerTest {
 		SimplePlanner planner = new SimplePlanner(mockDomainHelper, mockPlannerHelper);
 		
 		// Try and find a plan
-		ImmutablePlan plan = planner.findPlan(mockState, mockTaskNetwork);
+		Plan plan = planner.findPlan(mockState, mockTaskNetwork);
 		
 		assertEquals(1, plan.getActions().size());
 		assertEquals(mockActionB, plan.getActions().get(0));

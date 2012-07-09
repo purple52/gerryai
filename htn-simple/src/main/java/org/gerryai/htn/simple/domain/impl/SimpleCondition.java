@@ -19,16 +19,16 @@ package org.gerryai.htn.simple.domain.impl;
 
 import java.util.Map;
 
-import org.gerryai.htn.simple.domain.ImmutableCondition;
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.domain.ImmutableConditionBuilder;
 import org.gerryai.logic.Sentence;
 import org.gerryai.logic.Term;
 
 /**
+ * Simple immutable implementation of a logical condition.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public final class SimpleCondition implements ImmutableCondition {
+public final class SimpleCondition implements Condition {
 
     /**
      * The sentence that this condition checks for.
@@ -53,7 +53,7 @@ public final class SimpleCondition implements ImmutableCondition {
     /**
      * {@inheritDoc}
      */
-    public ImmutableCondition applyToCopy(Map<Term, Term> substitution) {
+    public Condition applyToCopy(Map<Term, Term> substitution) {
         return new Builder()
             .copy(this)
             .apply(substitution)
@@ -79,7 +79,7 @@ public final class SimpleCondition implements ImmutableCondition {
         /**
          * {@inheritDoc}
          */
-        public ImmutableConditionBuilder setSentence(Sentence sentence) {
+        public Builder setSentence(Sentence sentence) {
             this.sentence = sentence;
             return this;
         }
@@ -87,7 +87,7 @@ public final class SimpleCondition implements ImmutableCondition {
         /**
          * {@inheritDoc}
          */
-        public ImmutableConditionBuilder copy(ImmutableCondition condition) {
+        public Builder copy(Condition condition) {
             this.sentence = condition.getSentence();
             return this;
         }
@@ -95,7 +95,7 @@ public final class SimpleCondition implements ImmutableCondition {
         /**
          * {@inheritDoc}
          */
-        public ImmutableConditionBuilder apply(Map<Term, Term> substitution) {
+        public Builder apply(Map<Term, Term> substitution) {
             this.sentence = sentence.applyToCopy(substitution);
             return this;
         }
@@ -103,7 +103,7 @@ public final class SimpleCondition implements ImmutableCondition {
         /**
          * {@inheritDoc}
          */
-        public ImmutableCondition build() {
+        public Condition build() {
             return new SimpleCondition(this);
         }
     }

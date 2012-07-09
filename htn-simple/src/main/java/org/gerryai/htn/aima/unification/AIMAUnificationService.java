@@ -20,33 +20,23 @@ package org.gerryai.htn.aima.unification;
 import java.util.Map;
 
 import org.gerryai.htn.aima.AIMAConverter;
-import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.UnificationService;
-import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
-import org.gerryai.logic.Variable;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
 
 /**
  * Unification service that use an AIMA unifier underneath.
- * @param <O> the type of operator this service works with
  * @param <M> the type of method this service works with
- * @param <I> the class of condition the builder will handle
- * @param <V> the type of variable this service works with
  * @author David Edwards <david@more.fool.me.uk>
  */
 public class AIMAUnificationService<
-		O extends Operator<ImmutableEffect, I>,
-		M extends Method<ImmutableTaskNetwork, ImmutableConstraint<?>>,
-		I extends Condition,
-		V extends Variable>
-				implements UnificationService<M, ImmutableTaskNetwork, ImmutableConstraint<?>, I> {
+		M extends Method<ImmutableTaskNetwork, ImmutableConstraint<?>>>
+				implements UnificationService<M, ImmutableTaskNetwork, ImmutableConstraint<?>> {
 
 	/**
 	 * AIMA Unifier object to do the underlying expression unification.

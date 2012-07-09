@@ -20,7 +20,6 @@ package org.gerryai.htn.simple.planner.impl;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintFactory;
 import org.gerryai.htn.simple.constraint.impl.SimpleConstraintFactory;
 import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilderFactory;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
 import org.gerryai.htn.simple.logic.LogicFactory;
@@ -89,8 +88,8 @@ public class SimplePlanningFactory implements ImmutablePlanningFactory {
         domainBuilderFactory = new SimpleDomainBuilderFactory();
         problemBuilderFactory = new SimpleProblemBuilderFactory();
         
-        GenericConstraintValidatorFactory<ImmutableCondition> constraintValidatorFactory
-            = new GenericConstraintValidatorFactory<ImmutableCondition>();
+        GenericConstraintValidatorFactory constraintValidatorFactory
+            = new GenericConstraintValidatorFactory();
         taskNetworkFactory = new SimpleTaskNetworkFactory(constraintValidatorFactory, logicFactory);
 
         constraintFactory = new SimpleConstraintFactory();

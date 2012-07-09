@@ -25,10 +25,10 @@ import static org.mockito.Mockito.when;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.tasknetwork.Task;
 import org.junit.Test;
 
@@ -61,7 +61,7 @@ public class SimpleDomainHelperTest {
 	public final void testGetOperatorByNameEmptyList() throws OperatorNotFound {
 		
 		ImmutableDomain	mockDomain = mock(ImmutableDomain.class);
-		when(mockDomain.getOperators()).thenReturn(new HashSet<ImmutableOperator>());
+		when(mockDomain.getOperators()).thenReturn(new HashSet<Operator>());
 
 		// Create the domain helper under test
 		SimpleDomainHelper domainHelper = new SimpleDomainHelper(mockDomain);
@@ -78,11 +78,11 @@ public class SimpleDomainHelperTest {
 	public final void testGetOperatorByNameNotFound() throws OperatorNotFound {
 
 		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
-		ImmutableOperator mockOperatorA = mock(ImmutableOperator.class);
+		Operator mockOperatorA = mock(Operator.class);
 		when(mockOperatorA.getName()).thenReturn("operatorA");
-		ImmutableOperator mockOperatorB = mock(ImmutableOperator.class);
+		Operator mockOperatorB = mock(Operator.class);
 		when(mockOperatorB.getName()).thenReturn("operatorB");
-		Set<ImmutableOperator> operators = new HashSet<ImmutableOperator>();
+		Set<Operator> operators = new HashSet<Operator>();
 		operators.add(mockOperatorA);
 		operators.add(mockOperatorB);
 		when(mockDomain.getOperators()).thenReturn(operators);
@@ -102,11 +102,11 @@ public class SimpleDomainHelperTest {
 	public final void testGetOperatorByNameFound() throws OperatorNotFound {
 
 		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
-		ImmutableOperator mockOperatorA = mock(ImmutableOperator.class);
+		Operator mockOperatorA = mock(Operator.class);
 		when(mockOperatorA.getName()).thenReturn("operatorA");
-		ImmutableOperator mockOperatorB = mock(ImmutableOperator.class);
+		Operator mockOperatorB = mock(Operator.class);
 		when(mockOperatorB.getName()).thenReturn("operatorB");
-		Set<ImmutableOperator> operators = new HashSet<ImmutableOperator>();
+		Set<Operator> operators = new HashSet<Operator>();
 		operators.add(mockOperatorA);
 		operators.add(mockOperatorB);
 		when(mockDomain.getOperators()).thenReturn(operators);

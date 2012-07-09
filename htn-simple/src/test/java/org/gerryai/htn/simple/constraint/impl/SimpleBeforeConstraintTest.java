@@ -26,9 +26,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
@@ -48,7 +48,7 @@ public class SimpleBeforeConstraintTest {
         Task mockTask = mock(Task.class);
         Set<Task> mockTasks = new HashSet<Task>();
         mockTasks.add(mockTask);
-        ImmutableCondition mockCondition = mock(ImmutableCondition.class);
+        Condition mockCondition = mock(Condition.class);
 
         ImmutableValidatableBeforeConstraint constraint = new SimpleBeforeConstraint.Builder()
                 .addTasks(mockTasks)
@@ -67,10 +67,9 @@ public class SimpleBeforeConstraintTest {
         Task mockTask = mock(Task.class);
         Set<Task> mockTasks = new HashSet<Task>();
         mockTasks.add(mockTask);
-        ImmutableCondition mockCondition = mock(ImmutableCondition.class);
+        Condition mockCondition = mock(Condition.class);
 
-        @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator mockValidator = mock(ConstraintValidator.class);
         ImmutableValidatableBeforeConstraint constraint = new SimpleBeforeConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockCondition)
@@ -89,10 +88,9 @@ public class SimpleBeforeConstraintTest {
         Task mockTask = mock(Task.class);
         Set<Task> mockTasks = new HashSet<Task>();
         mockTasks.add(mockTask);
-        ImmutableCondition mockCondition = mock(ImmutableCondition.class);
+        Condition mockCondition = mock(Condition.class);
 
-        @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator mockValidator = mock(ConstraintValidator.class);
         ImmutableValidatableBeforeConstraint constraint = new SimpleBeforeConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockCondition)
@@ -112,8 +110,8 @@ public class SimpleBeforeConstraintTest {
         Task mockTask = mock(Task.class);
         Set<Task> mockTasks = new HashSet<Task>();
         mockTasks.add(mockTask);
-        ImmutableCondition mockConditionA = mock(ImmutableCondition.class);
-        ImmutableCondition mockConditionB = mock(ImmutableCondition.class);
+        Condition mockConditionA = mock(Condition.class);
+        Condition mockConditionB = mock(Condition.class);
         when(mockConditionA.applyToCopy(mockSubstitution)).thenReturn(mockConditionB);
         
         ImmutableValidatableBeforeConstraint initialConstraint = new SimpleBeforeConstraint.Builder()
@@ -143,7 +141,7 @@ public class SimpleBeforeConstraintTest {
         Set<Task> mockNewTasks = new HashSet<Task>();
         mockNewTasks.add(mockTaskB);
         mockNewTasks.add(mockTaskC);
-        ImmutableCondition mockCondition = mock(ImmutableCondition.class);
+        Condition mockCondition = mock(Condition.class);
 
         ImmutableValidatableBeforeConstraint initialConstraint = new SimpleBeforeConstraint.Builder()
                 .addTasks(mockTasks)

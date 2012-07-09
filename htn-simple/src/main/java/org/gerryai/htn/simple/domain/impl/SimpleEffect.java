@@ -19,7 +19,7 @@ package org.gerryai.htn.simple.domain.impl;
 
 import java.util.Map;
 
-import org.gerryai.htn.simple.domain.ImmutableEffect;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.simple.domain.ImmutableEffectBuilder;
 import org.gerryai.logic.Sentence;
 import org.gerryai.logic.Term;
@@ -28,7 +28,7 @@ import org.gerryai.logic.Term;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public final class SimpleEffect implements ImmutableEffect {
+public final class SimpleEffect implements Effect {
 
     /**
      * The sentence that this effect asserts.
@@ -53,7 +53,7 @@ public final class SimpleEffect implements ImmutableEffect {
     /**
      * {@inheritDoc}
      */
-    public ImmutableEffect applyToCopy(Map<Term, Term> substitution) {
+    public Effect applyToCopy(Map<Term, Term> substitution) {
         return new Builder()
             .copy(this)
             .apply(substitution)
@@ -87,7 +87,7 @@ public final class SimpleEffect implements ImmutableEffect {
         /**
          * {@inheritDoc}
          */
-        public ImmutableEffectBuilder copy(ImmutableEffect effect) {
+        public ImmutableEffectBuilder copy(Effect effect) {
             this.sentence = effect.getSentence();
             return this;
         }
@@ -104,7 +104,7 @@ public final class SimpleEffect implements ImmutableEffect {
          * Build the finished effect.
          * @return an updated builder
          */
-        public ImmutableEffect build() {
+        public Effect build() {
             return new SimpleEffect(this);
         }
     }

@@ -32,19 +32,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Operator;
+import org.gerryai.htn.plan.Action;
+import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.decomposition.UnifierNotFound;
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.plan.ImmutableActionFactory;
-import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.plan.ImmutablePlanBuilder;
 import org.gerryai.htn.simple.plan.ImmutablePlanBuilderFactory;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
@@ -88,7 +88,7 @@ public class SimplePlannerHelperTest {
      * Mock unification service.
      */
     private UnificationService<ImmutableMethod, ImmutableTaskNetwork,
-            ImmutableConstraint<?>, ImmutableCondition> mockUnificationService;
+            ImmutableConstraint<?>> mockUnificationService;
     
     /**
      * Mock sort service.
@@ -108,17 +108,17 @@ public class SimplePlannerHelperTest {
     /**
      * Map of plan builders to actions for mocking plan builders.
      */
-    private Map<ImmutablePlanBuilder, List<ImmutableAction>> builderActionMap;
+    private Map<ImmutablePlanBuilder, List<Action>> builderActionMap;
     
     /**
      * Map of plan builders to target actions for mocking plan builders.
      */
-    private Map<ImmutablePlanBuilder, List<ImmutableAction>> builderTargetActionMap;
+    private Map<ImmutablePlanBuilder, List<Action>> builderTargetActionMap;
     
     /**
      * Map of plan builders to plans for mocking plan builders.
      */
-    private Map<ImmutablePlanBuilder, ImmutablePlan> builderReturnMap;
+    private Map<ImmutablePlanBuilder, Plan> builderReturnMap;
     
     /**
      * Set up factories.
@@ -133,9 +133,9 @@ public class SimplePlannerHelperTest {
         mockSortService = mock(SortService.class);
         mockStateService = mock(ImmutableStateService.class);
         mockDomainHelper = mock(ImmutableDomainHelper.class);
-        builderActionMap = new HashMap<ImmutablePlanBuilder, List<ImmutableAction>>();
-        builderTargetActionMap = new HashMap<ImmutablePlanBuilder, List<ImmutableAction>>();
-        builderReturnMap = new HashMap<ImmutablePlanBuilder, ImmutablePlan>();
+        builderActionMap = new HashMap<ImmutablePlanBuilder, List<Action>>();
+        builderTargetActionMap = new HashMap<ImmutablePlanBuilder, List<Action>>();
+        builderReturnMap = new HashMap<ImmutablePlanBuilder, Plan>();
     }
 
     /**
@@ -164,14 +164,14 @@ public class SimplePlannerHelperTest {
 	@Test
 	public final void testFindPlanForPrimitiveEmptyTaskNetwork() throws PlanNotFound, TaskNotActionable {
 
-        List<ImmutableAction> mockActions = setupPlanBuilderFactory(0);
+        List<Action> mockActions = setupPlanBuilderFactory(0);
         ImmutableTaskNetwork mockTaskNetwork = setupTaskNetwork(mockActions);
         ImmutableState mockState = mock(ImmutableState.class);
 		
 		SimplePlannerHelper plannerHelper = createHelper();
 		
 		// Try to find a plan
-		ImmutablePlan plan = plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);		
+		Plan plan = plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);		
 		
 		assertTrue(plan.getActions().isEmpty());
 	}
@@ -184,14 +184,14 @@ public class SimplePlannerHelperTest {
 	@Test
 	public final void testFindPlanForPrimitiveOneTask() throws PlanNotFound, TaskNotActionable {
 
-		List<ImmutableAction> mockActions = setupPlanBuilderFactory(1);
+		List<Action> mockActions = setupPlanBuilderFactory(1);
         ImmutableTaskNetwork mockTaskNetwork = setupTaskNetwork(mockActions);
         ImmutableState mockState = mock(ImmutableState.class);
         
         SimplePlannerHelper plannerHelper = createHelper();
         
 		// Try to find a plan
-		ImmutablePlan plan = plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);		
+		Plan plan = plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);		
 		
 		assertEquals(1, plan.getActions().size());
 		assertTrue(plan.getActions().contains(mockActions.get(0)));
@@ -205,14 +205,14 @@ public class SimplePlannerHelperTest {
 	@Test
 	public final void testFindPlanForPrimitiveTwoTasks() throws PlanNotFound, TaskNotActionable {
 
-        List<ImmutableAction> mockActions = setupPlanBuilderFactory(2);
+        List<Action> mockActions = setupPlanBuilderFactory(2);
         ImmutableTaskNetwork mockTaskNetwork = setupTaskNetwork(mockActions);
         ImmutableState mockState = mock(ImmutableState.class);
         
 		SimplePlannerHelper plannerHelper = createHelper();
 		
 		// Try to find a plan
-		ImmutablePlan plan = plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);		
+		Plan plan = plannerHelper.findPlanForPrimitive(mockState, mockTaskNetwork);		
 		
 		assertEquals(2, plan.getActions().size());
 		assertTrue(plan.getActions().contains(mockActions.get(0)));
@@ -227,11 +227,11 @@ public class SimplePlannerHelperTest {
     @Test(expected = PlanNotFound.class)
     public final void testFindPlanForPrimitiveTwoTasksFirstFailsPreconditions() throws PlanNotFound, TaskNotActionable {
 
-        List<ImmutableAction> mockActions = setupPlanBuilderFactory(2);
+        List<Action> mockActions = setupPlanBuilderFactory(2);
         ImmutableTaskNetwork mockTaskNetwork = setupTaskNetwork(mockActions);
         ImmutableState mockState = mock(ImmutableState.class);
         
-        ImmutableCondition mockGroundCondition = linkCondition(mockActions.get(0));
+        Condition mockGroundCondition = linkCondition(mockActions.get(0));
         
         when(mockStateService.ask(mockState, mockGroundCondition)).thenReturn(false);
 
@@ -250,11 +250,11 @@ public class SimplePlannerHelperTest {
     public final void testFindPlanForPrimitiveTwoTasksSecondFailsPreconditions()
     		throws PlanNotFound, TaskNotActionable {
 
-        List<ImmutableAction> mockActions = setupPlanBuilderFactory(2);
+        List<Action> mockActions = setupPlanBuilderFactory(2);
         ImmutableTaskNetwork mockTaskNetwork = setupTaskNetwork(mockActions);
         ImmutableState mockState = mock(ImmutableState.class);
         
-        ImmutableCondition mockGroundCondition = linkCondition(mockActions.get(1));
+        Condition mockGroundCondition = linkCondition(mockActions.get(1));
         
         when(mockStateService.ask(mockState, mockGroundCondition)).thenReturn(false);
 
@@ -272,7 +272,7 @@ public class SimplePlannerHelperTest {
 	@Test(expected = PlanNotFound.class)
 	public final void testFindPlanForPrimitiveTaskNotActionable() throws PlanNotFound, TaskNotActionable {
 
-        List<ImmutableAction> mockActions = setupPlanBuilderFactory(1);
+        List<Action> mockActions = setupPlanBuilderFactory(1);
         ImmutableTaskNetwork mockTaskNetwork = setupTaskNetwork(mockActions);
         ImmutableState mockState = mock(ImmutableState.class);
         
@@ -346,13 +346,13 @@ public class SimplePlannerHelperTest {
 	 * @param howMany number of actions to create
 	 * @return the list of mock actions
 	 */
-	private List<ImmutableAction> createMockActions(int howMany) {
-	    List<ImmutableAction> mockActions = new ArrayList<ImmutableAction>();
+	private List<Action> createMockActions(int howMany) {
+	    List<Action> mockActions = new ArrayList<Action>();
         
 	    for (int i = 0; i < howMany; i++) {
-	        ImmutableAction mockAction = mock(ImmutableAction.class);
+	        Action mockAction = mock(Action.class);
 	        mockActions.add(mockAction);
-	        ImmutableOperator mockOperator = mock(ImmutableOperator.class);
+	        Operator mockOperator = mock(Operator.class);
 	        when(mockAction.getOperator()).thenReturn(mockOperator);
 	    }
 	    return mockActions;
@@ -364,21 +364,21 @@ public class SimplePlannerHelperTest {
 	 * @param mockPlan plan to return when actions have added
 	 * @return the plan builder
 	 */
-	private ImmutablePlanBuilder createPlanBuilder(List<ImmutableAction> mockActions, ImmutablePlan mockPlan) {
+	private ImmutablePlanBuilder createPlanBuilder(List<Action> mockActions, Plan mockPlan) {
 	    ImmutablePlanBuilder mockPlanBuilder = mock(ImmutablePlanBuilder.class);
 	    
 	    if (mockActions.isEmpty()) {
-	        verify(mockPlanBuilder, never()).addAction(any(ImmutableAction.class));
+	        verify(mockPlanBuilder, never()).addAction(any(Action.class));
 	        when(mockPlanBuilder.build()).thenReturn(mockPlan);
 	    } else {
-    	    builderActionMap.put(mockPlanBuilder, new ArrayList<ImmutableAction>());
+    	    builderActionMap.put(mockPlanBuilder, new ArrayList<Action>());
     	    builderTargetActionMap.put(mockPlanBuilder, mockActions);
     	    builderReturnMap.put(mockPlanBuilder, mockPlan);
-            when(mockPlanBuilder.addAction(any(ImmutableAction.class))).thenAnswer(new Answer<ImmutablePlanBuilder>() {
+            when(mockPlanBuilder.addAction(any(Action.class))).thenAnswer(new Answer<ImmutablePlanBuilder>() {
                 public ImmutablePlanBuilder answer(InvocationOnMock invocation) {
                     Object[] args = invocation.getArguments();
                     ImmutablePlanBuilder mock = (ImmutablePlanBuilder) invocation.getMock();
-                    builderActionMap.get(mock).add((ImmutableAction) args[0]);
+                    builderActionMap.get(mock).add((Action) args[0]);
                     if (builderTargetActionMap.get(mock).equals(builderActionMap.get(mock))) {
                         when(mock.build()).thenReturn(builderReturnMap.get(mock));
                     }
@@ -395,9 +395,9 @@ public class SimplePlannerHelperTest {
 	 * @param howManyActions number of actions to create.
 	 * @return the mock actions
 	 */
-	private List<ImmutableAction> setupPlanBuilderFactory(int howManyActions) {
-	    List<ImmutableAction> mockActions = createMockActions(howManyActions);
-        ImmutablePlan mockPlan = mock(ImmutablePlan.class);
+	private List<Action> setupPlanBuilderFactory(int howManyActions) {
+	    List<Action> mockActions = createMockActions(howManyActions);
+        Plan mockPlan = mock(Plan.class);
         when(mockPlan.getActions()).thenReturn(mockActions);
         ImmutablePlanBuilder mockPlanBuilder = createPlanBuilder(mockActions, mockPlan);
         when(mockPlanBuilderFactory.createBuilder()).thenReturn(mockPlanBuilder);
@@ -412,13 +412,13 @@ public class SimplePlannerHelperTest {
 	 * @throws PlanNotFound only if the test is broken
 	 * @throws TaskNotActionable only if the test is broken
 	 */
-	private ImmutableTaskNetwork setupTaskNetwork(List<ImmutableAction> mockActions)
+	private ImmutableTaskNetwork setupTaskNetwork(List<Action> mockActions)
 			throws PlanNotFound, TaskNotActionable {
 	    
 	    ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 	    Set<Task> tasks = new HashSet<Task>(mockActions.size());
         List<Task> sortedTasks = new ArrayList<Task>(mockActions.size());	    
-	    for (ImmutableAction mockAction : mockActions) {
+	    for (Action mockAction : mockActions) {
 	        Task mockTask = mock(Task.class);
             tasks.add(mockTask);
         
@@ -443,17 +443,17 @@ public class SimplePlannerHelperTest {
 	 * @param mockAction the action being worked on
 	 * @return the mock condition
 	 */
-	private ImmutableCondition linkCondition(ImmutableAction mockAction) {
+	private Condition linkCondition(Action mockAction) {
 	    
         Map<Variable, Constant> mockBindings = new HashMap<Variable, Constant>();
         when(mockAction.getBindings()).thenReturn(mockBindings);
         
-        ImmutableCondition mockCondition = mock(ImmutableCondition.class);
-        Set<ImmutableCondition> mockConditions = new HashSet<ImmutableCondition>(1);
+        Condition mockCondition = mock(Condition.class);
+        Set<Condition> mockConditions = new HashSet<Condition>(1);
         mockConditions.add(mockCondition);
         when(mockAction.getOperator().getPreconditions()).thenReturn(mockConditions);
         
-        ImmutableCondition mockGroundCondition = mock(ImmutableCondition.class);
+        Condition mockGroundCondition = mock(Condition.class);
         when(mockDomainHelper.getGroundedCondition(mockCondition, mockBindings)).thenReturn(mockGroundCondition);
         
         return mockGroundCondition;

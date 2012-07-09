@@ -24,9 +24,9 @@ import static org.mockito.Mockito.when;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilder;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.junit.Test;
 
 /**
@@ -40,7 +40,7 @@ public class SimpleDomainTest {
 	 */
 	@Test
 	public final void testOperators() {
-		Set<ImmutableOperator> operators = new HashSet<ImmutableOperator>();
+		Set<Operator> operators = new HashSet<Operator>();
 		
 		ImmutableDomainBuilder mockBuilder = mock(ImmutableDomainBuilder.class);
 		when(mockBuilder.getOperators()).thenReturn(operators);

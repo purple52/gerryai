@@ -26,11 +26,8 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutableDomain extends Domain<
-        ImmutableEffect,
-        ImmutableOperator,
         ImmutableMethod,
         ImmutableTaskNetwork,
-        ImmutableConstraint<?>,
-        ImmutableCondition> {
+        ImmutableConstraint<?>> {
 
 }

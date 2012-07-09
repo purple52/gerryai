@@ -23,9 +23,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.domain.ImmutableEffect;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
+import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Effect;
+import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.domain.ImmutableOperatorBuilder;
 import org.gerryai.logic.Variable;
 
@@ -33,7 +33,7 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleOperator implements ImmutableOperator {
+public class SimpleOperator implements Operator {
 
 	/**
 	 * Name of this operator.
@@ -48,12 +48,12 @@ public class SimpleOperator implements ImmutableOperator {
 	/**
 	 * Preconditions for this operator.
 	 */
-	private Set<ImmutableCondition> preconditions;
+	private Set<Condition> preconditions;
 	
 	/**
 	 * Effects of this operator.
 	 */
-	private Set<ImmutableEffect> effects;
+	private Set<Effect> effects;
 	
 	/**
 	 * Constructor for a simple operator.
@@ -83,14 +83,14 @@ public class SimpleOperator implements ImmutableOperator {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<ImmutableCondition> getPreconditions() {
+	public final Set<Condition> getPreconditions() {
 		return Collections.unmodifiableSet(preconditions);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<ImmutableEffect> getEffects() {
+	public final Set<Effect> getEffects() {
 		return Collections.unmodifiableSet(effects);
 	}
 
@@ -112,20 +112,20 @@ public class SimpleOperator implements ImmutableOperator {
 	    /**
 	     * Set of preconditions that must hold for the operator to be valid.
 	     */
-	    private Set<ImmutableCondition> preconditions;
+	    private Set<Condition> preconditions;
 	    
 	    /**
 	     * Set of effects that the operator has.
 	     */
-	    private Set<ImmutableEffect> effects;
+	    private Set<Effect> effects;
 	    
 	    /**
 	     * Default constructor.
 	     */
 	    protected Builder() {
 	        arguments = new ArrayList<Variable>();
-	        preconditions = new HashSet<ImmutableCondition>();
-	        effects = new HashSet<ImmutableEffect>();
+	        preconditions = new HashSet<Condition>();
+	        effects = new HashSet<Effect>();
 	    }
 	    
 	    /**
@@ -155,7 +155,7 @@ public class SimpleOperator implements ImmutableOperator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder addPrecondition(ImmutableCondition condition) {
+	    public final ImmutableOperatorBuilder addPrecondition(Condition condition) {
 	        preconditions.add(condition);
 	        return this;
 	    }
@@ -163,7 +163,7 @@ public class SimpleOperator implements ImmutableOperator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder addPreconditions(Set<ImmutableCondition> conditions) {
+	    public final ImmutableOperatorBuilder addPreconditions(Set<Condition> conditions) {
 	        preconditions.addAll(conditions);
 	        return this;
 	    }
@@ -171,7 +171,7 @@ public class SimpleOperator implements ImmutableOperator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder addEffect(ImmutableEffect effect) {
+	    public final ImmutableOperatorBuilder addEffect(Effect effect) {
 	        effects.add(effect);
 	        return this;
 	    }
@@ -179,7 +179,7 @@ public class SimpleOperator implements ImmutableOperator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder addEffects(Set<ImmutableEffect> effects) {
+	    public final ImmutableOperatorBuilder addEffects(Set<Effect> effects) {
 	        this.effects.addAll(effects);
 	        return this;
 	    }
@@ -187,7 +187,7 @@ public class SimpleOperator implements ImmutableOperator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperator build() {
+	    public final Operator build() {
 	        return new SimpleOperator(this);
 	    }
 	}

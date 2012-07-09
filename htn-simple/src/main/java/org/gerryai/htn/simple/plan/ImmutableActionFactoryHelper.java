@@ -17,17 +17,10 @@
  */
 package org.gerryai.htn.simple.plan;
 
-import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.domain.ImmutableEffect;
-import org.gerryai.htn.simple.domain.ImmutableOperator;
-
 /**
  * Action factory helper that uses immutable classes.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableActionFactoryHelper extends ActionFactoryHelper<
-        ImmutableEffect,
-        ImmutableOperator,
-        ImmutableCondition> {
+public interface ImmutableActionFactoryHelper extends ActionFactoryHelper {
 
 }

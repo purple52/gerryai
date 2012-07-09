@@ -23,9 +23,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
-import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.planner.ImmutablePlanner;
 import org.gerryai.htn.simple.planner.ImmutablePlannerFactory;
 import org.gerryai.htn.simple.problem.ImmutableProblem;
@@ -46,7 +46,7 @@ public class SimplePlanningServiceTest {
 	@Test
 	public final void testSolvePlanFound() throws PlanNotFound {
 		
-		ImmutablePlan mockPlan = mock(ImmutablePlan.class);
+		Plan mockPlan = mock(Plan.class);
 		ImmutableProblem mockProblem = createMockProblem();
 		ImmutablePlanner mockPlanner = mock(ImmutablePlanner.class);
 		when(mockPlanner.findPlan(mockProblem.getState(), mockProblem.getTaskNetwork())).thenReturn(mockPlan);
@@ -58,7 +58,7 @@ public class SimplePlanningServiceTest {
 		SimplePlanningService plannerService = new SimplePlanningService(mockPlannerFactory);
 		
 		// Try and solve the problem
-		ImmutablePlan plan = plannerService.solve(mockProblem);
+		Plan plan = plannerService.solve(mockProblem);
 		
 		// Verify that the correct plan was returned
 		verify(mockPlanner).findPlan(mockProblem.getState(), mockProblem.getTaskNetwork());

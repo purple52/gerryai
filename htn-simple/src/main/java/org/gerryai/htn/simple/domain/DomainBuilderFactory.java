@@ -18,34 +18,25 @@
 package org.gerryai.htn.simple.domain;
 
 import org.gerryai.htn.constraint.Constraint;
-import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Domain;
-import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Interface for a factory that creates domain and operator builders.
  * @param <D> the class of domain that the builder will handle
- * @param <O> the class of operator the builder will handle
  * @param <M> the class of method the builder will handle
  * @param <N> the class of task network the builders will handle
  * @param <C> the class of constraint the builder will handle
- * @param <I> the class of condition the builder will handle
- * @param <E> the class of effect the builder will handle
  * @param <B> the class of operator builder being used
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface DomainBuilderFactory<
-		D extends Domain<E, O, M, N, C, I>,
-		O extends Operator<E, I>,
+		D extends Domain<M, N, C>,
 		M extends Method<N, C>,
 		N extends TaskNetwork<C>,
 		C extends Constraint,
-		I extends Condition,
-		E extends Effect,
-		B extends OperatorBuilder<I, E, O, B>> {
+		B extends OperatorBuilder<B>> {
 
 	/**
 	 * Create a domain builder of the required type.

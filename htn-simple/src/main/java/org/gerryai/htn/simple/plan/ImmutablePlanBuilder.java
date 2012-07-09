@@ -17,6 +17,9 @@
  */
 package org.gerryai.htn.simple.plan;
 
+import org.gerryai.htn.plan.Action;
+import org.gerryai.htn.plan.Plan;
+
 /**
  * Builder interface for immutable plans.
  * @author David Edwards <david@more.fool.me.uk>
@@ -28,11 +31,11 @@ public interface ImmutablePlanBuilder {
      * @param action the action to add
      * @return updated builder
      */
-    ImmutablePlanBuilder addAction(ImmutableAction action);
+    ImmutablePlanBuilder addAction(Action action);
     
     /**
      * Build the finished plan.
      * @return the plan
      */
-    ImmutablePlan build();
+    Plan build();
 }

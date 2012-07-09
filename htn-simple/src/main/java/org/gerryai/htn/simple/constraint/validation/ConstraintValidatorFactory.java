@@ -17,19 +17,17 @@
  */
 package org.gerryai.htn.simple.constraint.validation;
 
-import org.gerryai.htn.domain.Condition;
 
 /**
  * Interface for factories that create constraint validators.
- * @param <I> type of condition the validator will work with
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ConstraintValidatorFactory<I extends Condition> {
+public interface ConstraintValidatorFactory {
 
 	/**
 	 * Create a validator.
 	 * @return the validator
 	 */
-	ConstraintValidator<I> create();
+	ConstraintValidator create();
 }

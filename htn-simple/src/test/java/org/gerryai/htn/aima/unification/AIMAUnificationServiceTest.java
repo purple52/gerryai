@@ -25,15 +25,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.gerryai.htn.aima.AIMAConverter;
-import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
-import org.gerryai.logic.Variable;
 import org.junit.Test;
 
 import aima.core.logic.fol.parsing.ast.Predicate;
@@ -51,13 +47,9 @@ public class AIMAUnificationServiceTest {
 	public final void testFindUnifier() {
 		aima.core.logic.fol.Unifier aimaUnifier = mock(aima.core.logic.fol.Unifier.class);
 		AIMAConverter aimaConverter = mock(AIMAConverter.class);
-		AIMAUnificationService<Operator<ImmutableEffect, Condition>,
-				Method<ImmutableTaskNetwork, ImmutableConstraint<?>>,
-		            Condition, Variable> unificationService
+		AIMAUnificationService<Method<ImmutableTaskNetwork, ImmutableConstraint<?>>> unificationService
 					= new AIMAUnificationService<
-					        Operator<ImmutableEffect, Condition>,
-					        Method<ImmutableTaskNetwork, ImmutableConstraint<?>>,
-					        Condition, Variable>(
+					        Method<ImmutableTaskNetwork, ImmutableConstraint<?>>>(
 					aimaUnifier, aimaConverter);
 		
 		Task mockTaskA = mock(Task.class);

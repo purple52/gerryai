@@ -18,11 +18,7 @@
 package org.gerryai.htn.simple.planner;
 
 import org.gerryai.htn.constraint.Constraint;
-import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.State;
@@ -33,27 +29,17 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Interface for a helper class to support a planner.
- * @param <E> type of effect this helper handles
- * @param <ST> type of state this helper handles
- * @param <P> type of plan this helper handles
- * @param <A> type of action this planner works with
- * @param <O> type of operator this planner helper uses
+ * @param <S> type of state this helper handles
  * @param <M> type of method the planner helper works with
  * @param <N> type of task network this planner works with
  * @param <C> type of constraint this planner works with
- * @param <I> type of condition the planner uses
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface PlannerHelper<
-        E extends Effect,
-        ST extends State,
-        P extends Plan<E, A, O, I>,
-        A extends Action<E, O, I>,
-		O extends Operator<E, I>,
+        S extends State,
 		M extends Method<N, C>,
 		N extends TaskNetwork<C>,
-		C extends Constraint,
-		I extends Condition> {
+		C extends Constraint> {
 	
 	/**
 	 * Check for obvious reasons why the given task network is unsolvable.
@@ -70,7 +56,7 @@ public interface PlannerHelper<
 	 * @return the plan
 	 * @throws PlanNotFound if no plan exists
 	 */
-	P findPlanForPrimitive(ST state, N taskNetwork) throws PlanNotFound;
+	Plan findPlanForPrimitive(S state, N taskNetwork) throws PlanNotFound;
 	
 	/**
 	 * Try to get a non-primitive task from a given network.

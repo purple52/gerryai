@@ -17,7 +17,6 @@
  */
 package org.gerryai.htn.simple.constraint;
 
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 
 /**
  * Extension of immutable, validatable and precedence constraint interfaces.
@@ -25,6 +24,6 @@ import org.gerryai.htn.simple.domain.ImmutableCondition;
  */
 public interface ImmutableValidatablePrecedenceConstraint
 		extends ImmutableConstraint<ImmutableValidatablePrecedenceConstraint>,
-		ValidatablePrecedenceConstraint<ImmutableCondition> {
+		ValidatablePrecedenceConstraint {
 
 }

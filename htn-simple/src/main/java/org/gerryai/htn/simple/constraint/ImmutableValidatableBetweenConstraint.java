@@ -17,7 +17,6 @@
  */
 package org.gerryai.htn.simple.constraint;
 
-import org.gerryai.htn.simple.domain.ImmutableCondition;
 
 /**
  * Extension of immutable, validatable and between constraint interfaces.
@@ -25,6 +24,6 @@ import org.gerryai.htn.simple.domain.ImmutableCondition;
  */
 public interface ImmutableValidatableBetweenConstraint
 		extends ImmutableConstraint<ImmutableValidatableBetweenConstraint>,
-		ValidatableBetweenConstraint<ImmutableCondition> {
+		ValidatableBetweenConstraint {
 
 }

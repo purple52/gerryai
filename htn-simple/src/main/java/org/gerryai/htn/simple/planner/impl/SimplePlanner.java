@@ -17,10 +17,10 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
+import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.ImmutablePlanner;
 import org.gerryai.htn.simple.planner.ImmutablePlannerHelper;
@@ -59,7 +59,7 @@ public class SimplePlanner implements ImmutablePlanner {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutablePlan findPlan(ImmutableState state, ImmutableTaskNetwork taskNetwork)
+	public final Plan findPlan(ImmutableState state, ImmutableTaskNetwork taskNetwork)
 	        throws PlanNotFound {
 		
 		if (plannerHelper.isUnsolvable(taskNetwork)) {
