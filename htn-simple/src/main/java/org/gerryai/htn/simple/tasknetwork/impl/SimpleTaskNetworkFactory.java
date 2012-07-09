@@ -25,7 +25,7 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.logic.LogicFactory;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
+import org.gerryai.htn.simple.tasknetwork.TaskBuilder;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkFactory;
@@ -115,7 +115,7 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
     /**
      * {@inheritDoc}
      */
-	public final ImmutableTaskBuilder createTaskBuilder() {
+	public final TaskBuilder createTaskBuilder() {
 	    return new SimpleTask.Builder(logicFactory);
 	}
     

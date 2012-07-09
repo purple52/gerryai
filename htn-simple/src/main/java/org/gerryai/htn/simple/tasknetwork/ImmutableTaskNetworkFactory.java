@@ -31,7 +31,7 @@ public interface ImmutableTaskNetworkFactory extends
      * Create a fresh task builder.
      * @return the builder
      */
-    ImmutableTaskBuilder createTaskBuilder();
+    TaskBuilder createTaskBuilder();
     
     /**
      * Create a fresh task network builder.

@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.simple.logic.LogicFactory;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
+import org.gerryai.htn.simple.tasknetwork.TaskBuilder;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
@@ -58,7 +58,7 @@ public class SimpleTask implements Task {
 	 * Constructor for a simple task.
 	 * @param builder the builder to build the task
 	 */
-	protected SimpleTask(ImmutableTaskBuilder builder) {
+	protected SimpleTask(TaskBuilder builder) {
 		this.name = builder.getName();
 		this.arguments = builder.getArguments();
 		this.isPrimitive = builder.isPrimitive();
@@ -115,7 +115,7 @@ public class SimpleTask implements Task {
 	/**
 	 * Builder for SimpleTask.
 	 */
-	public static class Builder implements ImmutableTaskBuilder {
+	public static class Builder implements TaskBuilder {
 
 	    /**
 	     * Name of the task being built.

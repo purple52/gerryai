@@ -11,49 +11,49 @@ import org.gerryai.logic.Term;
  * Interface for a builder for creating immutable tasks.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableTaskBuilder {
+public interface TaskBuilder {
 
 	/**
 	 * Set the name of the task.
 	 * @param name the name
 	 * @return the updated builder
 	 */
-	ImmutableTaskBuilder setName(String name);
+	TaskBuilder setName(String name);
 
 	/**
 	 * Set whether the task is primitive.
 	 * @param isPrimitive true if the task is primitive
 	 * @return the updated builder
 	 */
-	ImmutableTaskBuilder setIsPrimitive(boolean isPrimitive);
+	TaskBuilder setIsPrimitive(boolean isPrimitive);
 	
 	/**
 	 * Add an argument to the task.
 	 * @param term the term to add
 	 * @return the updated builder
 	 */
-	ImmutableTaskBuilder addArgument(Term term);
+	TaskBuilder addArgument(Term term);
 	
 	/**
 	 * Add a list of arguments to the task.
 	 * @param terms the terms to add
 	 * @return the updated builder
 	 */
-	ImmutableTaskBuilder addArguments(List<Term> terms);
+	TaskBuilder addArguments(List<Term> terms);
 	
 	/**
 	 * Copy from the provided task, overwriting any values already set.
 	 * @param task the task to copy
 	 * @return the updated builder
 	 */
-	ImmutableTaskBuilder copy(Task task);
+	TaskBuilder copy(Task task);
 	
 	/**
 	 * Apply the provided substituter to the arguments provided so far.
 	 * @param substitution the substitution to apply
 	 * @return the updated builder
 	 */
-	ImmutableTaskBuilder apply(Map<Term, Term> substitution);
+	TaskBuilder apply(Map<Term, Term> substitution);
 	
 	/**
 	 * Get the name of the task to be built.

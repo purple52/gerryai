@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.simple.logic.LogicFactory;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
+import org.gerryai.htn.simple.tasknetwork.TaskBuilder;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class SimpleTaskTest {
      */
     @Test
     public final void testName() {
-        ImmutableTaskBuilder mockBuilder = mock(ImmutableTaskBuilder.class);
+        TaskBuilder mockBuilder = mock(TaskBuilder.class);
         when(mockBuilder.getName()).thenReturn("testname");
 
         SimpleTask task = new SimpleTask(mockBuilder);
@@ -57,7 +57,7 @@ public class SimpleTaskTest {
      */
     @Test
     public final void testArguments() {
-        ImmutableTaskBuilder mockBuilder = mock(ImmutableTaskBuilder.class);
+        TaskBuilder mockBuilder = mock(TaskBuilder.class);
         Term mockTermA = mock(Term.class);
         Term mockTermB = mock(Term.class);
         List<Term> mockTerms = new ArrayList<Term>();
@@ -79,7 +79,7 @@ public class SimpleTaskTest {
      */
     @Test
     public final void testIsPrimitive() {
-        ImmutableTaskBuilder mockBuilder = mock(ImmutableTaskBuilder.class);
+        TaskBuilder mockBuilder = mock(TaskBuilder.class);
 
         when(mockBuilder.isPrimitive()).thenReturn(true);
         SimpleTask taskA = new SimpleTask(mockBuilder);
@@ -100,7 +100,7 @@ public class SimpleTaskTest {
         LogicFactory mockLogicFactory = mock(LogicFactory.class);
         
         // Create the builder under test
-        ImmutableTaskBuilder builder = new SimpleTask.Builder(mockLogicFactory);
+        TaskBuilder builder = new SimpleTask.Builder(mockLogicFactory);
         
         // Check that the arguments list has been initialised
         assertTrue(builder.getArguments().isEmpty());
@@ -115,7 +115,7 @@ public class SimpleTaskTest {
         LogicFactory mockLogicFactory = mock(LogicFactory.class);
         
         // Create the builder under test
-        ImmutableTaskBuilder builder = new SimpleTask.Builder(mockLogicFactory)
+        TaskBuilder builder = new SimpleTask.Builder(mockLogicFactory)
                 .setName("testname");
         
         // Check that the name has been set
@@ -135,7 +135,7 @@ public class SimpleTaskTest {
         Term mockTermB = mock(Term.class);
         
         // Create the builder under test
-        ImmutableTaskBuilder builder = new SimpleTask.Builder(mockLogicFactory)
+        TaskBuilder builder = new SimpleTask.Builder(mockLogicFactory)
                 .addArgument(mockTermA)
                 .addArgument(mockTermB);
         
@@ -167,7 +167,7 @@ public class SimpleTaskTest {
         mockTermsTwo.add(mockTermD);
         
         // Create the builder under test
-        ImmutableTaskBuilder builder = new SimpleTask.Builder(mockLogicFactory)
+        TaskBuilder builder = new SimpleTask.Builder(mockLogicFactory)
                 .addArguments(mockTermsOne)
                 .addArguments(mockTermsTwo);
         
