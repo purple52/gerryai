@@ -30,8 +30,8 @@ import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 import org.junit.Test;
@@ -50,22 +50,20 @@ public class AIMAUnificationServiceTest {
 	@Test
 	public final void testFindUnifier() {
 		aima.core.logic.fol.Unifier aimaUnifier = mock(aima.core.logic.fol.Unifier.class);
-		@SuppressWarnings("unchecked")
-		AIMAConverter<Term, Variable, ImmutableTask> aimaConverter
-				= mock(AIMAConverter.class);
-		AIMAUnificationService<Operator<ImmutableEffect, Condition>, Method<ImmutableTask,
-				ImmutableTaskNetwork, ImmutableConstraint<?>>,
+		AIMAConverter aimaConverter = mock(AIMAConverter.class);
+		AIMAUnificationService<Operator<ImmutableEffect, Condition>,
+				Method<ImmutableTaskNetwork, ImmutableConstraint<?>>,
 		            Condition, Variable> unificationService
 					= new AIMAUnificationService<
 					        Operator<ImmutableEffect, Condition>,
-					        Method<ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
+					        Method<ImmutableTaskNetwork, ImmutableConstraint<?>>,
 					        Condition, Variable>(
 					aimaUnifier, aimaConverter);
 		
-		ImmutableTask mockTaskA = mock(ImmutableTask.class);
-		ImmutableTask mockTaskB = mock(ImmutableTask.class);
+		Task mockTaskA = mock(Task.class);
+		Task mockTaskB = mock(Task.class);
 		@SuppressWarnings("unchecked")
-		Method<ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>> mockMethod = mock(Method.class);
+		Method<ImmutableTaskNetwork, ImmutableConstraint<?>> mockMethod = mock(Method.class);
 		when(mockMethod.getTask()).thenReturn(mockTaskB);
 		Predicate mockPredicateA = mock(Predicate.class);
 		Predicate mockPredicateB = mock(Predicate.class);

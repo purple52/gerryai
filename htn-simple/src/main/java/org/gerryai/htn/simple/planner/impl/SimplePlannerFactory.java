@@ -41,9 +41,7 @@ import org.gerryai.htn.simple.planner.ImmutablePlannerFactory;
 import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.planner.sort.impl.SimpleSortService;
 import org.gerryai.htn.simple.problem.ImmutableStateService;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
@@ -77,20 +75,19 @@ public class SimplePlannerFactory implements ImmutablePlannerFactory {
 		SimplePlanBuilderFactory planFactory = new SimplePlanBuilderFactory();
 		
 		aima.core.logic.fol.Unifier unifier = new aima.core.logic.fol.Unifier();
-		AIMAConverter<Term, Variable, ImmutableTask> converter = new AIMAConverterImpl();
-		ConstraintValidatorFactory<ImmutableTask,
-		    ImmutableCondition> constraintValidatorFactory
-				= new GenericConstraintValidatorFactory<ImmutableTask, ImmutableCondition>();
+		AIMAConverter converter = new AIMAConverterImpl();
+		ConstraintValidatorFactory<ImmutableCondition> constraintValidatorFactory
+				= new GenericConstraintValidatorFactory<ImmutableCondition>();
 		AIMAUnificationService<ImmutableOperator, ImmutableMethod, 
 		        ImmutableCondition, Variable> unificationService =
 		        new AIMAUnificationService<ImmutableOperator, ImmutableMethod,
 		        ImmutableCondition, Variable>(unifier, converter);
 		
-		DecompositionService<ImmutableMethod, ImmutableTask, ImmutableTaskNetwork,
+		DecompositionService<ImmutableMethod, ImmutableTaskNetwork,
 		        ImmutableConstraint<?>> decompositionService =
 				new SimpleDecompositionService(constraintValidatorFactory);
 		
-		SortService<ImmutableTask, ImmutableConstraint<?>> sortService =
+		SortService<ImmutableConstraint<?>> sortService =
 		        new SimpleSortService();
 
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(actionFactory,

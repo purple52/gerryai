@@ -24,26 +24,23 @@ import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * Interface for a constraint that dictates the state immediately after this task.
- * @param <K> type of task this constraint works with
  * @param <I> type of condition this constraint uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface BetweenConstraint<
-        K extends Task,
-        I extends Condition>
+public interface BetweenConstraint<I extends Condition>
                 extends Constraint {
 
 	/**
 	 * The set of tasks after which this constraint must hold.
 	 * @return the set of tasks
 	 */
-	Set<K> getPrecedingTasks();
+	Set<Task> getPrecedingTasks();
 
 	/**
 	 * The set of tasks before which this constraint must hold.
 	 * @return the set of tasks
 	 */
-	Set<K> getProcedingTasks();
+	Set<Task> getProcedingTasks();
 	
 	
 	/**

@@ -51,9 +51,9 @@ import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.problem.ImmutableStateService;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
@@ -81,22 +81,19 @@ public class SimplePlannerHelperTest {
     /**
      * Mock decomposition service.
      */
-    private DecompositionService<ImmutableMethod,
-            ImmutableTask, ImmutableTaskNetwork,
+    private DecompositionService<ImmutableMethod, ImmutableTaskNetwork,
             ImmutableConstraint<?>> mockDecompositionService;
     
     /**
      * Mock unification service.
      */
-    private UnificationService<ImmutableMethod, Term,
-            ImmutableTask, ImmutableTaskNetwork,
+    private UnificationService<ImmutableMethod, ImmutableTaskNetwork,
             ImmutableConstraint<?>, ImmutableCondition> mockUnificationService;
     
     /**
      * Mock sort service.
      */
-    private SortService<ImmutableTask,
-            ImmutableConstraint<?>> mockSortService;
+    private SortService<ImmutableConstraint<?>> mockSortService;
     
     /**
      * Mock state service.
@@ -151,7 +148,7 @@ public class SimplePlannerHelperTest {
 	    SimplePlannerHelper plannerHelper = createHelper();
 		
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
-		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
+		Set<Task> tasks = new HashSet<Task>();
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
 		
 		// Trying to find a non-primitive task should throw an exception since there isn't one
@@ -297,7 +294,7 @@ public class SimplePlannerHelperTest {
 	public final void testDecomposeNoUnifier() throws DecompositionNotFound, UnifierNotFound, InvalidConstraint {
 		
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
-		ImmutableTask mockTask = mock(ImmutableTask.class);
+		Task mockTask = mock(Task.class);
 		ImmutableMethod mockMethod = mock(ImmutableMethod.class);
 		
 		when(mockUnificationService.findUnifier(mockTask, mockMethod)).thenThrow(new UnifierNotFound());
@@ -318,7 +315,7 @@ public class SimplePlannerHelperTest {
 		
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		ImmutableTaskNetwork mockDecomposedTaskNetwork = mock(ImmutableTaskNetwork.class);
-		ImmutableTask mockTask = mock(ImmutableTask.class);
+		Task mockTask = mock(Task.class);
 		ImmutableMethod mockMethod = mock(ImmutableMethod.class);
 		@SuppressWarnings("unchecked")
 		Map<Term, Term> mockSubstitution = mock(Map.class);
@@ -419,10 +416,10 @@ public class SimplePlannerHelperTest {
 			throws PlanNotFound, TaskNotActionable {
 	    
 	    ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
-	    Set<ImmutableTask> tasks = new HashSet<ImmutableTask>(mockActions.size());
-        List<ImmutableTask> sortedTasks = new ArrayList<ImmutableTask>(mockActions.size());	    
+	    Set<Task> tasks = new HashSet<Task>(mockActions.size());
+        List<Task> sortedTasks = new ArrayList<Task>(mockActions.size());	    
 	    for (ImmutableAction mockAction : mockActions) {
-	        ImmutableTask mockTask = mock(ImmutableTask.class);
+	        Task mockTask = mock(Task.class);
             tasks.add(mockTask);
         
             // Fixed order we're expecting the tasks back in - note in practice, this is

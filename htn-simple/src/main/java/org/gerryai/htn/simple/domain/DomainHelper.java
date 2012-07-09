@@ -38,7 +38,6 @@ import org.gerryai.logic.Variable;
  * @param <D> type of domain this helper uses
  * @param <O> type of operator this domain helper uses
  * @param <M> type of method this domain helpers uses
- * @param <K> type of task this domain helper uses
  * @param <N> type of task network this domain helper uses
  * @param <C> type of constraint this domain helper uses
  * @param <I> the class of condition the domain will handle
@@ -46,11 +45,10 @@ import org.gerryai.logic.Variable;
  */
 public interface DomainHelper<
         E extends Effect,
-        D extends Domain<E, O, M, K, N, C, I>,
+        D extends Domain<E, O, M, N, C, I>,
 		O extends Operator<E, I>,
-		M extends Method<K, N, C>,
-		K extends Task,
-		N extends TaskNetwork<K, C>,
+		M extends Method<N, C>,
+		N extends TaskNetwork<C>,
 		C extends Constraint,
 		I extends Condition> {
 	
@@ -73,7 +71,7 @@ public interface DomainHelper<
 	 * @param task the task being matched
 	 * @return a set of matching methods
 	 */
-	Set<M> getMethodsByTask(K task);
+	Set<M> getMethodsByTask(Task task);
 	
 	/**
 	 * Get a grounded version of the supplied effect by applying the given bindings.

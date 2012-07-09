@@ -35,9 +35,9 @@ import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.ImmutablePlannerHelper;
 import org.gerryai.htn.simple.problem.ImmutableState;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.Task;
 import org.junit.Test;
 
 /**
@@ -86,8 +86,8 @@ public class SimplePlannerTest {
 		
 	    ImmutableState mockState = mock(ImmutableState.class);
 		
-		ImmutableTask mockTaskA = mock(ImmutableTask.class);
-		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
+		Task mockTaskA = mock(Task.class);
+		Set<Task> tasks = new HashSet<Task>();
 		tasks.add(mockTaskA);
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
@@ -116,8 +116,8 @@ public class SimplePlannerTest {
 		
 	    ImmutableState mockState = mock(ImmutableState.class);
 		
-		ImmutableTask mockTaskA = mock(ImmutableTask.class);
-		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
+		Task mockTaskA = mock(Task.class);
+		Set<Task> tasks = new HashSet<Task>();
 		tasks.add(mockTaskA);
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
@@ -150,8 +150,8 @@ public class SimplePlannerTest {
 		
 	    ImmutableState mockState = mock(ImmutableState.class);
 		
-		ImmutableTask mockTaskA = mock(ImmutableTask.class);
-		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
+		Task mockTaskA = mock(Task.class);
+		Set<Task> tasks = new HashSet<Task>();
 		tasks.add(mockTaskA);
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
@@ -191,8 +191,8 @@ public class SimplePlannerTest {
 		
 	    ImmutableState mockState = mock(ImmutableState.class);
 		
-		ImmutableTask mockTaskA = mock(ImmutableTask.class);
-		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
+		Task mockTaskA = mock(Task.class);
+		Set<Task> tasks = new HashSet<Task>();
 		tasks.add(mockTaskA);
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
@@ -234,15 +234,15 @@ public class SimplePlannerTest {
 	    ImmutableState mockState = mock(ImmutableState.class);
 		
 		// Initial task network containing task A
-		ImmutableTask mockTaskA = mock(ImmutableTask.class);
-		Set<ImmutableTask> tasks = new HashSet<ImmutableTask>();
+		Task mockTaskA = mock(Task.class);
+		Set<Task> tasks = new HashSet<Task>();
 		tasks.add(mockTaskA);
 		ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
 		when(mockTaskNetwork.getTasks()).thenReturn(tasks);
 
 		// The network that the initial network will decompose into, containing task B
-		ImmutableTask mockTaskB = mock(ImmutableTask.class);
-		Set<ImmutableTask> decomposedTasks = new HashSet<ImmutableTask>();
+		Task mockTaskB = mock(Task.class);
+		Set<Task> decomposedTasks = new HashSet<Task>();
 		decomposedTasks.add(mockTaskB);
 		ImmutableTaskNetwork mockDecomposedTaskNetwork = mock(ImmutableTaskNetwork.class);
 		when(mockDecomposedTaskNetwork.getTasks()).thenReturn(decomposedTasks);

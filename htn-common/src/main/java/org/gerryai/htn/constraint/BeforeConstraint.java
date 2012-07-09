@@ -24,20 +24,17 @@ import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * Interface for a constraint that dictates the state immediately before this task.
- * @param <K> type of task this constraint works with
  * @param <I> type of condition this constraint uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface BeforeConstraint<
-        K extends Task,
-        I extends Condition>
+public interface BeforeConstraint<I extends Condition>
                 extends Constraint {
 
 	/**
 	 * The set of tasks for which this constraint must hold.
 	 * @return the set of tasks
 	 */
-	Set<K> getTasks();
+	Set<Task> getTasks();
 	
 	/**
 	 * The condition that must be true just before the first of the tasks is achieved.

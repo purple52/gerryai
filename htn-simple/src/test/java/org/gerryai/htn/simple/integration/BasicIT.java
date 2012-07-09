@@ -30,9 +30,9 @@ import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.problem.ImmutableProblem;
 import org.gerryai.htn.simple.problem.ImmutableState;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Variable;
 import org.junit.Test;
@@ -54,7 +54,7 @@ public class BasicIT extends BaseIT {
 		// Build the task network to be solved
 		Constant constantKiwi = getPlanningFactory().getLogicFactory().createConstant("kiwi");
 		Constant constantBanjo = getPlanningFactory().getLogicFactory().createConstant("banjo");
-		ImmutableTask task = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
+		Task task = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
 				.setName("swap")
 				.addArgument(constantKiwi)
 				.addArgument(constantBanjo)
@@ -108,7 +108,7 @@ public class BasicIT extends BaseIT {
         // Build the task network to be solved
         Constant constantKiwi = getPlanningFactory().getLogicFactory().createConstant("kiwi");
         Constant constantBanjo = getPlanningFactory().getLogicFactory().createConstant("banjo");
-        ImmutableTask task = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
+        Task task = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
                 .setName("swap")
                 .addArgument(constantBanjo)
                 .addArgument(constantKiwi)
@@ -157,18 +157,18 @@ public class BasicIT extends BaseIT {
         Variable variableX = getPlanningFactory().getLogicFactory().createVariable("x");
         Variable variableY = getPlanningFactory().getLogicFactory().createVariable("y");
         
-        ImmutableTask methodATask = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
+        Task methodATask = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
                 .setName("swap")
                 .addArgument(variableX)
                 .addArgument(variableY)
                 .setIsPrimitive(false)
                 .build();
-        ImmutableTask methodASubTask1  = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
+        Task methodASubTask1  = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
                 .setName("drop")
                 .addArgument(variableX)
                 .setIsPrimitive(true)
                 .build();
-        ImmutableTask methodASubTask2  = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
+        Task methodASubTask2  = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
                 .setName("pickup")
                 .addArgument(variableY)
                 .setIsPrimitive(true)
@@ -203,18 +203,18 @@ public class BasicIT extends BaseIT {
                 .addConstraint(beforeConstraintNotHaveY)
                 .build();
         
-        ImmutableTask methodBTask  = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
+        Task methodBTask  = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
                 .setName("swap")
                 .addArgument(variableX)
                 .addArgument(variableY)
                 .setIsPrimitive(false)
                 .build();
-        ImmutableTask methodBSubTask1  = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
+        Task methodBSubTask1  = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
                 .setName("drop")
                 .addArgument(variableY)
                 .setIsPrimitive(true)
                 .build();
-        ImmutableTask methodBSubTask2  = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
+        Task methodBSubTask2  = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
                 .setName("pickup")
                 .addArgument(variableX)
                 .setIsPrimitive(true)

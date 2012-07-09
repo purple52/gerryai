@@ -28,7 +28,6 @@ import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.plan.ImmutablePlan;
 import org.gerryai.htn.simple.problem.ImmutableProblem;
 import org.gerryai.htn.simple.problem.ImmutableState;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
@@ -44,7 +43,6 @@ public interface ImmutablePlanningService extends PlanningService<
         ImmutableDomain,
         ImmutableOperator,
 		ImmutableMethod,
-		ImmutableTask,
 		ImmutableTaskNetwork,
 		ImmutableConstraint<?>,
 		ImmutableCondition> {

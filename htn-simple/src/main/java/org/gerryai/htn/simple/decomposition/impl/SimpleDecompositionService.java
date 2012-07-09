@@ -24,9 +24,9 @@ import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
 /**
@@ -36,21 +36,19 @@ import org.gerryai.logic.Term;
  *
  */
 public class SimpleDecompositionService implements
-		DecompositionService<ImmutableMethod, ImmutableTask, ImmutableTaskNetwork,
+		DecompositionService<ImmutableMethod, ImmutableTaskNetwork,
 		ImmutableConstraint<?>> {
 
     /**
      * Constraint validator factory.
      */
-    private ConstraintValidatorFactory<ImmutableTask,
-            ImmutableCondition> constraintValidatorFactory;
+    private ConstraintValidatorFactory<ImmutableCondition> constraintValidatorFactory;
 	
 	/**
 	 * Set the unification service.
 	 * @param constraintValidatorFactory the constraint validator factory to use
 	 */
-	public SimpleDecompositionService(ConstraintValidatorFactory<
-	        ImmutableTask, ImmutableCondition> constraintValidatorFactory) {
+	public SimpleDecompositionService(ConstraintValidatorFactory<ImmutableCondition> constraintValidatorFactory) {
 		this.constraintValidatorFactory = constraintValidatorFactory;
 	}
 	
@@ -58,7 +56,7 @@ public class SimpleDecompositionService implements
 	 * {@inheritDoc}
 	 */
 	public final ImmutableTaskNetwork decompose(Map<Term, Term> substitution,
-			ImmutableTaskNetwork taskNetwork, ImmutableTask task, ImmutableMethod method) throws InvalidConstraint {
+			ImmutableTaskNetwork taskNetwork, Task task, ImmutableMethod method) throws InvalidConstraint {
 	    
 		// Apply unifier where relevant
 		ImmutableTaskNetwork unifiedMethodSubTasks = method.getTaskNetwork()

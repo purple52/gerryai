@@ -20,7 +20,7 @@ package org.gerryai.htn.simple.constraint;
 import java.util.Map;
 import java.util.Set;
 
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
 /**
@@ -44,14 +44,14 @@ public interface ImmutableConstraintBuilder<C extends ImmutableConstraint<C>> {
      * @param newTasks the tasks to replace with
      * @return the updated builder
      */
-    ImmutableConstraintBuilder<C> replace(ImmutableTask oldTask, Set<ImmutableTask> newTasks);
+    ImmutableConstraintBuilder<C> replace(Task oldTask, Set<Task> newTasks);
  
     /**
      * @param oldTask the task to replace
      * @param newTasks the task to replace with
      * @return the updated builder
      */
-    ImmutableConstraintBuilder<C> replace(ImmutableTask oldTask, ImmutableTask newTasks);
+    ImmutableConstraintBuilder<C> replace(Task oldTask, Task newTasks);
  
     /**
      * Apply the substituter provided to the conditions of the constraint.

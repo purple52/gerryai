@@ -25,9 +25,9 @@ import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.ImmutablePlanner;
 import org.gerryai.htn.simple.planner.ImmutablePlannerHelper;
 import org.gerryai.htn.simple.problem.ImmutableState;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * Implementation of a planner.
@@ -70,7 +70,7 @@ public class SimplePlanner implements ImmutablePlanner {
 
 			try {
 				// Try and find a non-primitive task to deal with
-				ImmutableTask task = plannerHelper.getNonPrimitiveTask(taskNetwork);
+				Task task = plannerHelper.getNonPrimitiveTask(taskNetwork);
 
 				// 3. Task network is non-primitive
 				// TODO: Confirm implementation

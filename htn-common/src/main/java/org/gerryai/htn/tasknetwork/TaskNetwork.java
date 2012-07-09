@@ -23,19 +23,16 @@ import org.gerryai.htn.constraint.Constraint;
 
 /**
  * Interface that a task network must implement.
- * @param <K> type of task this network holds
  * @param <C> type of constraint this network uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface TaskNetwork<
-        K extends Task,
-        C extends Constraint> {
+public interface TaskNetwork<C extends Constraint> {
 
 	/**
 	 * Get the tasks that make up this network.
 	 * @return the tasks
 	 */
-	Set<K> getTasks();
+	Set<Task> getTasks();
 	
 	/**
 	 * Get the constraints for this network.

@@ -23,7 +23,6 @@ import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
@@ -31,7 +30,6 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @param <D> the class of domain that the builder will handle
  * @param <O> the class of operator the builder will handle
  * @param <M> the class of method the builder will handle
- * @param <K> the class of task the builders can handle
  * @param <N> the class of task network the builders will handle
  * @param <C> the class of constraint the builder will handle
  * @param <I> the class of condition the builder will handle
@@ -40,11 +38,10 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface DomainBuilderFactory<
-		D extends Domain<E, O, M, K, N, C, I>,
+		D extends Domain<E, O, M, N, C, I>,
 		O extends Operator<E, I>,
-		M extends Method<K, N, C>,
-		K extends Task,
-		N extends TaskNetwork<K, C>,
+		M extends Method<N, C>,
+		N extends TaskNetwork<C>,
 		C extends Constraint,
 		I extends Condition,
 		E extends Effect,
@@ -66,7 +63,7 @@ public interface DomainBuilderFactory<
 	 * Create a method builder of the required type.
 	 * @return the method builder
 	 */
-	MethodBuilder<K, N, C, M> createMethodBuilder();
+	MethodBuilder<N, C, M> createMethodBuilder();
 	
 	/**
 	 * Create an effect builder of the required type.

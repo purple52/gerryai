@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
 /**
@@ -34,14 +35,14 @@ public interface ImmutableTaskNetworkBuilder {
 	 * @param task the task
 	 * @return the updated builder
 	 */
-	ImmutableTaskNetworkBuilder addTask(ImmutableTask task);
+	ImmutableTaskNetworkBuilder addTask(Task task);
 
 	/**
 	 * Add a set of tasks.
 	 * @param tasks the tasks
 	 * @return the updated builder
 	 */
-	ImmutableTaskNetworkBuilder addTasks(Set<ImmutableTask> tasks);
+	ImmutableTaskNetworkBuilder addTasks(Set<Task> tasks);
 	
 	/**
 	 * Add a constraint.
@@ -84,13 +85,13 @@ public interface ImmutableTaskNetworkBuilder {
 	 * @param taskNetwork the network to replace with
 	 * @return the updated builder
 	 */
-	ImmutableTaskNetworkBuilder replace(ImmutableTask oldTask, ImmutableTaskNetwork taskNetwork);
+	ImmutableTaskNetworkBuilder replace(Task oldTask, ImmutableTaskNetwork taskNetwork);
 	
 	/**
 	 * Get the set of tasks for the task network to be built.
 	 * @return the tasks
 	 */
-	Set<ImmutableTask> getTasks();
+	Set<Task> getTasks();
 	
 	/**
 	 * Get the set of constraints for the task network to be built.

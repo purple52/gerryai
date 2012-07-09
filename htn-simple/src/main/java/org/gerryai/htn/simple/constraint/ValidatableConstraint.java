@@ -21,18 +21,14 @@ import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * Extended constraint interface that supports being validated.
  * The constraint needs to identify what class of validator it needs to use.
- * @param <K> type of task used by this sort of constraint
  * @param <I> type of condition used by this sort of constraint
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ValidatableConstraint<
-        K extends Task,
-        I extends Condition>
+public interface ValidatableConstraint<I extends Condition>
                 extends Constraint {
 
 	/**
@@ -40,13 +36,13 @@ public interface ValidatableConstraint<
 	 * @param validator the validator to use
 	 * @return true if the constraint passed validation
 	 */
-	boolean validate(ConstraintValidator<K, I> validator);
+	boolean validate(ConstraintValidator<I> validator);
 	
 	/**
 	 * Add the constraint to the validator so it is considered when validating in future.
 	 * @param validator the validator to add to.
 	 * @throws InvalidConstraint if constraint cannot be added
 	 */
-	void add(ConstraintValidator<K, I> validator) throws InvalidConstraint;
+	void add(ConstraintValidator<I> validator) throws InvalidConstraint;
 	
 }

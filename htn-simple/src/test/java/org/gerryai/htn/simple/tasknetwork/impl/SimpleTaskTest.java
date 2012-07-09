@@ -28,8 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.simple.logic.LogicFactory;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 import org.junit.Test;
 
@@ -191,7 +191,7 @@ public class SimpleTaskTest {
         Term mockTerm = mock(Term.class);
         
         // Create the builder under test
-        ImmutableTask primitiveTask = new SimpleTask.Builder(mockLogicFactory)
+        Task primitiveTask = new SimpleTask.Builder(mockLogicFactory)
                 .setName("testname")
                 .addArgument(mockTerm)
                 .setIsPrimitive(true)
@@ -212,7 +212,7 @@ public class SimpleTaskTest {
         Term mockTerm = mock(Term.class);
         
         // Create the builder under test
-        ImmutableTask primitiveTask = new SimpleTask.Builder(mockLogicFactory)
+        Task primitiveTask = new SimpleTask.Builder(mockLogicFactory)
                 .setName("testname")
                 .addArgument(mockTerm)
                 .setIsPrimitive(false)
@@ -224,34 +224,10 @@ public class SimpleTaskTest {
     }
     
     /**
-     * Test a simple build just copying a base task.
-     */
-    @Test
-    public final void testCopy() {
-        String name = "testname";
-        Term mockTerm = mock(Term.class);
-        List<Term> terms = new ArrayList<Term>();
-        terms.add(mockTerm);
-        LogicFactory mockLogicFactory = mock(LogicFactory.class);
-        ImmutableTask initialTask = new SimpleTask.Builder(mockLogicFactory)
-                .setName(name)
-                .addArguments(terms)
-                .setIsPrimitive(true)
-                .build();
-        
-        ImmutableTask newTask = initialTask.createCopyBuilder()
-                .build();
-        
-        assertEquals(name, newTask.getName());
-        assertEquals(terms, newTask.getArguments());
-        assertTrue(newTask.isPrimitive());
-    }
-    
-      /**
      * Test a copying a base task and applying a substituter.
      */
     @Test
-    public final void testBuilderApply() {
+    public final void testApplyToCopy() {
         String name = "testname";
         
         Term mockTermA = mock(Term.class);
@@ -266,16 +242,14 @@ public class SimpleTaskTest {
         Map<Term, Term> mockSubstitution = mock(Map.class);
         LogicFactory mockLogicFactory = mock(LogicFactory.class);
         when(mockLogicFactory.apply(termsA, mockSubstitution)).thenReturn(termsB);
-        ImmutableTask initialTask = new SimpleTask.Builder(mockLogicFactory)
+        Task initialTask = new SimpleTask.Builder(mockLogicFactory)
         .setName(name)
         .addArguments(termsA)
         .setIsPrimitive(true)
         .build();
         
         // Create the builder under test
-        ImmutableTask newTask = initialTask.createCopyBuilder()
-                .apply(mockSubstitution)
-                .build();
+        Task newTask = initialTask.applyToCopy(mockSubstitution);
         
         assertEquals(name, newTask.getName());
         assertEquals(termsB, newTask.getArguments());

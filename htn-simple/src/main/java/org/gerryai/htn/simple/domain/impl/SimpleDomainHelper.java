@@ -29,7 +29,7 @@ import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
@@ -76,7 +76,7 @@ public class SimpleDomainHelper implements ImmutableDomainHelper {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<ImmutableMethod> getMethodsByTask(ImmutableTask task) {
+	public final Set<ImmutableMethod> getMethodsByTask(Task task) {
 		// TODO Check task arguments match
 		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
 		for (ImmutableMethod method : domain.getMethods()) {

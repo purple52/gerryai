@@ -40,7 +40,6 @@ import org.gerryai.htn.simple.planner.ImmutablePlannerHelper;
 import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.problem.ImmutableStateService;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
@@ -70,20 +69,20 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 	/**
 	 * Service for decomposing tasks.
 	 */
-	private DecompositionService<ImmutableMethod, ImmutableTask, ImmutableTaskNetwork,
+	private DecompositionService<ImmutableMethod, ImmutableTaskNetwork,
 	        ImmutableConstraint<?>> decompositionService;
 	
 	/**
 	 * Service for finding unifiers.
 	 */
-	private UnificationService<ImmutableMethod, Term, ImmutableTask,
+	private UnificationService<ImmutableMethod,
 			ImmutableTaskNetwork, ImmutableConstraint<?>,
 			ImmutableCondition>  unificationService;
 
 	/**
 	 * Service for sorting tasks by precedence constraints.
 	 */
-	private SortService<ImmutableTask, ImmutableConstraint<?>> sortService;
+	private SortService<ImmutableConstraint<?>> sortService;
 	
 	/**
 	 * Service for handling state checks and updates.
@@ -103,11 +102,11 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 	public SimplePlannerHelper(
 	        ImmutableActionFactory actionFactory,
 	        ImmutablePlanBuilderFactory planBuilderFactory,
-			DecompositionService<ImmutableMethod, ImmutableTask, ImmutableTaskNetwork,
+			DecompositionService<ImmutableMethod, ImmutableTaskNetwork,
 			ImmutableConstraint<?>> decompositionservice,
-			UnificationService<ImmutableMethod, Term, ImmutableTask, ImmutableTaskNetwork,
+			UnificationService<ImmutableMethod, ImmutableTaskNetwork,
 			ImmutableConstraint<?>, ImmutableCondition>  unificationService,
-			SortService<ImmutableTask, ImmutableConstraint<?>> sortService,
+			SortService<ImmutableConstraint<?>> sortService,
 			ImmutableStateService stateService,
 			ImmutableDomainHelper domainHelper) {
 		this.actionFactory = actionFactory;
@@ -134,12 +133,12 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 	        ImmutableTaskNetwork taskNetwork) throws PlanNotFound {
 		// TODO: Confirm implementation
 		// TODO: Enforce constraints from task network completely
-	    List<ImmutableTask> sortedTasks = sortService.sortByConstaints(
+	    List<Task> sortedTasks = sortService.sortByConstaints(
 	            taskNetwork.getTasks(), taskNetwork.getConstraints());
 
 		ImmutablePlanBuilder planBuilder = planBuilderFactory.createBuilder();
 		
-		for (ImmutableTask task : sortedTasks) {
+		for (Task task : sortedTasks) {
 			ImmutableAction action;
 			try {
 				action = actionFactory.create(task);
@@ -175,9 +174,9 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableTask getNonPrimitiveTask(ImmutableTaskNetwork
+	public final Task getNonPrimitiveTask(ImmutableTaskNetwork
 			taskNetwork) throws NonPrimitiveTaskNotFound {
-		for (ImmutableTask task : taskNetwork.getTasks()) {
+		for (Task task : taskNetwork.getTasks()) {
 			if (!task.isPrimitive()) {
 				return task;
 			}
@@ -189,7 +188,7 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 	 * {@inheritDoc} 
 	 */
 	public final ImmutableTaskNetwork decompose(ImmutableTaskNetwork taskNetwork,
-			ImmutableTask task, ImmutableMethod method) throws DecompositionNotFound, InvalidConstraint {
+			Task task, ImmutableMethod method) throws DecompositionNotFound, InvalidConstraint {
 		Map<Term, Term> substitution;
 		try {
 		    substitution = unificationService.findUnifier(task, method);

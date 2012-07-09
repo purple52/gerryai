@@ -18,7 +18,6 @@
 package org.gerryai.htn.simple.domain;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
@@ -29,7 +28,6 @@ public interface ImmutableDomainBuilderFactory extends DomainBuilderFactory<
         ImmutableDomain,
         ImmutableOperator,
         ImmutableMethod,
-		ImmutableTask,
 		ImmutableTaskNetwork,
 		ImmutableConstraint<?>,
 		ImmutableCondition,

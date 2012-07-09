@@ -26,8 +26,7 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * Extension of the task network interface that is immutable and only uses immutable components.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableTaskNetwork extends TaskNetwork<ImmutableTask,
-        ImmutableConstraint<?>> {
+public interface ImmutableTaskNetwork extends TaskNetwork<ImmutableConstraint<?>> {
 
     /**
      * Create a new builder object that will build a copy of this immutable task network.
@@ -35,6 +34,6 @@ public interface ImmutableTaskNetwork extends TaskNetwork<ImmutableTask,
      * @return the builder
      * @throws InvalidConstraint if one of the constraints is invalid
      */
-    ImmutableTaskNetworkBuilder createCopyBuilder(ConstraintValidator<ImmutableTask,
+    ImmutableTaskNetworkBuilder createCopyBuilder(ConstraintValidator<
             ImmutableCondition> constraintValidator) throws InvalidConstraint;
 }

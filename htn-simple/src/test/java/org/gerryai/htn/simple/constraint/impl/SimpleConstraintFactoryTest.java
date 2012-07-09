@@ -28,7 +28,7 @@ import org.gerryai.htn.simple.constraint.ImmutableValidatableBeforeConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableValidatablePrecedenceConstraint;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.tasknetwork.Task;
 import org.junit.Test;
 
 /**
@@ -43,11 +43,11 @@ public class SimpleConstraintFactoryTest {
 	@Test
 	public final void testCreatePrecedenceConstraint() {
 		
-		ImmutableTask mockTaskA = mock(ImmutableTask.class);
-		ImmutableTask mockTaskB = mock(ImmutableTask.class);
-        Set<ImmutableTask> mockTasksOne = new HashSet<ImmutableTask>();
+		Task mockTaskA = mock(Task.class);
+		Task mockTaskB = mock(Task.class);
+        Set<Task> mockTasksOne = new HashSet<Task>();
         mockTasksOne.add(mockTaskA);
-        Set<ImmutableTask> mockTasksTwo = new HashSet<ImmutableTask>();
+        Set<Task> mockTasksTwo = new HashSet<Task>();
         mockTasksOne.add(mockTaskB);
         
 		// Create factory under test
@@ -66,7 +66,7 @@ public class SimpleConstraintFactoryTest {
 	 */
 	@Test
 	public final void testCreateBeforeConstraint() {
-		Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
+		Set<Task> mockTasks = new HashSet<Task>();
 		ImmutableCondition mockCondition = mock(ImmutableCondition.class);
 		
 		// Create factory under test
@@ -84,7 +84,7 @@ public class SimpleConstraintFactoryTest {
 	 */
 	@Test
 	public final void testCreateAfterConstraint() {
-		Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
+		Set<Task> mockTasks = new HashSet<Task>();
 		ImmutableCondition mockCondition = mock(ImmutableCondition.class);
 		
 		// Create factory under test
@@ -102,8 +102,8 @@ public class SimpleConstraintFactoryTest {
 	 */
 	@Test
 	public final void testCreateBetweenConstraint() {
-		Set<ImmutableTask> mockTasksA = new HashSet<ImmutableTask>();
-		Set<ImmutableTask> mockTasksB = new HashSet<ImmutableTask>();
+		Set<Task> mockTasksA = new HashSet<Task>();
+		Set<Task> mockTasksB = new HashSet<Task>();
 		ImmutableCondition mockCondition = mock(ImmutableCondition.class);
 		
 		// Create factory under test

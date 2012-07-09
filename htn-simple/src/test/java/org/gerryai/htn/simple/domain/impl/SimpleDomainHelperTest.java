@@ -29,7 +29,7 @@ import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.tasknetwork.Task;
 import org.junit.Test;
 
 /**
@@ -128,7 +128,7 @@ public class SimpleDomainHelperTest {
 		ImmutableDomain	mockDomain = mock(ImmutableDomain.class);
 		when(mockDomain.getMethods()).thenReturn(new HashSet<ImmutableMethod>());
 
-		ImmutableTask mockTask = mock(ImmutableTask.class);
+		Task mockTask = mock(Task.class);
 		
 		// Create the domain helper under test
 		SimpleDomainHelper domainHelper = new SimpleDomainHelper(mockDomain);
@@ -145,11 +145,11 @@ public class SimpleDomainHelperTest {
 
 		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
 		
-		ImmutableTask mockTaskA = mock(ImmutableTask.class);
+		Task mockTaskA = mock(Task.class);
 		when(mockTaskA.getName()).thenReturn("taskA");
-		ImmutableTask mockTaskB = mock(ImmutableTask.class);
+		Task mockTaskB = mock(Task.class);
 		when(mockTaskB.getName()).thenReturn("taskB");
-		ImmutableTask mockTaskC = mock(ImmutableTask.class);
+		Task mockTaskC = mock(Task.class);
 		when(mockTaskC.getName()).thenReturn("taskC");
 		
 		ImmutableMethod mockMethodA = mock(ImmutableMethod.class);
@@ -177,9 +177,9 @@ public class SimpleDomainHelperTest {
 
 		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
 		
-		ImmutableTask mockTaskA = mock(ImmutableTask.class);
+		Task mockTaskA = mock(Task.class);
 		when(mockTaskA.getName()).thenReturn("taskA");
-		ImmutableTask mockTaskB = mock(ImmutableTask.class);
+		Task mockTaskB = mock(Task.class);
 		when(mockTaskB.getName()).thenReturn("taskB");
 		
 		ImmutableMethod mockMethodA = mock(ImmutableMethod.class);
@@ -210,9 +210,9 @@ public class SimpleDomainHelperTest {
 
 		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
 		
-		ImmutableTask mockTaskA = mock(ImmutableTask.class);
+		Task mockTaskA = mock(Task.class);
 		when(mockTaskA.getName()).thenReturn("taskA");
-		ImmutableTask mockTaskB = mock(ImmutableTask.class);
+		Task mockTaskB = mock(Task.class);
 		when(mockTaskB.getName()).thenReturn("taskB");
 		
 		ImmutableMethod mockMethodA = mock(ImmutableMethod.class);

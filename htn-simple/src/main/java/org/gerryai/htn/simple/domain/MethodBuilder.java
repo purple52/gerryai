@@ -19,16 +19,12 @@ package org.gerryai.htn.simple.domain;
 
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Interface for a class that can build methods.
- * 
- * @param <K>
- *            type of task this builder can handle
  * @param <N>
  *            class of network the builder can handle
  * @param <C>
@@ -38,10 +34,9 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface MethodBuilder<
-        K extends Task,
-        N extends TaskNetwork<K, C>,
+        N extends TaskNetwork<C>,
         C extends Constraint,
-        M extends Method<K, N, C>> {
+        M extends Method<N, C>> {
 
     /**
      * Set the name of the operator.
@@ -50,7 +45,7 @@ public interface MethodBuilder<
      *            the name
      * @return the updated builder
      */
-    MethodBuilder<K, N, C, M> setName(String name);
+    MethodBuilder<N, C, M> setName(String name);
 
     /**
      * Add an argument to the operator.
@@ -59,7 +54,7 @@ public interface MethodBuilder<
      *            the task to add
      * @return the updated builder
      */
-    MethodBuilder<K, N, C, M> setTask(K task);
+    MethodBuilder<N, C, M> setTask(Task task);
 
     /**
      * Add an argument to the operator.
@@ -68,7 +63,7 @@ public interface MethodBuilder<
      *            the task network to add
      * @return the updated builder
      */
-    MethodBuilder<K, N, C, M> setTaskNetwork(N taskNetwork);
+    MethodBuilder<N, C, M> setTaskNetwork(N taskNetwork);
 
     /**
      * Get the name of the method being built.
@@ -82,7 +77,7 @@ public interface MethodBuilder<
      * 
      * @return the task
      */
-    ImmutableTask getTask();
+    Task getTask();
 
     /**
      * Get the task network for the method being built.

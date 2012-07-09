@@ -26,7 +26,7 @@ import org.gerryai.htn.simple.constraint.ImmutableValidatablePrecedenceConstrain
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
 import com.google.common.base.Objects;
@@ -40,12 +40,12 @@ public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenc
 	/**
 	 * The task that must come first.
 	 */
-	private Set<ImmutableTask> precedingTasks;
+	private Set<Task> precedingTasks;
 	
 	/**
 	 * The task that must come last.
 	 */
-	private Set<ImmutableTask> procedingTasks;
+	private Set<Task> procedingTasks;
 	
     /**
      * Constructor.
@@ -59,30 +59,28 @@ public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenc
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<ImmutableTask> getPrecedingTasks() {
+	public final Set<Task> getPrecedingTasks() {
 		return precedingTasks;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<ImmutableTask> getProcedingTasks() {
+	public final Set<Task> getProcedingTasks() {
 		return procedingTasks;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<ImmutableTask,
-	        ImmutableCondition> validator) {
+	public final boolean validate(ConstraintValidator<ImmutableCondition> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<ImmutableTask,
-	        ImmutableCondition> validator) throws InvalidConstraint {
+	public final void add(ConstraintValidator<ImmutableCondition> validator) throws InvalidConstraint {
 		validator.add(this);
 	}
 	
@@ -119,18 +117,18 @@ public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenc
         /**
          * The task that must come first.
          */
-        private Set<ImmutableTask> precedingTasks;
+        private Set<Task> precedingTasks;
 
         /**
          * The task that must come last.
          */
-        private Set<ImmutableTask> procedingTasks;
+        private Set<Task> procedingTasks;
         
         /**
          * @param tasks the tasks to set
          * @return the updated builder
          */
-        public final Builder setPrecedingTasks(Set<ImmutableTask> tasks) {
+        public final Builder setPrecedingTasks(Set<Task> tasks) {
             this.precedingTasks = tasks;
             return this;
         }
@@ -139,7 +137,7 @@ public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenc
          * @param tasks the tasks to set
          * @return the updated builder
          */
-        public final Builder setProcedingTasks(Set<ImmutableTask> tasks) {
+        public final Builder setProcedingTasks(Set<Task> tasks) {
             this.procedingTasks = tasks;
             return this;
         }
@@ -148,15 +146,15 @@ public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenc
          * {@inheritDoc}
          */
         public final Builder copy(ImmutableValidatablePrecedenceConstraint constraint) {
-            this.precedingTasks = new HashSet<ImmutableTask>(constraint.getPrecedingTasks());
-            this.procedingTasks = new HashSet<ImmutableTask>(constraint.getProcedingTasks());
+            this.precedingTasks = new HashSet<Task>(constraint.getPrecedingTasks());
+            this.procedingTasks = new HashSet<Task>(constraint.getProcedingTasks());
             return this;
         }
 
         /**
          * {@inheritDoc}
          */
-        public final Builder replace(ImmutableTask oldTask, Set<ImmutableTask> newTasks) {
+        public final Builder replace(Task oldTask, Set<Task> newTasks) {
             if (this.precedingTasks.contains(oldTask)) {
                 this.precedingTasks.remove(oldTask);
                 this.precedingTasks.addAll(newTasks);
@@ -171,7 +169,7 @@ public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenc
         /**
          * {@inheritDoc}
          */
-        public final Builder replace(ImmutableTask oldTask, ImmutableTask newTask) {
+        public final Builder replace(Task oldTask, Task newTask) {
             if (this.precedingTasks.contains(oldTask)) {
                 this.precedingTasks.remove(oldTask);
                 this.precedingTasks.add(newTask);
@@ -194,14 +192,14 @@ public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenc
         /**
          * @return the task
          */
-        protected final Set<ImmutableTask> getPrecedingTasks() {
+        protected final Set<Task> getPrecedingTasks() {
             return precedingTasks;
         }
 
         /**
          * @return the task
          */
-        protected final Set<ImmutableTask> getProcedingTasks() {
+        protected final Set<Task> getProcedingTasks() {
             return procedingTasks;
         }
         

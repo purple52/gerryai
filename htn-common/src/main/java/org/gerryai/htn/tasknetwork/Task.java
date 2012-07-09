@@ -18,6 +18,7 @@
 package org.gerryai.htn.tasknetwork;
 
 import java.util.List;
+import java.util.Map;
 
 import org.gerryai.logic.Term;
 
@@ -44,4 +45,11 @@ public interface Task {
 	 * @return true if task is a primitive
 	 */
 	boolean isPrimitive();
+	
+    /**
+     * Apply the given substitution to a copy of this task.
+     * @param substitution the substitution to apply
+     * @return the new task
+     */
+    Task applyToCopy(Map<Term, Term> substitution);
 }

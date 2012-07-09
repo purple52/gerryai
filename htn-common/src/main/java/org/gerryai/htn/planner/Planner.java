@@ -25,7 +25,6 @@ import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.problem.State;
-import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
@@ -36,7 +35,6 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @param <A> type of action this planner works with
  * @param <O> type of operator this planner works with
  * @param <M> type of method this planner works with
- * @param <K> type of task this planner works with
  * @param <N> type of task network this planner works with
  * @param <C> type of constraint this planner works with
  * @param <I> the class of condition the planner will handle
@@ -48,9 +46,8 @@ public interface Planner<
         P extends Plan<E, A, O, I>,
         A extends Action<E, O, I>,
 		O extends Operator<E, I>,
-		M extends Method<K, N, C>,
-		K extends Task,
-		N extends TaskNetwork<K, C>,
+		M extends Method<N, C>,
+		N extends TaskNetwork<C>,
 		C extends Constraint,
 		I extends Condition> {
 

@@ -23,7 +23,6 @@ import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
@@ -33,7 +32,6 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @param <D> type of domain this problem uses
  * @param <O> type of operator this problem uses
  * @param <M> type of method this problem uses
- * @param <K> type of task this problem uses
  * @param <N> the type of task network this problem uses
  * @param <C> the type of constraint this problem uses
  * @param <I> the class of condition the problem will handle
@@ -43,11 +41,10 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
 public interface Problem<
         E extends Effect,
         S extends State,
-        D extends Domain<E, O, M, K, N, C, I>,
+        D extends Domain<E, O, M, N, C, I>,
 		O extends Operator<E, I>,
-		M extends Method<K, N, C>,
-		K extends Task,
-		N extends TaskNetwork<K, C>,
+		M extends Method<N, C>,
+		N extends TaskNetwork<C>,
 		C extends Constraint,
 		I extends Condition> {
 	

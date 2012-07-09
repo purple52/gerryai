@@ -22,8 +22,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.gerryai.htn.simple.domain.ImmutableMethodBuilder;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
+import org.gerryai.htn.tasknetwork.Task;
 import org.junit.Test;
 
 /**
@@ -48,7 +48,7 @@ public class SimpleMethodTest {
 	 */
 	@Test
 	public final void testTask() {
-		ImmutableTask task = mock(ImmutableTask.class);
+		Task task = mock(Task.class);
 		ImmutableMethodBuilder mockBuilder = mock(ImmutableMethodBuilder.class);
 		when(mockBuilder.getTask()).thenReturn(task);
 		SimpleMethod method = new SimpleMethod(mockBuilder);

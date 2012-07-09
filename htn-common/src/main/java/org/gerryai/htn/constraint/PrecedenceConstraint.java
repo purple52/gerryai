@@ -23,23 +23,20 @@ import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * Interface for a constraint that dictates what order two tasks must be completed in.
- * @param <K> type of task this constraint works with
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface PrecedenceConstraint<
-        K extends Task>
-                extends Constraint {
+public interface PrecedenceConstraint extends Constraint {
 
 	/**
 	 * Get the task that must come first.
 	 * @return the task
 	 */
-	Set<K> getPrecedingTasks();
+	Set<Task> getPrecedingTasks();
 
 	/**
 	 * Get the task that must come last.
 	 * @return the task
 	 */
-	Set<K> getProcedingTasks();
+	Set<Task> getProcedingTasks();
 	
 }

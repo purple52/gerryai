@@ -18,14 +18,13 @@
 package org.gerryai.htn.simple.tasknetwork;
 
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.logic.Term;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface ImmutableTaskNetworkFactory extends
-        TaskNetworkFactory<Term, ImmutableTask, ImmutableTaskNetwork,
+        TaskNetworkFactory<ImmutableTaskNetwork,
         ImmutableConstraint<?>> {
 
     /**

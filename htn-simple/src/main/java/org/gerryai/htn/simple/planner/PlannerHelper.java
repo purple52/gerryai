@@ -39,7 +39,6 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @param <A> type of action this planner works with
  * @param <O> type of operator this planner helper uses
  * @param <M> type of method the planner helper works with
- * @param <K> type of task this planner works with
  * @param <N> type of task network this planner works with
  * @param <C> type of constraint this planner works with
  * @param <I> type of condition the planner uses
@@ -51,9 +50,8 @@ public interface PlannerHelper<
         P extends Plan<E, A, O, I>,
         A extends Action<E, O, I>,
 		O extends Operator<E, I>,
-		M extends Method<K, N, C>,
-		K extends Task,
-		N extends TaskNetwork<K, C>,
+		M extends Method<N, C>,
+		N extends TaskNetwork<C>,
 		C extends Constraint,
 		I extends Condition> {
 	
@@ -80,7 +78,7 @@ public interface PlannerHelper<
 	 * @return a non-primitive task
 	 * @throws NonPrimitiveTaskNotFound if no non-primitive tasks are present in the task network
 	 */
-	K getNonPrimitiveTask(N taskNetwork) throws NonPrimitiveTaskNotFound;
+	Task getNonPrimitiveTask(N taskNetwork) throws NonPrimitiveTaskNotFound;
 	
 	/**
 	 * Try to decompose the given task within a task network using the given method.
@@ -91,5 +89,5 @@ public interface PlannerHelper<
 	 * @throws DecompositionNotFound if the method could not be used to decompose the given task
      * @throws InvalidConstraint if the decomposition restulted in an invalid constraint
 	 */
-	N decompose(N taskNetwork, K task, M method) throws DecompositionNotFound, InvalidConstraint;
+	N decompose(N taskNetwork, Task task, M method) throws DecompositionNotFound, InvalidConstraint;
 }

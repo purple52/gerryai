@@ -19,8 +19,8 @@ package org.gerryai.htn.simple.domain.impl;
 
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableMethodBuilder;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
+import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -36,7 +36,7 @@ public class SimpleMethod implements ImmutableMethod {
 	/**
 	 * Task that this method decomposes.
 	 */
-	private ImmutableTask task;
+	private Task task;
 	
 	/**
 	 * Sub tasks that this method decomposes its task into.
@@ -62,7 +62,7 @@ public class SimpleMethod implements ImmutableMethod {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableTask getTask() {
+	public final Task getTask() {
 		return task;
 	}
 	
@@ -87,7 +87,7 @@ public class SimpleMethod implements ImmutableMethod {
 	    /**
 	     * Task that the method being built will decompose.
 	     */
-	    private ImmutableTask task;
+	    private Task task;
 
 	    /**
 	     * Task network that the method being built decomposes into.
@@ -112,7 +112,7 @@ public class SimpleMethod implements ImmutableMethod {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableMethodBuilder setTask(ImmutableTask task) {
+	    public final ImmutableMethodBuilder setTask(Task task) {
 	        this.task = task;
 	        return this;
 	    }
@@ -145,7 +145,7 @@ public class SimpleMethod implements ImmutableMethod {
 	     * Get the task for the method being built.
 	     * @return the task
 	     */
-	    public final ImmutableTask getTask() {
+	    public final Task getTask() {
 	        return task;
 	    }
 

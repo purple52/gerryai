@@ -28,16 +28,14 @@ import org.gerryai.logic.Term;
 
 /**
  * @param <M> type of method this service can decompose
- * @param <K> type of task this service works with
  * @param <N> type of task network this service works with
  * @param <C> type of constraint this service works with
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface DecompositionService<
-		M extends Method<K, N, C>,
-		K extends Task,
-		N extends TaskNetwork<K, C>,
+		M extends Method<N, C>,
+		N extends TaskNetwork<C>,
 		C extends Constraint> {
 
 	/**
@@ -49,6 +47,6 @@ public interface DecompositionService<
 	 * @return the decomposed task network
 	 * @throws InvalidConstraint 
 	 */
-	N decompose(Map<Term, Term> substitution, N taskNetwork, K task, M method)  throws InvalidConstraint;
+	N decompose(Map<Term, Term> substitution, N taskNetwork, Task task, M method)  throws InvalidConstraint;
 	
 }

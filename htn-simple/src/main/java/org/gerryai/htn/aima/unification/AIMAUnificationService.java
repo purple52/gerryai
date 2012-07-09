@@ -26,8 +26,8 @@ import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
@@ -43,11 +43,10 @@ import aima.core.logic.fol.parsing.ast.Predicate;
  */
 public class AIMAUnificationService<
 		O extends Operator<ImmutableEffect, I>,
-		M extends Method<ImmutableTask, ImmutableTaskNetwork, ImmutableConstraint<?>>,
+		M extends Method<ImmutableTaskNetwork, ImmutableConstraint<?>>,
 		I extends Condition,
 		V extends Variable>
-				implements UnificationService<M, Term, ImmutableTask,
-				ImmutableTaskNetwork, ImmutableConstraint<?>, I> {
+				implements UnificationService<M, ImmutableTaskNetwork, ImmutableConstraint<?>, I> {
 
 	/**
 	 * AIMA Unifier object to do the underlying expression unification.
@@ -57,7 +56,7 @@ public class AIMAUnificationService<
 	/**
 	 * Converter to convert between our classes and the AIMA FOL classes.
 	 */
-	private AIMAConverter<Term, V, ImmutableTask> converter;
+	private AIMAConverter converter;
 	
 	/**
 	 * Constructor taking all required dependencies.
@@ -65,7 +64,7 @@ public class AIMAUnificationService<
 	 * @param converter converted to translate between the two class schemes
 	 */
 	public AIMAUnificationService(aima.core.logic.fol.Unifier unifier,
-			AIMAConverter<Term, V, ImmutableTask> converter) {
+			AIMAConverter converter) {
 		this.unifier = unifier;
 		this.converter = converter;
 	}
@@ -73,7 +72,7 @@ public class AIMAUnificationService<
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Map<Term, Term> findUnifier(ImmutableTask task, M method) {
+	public final Map<Term, Term> findUnifier(Task task, M method) {
 
 		Predicate taskPredicate = converter.convert(task);
 		Predicate methodTaskPredicate = converter.convert(method.getTask());

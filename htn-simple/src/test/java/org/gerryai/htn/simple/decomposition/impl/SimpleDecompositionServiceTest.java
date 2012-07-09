@@ -32,10 +32,10 @@ import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 import org.junit.Test;
 
@@ -53,20 +53,20 @@ public class SimpleDecompositionServiceTest {
     @SuppressWarnings("unchecked")
     public final void testDecompose() throws InvalidConstraint {
     	
-    	ConstraintValidatorFactory<ImmutableTask,
-    	        ImmutableCondition> mockConstraintValidatorFactory = mock(ConstraintValidatorFactory.class);
+    	ConstraintValidatorFactory<ImmutableCondition> mockConstraintValidatorFactory
+    			= mock(ConstraintValidatorFactory.class);
 
     	SimpleDecompositionService decompositionService
     			= new SimpleDecompositionService(mockConstraintValidatorFactory);
     	
     	// TaskA will be decomposed into TaskB and TaskC
-    	ImmutableTask mockTaskA = mock(ImmutableTask.class);
-    	ImmutableTask mockTaskB = mock(ImmutableTask.class);
-    	ImmutableTask mockTaskC = mock(ImmutableTask.class);
+    	Task mockTaskA = mock(Task.class);
+    	Task mockTaskB = mock(Task.class);
+    	Task mockTaskC = mock(Task.class);
     	
-    	Set<ImmutableTask> taskNetworkTasks = new HashSet<ImmutableTask>();
+    	Set<Task> taskNetworkTasks = new HashSet<Task>();
     	taskNetworkTasks.add(mockTaskA);
-    	Set<ImmutableTask> methodSubTasks = new HashSet<ImmutableTask>();
+    	Set<Task> methodSubTasks = new HashSet<Task>();
     	methodSubTasks.add(mockTaskB);
     	methodSubTasks.add(mockTaskC);
     	

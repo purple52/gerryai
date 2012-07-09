@@ -28,7 +28,6 @@ import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.logic.Term;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
@@ -43,7 +42,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
 	/**
 	 * Set of tasks to be solved in this network.
 	 */
-	private Set<ImmutableTask> tasks;
+	private Set<Task> tasks;
 	
 	/**
 	 * Set of constraints to be met.
@@ -62,7 +61,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<ImmutableTask> getTasks() {
+	public final Set<Task> getTasks() {
 		return Collections.unmodifiableSet(tasks);
 	}
 
@@ -92,8 +91,8 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
 	/**
      * {@inheritDoc}
      */
-    public final Builder createCopyBuilder(ConstraintValidator<ImmutableTask,
-            ImmutableCondition> constraintValidator) throws InvalidConstraint {
+    public final Builder createCopyBuilder(ConstraintValidator<ImmutableCondition>
+    		constraintValidator) throws InvalidConstraint {
         return new Builder(constraintValidator)
             .copy(this);
     }
@@ -107,7 +106,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
         /**
          * Set of tasks we are building up.
          */
-        private Set<ImmutableTask> tasks;
+        private Set<Task> tasks;
         
         /**
          * Set of constraints we are building up.
@@ -117,31 +116,29 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
         /**
          * Constraint validator.
          */
-        private ConstraintValidator<ImmutableTask, ImmutableCondition> constraintValidator;
+        private ConstraintValidator<ImmutableCondition> constraintValidator;
         
         /**
          * Constructor, taking a constraint validator to use.
          * @param constraintValidator the constraint validator
          */
-        public Builder(ConstraintValidator<ImmutableTask,
-                ImmutableCondition> constraintValidator) {
+        public Builder(ConstraintValidator<ImmutableCondition> constraintValidator) {
             this.constraintValidator = constraintValidator;
-            tasks = new HashSet<ImmutableTask>();
+            tasks = new HashSet<Task>();
             constraints = new HashSet<ImmutableConstraint<?>>();
         }
         
         /**
          * @return the constraintValidator
          */
-        protected final ConstraintValidator<ImmutableTask,
-                ImmutableCondition> getConstraintValidator() {
+        protected final ConstraintValidator<ImmutableCondition> getConstraintValidator() {
             return constraintValidator;
         }
         
         /**
          * {@inheritDoc}
          */
-        public final Builder addTask(ImmutableTask task) {
+        public final Builder addTask(Task task) {
             tasks.add(task);
             constraintValidator.add(task);
             return this;
@@ -150,9 +147,9 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
         /**
          * {@inheritDoc}
          */
-        public final Builder addTasks(Set<ImmutableTask> tasks) {
+        public final Builder addTasks(Set<Task> tasks) {
             this.tasks.addAll(tasks);
-            for (ImmutableTask task : tasks) {
+            for (Task task : tasks) {
                 constraintValidator.add(task);
             }
             return this;
@@ -182,7 +179,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
          * {@inheritDoc}
          */
         public final Builder copy(ImmutableTaskNetwork taskNetwork) throws InvalidConstraint {
-            tasks = new HashSet<ImmutableTask>(taskNetwork.getTasks());
+            tasks = new HashSet<Task>(taskNetwork.getTasks());
             // Assume original task network is valid
             constraints = new HashSet<ImmutableConstraint<?>>(taskNetwork.getConstraints());
             return this;
@@ -194,16 +191,14 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
         public final Builder apply(Map<Term, Term> substitution) {
         
             // Build a map of tasks to their replacements
-            Map<ImmutableTask, ImmutableTask> taskReplacementMap =
-                    new HashMap<ImmutableTask, ImmutableTask>(tasks.size());
-            for (ImmutableTask task : tasks) {
-                ImmutableTask newTask = task.createCopyBuilder()
-                        .apply(substitution)
-                        .build();
+            Map<Task, Task> taskReplacementMap =
+                    new HashMap<Task, Task>(tasks.size());
+            for (Task task : tasks) {
+                Task newTask = task.applyToCopy(substitution);
                 taskReplacementMap.put(task, newTask);
             }
             // Replace the existing tasks in this builder
-            tasks = new HashSet<ImmutableTask>(taskReplacementMap.values());
+            tasks = new HashSet<Task>(taskReplacementMap.values());
             
             // Build a set of replacement constraints
             Set<ImmutableConstraint<?>> newConstraints = new HashSet<ImmutableConstraint<?>>(constraints.size());
@@ -211,7 +206,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
                 ImmutableConstraintBuilder<?> builder = constraint.createCopyBuilder()
                         .apply(substitution);
                 // Replace the tasks in the constraint with the new ones
-                for (ImmutableTask task : taskReplacementMap.keySet()) {
+                for (Task task : taskReplacementMap.keySet()) {
                     builder = builder.replace(task, taskReplacementMap.get(task));
                 }
                 newConstraints.add(builder.build());
@@ -224,12 +219,12 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
         /**
          * {@inheritDoc}
          */
-        public final Builder replace(ImmutableTask oldTask, ImmutableTaskNetwork newTaskNetwork) {
+        public final Builder replace(Task oldTask, ImmutableTaskNetwork newTaskNetwork) {
             //TODO: Check implementation
             
             // Build a new set of tasks
-            Set<ImmutableTask> newTasks = new HashSet<ImmutableTask>(tasks.size() + newTaskNetwork.getTasks().size());
-            for (ImmutableTask task : tasks) {
+            Set<Task> newTasks = new HashSet<Task>(tasks.size() + newTaskNetwork.getTasks().size());
+            for (Task task : tasks) {
                 if (!task.equals(oldTask)) {
                     newTasks.add(task);
                 } else {
@@ -266,7 +261,7 @@ public class SimpleTaskNetwork implements ImmutableTaskNetwork {
         /**
          * {@inheritDoc}
          */
-        public final Set<ImmutableTask> getTasks() {
+        public final Set<Task> getTasks() {
             return tasks;
         }
         

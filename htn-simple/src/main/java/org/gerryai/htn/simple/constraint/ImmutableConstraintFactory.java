@@ -18,14 +18,12 @@
 package org.gerryai.htn.simple.constraint;
 
 import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
  * Interface for a constraint factory that handles immutable classes.
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutableConstraintFactory extends ConstraintFactory<
-        ImmutableTask,
         ImmutableCondition,
         ImmutableValidatableBeforeConstraint,
         ImmutableValidatableAfterConstraint,

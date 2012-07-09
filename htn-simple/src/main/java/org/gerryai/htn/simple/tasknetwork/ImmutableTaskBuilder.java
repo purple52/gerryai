@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.simple.logic.LogicFactory;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
 /**
@@ -45,7 +46,7 @@ public interface ImmutableTaskBuilder {
 	 * @param task the task to copy
 	 * @return the updated builder
 	 */
-	ImmutableTaskBuilder copy(ImmutableTask task);
+	ImmutableTaskBuilder copy(Task task);
 	
 	/**
 	 * Apply the provided substituter to the arguments provided so far.
@@ -76,7 +77,7 @@ public interface ImmutableTaskBuilder {
 	 * Build the task.
 	 * @return the task
 	 */
-	ImmutableTask build();
+	Task build();
 
 	/**
 	 * Get the logic factory this builder can use.

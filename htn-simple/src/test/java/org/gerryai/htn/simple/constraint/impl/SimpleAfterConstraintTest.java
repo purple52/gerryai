@@ -30,7 +30,7 @@ import org.gerryai.htn.simple.constraint.ImmutableValidatableAfterConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 import org.junit.Test;
 
@@ -45,8 +45,8 @@ public class SimpleAfterConstraintTest {
      */
     @Test
     public final void testConstructor() {
-        ImmutableTask mockTask = mock(ImmutableTask.class);
-        Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
+        Task mockTask = mock(Task.class);
+        Set<Task> mockTasks = new HashSet<Task>();
         mockTasks.add(mockTask);
         ImmutableCondition mockCondition = mock(ImmutableCondition.class);
 
@@ -64,13 +64,13 @@ public class SimpleAfterConstraintTest {
      */
     @Test
     public final void testValidate() {
-        ImmutableTask mockTask = mock(ImmutableTask.class);
-        Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
+        Task mockTask = mock(Task.class);
+        Set<Task> mockTasks = new HashSet<Task>();
         mockTasks.add(mockTask);
         ImmutableCondition mockCondition = mock(ImmutableCondition.class);
 
         @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
         ImmutableValidatableAfterConstraint constraint = new SimpleAfterConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockCondition)
@@ -88,13 +88,13 @@ public class SimpleAfterConstraintTest {
     @Test
     public final void testAdd() throws InvalidConstraint {
         
-        ImmutableTask mockTask = mock(ImmutableTask.class);
-        Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
+        Task mockTask = mock(Task.class);
+        Set<Task> mockTasks = new HashSet<Task>();
         mockTasks.add(mockTask);
         ImmutableCondition mockCondition = mock(ImmutableCondition.class);
 
         @SuppressWarnings("unchecked")
-        ConstraintValidator<ImmutableTask, ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
+        ConstraintValidator<ImmutableCondition> mockValidator = mock(ConstraintValidator.class);
         ImmutableValidatableAfterConstraint constraint = new SimpleAfterConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockCondition)
@@ -111,8 +111,8 @@ public class SimpleAfterConstraintTest {
     public final void testCopyApply() {
         @SuppressWarnings("unchecked")
         Map<Term, Term> mockSubstitution = mock(Map.class);
-        ImmutableTask mockTask = mock(ImmutableTask.class);
-        Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
+        Task mockTask = mock(Task.class);
+        Set<Task> mockTasks = new HashSet<Task>();
         mockTasks.add(mockTask);
         ImmutableCondition mockConditionA = mock(ImmutableCondition.class);
         ImmutableCondition mockConditionB = mock(ImmutableCondition.class);
@@ -137,12 +137,12 @@ public class SimpleAfterConstraintTest {
      */
     @Test
     public final void testCopyReplace() {
-        ImmutableTask mockTaskA = mock(ImmutableTask.class);
-        Set<ImmutableTask> mockTasks = new HashSet<ImmutableTask>();
+        Task mockTaskA = mock(Task.class);
+        Set<Task> mockTasks = new HashSet<Task>();
         mockTasks.add(mockTaskA);
-        ImmutableTask mockTaskB = mock(ImmutableTask.class);
-        ImmutableTask mockTaskC = mock(ImmutableTask.class);
-        Set<ImmutableTask> mockNewTasks = new HashSet<ImmutableTask>();
+        Task mockTaskB = mock(Task.class);
+        Task mockTaskC = mock(Task.class);
+        Set<Task> mockNewTasks = new HashSet<Task>();
         mockNewTasks.add(mockTaskB);
         mockNewTasks.add(mockTaskC);
         ImmutableCondition mockCondition = mock(ImmutableCondition.class);

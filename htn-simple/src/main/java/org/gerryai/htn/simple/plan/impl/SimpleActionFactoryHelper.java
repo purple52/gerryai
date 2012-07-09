@@ -26,7 +26,7 @@ import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.plan.ImmutableActionFactoryHelper;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
@@ -53,7 +53,7 @@ public class SimpleActionFactoryHelper implements ImmutableActionFactoryHelper {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableOperator getOperator(ImmutableTask task) throws TaskNotActionable {
+	public final ImmutableOperator getOperator(Task task) throws TaskNotActionable {
 		
 		ImmutableOperator operator;
 		
@@ -69,8 +69,7 @@ public class SimpleActionFactoryHelper implements ImmutableActionFactoryHelper {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Map<Variable, Constant>
-	        getBindings(ImmutableTask task, ImmutableOperator operator) 
+	public final Map<Variable, Constant> getBindings(Task task, ImmutableOperator operator) 
 	                throws TaskNotActionable {
 
 	    Map<Variable, Constant> bindings =

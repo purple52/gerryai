@@ -20,7 +20,6 @@ package org.gerryai.htn.domain;
 import java.util.Set;
 
 import org.gerryai.htn.constraint.Constraint;
-import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
@@ -28,7 +27,6 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @param <E> type of effect this domain uses
  * @param <O> type of operator this domain uses
  * @param <M> type of operator this domain uses
- * @param <K> type of task this domain uses
  * @param <N> type of task network this domain uses
  * @param <C> type of constraint this domain uses
  * @param <I> the class of condition the domain will handle
@@ -37,9 +35,8 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
 public interface Domain<
         E extends Effect,
 		O extends Operator<E, I>,
-		M extends Method<K, N, C>,
-		K extends Task,
-		N extends TaskNetwork<K, C>,
+		M extends Method<N, C>,
+		N extends TaskNetwork<C>,
 		C extends Constraint,
 		I extends Condition> {
 

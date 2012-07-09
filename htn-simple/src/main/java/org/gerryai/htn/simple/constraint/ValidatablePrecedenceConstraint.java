@@ -19,18 +19,14 @@ package org.gerryai.htn.simple.constraint;
 
 import org.gerryai.htn.constraint.PrecedenceConstraint;
 import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * Extension of validatable and precedence constraint interfaces.
- * @param <K> type of task the constraint applies to
  * @param <I> type of condition the constraint uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface ValidatablePrecedenceConstraint<
-        K extends Task,
-        I extends Condition>
-		        extends	ValidatableConstraint<K, I>, PrecedenceConstraint<K> {
+public interface ValidatablePrecedenceConstraint<I extends Condition>
+		        extends	ValidatableConstraint<I>, PrecedenceConstraint {
 
 }

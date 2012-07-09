@@ -23,14 +23,12 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Interface that a method must implement.
- * @param <K> the type of task this method works with
  * @param <N> the type of task network this method works with
  * @param <C> the type of constraint this method works with
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface Method<
-		K extends Task,
-		N extends TaskNetwork<K, C>,
+		N extends TaskNetwork<C>,
 		C extends Constraint> {
 
 	/**
@@ -43,7 +41,7 @@ public interface Method<
 	 * Get the task for this method.
 	 * @return the task
 	 */
-	K getTask();
+	Task getTask();
 	
 	/**
 	 * Get the task network for this method.

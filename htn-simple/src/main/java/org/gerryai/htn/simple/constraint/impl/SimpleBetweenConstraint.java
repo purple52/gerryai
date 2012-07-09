@@ -26,7 +26,7 @@ import org.gerryai.htn.simple.constraint.ImmutableValidatableBetweenConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
 import com.google.common.base.Objects;
@@ -40,12 +40,12 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
 	/**
 	 * The set of tasks that this constraint must hold after.
 	 */
-	private Set<ImmutableTask> precedingTasks;
+	private Set<Task> precedingTasks;
 
 	/**
 	 * The set of tasks that this constraint must hold before.
 	 */
-	private Set<ImmutableTask> procedingTasks;
+	private Set<Task> procedingTasks;
 	
 	/**
 	 * The literal that must be true directly between the two sets of tasks.
@@ -66,7 +66,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
 	 * Get the set of tasks that this constraint must hold after.
 	 * @return the tasks
 	 */
-	public final Set<ImmutableTask> getPrecedingTasks() {
+	public final Set<Task> getPrecedingTasks() {
 		return precedingTasks;
 	}
 
@@ -74,7 +74,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
 	 * Get the set of tasks that this constraint must hold before.
 	 * @return the tasks
 	 */
-	public final Set<ImmutableTask> getProcedingTasks() {
+	public final Set<Task> getProcedingTasks() {
 		return procedingTasks;
 	}
 	
@@ -89,15 +89,14 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
 	/**
 	 * {@inheritDoc}
 	 */
-	public final boolean validate(ConstraintValidator<ImmutableTask,
-	        ImmutableCondition> validator) {
+	public final boolean validate(ConstraintValidator<ImmutableCondition> validator) {
 		return validator.validate(this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final void add(ConstraintValidator<ImmutableTask, ImmutableCondition> validator)
+	public final void add(ConstraintValidator<ImmutableCondition> validator)
 			throws InvalidConstraint {
 		validator.add(this);
 	}
@@ -135,12 +134,12 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
         /**
          * The set of tasks that this constraint must hold after.
          */
-        private Set<ImmutableTask> precedingTasks;
+        private Set<Task> precedingTasks;
 
         /**
          * The set of tasks that this constraint must hold before.
          */
-        private Set<ImmutableTask> procedingTasks;
+        private Set<Task> procedingTasks;
         
         /**
          * The condition that must be true directly after the last of these tasks.
@@ -151,15 +150,15 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
          * Default constructor.
          */
         public Builder() {
-            precedingTasks = new HashSet<ImmutableTask>();
-            procedingTasks = new HashSet<ImmutableTask>();
+            precedingTasks = new HashSet<Task>();
+            procedingTasks = new HashSet<Task>();
         }
 
         /**
          * @param tasks the tasks to add
          * @return the updated builder
          */
-        public final Builder addPrecedingTasks(Set<ImmutableTask> tasks) {
+        public final Builder addPrecedingTasks(Set<Task> tasks) {
             this.precedingTasks.addAll(tasks);
             return this;
         }
@@ -168,7 +167,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
          * @param tasks the tasks to add
          * @return the updated builder
          */
-        public final Builder addProcedingTasks(Set<ImmutableTask> tasks) {
+        public final Builder addProcedingTasks(Set<Task> tasks) {
             this.procedingTasks.addAll(tasks);
             return this;
         }
@@ -186,8 +185,8 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
          * {@inheritDoc}
          */
         public final Builder copy(ImmutableValidatableBetweenConstraint constraint) {
-            this.precedingTasks = new HashSet<ImmutableTask>(constraint.getPrecedingTasks());
-            this.procedingTasks = new HashSet<ImmutableTask>(constraint.getProcedingTasks());
+            this.precedingTasks = new HashSet<Task>(constraint.getPrecedingTasks());
+            this.procedingTasks = new HashSet<Task>(constraint.getProcedingTasks());
             this.condition = constraint.getCondition();
             return this;
         }
@@ -195,7 +194,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
         /**
          * {@inheritDoc}
          */
-        public final Builder replace(ImmutableTask oldTask, Set<ImmutableTask> newTasks) {
+        public final Builder replace(Task oldTask, Set<Task> newTasks) {
             if (this.precedingTasks.contains(oldTask)) {
                 this.precedingTasks.remove(oldTask);
                 this.precedingTasks.addAll(newTasks);
@@ -210,7 +209,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
         /**
          * {@inheritDoc}
          */
-        public final Builder replace(ImmutableTask oldTask, ImmutableTask newTask) {
+        public final Builder replace(Task oldTask, Task newTask) {
             if (this.precedingTasks.contains(oldTask)) {
                 this.precedingTasks.remove(oldTask);
                 this.precedingTasks.add(newTask);
@@ -235,14 +234,14 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
         /**
          * @return the tasks
          */
-        protected final Set<ImmutableTask> getPrecedingTasks() {
+        protected final Set<Task> getPrecedingTasks() {
             return precedingTasks;
         }
 
         /**
          * @return the tasks
          */
-        protected final Set<ImmutableTask> getProcedingTasks() {
+        protected final Set<Task> getProcedingTasks() {
             return procedingTasks;
         }
         

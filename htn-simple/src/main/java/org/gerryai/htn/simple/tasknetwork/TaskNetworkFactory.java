@@ -28,16 +28,12 @@ import org.gerryai.logic.Term;
 
 /**
  * Interface for a factory that creates task network builders.
- * @param <T> the class of task the builder will handle
- * @param <K> type of task this factory uses
  * @param <N> type of task network this factory uses
  * @param <C> the class of constraint the builder will handle
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface TaskNetworkFactory<
-		T extends Term,
-		K extends Task,
-		N extends TaskNetwork<K, C>,
+		N extends TaskNetwork<C>,
 		C extends Constraint> {
 
 	/**
@@ -47,7 +43,7 @@ public interface TaskNetworkFactory<
 	 * @return the task network builder
 	 * @throws InvalidConstraint if any of the supplied constraints are invalid
 	 */
-	N createTaskNetwork(Set<K> tasks, Set<C> constraints) throws InvalidConstraint;
+	N createTaskNetwork(Set<Task> tasks, Set<C> constraints) throws InvalidConstraint;
 	
 	/**
 	 * Copy the given task network and apply a substitution.
@@ -56,7 +52,7 @@ public interface TaskNetworkFactory<
 	 * @return the new task network
 	 * @throws InvalidConstraint if any of constraints involved end up being invalid
 	 */
-	N copyApply(N taskNetwork, Map<T, T> substitution) throws InvalidConstraint;
+	N copyApply(N taskNetwork, Map<Term, Term> substitution) throws InvalidConstraint;
 	
 	/**
 	 * Copy the given task network, apply a substitution and replace a task with a network.
@@ -67,7 +63,7 @@ public interface TaskNetworkFactory<
 	 * @return the new task network
 	 * @throws InvalidConstraint if any of constraints involved end up being invalid
 	 */
-	N copy(N taskNetwork, Map<T, T> substitution, K oldTask, N replacementNetwork) throws InvalidConstraint;
+	N copy(N taskNetwork, Map<Term, Term> substitution, Task oldTask, N replacementNetwork) throws InvalidConstraint;
 	
 	/**
 	 * Create a task using the name and arguments provided.
@@ -76,7 +72,7 @@ public interface TaskNetworkFactory<
 	 * @param isPrimitive whether the task is primitive or not
 	 * @return the task builder
 	 */
-	K createTask(String name, List<T> arguments, boolean isPrimitive);
+	Task createTask(String name, List<Term> arguments, boolean isPrimitive);
 	
 	/**
 	 * Copy the given task and apply the given substituter.
@@ -84,5 +80,5 @@ public interface TaskNetworkFactory<
 	 * @param substitution the substitution to apply
 	 * @return the new task
 	 */
-	K copy(K task, Map<T, T> substitution);
+	Task copy(Task task, Map<Term, Term> substitution);
 }

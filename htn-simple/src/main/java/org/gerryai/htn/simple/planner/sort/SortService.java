@@ -23,18 +23,14 @@ import java.util.Set;
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.tasknetwork.Task;
 
 /**
  * Interface for a service that can sort tasks based on a set of constraints.
- * @param <K> type of task this service works with
  * @param <C> type of constraint this service works with
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface SortService<
-        K extends Task,
-        C extends Constraint> {
+public interface SortService<C extends Constraint> {
     
     /**
      * Given a set of task and a set of constraints, return a sorted list of tasks.
@@ -43,7 +39,7 @@ public interface SortService<
      * @return the sorted list of tasks
      * @throws PlanNotFound if the constraints cannot be satisfied
      */
-    List<ImmutableTask> sortByConstaints(Set<ImmutableTask> tasks,
+    List<Task> sortByConstaints(Set<Task> tasks,
             Set<ImmutableConstraint<?>> constraints) throws PlanNotFound;
 
 }

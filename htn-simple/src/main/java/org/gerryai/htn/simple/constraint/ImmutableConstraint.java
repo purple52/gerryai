@@ -19,7 +19,6 @@ package org.gerryai.htn.simple.constraint;
 
 import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
  * Interface for constraints that support the operations required by this HTN implementation.
@@ -29,9 +28,7 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 public interface ImmutableConstraint<C extends ImmutableConstraint<C>>
         extends
         Constraint,
-        ValidatableConstraint<
-                ImmutableTask,
-                ImmutableCondition> {
+        ValidatableConstraint<ImmutableCondition> {
 
     /**
      * Create a new builder object that can build this type of constraint.

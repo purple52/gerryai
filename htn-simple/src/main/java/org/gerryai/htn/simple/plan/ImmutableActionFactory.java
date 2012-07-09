@@ -20,7 +20,6 @@ package org.gerryai.htn.simple.plan;
 import org.gerryai.htn.simple.domain.ImmutableCondition;
 import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
  * Interface for a factory that creates immutable actions.
@@ -29,7 +28,6 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 public interface ImmutableActionFactory extends ActionFactory<
         ImmutableEffect,
         ImmutableOperator,
-        ImmutableTask,
         ImmutableCondition,
         ImmutableAction> {
 

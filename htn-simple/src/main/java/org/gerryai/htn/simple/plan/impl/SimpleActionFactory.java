@@ -24,7 +24,7 @@ import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.plan.ImmutableAction;
 import org.gerryai.htn.simple.plan.ImmutableActionFactory;
 import org.gerryai.htn.simple.plan.ImmutableActionFactoryHelper;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Variable;
 
@@ -50,7 +50,7 @@ public class SimpleActionFactory implements ImmutableActionFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableAction create(ImmutableTask task) throws TaskNotActionable {
+	public final ImmutableAction create(Task task) throws TaskNotActionable {
 
 		// Try and get the operator
 		ImmutableOperator operator = actionFactoryHelper.getOperator(task);

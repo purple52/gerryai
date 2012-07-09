@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.gerryai.htn.simple.logic.LogicFactory;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskBuilder;
+import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
 import com.google.common.base.Objects;
@@ -32,7 +32,7 @@ import com.google.common.base.Objects;
 /**
  * Basic implementation of the Task interface.
  */
-public class SimpleTask implements ImmutableTask {
+public class SimpleTask implements Task {
 	
 	/**
 	 * Name for this task.
@@ -89,9 +89,11 @@ public class SimpleTask implements ImmutableTask {
 	/**
      * {@inheritDoc}
      */
-	public final Builder createCopyBuilder() {
+	public final Task applyToCopy(Map<Term, Term> substitution) {
         return new Builder(logicFactory)
-	        .copy(this);
+	        .copy(this)
+	        .apply(substitution)
+	        .build();
 	}
 	
 	@Override
@@ -179,7 +181,7 @@ public class SimpleTask implements ImmutableTask {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final Builder copy(ImmutableTask task) {
+	    public final Builder copy(Task task) {
 	        name = task.getName();
 	        arguments = new ArrayList<Term>(task.getArguments());
 	        isPrimitive = task.isPrimitive();
@@ -197,7 +199,7 @@ public class SimpleTask implements ImmutableTask {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableTask build() {
+	    public final Task build() {
 	        return new SimpleTask(this);
 	    }
 	    

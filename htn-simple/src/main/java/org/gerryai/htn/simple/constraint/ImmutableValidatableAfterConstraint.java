@@ -18,7 +18,6 @@
 package org.gerryai.htn.simple.constraint;
 
 import org.gerryai.htn.simple.domain.ImmutableCondition;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
 
 /**
  * Extension of immutable, validatable and after constraint interfaces.
@@ -26,5 +25,5 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
  */
 public interface ImmutableValidatableAfterConstraint
 		extends ImmutableConstraint<ImmutableValidatableAfterConstraint>,
-		ValidatableAfterConstraint<ImmutableTask, ImmutableCondition> {
+		ValidatableAfterConstraint<ImmutableCondition> {
 }

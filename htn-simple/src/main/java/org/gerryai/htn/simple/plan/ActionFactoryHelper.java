@@ -32,13 +32,11 @@ import org.gerryai.logic.Variable;
  * @param <E> type of effect this action uses
  * @param <O> type of operator this action uses
  * @param <I> type of condition the action uses
- * @param <K> type of task this helper works with
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ActionFactoryHelper<
         E extends Effect,
         O extends Operator<E, I>,
-        K extends Task,
         I extends Condition> {
 	
 	/**
@@ -47,7 +45,7 @@ public interface ActionFactoryHelper<
 	 * @return the operator
 	 * @throws TaskNotActionable if an operator does not exist for this task
 	 */
-	O getOperator(K task) throws TaskNotActionable;
+	O getOperator(Task task) throws TaskNotActionable;
 	
 	/**
 	 * Get the bindings for grounding this task.
@@ -56,6 +54,6 @@ public interface ActionFactoryHelper<
 	 * @return a set of bindings that ground this operator to implement this task
 	 * @throws TaskNotActionable if a set of bindings cannot be generated
 	 */
-	Map<Variable, Constant> getBindings(K task, O operator) throws TaskNotActionable;
+	Map<Variable, Constant> getBindings(Task task, O operator) throws TaskNotActionable;
 
 }
