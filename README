@@ -13,3 +13,11 @@ https://github.com/jgrapht/jgrapht.git
 
 2. Install:
 mvn install
+
+Install PDDL4J:
+
+1. Download from SourceForge:
+
+2. Install:
+
+mvn install:install-file -Dfile=pddl4j.jar -DgroupId=pddl4j -DartifactId=pddl4j -Dversion=1.0 -Dpackaging=jar -DgeneratePom=true

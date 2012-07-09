@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.gerryai</groupId>
+    <artifactId>gerryai</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>htn-pddl</artifactId>
+  <name>HTN PDDL</name>
+  <description>Provides support for reading PPDL files and generating domain and problem objects from them</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>pddl4j</groupId>
+  		<artifactId>pddl4j</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  		<scope>test</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.gerryai</groupId>
+  		<artifactId>htn-common</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
+</project>

@@ -28,8 +28,6 @@ import org.gerryai.htn.simple.domain.ImmutableEffect;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.ImmutableOperator;
 import org.gerryai.htn.simple.plan.ImmutablePlan;
-import org.gerryai.htn.simple.planner.ImmutablePlanningFactory;
-import org.gerryai.htn.simple.planner.impl.SimplePlanningFactory;
 import org.gerryai.htn.simple.problem.ImmutableProblem;
 import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTask;
@@ -52,8 +50,6 @@ public class BasicIT extends BaseIT {
 	 */
 	@Test
 	public final void testKiwiBanjo() throws PlanNotFound, InvalidConstraint {
-
-	    ImmutableDomain domain = createDomain();
 	    
 		// Build the task network to be solved
 		Constant constantKiwi = getPlanningFactory().getLogicFactory().createConstant("kiwi");
@@ -82,7 +78,7 @@ public class BasicIT extends BaseIT {
 		// Create the problem by putting together the domain and network to be solved;
 		ImmutableProblem problem = getPlanningFactory().getProblemBuilderFactory().createProblemBuilder()
 		        .setState(state)
-		        .setDomain(domain)
+		        .setDomain(getDomain())
 		        .setTaskNetwork(taskNetwork)
 		        .build();
 		
@@ -109,43 +105,39 @@ public class BasicIT extends BaseIT {
     @Test
     public final void testBanjoKiwi() throws PlanNotFound, InvalidConstraint {
         
-        ImmutablePlanningFactory planningFactory = new SimplePlanningFactory();
-        
-        ImmutableDomain domain = createDomain();
-        
         // Build the task network to be solved
-        Constant constantKiwi = planningFactory.getLogicFactory().createConstant("kiwi");
-        Constant constantBanjo = planningFactory.getLogicFactory().createConstant("banjo");
-        ImmutableTask task = planningFactory.getTaskNetworkFactory().createTaskBuilder()
+        Constant constantKiwi = getPlanningFactory().getLogicFactory().createConstant("kiwi");
+        Constant constantBanjo = getPlanningFactory().getLogicFactory().createConstant("banjo");
+        ImmutableTask task = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
                 .setName("swap")
                 .addArgument(constantBanjo)
                 .addArgument(constantKiwi)
                 .setIsPrimitive(false)
                 .build();
-        ImmutableTaskNetwork taskNetwork = planningFactory.getTaskNetworkFactory().createTaskNetworkBuilder()
+        ImmutableTaskNetwork taskNetwork = getPlanningFactory().getTaskNetworkFactory().createTaskNetworkBuilder()
                 .addTask(task)
                 .build();
         
         // Create the initial state
-        ImmutableEffect effect = planningFactory.getDomainBuilderFactory().createEffectBuilder()
-                .setSentence(planningFactory.getLogicFactory().sentenceBuilder()
+        ImmutableEffect effect = getPlanningFactory().getDomainBuilderFactory().createEffectBuilder()
+                .setSentence(getPlanningFactory().getLogicFactory().sentenceBuilder()
                         .predicate("have")
                         .addTerm(constantBanjo)
                         .build())
                 .build();
-        ImmutableState state = planningFactory.getStateService().createStateBuilder()
+        ImmutableState state = getPlanningFactory().getStateService().createStateBuilder()
                 .tell(effect)
                 .build();
                 
         // Create the problem by putting together the domain and network to be solved;
-        ImmutableProblem problem = planningFactory.getProblemBuilderFactory().createProblemBuilder()
+        ImmutableProblem problem = getPlanningFactory().getProblemBuilderFactory().createProblemBuilder()
                 .setState(state)
-                .setDomain(domain)
+                .setDomain(getDomain())
                 .setTaskNetwork(taskNetwork)
                 .build();
         
         // Solve the problem
-        ImmutablePlan plan = planningFactory.getPlanningService().solve(problem);
+        ImmutablePlan plan = getPlanningFactory().getPlanningService().solve(problem);
         
         assertEquals(2, plan.getActions().size());
         assertEquals("drop", plan.getActions().get(0).getOperator().getName());
@@ -159,13 +151,8 @@ public class BasicIT extends BaseIT {
 
     }
     
-    /**
-     * Create the basic domain.
-     * @return the domain
-     * @throws PlanNotFound only if test fails
-     * @throws InvalidConstraint only if test fails
-     */
-	public final ImmutableDomain createDomain() throws PlanNotFound, InvalidConstraint {
+    @Override
+	final ImmutableDomain createDomain() throws PlanNotFound, InvalidConstraint {
 	    
         Variable variableX = getPlanningFactory().getLogicFactory().createVariable("x");
         Variable variableY = getPlanningFactory().getLogicFactory().createVariable("y");
