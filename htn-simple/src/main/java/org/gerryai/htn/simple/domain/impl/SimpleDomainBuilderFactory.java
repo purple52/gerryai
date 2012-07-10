@@ -17,12 +17,12 @@
  */
 package org.gerryai.htn.simple.domain.impl;
 
-import org.gerryai.htn.simple.domain.ImmutableConditionBuilder;
+import org.gerryai.htn.simple.domain.ConditionBuilder;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilder;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilderFactory;
-import org.gerryai.htn.simple.domain.ImmutableEffectBuilder;
+import org.gerryai.htn.simple.domain.EffectBuilder;
 import org.gerryai.htn.simple.domain.ImmutableMethodBuilder;
-import org.gerryai.htn.simple.domain.ImmutableOperatorBuilder;
+import org.gerryai.htn.simple.domain.OperatorBuilder;
 
 /**
  * Simple implementation of a factory for generating immutable domain builders.
@@ -40,7 +40,7 @@ public class SimpleDomainBuilderFactory implements ImmutableDomainBuilderFactory
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableOperatorBuilder createOperatorBuilder() {
+	public final OperatorBuilder createOperatorBuilder() {
 		return new SimpleOperator.Builder();	
 	}
 
@@ -54,14 +54,14 @@ public class SimpleDomainBuilderFactory implements ImmutableDomainBuilderFactory
 	/**
      * {@inheritDoc}
      */
-    public final ImmutableEffectBuilder createEffectBuilder() {
+    public final EffectBuilder createEffectBuilder() {
         return new SimpleEffect.Builder();
     }
     
     /**
      * {@inheritDoc}
      */
-    public final ImmutableConditionBuilder createConditionBuilder() {
+    public final ConditionBuilder createConditionBuilder() {
         return new SimpleCondition.Builder();
     }
 }

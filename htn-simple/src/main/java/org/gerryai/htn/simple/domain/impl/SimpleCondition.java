@@ -20,7 +20,7 @@ package org.gerryai.htn.simple.domain.impl;
 import java.util.Map;
 
 import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.simple.domain.ImmutableConditionBuilder;
+import org.gerryai.htn.simple.domain.ConditionBuilder;
 import org.gerryai.logic.Sentence;
 import org.gerryai.logic.Term;
 
@@ -64,7 +64,7 @@ public final class SimpleCondition implements Condition {
      * Builder class for conditions.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static final class Builder implements ImmutableConditionBuilder {
+    public static final class Builder implements ConditionBuilder {
    
         /**
          * The sentence that the condition being built will use.

@@ -29,8 +29,8 @@ import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
-import org.gerryai.htn.simple.plan.ImmutableActionFactory;
-import org.gerryai.htn.simple.plan.ImmutableActionFactoryHelper;
+import org.gerryai.htn.simple.plan.ActionFactory;
+import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactory;
 import org.gerryai.htn.simple.plan.impl.SimpleActionFactoryHelper;
 import org.gerryai.htn.simple.plan.impl.SimplePlanBuilderFactory;
@@ -67,8 +67,8 @@ public class SimplePlannerFactory implements ImmutablePlannerFactory {
 		
 	    ImmutableDomainHelper domainHelper = new SimpleDomainHelper(domain);
 		
-		ImmutableActionFactoryHelper actionFactoryHelper = new SimpleActionFactoryHelper(domainHelper);
-		ImmutableActionFactory actionFactory = new SimpleActionFactory(actionFactoryHelper);
+		ActionFactoryHelper actionFactoryHelper = new SimpleActionFactoryHelper(domainHelper);
+		ActionFactory actionFactory = new SimpleActionFactory(actionFactoryHelper);
 		SimplePlanBuilderFactory planFactory = new SimplePlanBuilderFactory();
 		
 		aima.core.logic.fol.Unifier unifier = new aima.core.logic.fol.Unifier();

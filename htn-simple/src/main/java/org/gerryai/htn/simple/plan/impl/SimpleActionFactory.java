@@ -22,8 +22,8 @@ import java.util.Map;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.TaskNotActionable;
-import org.gerryai.htn.simple.plan.ImmutableActionFactory;
-import org.gerryai.htn.simple.plan.ImmutableActionFactoryHelper;
+import org.gerryai.htn.simple.plan.ActionFactory;
+import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Variable;
@@ -32,18 +32,18 @@ import org.gerryai.logic.Variable;
  * Factory for creating actions.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleActionFactory implements ImmutableActionFactory {
+public class SimpleActionFactory implements ActionFactory {
 
 	/**
 	 * Helper object for doing the difficult bits.
 	 */
-	private ImmutableActionFactoryHelper actionFactoryHelper;
+	private ActionFactoryHelper actionFactoryHelper;
 	
 	/**
 	 * Constructor taking all required dependencies.
 	 * @param actionFactoryHelper the action factory
 	 */
-	public SimpleActionFactory(ImmutableActionFactoryHelper actionFactoryHelper) {
+	public SimpleActionFactory(ActionFactoryHelper actionFactoryHelper) {
 		this.actionFactoryHelper = actionFactoryHelper;
 	}
 	

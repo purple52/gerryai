@@ -28,7 +28,6 @@ public interface ImmutableDomainBuilderFactory extends DomainBuilderFactory<
         ImmutableDomain,
         ImmutableMethod,
 		ImmutableTaskNetwork,
-		ImmutableConstraint<?>,
-		ImmutableOperatorBuilder> {
+		ImmutableConstraint<?>> {
 
 }

@@ -20,7 +20,7 @@ package org.gerryai.htn.simple.domain.impl;
 import java.util.Map;
 
 import org.gerryai.htn.domain.Effect;
-import org.gerryai.htn.simple.domain.ImmutableEffectBuilder;
+import org.gerryai.htn.simple.domain.EffectBuilder;
 import org.gerryai.logic.Sentence;
 import org.gerryai.logic.Term;
 
@@ -64,7 +64,7 @@ public final class SimpleEffect implements Effect {
      * Builder class for effects.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static final class Builder implements ImmutableEffectBuilder {
+    public static final class Builder implements EffectBuilder {
    
         /**
          * The sentence that the effect being built will use.
@@ -79,7 +79,7 @@ public final class SimpleEffect implements Effect {
         /**
          * {@inheritDoc}
          */
-        public ImmutableEffectBuilder setSentence(Sentence sentence) {
+        public EffectBuilder setSentence(Sentence sentence) {
             this.sentence = sentence;
             return this;
         }
@@ -87,7 +87,7 @@ public final class SimpleEffect implements Effect {
         /**
          * {@inheritDoc}
          */
-        public ImmutableEffectBuilder copy(Effect effect) {
+        public EffectBuilder copy(Effect effect) {
             this.sentence = effect.getSentence();
             return this;
         }
@@ -95,7 +95,7 @@ public final class SimpleEffect implements Effect {
         /**
          * {@inheritDoc}
          */
-        public ImmutableEffectBuilder apply(Map<Term, Term> substitution) {
+        public EffectBuilder apply(Map<Term, Term> substitution) {
             this.sentence = sentence.applyToCopy(substitution);
             return this;
         }

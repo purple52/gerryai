@@ -28,15 +28,13 @@ import org.gerryai.htn.tasknetwork.TaskNetwork;
  * @param <M> the class of method the builder will handle
  * @param <N> the class of task network the builders will handle
  * @param <C> the class of constraint the builder will handle
- * @param <B> the class of operator builder being used
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface DomainBuilderFactory<
 		D extends Domain<M, N, C>,
 		M extends Method<N, C>,
 		N extends TaskNetwork<C>,
-		C extends Constraint,
-		B extends OperatorBuilder<B>> {
+		C extends Constraint> {
 
 	/**
 	 * Create a domain builder of the required type.
@@ -48,7 +46,7 @@ public interface DomainBuilderFactory<
 	 * Create an operator builder of the required type.
 	 * @return the operator builder
 	 */
-	B createOperatorBuilder();
+	OperatorBuilder createOperatorBuilder();
 
 	/**
 	 * Create a method builder of the required type.
@@ -60,11 +58,11 @@ public interface DomainBuilderFactory<
 	 * Create an effect builder of the required type.
 	 * @return the effect builder
 	 */
-	ImmutableEffectBuilder createEffectBuilder();
+	EffectBuilder createEffectBuilder();
 	
 	   /**
      * Create a condition builder of the required type.
      * @return the condition builder
      */
-    ImmutableConditionBuilder createConditionBuilder();
+    ConditionBuilder createConditionBuilder();
 }

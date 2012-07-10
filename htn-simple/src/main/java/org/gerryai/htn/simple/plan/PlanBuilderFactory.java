@@ -21,11 +21,11 @@ package org.gerryai.htn.simple.plan;
  * Factory for creating builder objects for immutable plans.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutablePlanBuilderFactory {
+public interface PlanBuilderFactory {
 
 	/**
 	 * Create a new empty plan builder.
 	 * @return an empty plan builder
 	 */
-	ImmutablePlanBuilder createBuilder();
+	PlanBuilder createBuilder();
 }

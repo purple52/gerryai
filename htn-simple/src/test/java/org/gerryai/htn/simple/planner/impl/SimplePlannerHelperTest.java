@@ -44,9 +44,9 @@ import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.decomposition.UnifierNotFound;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.plan.ImmutableActionFactory;
-import org.gerryai.htn.simple.plan.ImmutablePlanBuilder;
-import org.gerryai.htn.simple.plan.ImmutablePlanBuilderFactory;
+import org.gerryai.htn.simple.plan.ActionFactory;
+import org.gerryai.htn.simple.plan.PlanBuilder;
+import org.gerryai.htn.simple.plan.PlanBuilderFactory;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.problem.ImmutableState;
@@ -71,12 +71,12 @@ public class SimplePlannerHelperTest {
 	/**
 	 * Mock plan builder factory.
 	 */
-    private ImmutablePlanBuilderFactory mockPlanBuilderFactory;
+    private PlanBuilderFactory mockPlanBuilderFactory;
     
     /**
      * Mock action factory.
      */
-    private ImmutableActionFactory mockActionFactory;
+    private ActionFactory mockActionFactory;
     
     /**
      * Mock decomposition service.
@@ -108,17 +108,17 @@ public class SimplePlannerHelperTest {
     /**
      * Map of plan builders to actions for mocking plan builders.
      */
-    private Map<ImmutablePlanBuilder, List<Action>> builderActionMap;
+    private Map<PlanBuilder, List<Action>> builderActionMap;
     
     /**
      * Map of plan builders to target actions for mocking plan builders.
      */
-    private Map<ImmutablePlanBuilder, List<Action>> builderTargetActionMap;
+    private Map<PlanBuilder, List<Action>> builderTargetActionMap;
     
     /**
      * Map of plan builders to plans for mocking plan builders.
      */
-    private Map<ImmutablePlanBuilder, Plan> builderReturnMap;
+    private Map<PlanBuilder, Plan> builderReturnMap;
     
     /**
      * Set up factories.
@@ -126,16 +126,16 @@ public class SimplePlannerHelperTest {
     @SuppressWarnings("unchecked")
     @Before
     public final void setup() {
-        mockPlanBuilderFactory = mock(ImmutablePlanBuilderFactory.class);
-        mockActionFactory = mock(ImmutableActionFactory.class);
+        mockPlanBuilderFactory = mock(PlanBuilderFactory.class);
+        mockActionFactory = mock(ActionFactory.class);
         mockDecompositionService = mock(DecompositionService.class);
         mockUnificationService = mock(UnificationService.class);
         mockSortService = mock(SortService.class);
         mockStateService = mock(ImmutableStateService.class);
         mockDomainHelper = mock(ImmutableDomainHelper.class);
-        builderActionMap = new HashMap<ImmutablePlanBuilder, List<Action>>();
-        builderTargetActionMap = new HashMap<ImmutablePlanBuilder, List<Action>>();
-        builderReturnMap = new HashMap<ImmutablePlanBuilder, Plan>();
+        builderActionMap = new HashMap<PlanBuilder, List<Action>>();
+        builderTargetActionMap = new HashMap<PlanBuilder, List<Action>>();
+        builderReturnMap = new HashMap<PlanBuilder, Plan>();
     }
 
     /**
@@ -364,8 +364,8 @@ public class SimplePlannerHelperTest {
 	 * @param mockPlan plan to return when actions have added
 	 * @return the plan builder
 	 */
-	private ImmutablePlanBuilder createPlanBuilder(List<Action> mockActions, Plan mockPlan) {
-	    ImmutablePlanBuilder mockPlanBuilder = mock(ImmutablePlanBuilder.class);
+	private PlanBuilder createPlanBuilder(List<Action> mockActions, Plan mockPlan) {
+	    PlanBuilder mockPlanBuilder = mock(PlanBuilder.class);
 	    
 	    if (mockActions.isEmpty()) {
 	        verify(mockPlanBuilder, never()).addAction(any(Action.class));
@@ -374,10 +374,10 @@ public class SimplePlannerHelperTest {
     	    builderActionMap.put(mockPlanBuilder, new ArrayList<Action>());
     	    builderTargetActionMap.put(mockPlanBuilder, mockActions);
     	    builderReturnMap.put(mockPlanBuilder, mockPlan);
-            when(mockPlanBuilder.addAction(any(Action.class))).thenAnswer(new Answer<ImmutablePlanBuilder>() {
-                public ImmutablePlanBuilder answer(InvocationOnMock invocation) {
+            when(mockPlanBuilder.addAction(any(Action.class))).thenAnswer(new Answer<PlanBuilder>() {
+                public PlanBuilder answer(InvocationOnMock invocation) {
                     Object[] args = invocation.getArguments();
-                    ImmutablePlanBuilder mock = (ImmutablePlanBuilder) invocation.getMock();
+                    PlanBuilder mock = (PlanBuilder) invocation.getMock();
                     builderActionMap.get(mock).add((Action) args[0]);
                     if (builderTargetActionMap.get(mock).equals(builderActionMap.get(mock))) {
                         when(mock.build()).thenReturn(builderReturnMap.get(mock));
@@ -399,7 +399,7 @@ public class SimplePlannerHelperTest {
 	    List<Action> mockActions = createMockActions(howManyActions);
         Plan mockPlan = mock(Plan.class);
         when(mockPlan.getActions()).thenReturn(mockActions);
-        ImmutablePlanBuilder mockPlanBuilder = createPlanBuilder(mockActions, mockPlan);
+        PlanBuilder mockPlanBuilder = createPlanBuilder(mockActions, mockPlan);
         when(mockPlanBuilderFactory.createBuilder()).thenReturn(mockPlanBuilder);
         
         return mockActions;

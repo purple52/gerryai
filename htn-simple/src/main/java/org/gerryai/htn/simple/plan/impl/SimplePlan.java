@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
-import org.gerryai.htn.simple.plan.ImmutablePlanBuilder;
+import org.gerryai.htn.simple.plan.PlanBuilder;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -54,7 +54,7 @@ public class SimplePlan implements Plan {
 	 * Builder class for SimplePlan objects.
 	 * @author David Edwards <david@more.fool.me.uk>
 	 */
-	public static class Builder implements ImmutablePlanBuilder {
+	public static class Builder implements PlanBuilder {
 	    
 	    /**
 	     * The actions to use when building the plan.
@@ -71,7 +71,7 @@ public class SimplePlan implements Plan {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutablePlanBuilder addAction(Action action) {
+	    public final PlanBuilder addAction(Action action) {
 	        actions.add(action);
 	        return this;
 	    }

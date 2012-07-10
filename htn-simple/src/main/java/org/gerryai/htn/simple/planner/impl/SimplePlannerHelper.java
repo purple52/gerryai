@@ -32,9 +32,9 @@ import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.decomposition.UnifierNotFound;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
 import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.plan.ImmutableActionFactory;
-import org.gerryai.htn.simple.plan.ImmutablePlanBuilder;
-import org.gerryai.htn.simple.plan.ImmutablePlanBuilderFactory;
+import org.gerryai.htn.simple.plan.ActionFactory;
+import org.gerryai.htn.simple.plan.PlanBuilder;
+import org.gerryai.htn.simple.plan.PlanBuilderFactory;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.ImmutablePlannerHelper;
 import org.gerryai.htn.simple.planner.sort.SortService;
@@ -59,12 +59,12 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 	/**
 	 * Factory for creating actions.
 	 */
-	private ImmutableActionFactory actionFactory;
+	private ActionFactory actionFactory;
 	
 	/**
 	 * Factory for creating plans.
 	 */
-	private ImmutablePlanBuilderFactory planBuilderFactory;
+	private PlanBuilderFactory planBuilderFactory;
 	
 	/**
 	 * Service for decomposing tasks.
@@ -99,8 +99,8 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 	 * @param domainHelper the helper for manipulating domain objects
 	 */
 	public SimplePlannerHelper(
-	        ImmutableActionFactory actionFactory,
-	        ImmutablePlanBuilderFactory planBuilderFactory,
+	        ActionFactory actionFactory,
+	        PlanBuilderFactory planBuilderFactory,
 			DecompositionService<ImmutableMethod, ImmutableTaskNetwork,
 			ImmutableConstraint<?>> decompositionservice,
 			UnificationService<ImmutableMethod, ImmutableTaskNetwork,
@@ -135,7 +135,7 @@ public class SimplePlannerHelper implements ImmutablePlannerHelper {
 	    List<Task> sortedTasks = sortService.sortByConstaints(
 	            taskNetwork.getTasks(), taskNetwork.getConstraints());
 
-		ImmutablePlanBuilder planBuilder = planBuilderFactory.createBuilder();
+		PlanBuilder planBuilder = planBuilderFactory.createBuilder();
 		
 		for (Task task : sortedTasks) {
 			Action action;

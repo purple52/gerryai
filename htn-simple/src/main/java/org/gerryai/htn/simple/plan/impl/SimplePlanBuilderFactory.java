@@ -17,19 +17,19 @@
  */
 package org.gerryai.htn.simple.plan.impl;
 
-import org.gerryai.htn.simple.plan.ImmutablePlanBuilder;
-import org.gerryai.htn.simple.plan.ImmutablePlanBuilderFactory;
+import org.gerryai.htn.simple.plan.PlanBuilder;
+import org.gerryai.htn.simple.plan.PlanBuilderFactory;
 
 /**
  * Factory for creating simple plans.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimplePlanBuilderFactory implements ImmutablePlanBuilderFactory {
+public class SimplePlanBuilderFactory implements PlanBuilderFactory {
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutablePlanBuilder createBuilder() {
+	public final PlanBuilder createBuilder() {
 		return new SimplePlan.Builder();
 	}
 

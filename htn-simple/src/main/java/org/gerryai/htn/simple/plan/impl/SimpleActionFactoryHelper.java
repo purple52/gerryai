@@ -25,7 +25,7 @@ import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
-import org.gerryai.htn.simple.plan.ImmutableActionFactoryHelper;
+import org.gerryai.htn.simple.plan.ActionFactoryHelper;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
@@ -35,7 +35,7 @@ import org.gerryai.logic.Variable;
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public class SimpleActionFactoryHelper implements ImmutableActionFactoryHelper {
+public class SimpleActionFactoryHelper implements ActionFactoryHelper {
 
 	/**
 	 * Service for the domain that we are working in.

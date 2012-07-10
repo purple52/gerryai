@@ -24,14 +24,14 @@ import org.gerryai.htn.plan.Plan;
  * Builder interface for immutable plans.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutablePlanBuilder {
+public interface PlanBuilder {
 
     /**
      * Add an action to the plan being built.
      * @param action the action to add
      * @return updated builder
      */
-    ImmutablePlanBuilder addAction(Action action);
+    PlanBuilder addAction(Action action);
     
     /**
      * Build the finished plan.

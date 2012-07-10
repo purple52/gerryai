@@ -27,61 +27,58 @@ import org.gerryai.logic.Variable;
 
 /**
  * Interface for a class that can build operators.
- * @param <B> class of builder being advertised
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface OperatorBuilder<
-        B extends OperatorBuilder<B>> {
+public interface OperatorBuilder {
 
 	/**
 	 * Set the name of the operator.
 	 * @param name the name
 	 * @return the updated builder
 	 */
-	B setName(String name);
+	OperatorBuilder setName(String name);
 	
 	/**
 	 * Add an argument to the operator.
 	 * @param argument the variable to add
 	 * @return the updated builder
 	 */
-	B addArgument(Variable argument);
+	OperatorBuilder addArgument(Variable argument);
 
 	/**
 	 * Add a list of arguments to the operator.
 	 * @param arguments the variables to add
 	 * @return the updated builder
 	 */
-	B addArguments(List<Variable> arguments);
+	OperatorBuilder addArguments(List<Variable> arguments);
 
 	/**
 	 * Add an argument to the operator.
 	 * @param condition the condition to add
 	 * @return the updated builder
 	 */
-	B addPrecondition(Condition condition);
+	OperatorBuilder addPrecondition(Condition condition);
 	
 	/**
 	 * Add a set of preconditions to the operator.
 	 * @param conditions the conditions to add
 	 * @return the updated builder
 	 */
-	B addPreconditions(Set<Condition> conditions);
+	OperatorBuilder addPreconditions(Set<Condition> conditions);
 
 	/**
 	 * Add an effect to the operator.
 	 * @param effect the effect to add
 	 * @return the updated builder
 	 */
-	B addEffect(Effect effect);
+	OperatorBuilder addEffect(Effect effect);
 	
 	/**
 	 * Add a set of effects to the operator.
 	 * @param effects the effects to add
 	 * @return the updated builder
 	 */
-	B addEffects(Set<Effect> effects);
+	OperatorBuilder addEffects(Set<Effect> effects);
     
 	/**
 	 * Build the operator.

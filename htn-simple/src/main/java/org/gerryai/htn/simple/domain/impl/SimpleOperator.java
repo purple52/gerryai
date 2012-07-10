@@ -26,7 +26,7 @@ import java.util.Set;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Effect;
 import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.simple.domain.ImmutableOperatorBuilder;
+import org.gerryai.htn.simple.domain.OperatorBuilder;
 import org.gerryai.logic.Variable;
 
 /**
@@ -97,7 +97,7 @@ public class SimpleOperator implements Operator {
 	/**
 	 * Builder class for a SimpleOperator.
 	 */
-	public static class Builder implements ImmutableOperatorBuilder {
+	public static class Builder implements OperatorBuilder {
 
 	    /**
 	     * Name of the operator.
@@ -131,7 +131,7 @@ public class SimpleOperator implements Operator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder setName(String name) {
+	    public final OperatorBuilder setName(String name) {
 	        this.name = name;
 	        return this;
 	    }
@@ -139,7 +139,7 @@ public class SimpleOperator implements Operator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder addArgument(Variable argument) {
+	    public final OperatorBuilder addArgument(Variable argument) {
 	        arguments.add(argument);
 	        return this;
 	    }
@@ -147,7 +147,7 @@ public class SimpleOperator implements Operator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder addArguments(List<Variable> argument) {
+	    public final OperatorBuilder addArguments(List<Variable> argument) {
 	        arguments.addAll(argument);
 	        return this;
 	    }
@@ -155,7 +155,7 @@ public class SimpleOperator implements Operator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder addPrecondition(Condition condition) {
+	    public final OperatorBuilder addPrecondition(Condition condition) {
 	        preconditions.add(condition);
 	        return this;
 	    }
@@ -163,7 +163,7 @@ public class SimpleOperator implements Operator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder addPreconditions(Set<Condition> conditions) {
+	    public final OperatorBuilder addPreconditions(Set<Condition> conditions) {
 	        preconditions.addAll(conditions);
 	        return this;
 	    }
@@ -171,7 +171,7 @@ public class SimpleOperator implements Operator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder addEffect(Effect effect) {
+	    public final OperatorBuilder addEffect(Effect effect) {
 	        effects.add(effect);
 	        return this;
 	    }
@@ -179,7 +179,7 @@ public class SimpleOperator implements Operator {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final ImmutableOperatorBuilder addEffects(Set<Effect> effects) {
+	    public final OperatorBuilder addEffects(Set<Effect> effects) {
 	        this.effects.addAll(effects);
 	        return this;
 	    }

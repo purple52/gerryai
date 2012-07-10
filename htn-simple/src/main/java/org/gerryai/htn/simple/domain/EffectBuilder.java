@@ -19,40 +19,41 @@ package org.gerryai.htn.simple.domain;
 
 import java.util.Map;
 
-import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Effect;
 import org.gerryai.logic.Sentence;
 import org.gerryai.logic.Term;
 
 /**
- * Interface for a builder for immutable conditions.
+ * Interface for a builder for immutable effects.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableConditionBuilder {
+public interface EffectBuilder {
 
     /**
-     * Set the logical sentence for the condition being built.
+     * Set the logical sentence for the effect being built.
      * @param sentence the sentence
      * @return an updated builder
      */
-    ImmutableConditionBuilder setSentence(Sentence sentence);
-        
+    EffectBuilder setSentence(Sentence sentence);
+
     /**
-     * Copy from the provided condition, overwriting any values already set.
-     * @param condition the condition to copy
+     * Copy from the provided effect, overwriting any values already set.
+     * @param effect the effect to copy
      * @return the updated builder
      */
-    ImmutableConditionBuilder copy(Condition condition);
+    EffectBuilder copy(Effect effect);
     
     /**
      * Apply the provided substituter to the arguments provided so far.
      * @param substitution the substitution to apply
      * @return the updated builder
      */
-    ImmutableConditionBuilder apply(Map<Term, Term> substitution);
+    EffectBuilder apply(Map<Term, Term> substitution);
+    
     
     /**
-     * Build the finished condition.
+     * Build the finished effect.
      * @return an updated builder
      */
-    Condition build();
+    Effect build();
 }
