@@ -17,25 +17,25 @@
  */
 package org.gerryai.htn.simple.constraint.impl;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.gerryai.htn.constraint.AfterConstraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
-import org.gerryai.htn.simple.constraint.ImmutableValidatableAfterConstraint;
-import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Multimap;
 
 /**
+ * Simple implementation of an after constraint.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class SimpleAfterConstraint implements ImmutableValidatableAfterConstraint {
+public class SimpleAfterConstraint implements AfterConstraint {
 
 	/**
 	 * The set of tasks that this constraint must hold for.
@@ -52,47 +52,34 @@ public class SimpleAfterConstraint implements ImmutableValidatableAfterConstrain
      * @param builder the builder to build from
      */
     protected SimpleAfterConstraint(Builder builder) {
-        tasks = builder.getTasks();
-        condition = builder.getCondition();
+        tasks = builder.tasks;
+        condition = builder.condition;
     }
     
-	/**
-	 * Get the set of tasks that this constraint must hold for.
-	 * @return the tasks
-	 */
+	@Override
 	public final Set<Task> getTasks() {
-		return tasks;
+		return Collections.unmodifiableSet(tasks);
 	}
 
-	/**
-	 * Get the condition that must be true directly after the last of these tasks.
-	 * @return the condition
-	 */
+	@Override
 	public final Condition getCondition() {
 		return condition;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final boolean validate(ConstraintValidator validator) {
-		return validator.validate(this);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void add(ConstraintValidator validator)
-			throws InvalidConstraint {
-		validator.add(this);
-	}
-
-    /**
-     * {@inheritDoc}
-     */
-    public final ImmutableConstraintBuilder<ImmutableValidatableAfterConstraint> createCopyBuilder() {
+    @Override
+    public final AfterConstraint apply(Map<Term, Term> substitution) {
         return new Builder()
-            .copy(this);
+            .copy(this)
+            .apply(substitution)
+            .build();
+    }
+    
+    @Override
+    public final AfterConstraint replace(Multimap<Task, Task> taskMap) {
+        return new Builder()
+        .copy(this)
+        .replace(taskMap)
+        .build();    	
     }
     
 	@Override
@@ -115,7 +102,7 @@ public class SimpleAfterConstraint implements ImmutableValidatableAfterConstrain
 	 * Builder class for SimpleAfterConstraint.
 	 * @author David Edwards <david@more.fool.me.uk>
 	 */
-	public static class Builder implements ImmutableConstraintBuilder<ImmutableValidatableAfterConstraint> {
+	public static class Builder implements ImmutableConstraintBuilder<AfterConstraint> {
 	    
 	    /**
 	     * The set of tasks that this constraint must hold for.
@@ -152,64 +139,39 @@ public class SimpleAfterConstraint implements ImmutableValidatableAfterConstrain
             return this;
         }
         
-        /**
-         * {@inheritDoc}
-         */
-        public final Builder copy(ImmutableValidatableAfterConstraint constraint) {
-            this.tasks = new HashSet<Task>(constraint.getTasks());
-            this.condition = constraint.getCondition();
+        @Override
+        public final Builder copy(AfterConstraint constraint) {
+            tasks = new HashSet<Task>(constraint.getTasks());
+            condition = constraint.getCondition();
             return this;
         }
 
-        /**
-         * {@inheritDoc}
-         */
-        public final Builder replace(Task oldTask, Set<Task> newTasks) {
-            if (this.tasks.contains(oldTask)) {
-                this.tasks.remove(oldTask);
-                this.tasks.addAll(newTasks);
-            }
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public final Builder replace(Task oldTask, Task newTask) {
-            if (this.tasks.contains(oldTask)) {
-                this.tasks.remove(oldTask);
-                this.tasks.add(newTask);
-            }
-            return this;
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
+        @Override
         public final Builder apply(Map<Term, Term> substitution) {
-            Condition newCondition = this.condition.applyToCopy(substitution);
-            this.condition = newCondition;
+        	condition = condition.applyToCopy(substitution);
+        	for (Task oldTask : tasks) {
+        		Task newTask = oldTask.applyToCopy(substitution);
+        		if (!oldTask.equals(newTask)) {
+        			tasks.remove(oldTask);
+        			tasks.add(newTask);
+        		}
+        	}
             return this;
-        }        
+        }      
         
-        /**
-         * @return the tasks
-         */
-        protected final Set<Task> getTasks() {
-            return tasks;
+        @Override
+        public final Builder replace(Multimap<Task, Task> taskMap) {
+        	for (Task task : taskMap.keySet()) {
+	            if (tasks.contains(task)) {
+	                tasks.remove(task);
+	                tasks.addAll(taskMap.get(task));
+	            }
+        	}
+            return this;
         }
         
-        /**
-         * @return the condition
-         */
-        protected final Condition getCondition() {
-            return condition;
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-	    public final ImmutableValidatableAfterConstraint build() {
+        @Override
+	    public final AfterConstraint build() {
 	        return new SimpleAfterConstraint(this);
 	    }
 	}	

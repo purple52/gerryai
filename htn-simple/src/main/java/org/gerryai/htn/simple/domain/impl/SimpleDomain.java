@@ -21,17 +21,17 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
-import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilder;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
 
 /**
  * Simple representation of a domain.
  * Wraps a set of operators and a set of methods to define the domain.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleDomain implements ImmutableDomain {
+public class SimpleDomain implements Domain {
 
 	/**
 	 * Operators available in this domain.
@@ -41,7 +41,7 @@ public class SimpleDomain implements ImmutableDomain {
 	/**
 	 * Methods available in this domain.
 	 */
-	private Set<ImmutableMethod> methods;
+	private Set<Method> methods;
 	
 	/**
 	 * Constructor for a simple domain.
@@ -62,7 +62,7 @@ public class SimpleDomain implements ImmutableDomain {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<ImmutableMethod> getMethods() {
+	public final Set<Method> getMethods() {
 		return Collections.unmodifiableSet(methods);
 	}
 
@@ -80,14 +80,14 @@ public class SimpleDomain implements ImmutableDomain {
 	    /**
 	     * Set of methods that the domain uses.
 	     */
-	    private Set<ImmutableMethod> methods;
+	    private Set<Method> methods;
 	    
 	    /**
 	     * Default constructor.
 	     */
 	    public Builder() {
 	        operators = new HashSet<Operator>();
-	        methods = new HashSet<ImmutableMethod>();
+	        methods = new HashSet<Method>();
 	    }
 
 	    /**
@@ -101,7 +101,7 @@ public class SimpleDomain implements ImmutableDomain {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final Builder addMethod(ImmutableMethod method) {
+	    public final Builder addMethod(Method method) {
 	        methods.add(method);
 	        return this;
 	    }
@@ -109,7 +109,7 @@ public class SimpleDomain implements ImmutableDomain {
 	    /**
 	     * {@inheritDoc}
 	     */
-	    public final SimpleDomain build() {
+	    public final Domain build() {
 	        return new SimpleDomain(this);
 	    }
 
@@ -121,9 +121,9 @@ public class SimpleDomain implements ImmutableDomain {
 	    }
 
 	    /**
-	     * @return the effects
+	     * @return the methods
 	     */
-	    public final Set<ImmutableMethod> getMethods() {
+	    public final Set<Method> getMethods() {
 	        return methods;
 	    }
 

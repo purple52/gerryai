@@ -20,7 +20,6 @@ package org.gerryai.htn.simple.domain;
 import java.util.Map;
 import java.util.Set;
 
-import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Effect;
@@ -28,29 +27,20 @@ import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.domain.OperatorNotFound;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Variable;
 
 /**
  * Interface for a service that manages a domain.
- * @param <D> type of domain this helper uses
- * @param <M> type of method this domain helpers uses
- * @param <N> type of task network this domain helper uses
- * @param <C> type of constraint this domain helper uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface DomainHelper<
-        D extends Domain<M, N, C>,
-		M extends Method<N, C>,
-		N extends TaskNetwork<C>,
-		C extends Constraint> {
+public interface DomainHelper {
 	
 	/**
 	 * Get the domain that this service is managing.
 	 * @return the domain
 	 */
-	D getDomain();
+	Domain getDomain();
 	
 	/**
 	 * Get an operator by name.
@@ -65,7 +55,7 @@ public interface DomainHelper<
 	 * @param task the task being matched
 	 * @return a set of matching methods
 	 */
-	Set<M> getMethodsByTask(Task task);
+	Set<Method> getMethodsByTask(Task task);
 	
 	/**
 	 * Get a grounded version of the supplied effect by applying the given bindings.

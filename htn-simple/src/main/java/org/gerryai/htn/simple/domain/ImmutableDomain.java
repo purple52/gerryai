@@ -18,16 +18,11 @@
 package org.gerryai.htn.simple.domain;
 
 import org.gerryai.htn.domain.Domain;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  * Interface for a domain that uses immutable classes.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableDomain extends Domain<
-        ImmutableMethod,
-        ImmutableTaskNetwork,
-        ImmutableConstraint<?>> {
+public interface ImmutableDomain extends Domain {
 
 }

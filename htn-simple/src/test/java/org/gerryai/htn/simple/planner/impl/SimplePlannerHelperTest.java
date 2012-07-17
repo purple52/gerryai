@@ -32,13 +32,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.gerryai.htn.constraint.PrecedenceConstraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.plan.TaskNotActionable;
 import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.UnificationService;
 import org.gerryai.htn.simple.decomposition.UnifierNotFound;
@@ -52,7 +52,7 @@ import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.problem.ImmutableStateService;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
@@ -81,19 +81,17 @@ public class SimplePlannerHelperTest {
     /**
      * Mock decomposition service.
      */
-    private DecompositionService<ImmutableMethod, ImmutableTaskNetwork,
-            ImmutableConstraint<?>> mockDecompositionService;
+    private DecompositionService mockDecompositionService;
     
     /**
      * Mock unification service.
      */
-    private UnificationService<ImmutableMethod, ImmutableTaskNetwork,
-            ImmutableConstraint<?>> mockUnificationService;
+    private UnificationService mockUnificationService;
     
     /**
      * Mock sort service.
      */
-    private SortService<ImmutableConstraint<?>> mockSortService;
+    private SortService mockSortService;
     
     /**
      * Mock state service.
@@ -123,7 +121,6 @@ public class SimplePlannerHelperTest {
     /**
      * Set up factories.
      */
-    @SuppressWarnings("unchecked")
     @Before
     public final void setup() {
         mockPlanBuilderFactory = mock(PlanBuilderFactory.class);
@@ -430,9 +427,9 @@ public class SimplePlannerHelperTest {
             when(mockActionFactory.create(mockTask)).thenReturn(mockAction);
 	    }
 	    
-        Set<ImmutableConstraint<?>> mockConstraints = new HashSet<ImmutableConstraint<?>>();
+        Set<PrecedenceConstraint> mockConstraints = new HashSet<PrecedenceConstraint>();
         when(mockTaskNetwork.getTasks()).thenReturn(tasks);
-        when(mockTaskNetwork.getConstraints()).thenReturn(mockConstraints);
+        when(mockTaskNetwork.getPrecedenceConstraints()).thenReturn(mockConstraints);
         when(mockSortService.sortByConstaints(tasks, mockConstraints)).thenReturn(sortedTasks);
         
         return mockTaskNetwork;

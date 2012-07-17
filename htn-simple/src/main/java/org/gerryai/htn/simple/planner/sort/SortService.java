@@ -20,17 +20,15 @@ package org.gerryai.htn.simple.planner.sort;
 import java.util.List;
 import java.util.Set;
 
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.constraint.PrecedenceConstraint;
 import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 
 /**
- * Interface for a service that can sort tasks based on a set of constraints.
- * @param <C> type of constraint this service works with
+ * Interface for a service that can sort tasks based on a set of precedence constraints.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface SortService<C extends Constraint> {
+public interface SortService {
     
     /**
      * Given a set of task and a set of constraints, return a sorted list of tasks.
@@ -40,6 +38,6 @@ public interface SortService<C extends Constraint> {
      * @throws PlanNotFound if the constraints cannot be satisfied
      */
     List<Task> sortByConstaints(Set<Task> tasks,
-            Set<ImmutableConstraint<?>> constraints) throws PlanNotFound;
+            Set<PrecedenceConstraint> constraints) throws PlanNotFound;
 
 }

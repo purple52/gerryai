@@ -21,40 +21,61 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
+import org.gerryai.htn.constraint.AfterConstraint;
+import org.gerryai.htn.constraint.BeforeConstraint;
+import org.gerryai.htn.constraint.BetweenConstraint;
+import org.gerryai.htn.constraint.PrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
+import org.gerryai.htn.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
 import org.junit.Test;
 
 /**
+ * Unit tests for SimpleTaskNetwork.
  * @author David Edwards <david@more.fool.me.uk>
- * 
  */
 public class SimpleTaskNetworkTest {
 
+	/**
+	 * Test that an empty network contains empty lists.
+	 */
+	@Test
+	public final void testEmptyTaskNetwork() {
+		ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+		ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
+		TaskNetwork taskNetwork = new SimpleTaskNetwork.Builder(mockValidatorFactory)
+				.build();
+		
+		assertTrue(taskNetwork.getTasks().isEmpty());
+		assertTrue(taskNetwork.getAfterConstraints().isEmpty());
+		assertTrue(taskNetwork.getBeforeConstraints().isEmpty());
+		assertTrue(taskNetwork.getBetweenConstraints().isEmpty());
+		assertTrue(taskNetwork.getPrecedenceConstraints().isEmpty());
+	}
+	
     /**
      * Test that a task network with no tasks is considered primitive.
      */
     @Test
     public final void testIsPrimitiveNoTasks() {
-
-        Set<Task> tasks = new HashSet<Task>();
-
-        ImmutableTaskNetworkBuilder mockBuilder = mock(ImmutableTaskNetworkBuilder.class);
-        when(mockBuilder.getTasks()).thenReturn(tasks);
-        
-        SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+		ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
+        TaskNetwork taskNetwork = new SimpleTaskNetwork.Builder(mockValidatorFactory)
+        		.build();
 
         assertTrue(taskNetwork.isPrimitive());
     }
@@ -64,16 +85,18 @@ public class SimpleTaskNetworkTest {
      */
     @Test
     public final void testIsPrimitiveOnePrimitiveTask() {
-        
-        Set<Task> tasks = new HashSet<Task>();
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+		ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
+        Set<Task> mockTasks = new HashSet<Task>();
         Task mockPrimitiveTask = mock(Task.class);
         when(mockPrimitiveTask.isPrimitive()).thenReturn(true);
-        tasks.add(mockPrimitiveTask);
-
-        ImmutableTaskNetworkBuilder mockBuilder = mock(ImmutableTaskNetworkBuilder.class);
-        when(mockBuilder.getTasks()).thenReturn(tasks);
+        mockTasks.add(mockPrimitiveTask);
+        when(mockConstraintValidator.getTasks()).thenReturn(mockTasks);
         
-        SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
+        TaskNetwork taskNetwork = new SimpleTaskNetwork.Builder(mockValidatorFactory)
+        		.build();
 
         assertTrue(taskNetwork.isPrimitive());
     }
@@ -83,16 +106,18 @@ public class SimpleTaskNetworkTest {
      */
     @Test
     public final void testIsPrimitiveOneNonPrimitiveTask() {
-        
-        Set<Task> tasks = new HashSet<Task>();
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+		ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
+        Set<Task> mockTasks = new HashSet<Task>();
         Task mockNonPrimitiveTask = mock(Task.class);
         when(mockNonPrimitiveTask.isPrimitive()).thenReturn(false);
-        tasks.add(mockNonPrimitiveTask);
-
-        ImmutableTaskNetworkBuilder mockBuilder = mock(ImmutableTaskNetworkBuilder.class);
-        when(mockBuilder.getTasks()).thenReturn(tasks);
-
-        SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
+        mockTasks.add(mockNonPrimitiveTask);
+        when(mockConstraintValidator.getTasks()).thenReturn(mockTasks);
+        
+        TaskNetwork taskNetwork = new SimpleTaskNetwork.Builder(mockValidatorFactory)
+        		.build();
         
         assertFalse(taskNetwork.isPrimitive());
     }
@@ -102,83 +127,97 @@ public class SimpleTaskNetworkTest {
      */
     @Test
     public final void testIsPrimitiveManyTasksAllPrimitive() {
-
-        Set<Task> tasks = new HashSet<Task>();
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+		ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
+        Set<Task> mockTasks = new HashSet<Task>();
         Task mockPrimitiveTaskOne = mock(Task.class);
         when(mockPrimitiveTaskOne.isPrimitive()).thenReturn(true);
         Task mockPrimitiveTaskTwo = mock(Task.class);
         when(mockPrimitiveTaskTwo.isPrimitive()).thenReturn(true);
         Task mockPrimitiveTaskThree = mock(Task.class);
         when(mockPrimitiveTaskThree.isPrimitive()).thenReturn(true);
-        tasks.add(mockPrimitiveTaskOne);
-        tasks.add(mockPrimitiveTaskTwo);
-        tasks.add(mockPrimitiveTaskThree);
-
-        ImmutableTaskNetworkBuilder mockBuilder = mock(ImmutableTaskNetworkBuilder.class);
-        when(mockBuilder.getTasks()).thenReturn(tasks);
+        mockTasks.add(mockPrimitiveTaskOne);
+        mockTasks.add(mockPrimitiveTaskTwo);
+        mockTasks.add(mockPrimitiveTaskThree);
+        when(mockConstraintValidator.getTasks()).thenReturn(mockTasks);
         
-        SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
+        TaskNetwork taskNetwork = new SimpleTaskNetwork.Builder(mockValidatorFactory)
+        		.build();
 
         assertTrue(taskNetwork.isPrimitive());
     }
 
     /**
-     * Test that a task network with many primitive taska and one non-primitive task is considered non-primitive.
+     * Test that a task network with many primitive tasks and one non-primitive task is considered non-primitive.
      */
     @Test
     public final void testIsPrimitiveManyTasksOneNonPrimitive() {
-
-        Set<Task> tasks = new HashSet<Task>();
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+    	ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
+        Set<Task> mockTasks = new HashSet<Task>();
         Task mockPrimitiveTaskOne = mock(Task.class);
         when(mockPrimitiveTaskOne.isPrimitive()).thenReturn(true);
         Task mockPrimitiveTaskTwo = mock(Task.class);
         when(mockPrimitiveTaskTwo.isPrimitive()).thenReturn(false);
         Task mockPrimitiveTaskThree = mock(Task.class);
         when(mockPrimitiveTaskThree.isPrimitive()).thenReturn(true);
-        tasks.add(mockPrimitiveTaskOne);
-        tasks.add(mockPrimitiveTaskTwo);
-        tasks.add(mockPrimitiveTaskThree);
+        mockTasks.add(mockPrimitiveTaskOne);
+        mockTasks.add(mockPrimitiveTaskTwo);
+        mockTasks.add(mockPrimitiveTaskThree);
+        when(mockConstraintValidator.getTasks()).thenReturn(mockTasks);
 
-        ImmutableTaskNetworkBuilder mockBuilder = mock(ImmutableTaskNetworkBuilder.class);
-        when(mockBuilder.getTasks()).thenReturn(tasks);
-
-        SimpleTaskNetwork taskNetwork = new SimpleTaskNetwork(mockBuilder);
+        TaskNetwork taskNetwork = new SimpleTaskNetwork.Builder(mockValidatorFactory)
+        		.build();
         
         assertFalse(taskNetwork.isPrimitive());
     }
 
     /**
-     * Test builder construction.
+     * Test that builder returns tasks from validator.
      */
     @Test
-    public final void testSimpleTaskNetworkBuilder() {
-        // Create the builder under test
-        ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
-        ImmutableTaskNetworkBuilder builder = new SimpleTaskNetwork.Builder(mockConstraintValidator);
+    public final void testGetTasks() {
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+    	ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
+        Task mockTaskA = mock(Task.class);
+        Task mockTaskB = mock(Task.class);
+        Set<Task> mockTasks = new HashSet<Task>();
+        mockTasks.add(mockTaskA);
+        mockTasks.add(mockTaskB);
+        when(mockConstraintValidator.getTasks()).thenReturn(mockTasks);
         
-        // Check that the argument and constraint lists have been initialised
-        assertTrue(builder.getTasks().isEmpty());
-        assertTrue(builder.getConstraints().isEmpty());
+        // Create the builder under test
+        TaskNetwork taskNetwork = new SimpleTaskNetwork.Builder(mockValidatorFactory)
+        		.build();
+        
+        assertEquals(mockTasks, taskNetwork.getTasks());
     }
-
+    
     /**
      * Test adding single tasks.
      */
     @Test
     public final void testAddTask() {
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+    	ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
         Task mockTaskA = mock(Task.class);
         Task mockTaskB = mock(Task.class);
         
-        // Create the builder under test
-        ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
-        ImmutableTaskNetworkBuilder builder = new SimpleTaskNetwork.Builder(mockConstraintValidator)
+        new SimpleTaskNetwork.Builder(mockValidatorFactory)
                 .addTask(mockTaskA)
-                .addTask(mockTaskB);
+                .addTask(mockTaskB)
+                .build();
         
-        // Check that the task set contains only the tasks we have just added
-        assertEquals(2, builder.getTasks().size());
-        assertTrue(builder.getTasks().contains(mockTaskA));
-        assertTrue(builder.getTasks().contains(mockTaskB));
+        verify(mockConstraintValidator).add(mockTaskA);
+        verify(mockConstraintValidator).add(mockTaskB);
     }
 
     /**
@@ -186,6 +225,10 @@ public class SimpleTaskNetworkTest {
      */
     @Test
     public final void testAddTasks() {
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+    	ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
         Task mockTaskA = mock(Task.class);
         Task mockTaskB = mock(Task.class);
         Set<Task> mockTasksOne = new HashSet<Task>();
@@ -198,108 +241,103 @@ public class SimpleTaskNetworkTest {
         mockTasksTwo.add(mockTaskC);
         mockTasksTwo.add(mockTaskD);
         
-        // Create the builder under test
-        ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
-        ImmutableTaskNetworkBuilder builder = new SimpleTaskNetwork.Builder(mockConstraintValidator)
+        new SimpleTaskNetwork.Builder(mockValidatorFactory)
                 .addTasks(mockTasksOne)
-                .addTasks(mockTasksTwo);
-        
-        Set<Task> expectedTasks = new HashSet<Task>();
-        expectedTasks.add(mockTaskA);
-        expectedTasks.add(mockTaskB);
-        expectedTasks.add(mockTaskC);
-        expectedTasks.add(mockTaskD);
-        
-        // Check that the arguments have been added in the correct order
-        assertEquals(expectedTasks, builder.getTasks());
-    }
-
-    /**
-     * Test adding single constraints.
-     * @throws InvalidConstraint only if the test fails
-     */
-    @Test
-    public final void testAddConstraint() throws InvalidConstraint {
-        ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
-        
-        ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
-        when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
-        ImmutableConstraint<?> mockConstraintB = mock(ImmutableConstraint.class);
-        when(mockConstraintB.validate(mockConstraintValidator)).thenReturn(true);
-        
-        // Create the builder under test
-        ImmutableTaskNetworkBuilder builder = new SimpleTaskNetwork.Builder(mockConstraintValidator)
-                .addConstraint(mockConstraintA)
-                .addConstraint(mockConstraintB);
-        
-        // Check that the task set contains only the tasks we have just added
-        assertEquals(2, builder.getConstraints().size());
-        assertTrue(builder.getConstraints().contains(mockConstraintA));
-        assertTrue(builder.getConstraints().contains(mockConstraintB));
-    }
-
-    /**
-     * Test adding sets of constraints.
-     * @throws InvalidConstraint only if test fails
-     */
-    @Test
-    public final void testAddConstraints() throws InvalidConstraint {
-        ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
-        
-        ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
-        when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
-        ImmutableConstraint<?> mockConstraintB = mock(ImmutableConstraint.class);
-        when(mockConstraintB.validate(mockConstraintValidator)).thenReturn(true);
-        
-        Set<ImmutableConstraint<?>> mockConstraintsOne = new HashSet<ImmutableConstraint<?>>();
-        mockConstraintsOne.add(mockConstraintA);
-        mockConstraintsOne.add(mockConstraintB);
-
-        ImmutableConstraint<?> mockConstraintC = mock(ImmutableConstraint.class);
-        when(mockConstraintC.validate(mockConstraintValidator)).thenReturn(true);
-        ImmutableConstraint<?> mockConstraintD = mock(ImmutableConstraint.class);
-        when(mockConstraintD.validate(mockConstraintValidator)).thenReturn(true);
-    
-        Set<ImmutableConstraint<?>> mockConstraintsTwo = new HashSet<ImmutableConstraint<?>>();
-        mockConstraintsTwo.add(mockConstraintC);
-        mockConstraintsTwo.add(mockConstraintD);
-        
-        // Create the builder under test
-        ImmutableTaskNetworkBuilder builder = new SimpleTaskNetwork.Builder(mockConstraintValidator)
-                .addConstraints(mockConstraintsOne)
-                .addConstraints(mockConstraintsTwo);
-        
-        Set<ImmutableConstraint<?>> expectedConstraints = new HashSet<ImmutableConstraint<?>>();
-        expectedConstraints.add(mockConstraintA);
-        expectedConstraints.add(mockConstraintB);        
-        expectedConstraints.add(mockConstraintC);
-        expectedConstraints.add(mockConstraintD);
-                
-        // Check that the arguments have been added in the correct order
-        assertEquals(expectedConstraints, builder.getConstraints());
-    }
-    
-    /**
-     * Test build.
-     * @throws InvalidConstraint only if the test fails
-     */
-    @Test
-    public final void testBuild() throws InvalidConstraint {
-        
-        Task mockTaskA = mock(Task.class);
-        ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
-        ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
-        when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
-        
-        ImmutableTaskNetwork taskNetwork = new SimpleTaskNetwork.Builder(mockConstraintValidator)
-                .addTask(mockTaskA)
-                .addConstraint(mockConstraintA)
+                .addTasks(mockTasksTwo)
                 .build();
         
-        assertEquals(1, taskNetwork.getTasks().size());
-        assertTrue(taskNetwork.getTasks().contains(mockTaskA));
-        assertEquals(1, taskNetwork.getConstraints().size());
-        assertTrue(taskNetwork.getConstraints().contains(mockConstraintA));
+        verify(mockConstraintValidator).add(mockTaskA);
+        verify(mockConstraintValidator).add(mockTaskB);
+        verify(mockConstraintValidator).add(mockTaskC);
+        verify(mockConstraintValidator).add(mockTaskD);
+    }
+
+    /**
+     * Test adding single after constraints.
+     * @throws InvalidConstraint only if the test fails
+     */
+    @Test
+    public final void testAddAfterConstraints() throws InvalidConstraint {
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+    	ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
+        AfterConstraint mockConstraintA = mock(AfterConstraint.class);
+        AfterConstraint mockConstraintB = mock(AfterConstraint.class);
+        
+        new SimpleTaskNetwork.Builder(mockValidatorFactory)
+                .addAfterConstraint(mockConstraintA)
+                .addAfterConstraint(mockConstraintB)
+                .build();
+        
+        verify(mockConstraintValidator).add(mockConstraintA);
+        verify(mockConstraintValidator).add(mockConstraintB);
+    }
+
+    /**
+     * Test adding single before constraints.
+     * @throws InvalidConstraint only if the test fails
+     */
+    @Test
+    public final void testAddBeforeConstraints() throws InvalidConstraint {
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+    	ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
+        BeforeConstraint mockConstraintA = mock(BeforeConstraint.class);
+        BeforeConstraint mockConstraintB = mock(BeforeConstraint.class);
+        
+        new SimpleTaskNetwork.Builder(mockValidatorFactory)
+                .addBeforeConstraint(mockConstraintA)
+                .addBeforeConstraint(mockConstraintB)
+                .build();
+        
+        verify(mockConstraintValidator).add(mockConstraintA);
+        verify(mockConstraintValidator).add(mockConstraintB);
+    }
+ 
+    /**
+     * Test adding single between constraints.
+     * @throws InvalidConstraint only if the test fails
+     */
+    @Test
+    public final void testAddBetweenConstraint() throws InvalidConstraint {
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+    	ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
+        BetweenConstraint mockConstraintA = mock(BetweenConstraint.class);
+        BetweenConstraint mockConstraintB = mock(BetweenConstraint.class);
+        
+        new SimpleTaskNetwork.Builder(mockValidatorFactory)
+                .addBetweenConstraint(mockConstraintA)
+                .addBetweenConstraint(mockConstraintB)
+                .build();
+        
+        verify(mockConstraintValidator).add(mockConstraintA);
+        verify(mockConstraintValidator).add(mockConstraintB);
+    }
+
+    /**
+     * Test adding single precedence constraints.
+     * @throws InvalidConstraint only if the test fails
+     */
+    @Test
+    public final void testAddPrecedenceConstraint() throws InvalidConstraint {
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+    	ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
+        PrecedenceConstraint mockConstraintA = mock(PrecedenceConstraint.class);
+        PrecedenceConstraint mockConstraintB = mock(PrecedenceConstraint.class);
+        
+        new SimpleTaskNetwork.Builder(mockValidatorFactory)
+                .addPrecedenceConstraint(mockConstraintA)
+                .addPrecedenceConstraint(mockConstraintB)
+                .build();
+        
+        verify(mockConstraintValidator).add(mockConstraintA);
+        verify(mockConstraintValidator).add(mockConstraintB);
     }
     
     /**
@@ -308,109 +346,240 @@ public class SimpleTaskNetworkTest {
      */
     @Test
     public final void testCopy() throws InvalidConstraint {
-        
-        ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
-        Task mockTaskA = mock(Task.class);
-        ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
-        Set<Task> mockTasks = new HashSet<Task>();
-        mockTasks.add(mockTaskA);
-        Set<ImmutableConstraint<?>> mockConstraints = new HashSet<ImmutableConstraint<?>>();
-        mockConstraints.add(mockConstraintA);
-        when(mockTaskNetwork.getTasks()).thenReturn(mockTasks);
-        when(mockTaskNetwork.getConstraints()).thenReturn(mockConstraints);
-        
-        ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
-        
-        ImmutableTaskNetwork taskNetwork = new SimpleTaskNetwork.Builder(mockConstraintValidator)
-                .copy(mockTaskNetwork)
-                .build();
-        
-        assertEquals(1, taskNetwork.getTasks().size());
-        assertTrue(taskNetwork.getTasks().contains(mockTaskA));
-        assertEquals(1, taskNetwork.getConstraints().size());
-        assertTrue(taskNetwork.getConstraints().contains(mockConstraintA));
-    }
-    
-     /**
-     * Test apply.
-     * @throws InvalidConstraint only if the test fails
-     */
-    @SuppressWarnings("unchecked")
-    @Test
-    public final void testApply() throws InvalidConstraint {
-        
-        Task mockTaskA = mock(Task.class);
-        Task mockTaskB = mock(Task.class);
-        Task mockTaskC = mock(Task.class);
-        Task mockTaskD = mock(Task.class);
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+    	ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		    	
+    	Task mockTaskA = mock(Task.class);
+    	Task mockTaskB = mock(Task.class);
         Set<Task> mockTasks = new HashSet<Task>();
         mockTasks.add(mockTaskA);
         mockTasks.add(mockTaskB);
         
-        ImmutableConstraint<?> mockConstraintA = mock(ImmutableConstraint.class);
-        ImmutableConstraint<?> mockConstraintB = mock(ImmutableConstraint.class);
-        ImmutableConstraint<?> mockConstraintC = mock(ImmutableConstraint.class);
-        ImmutableConstraint<?> mockConstraintD = mock(ImmutableConstraint.class);
-        Set<ImmutableConstraint<?>> mockConstraints = new HashSet<ImmutableConstraint<?>>();
-        mockConstraints.add(mockConstraintA);
-        mockConstraints.add(mockConstraintB);
- 
-        ConstraintValidator mockConstraintValidator
-        		= mock(ConstraintValidator.class);
-        when(mockConstraintA.validate(mockConstraintValidator)).thenReturn(true);
-        when(mockConstraintB.validate(mockConstraintValidator)).thenReturn(true);
+        AfterConstraint mockAfterConstraintA = mock(AfterConstraint.class);
+        AfterConstraint mockAfterConstraintB = mock(AfterConstraint.class);
+        Set<AfterConstraint> mockAfterConstraints = new HashSet<AfterConstraint>();
+        mockAfterConstraints.add(mockAfterConstraintA);
+        mockAfterConstraints.add(mockAfterConstraintB);
         
-        Map<Term, Term> mockSubstitution = mock(Map.class);
- 
-        ImmutableTaskNetwork initialTaskNetwork = new SimpleTaskNetwork.Builder(mockConstraintValidator)
-                .addTasks(mockTasks)
-                .addConstraints(mockConstraints)
+        BeforeConstraint mockBeforeConstraintA = mock(BeforeConstraint.class);
+        BeforeConstraint mockBeforeConstraintB = mock(BeforeConstraint.class);
+        Set<BeforeConstraint> mockBeforeConstraints = new HashSet<BeforeConstraint>();
+        mockBeforeConstraints.add(mockBeforeConstraintA);  
+        mockBeforeConstraints.add(mockBeforeConstraintB);
+        
+        BetweenConstraint mockBetweenConstraintA = mock(BetweenConstraint.class);
+        BetweenConstraint mockBetweenConstraintB = mock(BetweenConstraint.class);
+        Set<BetweenConstraint> mockBetweenConstraints = new HashSet<BetweenConstraint>();
+        mockBetweenConstraints.add(mockBetweenConstraintA);
+        mockBetweenConstraints.add(mockBetweenConstraintB);
+        
+        PrecedenceConstraint mockPrecedenceConstraintA = mock(PrecedenceConstraint.class);
+        PrecedenceConstraint mockPrecedenceConstraintB = mock(PrecedenceConstraint.class);
+        Set<PrecedenceConstraint> mockPrecedenceConstraints = new HashSet<PrecedenceConstraint>();
+        mockPrecedenceConstraints.add(mockPrecedenceConstraintA);  
+        mockPrecedenceConstraints.add(mockPrecedenceConstraintB);
+        
+        TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
+        when(mockTaskNetwork.getTasks()).thenReturn(mockTasks);
+        when(mockTaskNetwork.getAfterConstraints()).thenReturn(mockAfterConstraints);
+        when(mockTaskNetwork.getBeforeConstraints()).thenReturn(mockBeforeConstraints);
+        when(mockTaskNetwork.getBetweenConstraints()).thenReturn(mockBetweenConstraints);
+        when(mockTaskNetwork.getPrecedenceConstraints()).thenReturn(mockPrecedenceConstraints);
+        when(mockConstraintValidator.getTasks()).thenReturn(mockTasks);
+        when(mockConstraintValidator.getAfterConstraints()).thenReturn(mockAfterConstraints);
+        when(mockConstraintValidator.getBeforeConstraints()).thenReturn(mockBeforeConstraints);
+        when(mockConstraintValidator.getBetweenConstraints()).thenReturn(mockBetweenConstraints);
+        when(mockConstraintValidator.getPrecedenceConstraints()).thenReturn(mockPrecedenceConstraints);
+        
+        
+        TaskNetwork taskNetwork = new SimpleTaskNetwork.Builder(mockValidatorFactory, mockTaskNetwork)
                 .build();
         
-        when(mockTaskA.applyToCopy(mockSubstitution)).thenReturn(mockTaskC);
-        when(mockTaskB.applyToCopy(mockSubstitution)).thenReturn(mockTaskD);
-        
-        @SuppressWarnings("rawtypes")
-        ImmutableConstraintBuilder mockConstraintBuilderA = mock(ImmutableConstraintBuilder.class);
-        @SuppressWarnings("rawtypes")
-        ImmutableConstraintBuilder mockConstraintBuilderA1 = mock(ImmutableConstraintBuilder.class);
-        @SuppressWarnings("rawtypes")
-        ImmutableConstraintBuilder mockConstraintBuilderA2 = mock(ImmutableConstraintBuilder.class);
-        @SuppressWarnings("rawtypes")
-        ImmutableConstraintBuilder mockConstraintBuilderA3 = mock(ImmutableConstraintBuilder.class);
-        when(mockConstraintA.createCopyBuilder()).thenReturn(mockConstraintBuilderA);
-        when(mockConstraintBuilderA.apply(mockSubstitution)).thenReturn(mockConstraintBuilderA1);
-        when(mockConstraintBuilderA1.replace(mockTaskA, mockTaskC)).thenReturn(mockConstraintBuilderA2);
-        when(mockConstraintBuilderA2.replace(mockTaskB, mockTaskD)).thenReturn(mockConstraintBuilderA3);
-        when(mockConstraintBuilderA2.replace(mockTaskA, mockTaskC)).thenReturn(mockConstraintBuilderA3);
-        when(mockConstraintBuilderA1.replace(mockTaskB, mockTaskD)).thenReturn(mockConstraintBuilderA2);
-        when(mockConstraintBuilderA3.build()).thenReturn(mockConstraintC);
-        
-        @SuppressWarnings("rawtypes")
-        ImmutableConstraintBuilder mockConstraintBuilderB = mock(ImmutableConstraintBuilder.class);
-        @SuppressWarnings("rawtypes")
-        ImmutableConstraintBuilder mockConstraintBuilderB1 = mock(ImmutableConstraintBuilder.class);
-        @SuppressWarnings("rawtypes")
-        ImmutableConstraintBuilder mockConstraintBuilderB2 = mock(ImmutableConstraintBuilder.class);
-        @SuppressWarnings("rawtypes")
-        ImmutableConstraintBuilder mockConstraintBuilderB3 = mock(ImmutableConstraintBuilder.class);
-        when(mockConstraintB.createCopyBuilder()).thenReturn(mockConstraintBuilderB);
-        when(mockConstraintBuilderB.apply(mockSubstitution)).thenReturn(mockConstraintBuilderB1);
-        when(mockConstraintBuilderB1.replace(mockTaskA, mockTaskC)).thenReturn(mockConstraintBuilderB2);
-        when(mockConstraintBuilderB2.replace(mockTaskB, mockTaskD)).thenReturn(mockConstraintBuilderB3);
-        when(mockConstraintBuilderB2.replace(mockTaskA, mockTaskC)).thenReturn(mockConstraintBuilderB3);
-        when(mockConstraintBuilderB1.replace(mockTaskB, mockTaskD)).thenReturn(mockConstraintBuilderB2);
-        when(mockConstraintBuilderB3.build()).thenReturn(mockConstraintD);
-        
-        ImmutableTaskNetwork taskNetwork = initialTaskNetwork.createCopyBuilder(mockConstraintValidator)
-                .apply(mockSubstitution)
-                .build();
-        
+        verify(mockConstraintValidator).add(mockTaskA);
+        verify(mockConstraintValidator).add(mockTaskB);
         assertEquals(2, taskNetwork.getTasks().size());
-        assertTrue(taskNetwork.getTasks().contains(mockTaskC));
-        assertTrue(taskNetwork.getTasks().contains(mockTaskD));
-        assertEquals(2, taskNetwork.getConstraints().size());
-        assertTrue(taskNetwork.getConstraints().contains(mockConstraintC));
-        assertTrue(taskNetwork.getConstraints().contains(mockConstraintD));
+        assertTrue(taskNetwork.getTasks().contains(mockTaskA));
+        assertTrue(taskNetwork.getTasks().contains(mockTaskB));
+        
+        verify(mockConstraintValidator).add(mockAfterConstraintA);
+        verify(mockConstraintValidator).add(mockAfterConstraintB);
+        assertEquals(2, taskNetwork.getAfterConstraints().size());
+        assertTrue(taskNetwork.getAfterConstraints().contains(mockAfterConstraintA));
+        assertTrue(taskNetwork.getAfterConstraints().contains(mockAfterConstraintB));
+        
+        verify(mockConstraintValidator).add(mockBeforeConstraintA);
+        verify(mockConstraintValidator).add(mockBeforeConstraintB);
+        assertEquals(2, taskNetwork.getBeforeConstraints().size());
+        assertTrue(taskNetwork.getBeforeConstraints().contains(mockBeforeConstraintA));
+        assertTrue(taskNetwork.getBeforeConstraints().contains(mockBeforeConstraintB));
+        
+        verify(mockConstraintValidator).add(mockBetweenConstraintA);
+        verify(mockConstraintValidator).add(mockBetweenConstraintB);
+        assertEquals(2, taskNetwork.getBetweenConstraints().size());
+        assertTrue(taskNetwork.getBetweenConstraints().contains(mockBetweenConstraintA));
+        assertTrue(taskNetwork.getBetweenConstraints().contains(mockBetweenConstraintB));
+        
+        verify(mockConstraintValidator).add(mockPrecedenceConstraintA);
+        verify(mockConstraintValidator).add(mockPrecedenceConstraintB);
+        assertEquals(2, taskNetwork.getPrecedenceConstraints().size());
+        assertTrue(taskNetwork.getPrecedenceConstraints().contains(mockPrecedenceConstraintA));
+        assertTrue(taskNetwork.getPrecedenceConstraints().contains(mockPrecedenceConstraintB));
     }
+    
+	/**
+	 * Test apply.
+	 * @throws InvalidConstraint only if the test fails
+	 */
+    @Test
+    public final void testApply() throws InvalidConstraint {
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+    	ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
+    	Task mockTaskA = mock(Task.class);
+    	Task mockTaskB = mock(Task.class);
+        Set<Task> mockTasks = new HashSet<Task>();
+        mockTasks.add(mockTaskA);
+        mockTasks.add(mockTaskB);
+        
+        AfterConstraint mockAfterConstraintA = mock(AfterConstraint.class);
+        AfterConstraint mockAfterConstraintB = mock(AfterConstraint.class);
+        Set<AfterConstraint> mockAfterConstraints = new HashSet<AfterConstraint>();
+        mockAfterConstraints.add(mockAfterConstraintA);
+        mockAfterConstraints.add(mockAfterConstraintB);
+        
+        BeforeConstraint mockBeforeConstraintA = mock(BeforeConstraint.class);
+        BeforeConstraint mockBeforeConstraintB = mock(BeforeConstraint.class);
+        Set<BeforeConstraint> mockBeforeConstraints = new HashSet<BeforeConstraint>();
+        mockBeforeConstraints.add(mockBeforeConstraintA);  
+        mockBeforeConstraints.add(mockBeforeConstraintB);
+        
+        BetweenConstraint mockBetweenConstraintA = mock(BetweenConstraint.class);
+        BetweenConstraint mockBetweenConstraintB = mock(BetweenConstraint.class);
+        Set<BetweenConstraint> mockBetweenConstraints = new HashSet<BetweenConstraint>();
+        mockBetweenConstraints.add(mockBetweenConstraintA);
+        mockBetweenConstraints.add(mockBetweenConstraintB);
+        
+        PrecedenceConstraint mockPrecedenceConstraintA = mock(PrecedenceConstraint.class);
+        PrecedenceConstraint mockPrecedenceConstraintB = mock(PrecedenceConstraint.class);
+        Set<PrecedenceConstraint> mockPrecedenceConstraints = new HashSet<PrecedenceConstraint>();
+        mockPrecedenceConstraints.add(mockPrecedenceConstraintA);  
+        mockPrecedenceConstraints.add(mockPrecedenceConstraintB);
+        
+		when(mockConstraintValidator.getTasks()).thenReturn(mockTasks);
+        when(mockConstraintValidator.getAfterConstraints()).thenReturn(mockAfterConstraints);
+        when(mockConstraintValidator.getBeforeConstraints()).thenReturn(mockBeforeConstraints);
+        when(mockConstraintValidator.getBetweenConstraints()).thenReturn(mockBetweenConstraints);
+        when(mockConstraintValidator.getPrecedenceConstraints()).thenReturn(mockPrecedenceConstraints);
+        
+		@SuppressWarnings("unchecked")
+        Map<Term, Term> mockSubstitution = mock(Map.class);
+		
+		TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
+		
+		TaskNetwork taskNetwork = new SimpleTaskNetwork.Builder(mockValidatorFactory, mockTaskNetwork)
+        		.apply(mockSubstitution)
+        		.build();
+
+    	verify(mockConstraintValidator).apply(mockSubstitution);
+
+        assertEquals(2, taskNetwork.getTasks().size());
+        assertTrue(taskNetwork.getTasks().contains(mockTaskA));
+        assertTrue(taskNetwork.getTasks().contains(mockTaskB));
+        
+        assertEquals(2, taskNetwork.getAfterConstraints().size());
+        assertTrue(taskNetwork.getAfterConstraints().contains(mockAfterConstraintA));
+        assertTrue(taskNetwork.getAfterConstraints().contains(mockAfterConstraintB));
+        
+        assertEquals(2, taskNetwork.getBeforeConstraints().size());
+        assertTrue(taskNetwork.getBeforeConstraints().contains(mockBeforeConstraintA));
+        assertTrue(taskNetwork.getBeforeConstraints().contains(mockBeforeConstraintB));
+        
+        assertEquals(2, taskNetwork.getBetweenConstraints().size());
+        assertTrue(taskNetwork.getBetweenConstraints().contains(mockBetweenConstraintA));
+        assertTrue(taskNetwork.getBetweenConstraints().contains(mockBetweenConstraintB));
+
+        assertEquals(2, taskNetwork.getPrecedenceConstraints().size());
+        assertTrue(taskNetwork.getPrecedenceConstraints().contains(mockPrecedenceConstraintA));
+        assertTrue(taskNetwork.getPrecedenceConstraints().contains(mockPrecedenceConstraintB));
+    }
+    
+    /**
+     * Test replace.
+     * @throws InvalidConstraint only if the test fails
+     */
+    @Test
+    public final void testReplace() throws InvalidConstraint {
+    	ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
+    	ConstraintValidator mockConstraintValidator = mock(ConstraintValidator.class);
+		when(mockValidatorFactory.create()).thenReturn(mockConstraintValidator);
+		
+		Task mockTaskA = mock(Task.class);
+		Task mockTaskB = mock(Task.class);
+		Set<Task> mockTasks = new HashSet<Task>();
+		mockTasks.add(mockTaskA);
+		mockTasks.add(mockTaskB);
+       
+		AfterConstraint mockAfterConstraintA = mock(AfterConstraint.class);
+		AfterConstraint mockAfterConstraintB = mock(AfterConstraint.class);
+		Set<AfterConstraint> mockAfterConstraints = new HashSet<AfterConstraint>();
+		mockAfterConstraints.add(mockAfterConstraintA);
+		mockAfterConstraints.add(mockAfterConstraintB);
+       
+		BeforeConstraint mockBeforeConstraintA = mock(BeforeConstraint.class);
+		BeforeConstraint mockBeforeConstraintB = mock(BeforeConstraint.class);
+		Set<BeforeConstraint> mockBeforeConstraints = new HashSet<BeforeConstraint>();
+		mockBeforeConstraints.add(mockBeforeConstraintA);  
+		mockBeforeConstraints.add(mockBeforeConstraintB);
+       
+		BetweenConstraint mockBetweenConstraintA = mock(BetweenConstraint.class);
+		BetweenConstraint mockBetweenConstraintB = mock(BetweenConstraint.class);
+		Set<BetweenConstraint> mockBetweenConstraints = new HashSet<BetweenConstraint>();
+		mockBetweenConstraints.add(mockBetweenConstraintA);
+		mockBetweenConstraints.add(mockBetweenConstraintB);
+       
+		PrecedenceConstraint mockPrecedenceConstraintA = mock(PrecedenceConstraint.class);
+		PrecedenceConstraint mockPrecedenceConstraintB = mock(PrecedenceConstraint.class);
+		Set<PrecedenceConstraint> mockPrecedenceConstraints = new HashSet<PrecedenceConstraint>();
+		mockPrecedenceConstraints.add(mockPrecedenceConstraintA);  
+		mockPrecedenceConstraints.add(mockPrecedenceConstraintB);
+       
+		when(mockConstraintValidator.getTasks()).thenReturn(mockTasks);
+		when(mockConstraintValidator.getAfterConstraints()).thenReturn(mockAfterConstraints);
+		when(mockConstraintValidator.getBeforeConstraints()).thenReturn(mockBeforeConstraints);
+		when(mockConstraintValidator.getBetweenConstraints()).thenReturn(mockBetweenConstraints);
+		when(mockConstraintValidator.getPrecedenceConstraints()).thenReturn(mockPrecedenceConstraints);
+       
+		Task mockOldTask = mock(Task.class);
+		TaskNetwork mockNewTaskNetwork = mock(TaskNetwork.class);
+		
+		TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
+		
+		TaskNetwork taskNetwork = new SimpleTaskNetwork.Builder(mockValidatorFactory, mockTaskNetwork)
+       		.replace(mockOldTask, mockNewTaskNetwork)
+       		.build();
+
+		verify(mockConstraintValidator).replace(mockOldTask, mockNewTaskNetwork);
+
+		assertEquals(2, taskNetwork.getTasks().size());
+		assertTrue(taskNetwork.getTasks().contains(mockTaskA));
+		assertTrue(taskNetwork.getTasks().contains(mockTaskB));
+       
+		assertEquals(2, taskNetwork.getAfterConstraints().size());
+		assertTrue(taskNetwork.getAfterConstraints().contains(mockAfterConstraintA));
+		assertTrue(taskNetwork.getAfterConstraints().contains(mockAfterConstraintB));
+       
+		assertEquals(2, taskNetwork.getBeforeConstraints().size());
+		assertTrue(taskNetwork.getBeforeConstraints().contains(mockBeforeConstraintA));
+		assertTrue(taskNetwork.getBeforeConstraints().contains(mockBeforeConstraintB));
+       
+		assertEquals(2, taskNetwork.getBetweenConstraints().size());
+		assertTrue(taskNetwork.getBetweenConstraints().contains(mockBetweenConstraintA));
+		assertTrue(taskNetwork.getBetweenConstraints().contains(mockBetweenConstraintB));
+
+		assertEquals(2, taskNetwork.getPrecedenceConstraints().size());
+		assertTrue(taskNetwork.getPrecedenceConstraints().contains(mockPrecedenceConstraintA));
+		assertTrue(taskNetwork.getPrecedenceConstraints().contains(mockPrecedenceConstraintB));
+   }
 }

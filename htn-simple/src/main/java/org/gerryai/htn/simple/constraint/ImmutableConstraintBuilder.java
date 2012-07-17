@@ -18,10 +18,12 @@
 package org.gerryai.htn.simple.constraint;
 
 import java.util.Map;
-import java.util.Set;
 
+import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
+
+import com.google.common.collect.Multimap;
 
 /**
  * Interface for constraint builders used by this HTN implementation.
@@ -30,7 +32,7 @@ import org.gerryai.logic.Term;
  * @param <C> type of constraint this builder generates
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableConstraintBuilder<C extends ImmutableConstraint<C>> {
+public interface ImmutableConstraintBuilder<C extends Constraint<C>> {
 
     /**
      * Copy the provided constraint as a basis for a new one.
@@ -40,18 +42,11 @@ public interface ImmutableConstraintBuilder<C extends ImmutableConstraint<C>> {
     ImmutableConstraintBuilder<C> copy(C constraint);
     
     /**
-     * @param oldTask the task to replace
-     * @param newTasks the tasks to replace with
+     * Replace tasks in the constrain being built using the map provided.
+     * @param taskMap map to tasks to sets of tasks that they should be replaced with
      * @return the updated builder
      */
-    ImmutableConstraintBuilder<C> replace(Task oldTask, Set<Task> newTasks);
- 
-    /**
-     * @param oldTask the task to replace
-     * @param newTasks the task to replace with
-     * @return the updated builder
-     */
-    ImmutableConstraintBuilder<C> replace(Task oldTask, Task newTasks);
+    ImmutableConstraintBuilder<C> replace(Multimap<Task, Task> taskMap);
  
     /**
      * Apply the substituter provided to the conditions of the constraint.

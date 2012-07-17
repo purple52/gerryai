@@ -17,25 +17,25 @@
  */
 package org.gerryai.htn.simple.constraint.impl;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.gerryai.htn.constraint.BetweenConstraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
-import org.gerryai.htn.simple.constraint.ImmutableValidatableBetweenConstraint;
-import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Multimap;
 
 /**
+ * Simple implementation of a between constraint.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConstraint {
+public class SimpleBetweenConstraint implements BetweenConstraint {
 
 	/**
 	 * The set of tasks that this constraint must hold after.
@@ -45,7 +45,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
 	/**
 	 * The set of tasks that this constraint must hold before.
 	 */
-	private Set<Task> procedingTasks;
+	private Set<Task> proceedingTasks;
 	
 	/**
 	 * The literal that must be true directly between the two sets of tasks.
@@ -57,61 +57,45 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
      * @param builder the builder to build from
      */
     protected SimpleBetweenConstraint(Builder builder) {
-        precedingTasks = builder.getPrecedingTasks();
-        procedingTasks = builder.getProcedingTasks();
-        condition = builder.getCondition();
+        precedingTasks = builder.precedingTasks;
+        proceedingTasks = builder.proceedingTasks;
+        condition = builder.condition;
     }
 	
-	/**
-	 * Get the set of tasks that this constraint must hold after.
-	 * @return the tasks
-	 */
+	@Override
 	public final Set<Task> getPrecedingTasks() {
-		return precedingTasks;
+		return Collections.unmodifiableSet(precedingTasks);
 	}
 
-	/**
-	 * Get the set of tasks that this constraint must hold before.
-	 * @return the tasks
-	 */
+	@Override
 	public final Set<Task> getProcedingTasks() {
-		return procedingTasks;
+		return Collections.unmodifiableSet(proceedingTasks);
 	}
 	
-	/**
-	 * Get the condition that must be true directly after the last of these tasks.
-	 * @return the condition
-	 */
+	@Override
 	public final Condition getCondition() {
 		return condition;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final boolean validate(ConstraintValidator validator) {
-		return validator.validate(this);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void add(ConstraintValidator validator)
-			throws InvalidConstraint {
-		validator.add(this);
-	}
 	
-    /**
-     * {@inheritDoc}
-     */
-    public final ImmutableConstraintBuilder<ImmutableValidatableBetweenConstraint> createCopyBuilder() {
+    @Override
+    public final BetweenConstraint apply(Map<Term, Term> substitution) {
         return new Builder()
-            .copy(this);
+            .copy(this)
+            .apply(substitution)
+            .build();
+    }
+    
+    @Override
+    public final BetweenConstraint replace(Multimap<Task, Task> taskMap) {
+        return new Builder()
+        .copy(this)
+        .replace(taskMap)
+        .build();    	
     }
 	
 	@Override
 	public final int hashCode() {
-		return Objects.hashCode(precedingTasks, procedingTasks, condition);
+		return Objects.hashCode(precedingTasks, proceedingTasks, condition);
 	}
 
 	@Override
@@ -119,7 +103,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
 		if (obj instanceof SimpleBetweenConstraint) {
 	        final SimpleBetweenConstraint other = (SimpleBetweenConstraint) obj;
 	        return Objects.equal(precedingTasks, other.precedingTasks)
-	        	&& Objects.equal(procedingTasks, other.procedingTasks)
+	        	&& Objects.equal(proceedingTasks, other.proceedingTasks)
 	            && Objects.equal(condition, other.condition);
 	    } else {
 	        return false;
@@ -130,8 +114,9 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
      * Builder class for SimpleBetweenConstraint.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder implements ImmutableConstraintBuilder<ImmutableValidatableBetweenConstraint> {     
-        /**
+    public static class Builder implements ImmutableConstraintBuilder<BetweenConstraint> {     
+
+    	/**
          * The set of tasks that this constraint must hold after.
          */
         private Set<Task> precedingTasks;
@@ -139,7 +124,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
         /**
          * The set of tasks that this constraint must hold before.
          */
-        private Set<Task> procedingTasks;
+        private Set<Task> proceedingTasks;
         
         /**
          * The condition that must be true directly after the last of these tasks.
@@ -151,7 +136,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
          */
         public Builder() {
             precedingTasks = new HashSet<Task>();
-            procedingTasks = new HashSet<Task>();
+            proceedingTasks = new HashSet<Task>();
         }
 
         /**
@@ -159,7 +144,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
          * @return the updated builder
          */
         public final Builder addPrecedingTasks(Set<Task> tasks) {
-            this.precedingTasks.addAll(tasks);
+            precedingTasks.addAll(tasks);
             return this;
         }
 
@@ -168,7 +153,7 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
          * @return the updated builder
          */
         public final Builder addProcedingTasks(Set<Task> tasks) {
-            this.procedingTasks.addAll(tasks);
+        	proceedingTasks.addAll(tasks);
             return this;
         }
         
@@ -181,82 +166,54 @@ public class SimpleBetweenConstraint implements ImmutableValidatableBetweenConst
             return this;
         }
 
-        /**
-         * {@inheritDoc}
-         */
-        public final Builder copy(ImmutableValidatableBetweenConstraint constraint) {
-            this.precedingTasks = new HashSet<Task>(constraint.getPrecedingTasks());
-            this.procedingTasks = new HashSet<Task>(constraint.getProcedingTasks());
-            this.condition = constraint.getCondition();
+        @Override
+        public final Builder copy(BetweenConstraint constraint) {
+        	precedingTasks = new HashSet<Task>(constraint.getPrecedingTasks());
+            proceedingTasks = new HashSet<Task>(constraint.getProcedingTasks());
+            condition = constraint.getCondition();
             return this;
         }
 
-        /**
-         * {@inheritDoc}
-         */
-        public final Builder replace(Task oldTask, Set<Task> newTasks) {
-            if (this.precedingTasks.contains(oldTask)) {
-                this.precedingTasks.remove(oldTask);
-                this.precedingTasks.addAll(newTasks);
-            }
-            if (this.procedingTasks.contains(oldTask)) {
-                this.procedingTasks.remove(oldTask);
-                this.procedingTasks.addAll(newTasks);
-            }
-            return this;
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public final Builder replace(Task oldTask, Task newTask) {
-            if (this.precedingTasks.contains(oldTask)) {
-                this.precedingTasks.remove(oldTask);
-                this.precedingTasks.add(newTask);
-            }
-            if (this.procedingTasks.contains(oldTask)) {
-                this.procedingTasks.remove(oldTask);
-                this.procedingTasks.add(newTask);
-            }
-            return this;
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
+        @Override
         public final Builder apply(Map<Term, Term> substitution) {
-        	Condition newCondition = this.condition
-                    .applyToCopy(substitution);
-            this.condition = newCondition;
+        	condition = condition.applyToCopy(substitution);
+        	for (Task oldTask : precedingTasks) {
+        		Task newTask = oldTask.applyToCopy(substitution);
+        		if (!oldTask.equals(newTask)) {
+        			precedingTasks.remove(oldTask);
+        			precedingTasks.add(newTask);
+        		}
+        	}
+        	for (Task oldTask : proceedingTasks) {
+        		Task newTask = oldTask.applyToCopy(substitution);
+        		if (!oldTask.equals(newTask)) {
+        			proceedingTasks.remove(oldTask);
+        			proceedingTasks.add(newTask);
+        		}
+        	}
+        	return this;
+        }      
+        
+        @Override
+        public final Builder replace(Multimap<Task, Task> taskMap) {
+        	for (Task task : taskMap.keySet()) {
+	            if (precedingTasks.contains(task)) {
+	            	precedingTasks.remove(task);
+	            	precedingTasks.addAll(taskMap.get(task));
+	            }
+	            if (proceedingTasks.contains(task)) {
+	            	proceedingTasks.remove(task);
+	            	proceedingTasks.addAll(taskMap.get(task));
+	            }
+	        }
             return this;
-        }    
-        
-        /**
-         * @return the tasks
-         */
-        protected final Set<Task> getPrecedingTasks() {
-            return precedingTasks;
         }
-
-        /**
-         * @return the tasks
-         */
-        protected final Set<Task> getProcedingTasks() {
-            return procedingTasks;
-        }
-        
-        /**
-         * @return the condition
-         */
-        protected final Condition getCondition() {
-            return condition;
-        }
-        
+                  
         /**
          * Build the constraint.
          * @return the finished constraint
          */
-        public final ImmutableValidatableBetweenConstraint build() {
+        public final BetweenConstraint build() {
             return new SimpleBetweenConstraint(this);
         }
     }

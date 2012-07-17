@@ -26,8 +26,6 @@ import java.util.Map;
 
 import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 import org.junit.Test;
@@ -47,15 +45,11 @@ public class AIMAUnificationServiceTest {
 	public final void testFindUnifier() {
 		aima.core.logic.fol.Unifier aimaUnifier = mock(aima.core.logic.fol.Unifier.class);
 		AIMAConverter aimaConverter = mock(AIMAConverter.class);
-		AIMAUnificationService<Method<ImmutableTaskNetwork, ImmutableConstraint<?>>> unificationService
-					= new AIMAUnificationService<
-					        Method<ImmutableTaskNetwork, ImmutableConstraint<?>>>(
-					aimaUnifier, aimaConverter);
+		AIMAUnificationService unificationService = new AIMAUnificationService(aimaUnifier, aimaConverter);
 		
 		Task mockTaskA = mock(Task.class);
 		Task mockTaskB = mock(Task.class);
-		@SuppressWarnings("unchecked")
-		Method<ImmutableTaskNetwork, ImmutableConstraint<?>> mockMethod = mock(Method.class);
+		Method mockMethod = mock(Method.class);
 		when(mockMethod.getTask()).thenReturn(mockTaskB);
 		Predicate mockPredicateA = mock(Predicate.class);
 		Predicate mockPredicateB = mock(Predicate.class);

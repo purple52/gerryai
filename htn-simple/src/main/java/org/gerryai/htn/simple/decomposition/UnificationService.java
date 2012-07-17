@@ -19,23 +19,15 @@ package org.gerryai.htn.simple.decomposition;
 
 import java.util.Map;
 
-import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.tasknetwork.Task;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
 
 /**
  * Interface for a service that can find a unifier for a task and method.
- * @param <M> the type of method this service works with
- * @param <N> the type of task network this service works with
- * @param <C> the type of constraint this service works with
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface UnificationService<
-		M extends Method<N, C>,
-		N extends TaskNetwork<C>,
-		C extends Constraint> {
+public interface UnificationService {
 	
 	/**
 	 * Given a task and a method, try and find the most general unifier (MGU).
@@ -44,6 +36,6 @@ public interface UnificationService<
 	 * @return the most general unifier
 	 * @throws UnifierNotFound if no unifier could be found for this task and method
 	 */
-    Map<Term, Term> findUnifier(Task task, M method) throws UnifierNotFound;
+    Map<Term, Term> findUnifier(Task task, Method method) throws UnifierNotFound;
 	
 }

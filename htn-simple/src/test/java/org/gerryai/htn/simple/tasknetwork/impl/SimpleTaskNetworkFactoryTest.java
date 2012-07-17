@@ -35,12 +35,10 @@ public class SimpleTaskNetworkFactoryTest {
 	 */
 	@Test
 	public final void testCreateTaskBuilder() {
-		ConstraintValidatorFactory mockConstraintValidatorFactory
-				= mock(ConstraintValidatorFactory.class);
 		LogicFactory mockLogicFactory = mock(LogicFactory.class);
+		ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
 		
-		SimpleTaskNetworkFactory factory
-				= new SimpleTaskNetworkFactory(mockConstraintValidatorFactory, mockLogicFactory);
+		SimpleTaskNetworkFactory factory = new SimpleTaskNetworkFactory(mockLogicFactory, mockValidatorFactory);
 		
 		assertTrue(factory.createTaskBuilder() instanceof SimpleTask.Builder);
 	}
@@ -50,12 +48,10 @@ public class SimpleTaskNetworkFactoryTest {
 	 */
 	@Test
 	public final void testCreateTaskNetworkBuilder() {
-		ConstraintValidatorFactory mockConstraintValidatorFactory
-				= mock(ConstraintValidatorFactory.class);
 		LogicFactory mockLogicFactory = mock(LogicFactory.class);
+		ConstraintValidatorFactory mockValidatorFactory = mock(ConstraintValidatorFactory.class);
 		
-		SimpleTaskNetworkFactory factory =
-				new SimpleTaskNetworkFactory(mockConstraintValidatorFactory, mockLogicFactory);
+		SimpleTaskNetworkFactory factory = new SimpleTaskNetworkFactory(mockLogicFactory, mockValidatorFactory);
 		assertTrue(factory.createTaskNetworkBuilder() instanceof SimpleTaskNetwork.Builder);
 	}
 

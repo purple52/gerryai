@@ -1,7 +1,7 @@
 package org.gerryai.htn.simple.problem;
 
-import org.gerryai.htn.simple.domain.ImmutableDomain;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
+import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  *  Gerry AI - Open framework for automated planning algorithms
@@ -39,14 +39,14 @@ public interface ImmutableProblemBuilder {
      * @param taskNetwork the task network
      * @return an updated builder object
      */
-    ImmutableProblemBuilder setTaskNetwork(ImmutableTaskNetwork taskNetwork);
+    ImmutableProblemBuilder setTaskNetwork(TaskNetwork taskNetwork);
     
 	/**
 	 * Set the domain to be used by the problem.
 	 * @param domain the domain
 	 * @return an updated builder object
 	 */
-	ImmutableProblemBuilder setDomain(ImmutableDomain domain);
+	ImmutableProblemBuilder setDomain(Domain domain);
 
     /**
      * Build the finished problem.

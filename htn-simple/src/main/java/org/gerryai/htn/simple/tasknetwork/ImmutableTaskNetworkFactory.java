@@ -17,15 +17,11 @@
  */
 package org.gerryai.htn.simple.tasknetwork;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public interface ImmutableTaskNetworkFactory extends
-        TaskNetworkFactory<ImmutableTaskNetwork,
-        ImmutableConstraint<?>> {
+public interface ImmutableTaskNetworkFactory extends TaskNetworkFactory {
 
     /**
      * Create a fresh task builder.
@@ -37,5 +33,5 @@ public interface ImmutableTaskNetworkFactory extends
      * Create a fresh task network builder.
      * @return the builder
      */
-    ImmutableTaskNetworkBuilder createTaskNetworkBuilder();
+    TaskNetworkBuilder createTaskNetworkBuilder();
 }

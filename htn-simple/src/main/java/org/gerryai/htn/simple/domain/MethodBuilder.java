@@ -17,53 +17,36 @@
  */
 package org.gerryai.htn.simple.domain;
 
-import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Interface for a class that can build methods.
- * @param <N>
- *            class of network the builder can handle
- * @param <C>
- *            class of constraint the builder can handle
- * @param <M>
- *            type of method this builder generates
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface MethodBuilder<
-        N extends TaskNetwork<C>,
-        C extends Constraint,
-        M extends Method<N, C>> {
+public interface MethodBuilder {
 
     /**
      * Set the name of the operator.
-     * 
-     * @param name
-     *            the name
+     * @param name the name
      * @return the updated builder
      */
-    MethodBuilder<N, C, M> setName(String name);
+    MethodBuilder setName(String name);
 
     /**
      * Add an argument to the operator.
-     * 
-     * @param task
-     *            the task to add
+     * @param task the task to add
      * @return the updated builder
      */
-    MethodBuilder<N, C, M> setTask(Task task);
+    MethodBuilder setTask(Task task);
 
     /**
      * Add an argument to the operator.
-     * 
-     * @param taskNetwork
-     *            the task network to add
+     * @param taskNetwork the task network to add
      * @return the updated builder
      */
-    MethodBuilder<N, C, M> setTaskNetwork(N taskNetwork);
+    MethodBuilder setTaskNetwork(TaskNetwork taskNetwork);
 
     /**
      * Get the name of the method being built.
@@ -84,12 +67,12 @@ public interface MethodBuilder<
      * 
      * @return the task network
      */
-    ImmutableTaskNetwork getTaskNetwork();
+    TaskNetwork getTaskNetwork();
 
     /**
      * Build the method.
      * 
      * @return the method
      */
-    M build();
+    Method build();
 }

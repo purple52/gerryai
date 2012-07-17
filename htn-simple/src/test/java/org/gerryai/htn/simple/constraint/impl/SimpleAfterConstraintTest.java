@@ -19,20 +19,20 @@ package org.gerryai.htn.simple.constraint.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.gerryai.htn.constraint.AfterConstraint;
 import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.simple.constraint.ImmutableValidatableAfterConstraint;
-import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 import org.junit.Test;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 /**
  * @author David Edwards <david@more.fool.me.uk>
@@ -50,7 +50,7 @@ public class SimpleAfterConstraintTest {
         mockTasks.add(mockTask);
         Condition mockCondition = mock(Condition.class);
 
-        ImmutableValidatableAfterConstraint constraint = new SimpleAfterConstraint.Builder()
+        AfterConstraint constraint = new SimpleAfterConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockCondition)
                 .build();
@@ -60,81 +60,41 @@ public class SimpleAfterConstraintTest {
     }
 
     /**
-     * Test validate is called.
-     */
-    @Test
-    public final void testValidate() {
-        Task mockTask = mock(Task.class);
-        Set<Task> mockTasks = new HashSet<Task>();
-        mockTasks.add(mockTask);
-        Condition mockCondition = mock(Condition.class);
-
-        ConstraintValidator mockValidator = mock(ConstraintValidator.class);
-        ImmutableValidatableAfterConstraint constraint = new SimpleAfterConstraint.Builder()
-                .addTasks(mockTasks)
-                .setCondition(mockCondition)
-                .build();
-        
-        constraint.validate(mockValidator);
-
-        verify(mockValidator).validate(constraint);
-    }
-
-    /**
-     * Test that constraint is added to the validator.
-     * @throws InvalidConstraint only if test fails
-     */
-    @Test
-    public final void testAdd() throws InvalidConstraint {
-        
-        Task mockTask = mock(Task.class);
-        Set<Task> mockTasks = new HashSet<Task>();
-        mockTasks.add(mockTask);
-        Condition mockCondition = mock(Condition.class);
-
-        ConstraintValidator mockValidator = mock(ConstraintValidator.class);
-        ImmutableValidatableAfterConstraint constraint = new SimpleAfterConstraint.Builder()
-                .addTasks(mockTasks)
-                .setCondition(mockCondition)
-                .build();
-        constraint.add(mockValidator);
-
-        verify(mockValidator).add(constraint);
-    }
-
-    /**
      * Test construction using copy and apply.
      */
     @Test
-    public final void testCopyApply() {
+    public final void testApply() {
         @SuppressWarnings("unchecked")
         Map<Term, Term> mockSubstitution = mock(Map.class);
-        Task mockTask = mock(Task.class);
-        Set<Task> mockTasks = new HashSet<Task>();
-        mockTasks.add(mockTask);
-        Condition mockConditionA = mock(Condition.class);
-        Condition mockConditionB = mock(Condition.class);
-        when(mockConditionA.applyToCopy(mockSubstitution)).thenReturn(mockConditionB);
-
-        ImmutableValidatableAfterConstraint initialConstraint = new SimpleAfterConstraint.Builder()
-                .addTasks(mockTasks)
-                .setCondition(mockConditionA)
+        
+        Task mockInitialTask = mock(Task.class);
+        Set<Task> mockInitialTasks = new HashSet<Task>();
+        mockInitialTasks.add(mockInitialTask);
+        Task mockUpdatedTask = mock(Task.class);
+        Set<Task> mockUpdatedTasks = new HashSet<Task>();
+        mockUpdatedTasks.add(mockUpdatedTask);        
+        when(mockInitialTask.applyToCopy(mockSubstitution)).thenReturn(mockUpdatedTask);
+        
+        Condition mockInitialCondition = mock(Condition.class);
+        Condition mockUpdatedCondition = mock(Condition.class);
+        when(mockInitialCondition.applyToCopy(mockSubstitution)).thenReturn(mockUpdatedCondition);
+        
+        AfterConstraint initialConstraint = new SimpleAfterConstraint.Builder()
+                .addTasks(mockInitialTasks)
+                .setCondition(mockInitialCondition)
                 .build();
         
-        ImmutableValidatableAfterConstraint constraint = initialConstraint.createCopyBuilder()
-                .apply(mockSubstitution)
-                .build();
+        AfterConstraint constraint = initialConstraint.apply(mockSubstitution);
 
-        assertEquals(mockTasks, constraint.getTasks());
-        assertEquals(mockConditionB, constraint.getCondition());
-        //TODO: check substitution results properly
+        assertEquals(mockUpdatedTasks, constraint.getTasks());
+        assertEquals(mockUpdatedCondition, constraint.getCondition());
     }
 
     /**
      * Test construction using copy and replace.
      */
     @Test
-    public final void testCopyReplace() {
+    public final void testReplace() {
         Task mockTaskA = mock(Task.class);
         Set<Task> mockTasks = new HashSet<Task>();
         mockTasks.add(mockTaskA);
@@ -143,16 +103,17 @@ public class SimpleAfterConstraintTest {
         Set<Task> mockNewTasks = new HashSet<Task>();
         mockNewTasks.add(mockTaskB);
         mockNewTasks.add(mockTaskC);
+        Multimap<Task, Task> mockTaskMap = HashMultimap.create();
+        mockTaskMap.put(mockTaskA, mockTaskB);
+        mockTaskMap.put(mockTaskA, mockTaskC);
         Condition mockCondition = mock(Condition.class);
 
-        ImmutableValidatableAfterConstraint initialConstraint = new SimpleAfterConstraint.Builder()
+        AfterConstraint initialConstraint = new SimpleAfterConstraint.Builder()
                 .addTasks(mockTasks)
                 .setCondition(mockCondition)
                 .build();
         
-        ImmutableValidatableAfterConstraint constraint = initialConstraint.createCopyBuilder()
-                .replace(mockTaskA, mockNewTasks)
-                .build();
+        AfterConstraint constraint = initialConstraint.replace(mockTaskMap);
 
         assertEquals(mockNewTasks, constraint.getTasks());
     }

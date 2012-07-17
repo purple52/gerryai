@@ -19,6 +19,8 @@ package org.gerryai.htn.simple.domain;
 
 import java.util.Set;
 
+import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 
 /**
@@ -39,7 +41,7 @@ public interface ImmutableDomainBuilder {
 	 * @param method the method to add
 	 * @return the updated builder
 	 */
-	ImmutableDomainBuilder addMethod(ImmutableMethod method);
+	ImmutableDomainBuilder addMethod(Method method);
 
 	/**
 	 * Get the set of operators added to this builder.
@@ -51,11 +53,11 @@ public interface ImmutableDomainBuilder {
      * Get the methods added to this builder.
      * @return the methods
      */
-    Set<ImmutableMethod> getMethods();
+    Set<Method> getMethods();
 	
 	/**
 	 * Build the domain.
 	 * @return the domain
 	 */
-	ImmutableDomain build();
+	Domain build();
 }

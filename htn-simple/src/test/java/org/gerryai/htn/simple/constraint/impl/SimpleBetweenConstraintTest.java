@@ -19,24 +19,24 @@ package org.gerryai.htn.simple.constraint.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.gerryai.htn.constraint.BetweenConstraint;
 import org.gerryai.htn.domain.Condition;
-import org.gerryai.htn.simple.constraint.ImmutableValidatableBetweenConstraint;
-import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 import org.junit.Test;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+
 /**
+ * Unit tests for SipleBetweenConstraint.
  * @author David Edwards <david@more.fool.me.uk>
- * 
  */
 public class SimpleBetweenConstraintTest {
 
@@ -48,119 +48,75 @@ public class SimpleBetweenConstraintTest {
         Task mockPrecedingTask = mock(Task.class);
         Set<Task> mockPrecedingTasks = new HashSet<Task>();
         mockPrecedingTasks.add(mockPrecedingTask);
-        Task mockProcedingTask = mock(Task.class);
-        Set<Task> mockProcedingTasks = new HashSet<Task>();
-        mockProcedingTasks.add(mockProcedingTask);
+        Task mockProceedingTask = mock(Task.class);
+        Set<Task> mockProceedingTasks = new HashSet<Task>();
+        mockProceedingTasks.add(mockProceedingTask);
         Condition mockCondition = mock(Condition.class);
         
-        ImmutableValidatableBetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
+        BetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(mockPrecedingTasks)
-                .addProcedingTasks(mockProcedingTasks)
+                .addProcedingTasks(mockProceedingTasks)
                 .setCondition(mockCondition)
                 .build();
         
         assertEquals(mockPrecedingTasks, constraint.getPrecedingTasks());
-        assertEquals(mockProcedingTasks, constraint.getProcedingTasks());
+        assertEquals(mockProceedingTasks, constraint.getProcedingTasks());
         assertEquals(mockCondition, constraint.getCondition());
-    }
-
-   
-    /**
-     * Test validate is called.
-     */
-    @Test
-    public final void testValidate() {
-        Task mockPrecedingTask = mock(Task.class);
-        Set<Task> mockPrecedingTasks = new HashSet<Task>();
-        mockPrecedingTasks.add(mockPrecedingTask);
-        Task mockProcedingTask = mock(Task.class);
-        Set<Task> mockProcedingTasks = new HashSet<Task>();
-        mockProcedingTasks.add(mockProcedingTask);
-        Condition mockCondition = mock(Condition.class);
-        ConstraintValidator mockValidator = mock(ConstraintValidator.class);
- 
-        ImmutableValidatableBetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
-                .addPrecedingTasks(mockPrecedingTasks)
-                .addProcedingTasks(mockProcedingTasks)
-                .setCondition(mockCondition)
-                .build();
-        constraint.validate(mockValidator);
-
-        verify(mockValidator).validate(constraint);
-    }
-
-    /**
-     * Test that constraint is added to validator.
-     * @throws InvalidConstraint only if test fails
-     */
-    @Test
-    public final void testAdd() throws InvalidConstraint {
-        Task mockPrecedingTask = mock(Task.class);
-        Set<Task> mockPrecedingTasks = new HashSet<Task>();
-        mockPrecedingTasks.add(mockPrecedingTask);
-        Task mockProcedingTask = mock(Task.class);
-        Set<Task> mockProcedingTasks = new HashSet<Task>();
-        mockProcedingTasks.add(mockProcedingTask);
-        Condition mockCondition = mock(Condition.class);
-        ConstraintValidator mockValidator = mock(ConstraintValidator.class);
- 
-        ImmutableValidatableBetweenConstraint constraint = new SimpleBetweenConstraint.Builder()
-                .addPrecedingTasks(mockPrecedingTasks)
-                .addProcedingTasks(mockProcedingTasks)
-                .setCondition(mockCondition)
-                .build();
-        
-        constraint.add(mockValidator);
-
-        verify(mockValidator).add(constraint);
     }
 
     /**
      * Test construction using copy and apply.
      */
     @Test
-    public final void testCopyApply() {
-        
-        Task mockPrecedingTask = mock(Task.class);
-        Set<Task> mockPrecedingTasks = new HashSet<Task>();
-        mockPrecedingTasks.add(mockPrecedingTask);
-        Task mockProcedingTask = mock(Task.class);
-        Set<Task> mockProcedingTasks = new HashSet<Task>();
-        mockProcedingTasks.add(mockProcedingTask);
-        
+    public final void testApply() {
+
         @SuppressWarnings("unchecked")
         Map<Term, Term> mockSubstitution = mock(Map.class);
+        
+        Task mockInitialPrecedingTask = mock(Task.class);
+        Set<Task> mockInitialPrecedingTasks = new HashSet<Task>();
+        mockInitialPrecedingTasks.add(mockInitialPrecedingTask);
+        Task mockUpdatedPrecedingTask = mock(Task.class);
+        Set<Task> mockUpdatedPrecedingTasks = new HashSet<Task>();
+        mockUpdatedPrecedingTasks.add(mockUpdatedPrecedingTask);        
+        when(mockInitialPrecedingTask.applyToCopy(mockSubstitution)).thenReturn(mockUpdatedPrecedingTask);
+        
+        Task mockInitialProceedingTask = mock(Task.class);
+        Set<Task> mockInitialProceedingTasks = new HashSet<Task>();
+        mockInitialProceedingTasks.add(mockInitialProceedingTask);
+        Task mockUpdatedProceedingTask = mock(Task.class);
+        Set<Task> mockUpdatedProceedingTasks = new HashSet<Task>();
+        mockUpdatedProceedingTasks.add(mockUpdatedProceedingTask);
+        when(mockInitialProceedingTask.applyToCopy(mockSubstitution)).thenReturn(mockUpdatedProceedingTask);
+
         Condition mockConditionA = mock(Condition.class);
         Condition mockConditionB = mock(Condition.class);
         when(mockConditionA.applyToCopy(mockSubstitution)).thenReturn(mockConditionB);
 
-        ImmutableValidatableBetweenConstraint initialConstraint = new SimpleBetweenConstraint.Builder()
-                .addPrecedingTasks(mockPrecedingTasks)
-                .addProcedingTasks(mockProcedingTasks)
+        BetweenConstraint initialConstraint = new SimpleBetweenConstraint.Builder()
+                .addPrecedingTasks(mockInitialPrecedingTasks)
+                .addProcedingTasks(mockInitialProceedingTasks)
                 .setCondition(mockConditionA)
                 .build();
         
-        ImmutableValidatableBetweenConstraint constraint = initialConstraint.createCopyBuilder()
-                .apply(mockSubstitution)
-                .build();
+        BetweenConstraint constraint = initialConstraint.apply(mockSubstitution);
 
-        assertEquals(mockPrecedingTasks, constraint.getPrecedingTasks());
-        assertEquals(mockProcedingTasks, constraint.getProcedingTasks());
+        assertEquals(mockUpdatedPrecedingTasks, constraint.getPrecedingTasks());
+        assertEquals(mockUpdatedProceedingTasks, constraint.getProcedingTasks());
         assertEquals(mockConditionB, constraint.getCondition());
-        //TODO: check the substitution has been properly applied
     }
 
     /**
      * Test construction using copy and replace.
      */
     @Test
-    public final void testCopyReplace() {
+    public final void testReplace() {
         Task mockPrecedingTask = mock(Task.class);
         Set<Task> mockPrecedingTasks = new HashSet<Task>();
         mockPrecedingTasks.add(mockPrecedingTask);
-        Task mockProcedingTask = mock(Task.class);
-        Set<Task> mockProcedingTasks = new HashSet<Task>();
-        mockProcedingTasks.add(mockProcedingTask);
+        Task mockProceedingTask = mock(Task.class);
+        Set<Task> mockProceedingTasks = new HashSet<Task>();
+        mockProceedingTasks.add(mockProceedingTask);
         
         Task mockTaskB = mock(Task.class);
         Task mockTaskC = mock(Task.class);
@@ -173,18 +129,21 @@ public class SimpleBetweenConstraintTest {
         mockNewProcedingTasks.add(mockTaskD);
         mockNewProcedingTasks.add(mockTaskE);
         
+        Multimap<Task, Task> mockTaskMap = HashMultimap.create();
+        mockTaskMap.put(mockPrecedingTask, mockTaskB);
+        mockTaskMap.put(mockPrecedingTask, mockTaskC);
+        mockTaskMap.put(mockProceedingTask, mockTaskD);
+        mockTaskMap.put(mockProceedingTask, mockTaskE);
+        
         Condition mockCondition = mock(Condition.class);
 
-        ImmutableValidatableBetweenConstraint initialConstraint = new SimpleBetweenConstraint.Builder()
+        BetweenConstraint initialConstraint = new SimpleBetweenConstraint.Builder()
                 .addPrecedingTasks(mockPrecedingTasks)
-                .addProcedingTasks(mockProcedingTasks)
+                .addProcedingTasks(mockProceedingTasks)
                 .setCondition(mockCondition)
                 .build();
         
-        ImmutableValidatableBetweenConstraint constraint = initialConstraint.createCopyBuilder()
-                .replace(mockPrecedingTask, mockNewPrecedingTasks)
-                .replace(mockProcedingTask, mockNewProcedingTasks)
-                .build();
+        BetweenConstraint constraint = initialConstraint.replace(mockTaskMap);
 
         assertEquals(mockNewPrecedingTasks, constraint.getPrecedingTasks());
         assertEquals(mockNewProcedingTasks, constraint.getProcedingTasks());

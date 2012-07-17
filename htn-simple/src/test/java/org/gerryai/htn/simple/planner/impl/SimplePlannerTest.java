@@ -27,16 +27,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Action;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.ImmutablePlannerHelper;
 import org.gerryai.htn.simple.problem.ImmutableState;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.junit.Test;
 
@@ -127,7 +127,7 @@ public class SimplePlannerTest {
 		ImmutablePlannerHelper mockPlannerHelper = mock(ImmutablePlannerHelper.class);
 		when(mockPlannerHelper.getNonPrimitiveTask(mockTaskNetwork)).thenReturn(mockTaskA);
 		ImmutableDomainHelper mockDomainHelper = mock(ImmutableDomainHelper.class);
-		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
+		Set<Method> methods = new HashSet<Method>();
 		when(mockDomainHelper.getMethodsByTask(mockTaskA)).thenReturn(methods);
 		
 		// Create the planner to be tested
@@ -158,9 +158,9 @@ public class SimplePlannerTest {
 
 		// Create a domain helper that has two potentially matching methods
 		ImmutableDomainHelper mockDomainHelper = mock(ImmutableDomainHelper.class);
-		ImmutableMethod mockMethodA = mock(ImmutableMethod.class);
-		ImmutableMethod mockMethodB = mock(ImmutableMethod.class);
-		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
+		Method mockMethodA = mock(Method.class);
+		Method mockMethodB = mock(Method.class);
+		Set<Method> methods = new HashSet<Method>();
 		methods.add(mockMethodA);
 		methods.add(mockMethodB);
 		when(mockDomainHelper.getMethodsByTask(mockTaskA)).thenReturn(methods);
@@ -255,8 +255,8 @@ public class SimplePlannerTest {
 		when(mockPlan.getActions()).thenReturn(actions);
 		
 		// Domain helper should return method A for decomposing task A
-		ImmutableMethod mockMethodA = mock(ImmutableMethod.class);
-		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
+		Method mockMethodA = mock(Method.class);
+		Set<Method> methods = new HashSet<Method>();
 		methods.add(mockMethodA);
 		ImmutableDomainHelper mockDomainHelper = mock(ImmutableDomainHelper.class);
 		when(mockDomainHelper.getMethodsByTask(mockTaskA)).thenReturn(methods);

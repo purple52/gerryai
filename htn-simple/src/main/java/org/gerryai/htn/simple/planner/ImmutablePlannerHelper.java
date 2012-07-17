@@ -17,19 +17,12 @@
  */
 package org.gerryai.htn.simple.planner;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.problem.ImmutableState;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  * Interface for a planner helper that uses immutable objects.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutablePlannerHelper extends PlannerHelper<
-        ImmutableState,
-        ImmutableMethod,
-        ImmutableTaskNetwork,
-		ImmutableConstraint<?>> {
+public interface ImmutablePlannerHelper extends PlannerHelper<ImmutableState> {
 
 }

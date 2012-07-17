@@ -17,17 +17,10 @@
  */
 package org.gerryai.htn.simple.domain;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-
 /**
  * Interface for factory that generates builders for immutable domains.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableDomainBuilderFactory extends DomainBuilderFactory<
-        ImmutableDomain,
-        ImmutableMethod,
-		ImmutableTaskNetwork,
-		ImmutableConstraint<?>> {
+public interface ImmutableDomainBuilderFactory extends DomainBuilderFactory {
 
 }

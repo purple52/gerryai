@@ -17,83 +17,73 @@
  */
 package org.gerryai.htn.simple.constraint.impl;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.gerryai.htn.constraint.PrecedenceConstraint;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
-import org.gerryai.htn.simple.constraint.ImmutableValidatablePrecedenceConstraint;
-import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Multimap;
 
 /**
+ * Simple implementation of a precedence constraint.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenceConstraint {
+public class SimplePrecedenceConstraint	implements PrecedenceConstraint {
 
 	/**
-	 * The task that must come first.
+	 * The tasks that must come first.
 	 */
 	private Set<Task> precedingTasks;
 	
 	/**
-	 * The task that must come last.
+	 * The tasks that must come last.
 	 */
-	private Set<Task> procedingTasks;
+	private Set<Task> proceedingTasks;
 	
     /**
      * Constructor.
      * @param builder the builder to build from
      */
     protected SimplePrecedenceConstraint(Builder builder) {
-        precedingTasks = builder.getPrecedingTasks();
-        procedingTasks = builder.getProcedingTasks();
+        precedingTasks = builder.precedingTasks;
+        proceedingTasks = builder.proceedingTasks;
     }
 	
-	/**
-	 * {@inheritDoc}
-	 */
+	@Override
 	public final Set<Task> getPrecedingTasks() {
-		return precedingTasks;
+		return Collections.unmodifiableSet(precedingTasks);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	@Override
 	public final Set<Task> getProcedingTasks() {
-		return procedingTasks;
+		return Collections.unmodifiableSet(proceedingTasks);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final boolean validate(ConstraintValidator validator) {
-		return validator.validate(this);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final void add(ConstraintValidator validator) throws InvalidConstraint {
-		validator.add(this);
-	}
-	
-    /**
-     * {@inheritDoc}
-     */
-    public final ImmutableConstraintBuilder<ImmutableValidatablePrecedenceConstraint> createCopyBuilder() {
+    @Override
+    public final PrecedenceConstraint apply(Map<Term, Term> substitution) {
         return new Builder()
-            .copy(this);
+            .copy(this)
+            .apply(substitution)
+            .build();
+    }
+    
+    @Override
+    public final PrecedenceConstraint replace(Multimap<Task, Task> taskMap) {
+        return new Builder()
+        .copy(this)
+        .replace(taskMap)
+        .build();    	
     }
     
 	@Override
 	public final int hashCode() {
-		return Objects.hashCode(precedingTasks, procedingTasks);
+		return Objects.hashCode(precedingTasks, proceedingTasks);
 	}
 
 	@Override
@@ -101,7 +91,7 @@ public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenc
 		if (obj instanceof SimplePrecedenceConstraint) {
 	        final SimplePrecedenceConstraint other = (SimplePrecedenceConstraint) obj;
 	        return Objects.equal(precedingTasks, other.precedingTasks)
-	            && Objects.equal(procedingTasks, other.procedingTasks);
+	            && Objects.equal(proceedingTasks, other.proceedingTasks);
 	    } else {
 	        return false;
 	    }
@@ -111,17 +101,17 @@ public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenc
      * Builder class for SimpleBetweenConstraint.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder implements ImmutableConstraintBuilder<ImmutableValidatablePrecedenceConstraint> {
+    public static class Builder implements ImmutableConstraintBuilder<PrecedenceConstraint> {
         
         /**
-         * The task that must come first.
+         * The tasks that must come first.
          */
         private Set<Task> precedingTasks;
 
         /**
-         * The task that must come last.
+         * The tasks that must come last.
          */
-        private Set<Task> procedingTasks;
+        private Set<Task> proceedingTasks;
         
         /**
          * @param tasks the tasks to set
@@ -137,76 +127,56 @@ public class SimplePrecedenceConstraint	implements ImmutableValidatablePrecedenc
          * @return the updated builder
          */
         public final Builder setProcedingTasks(Set<Task> tasks) {
-            this.procedingTasks = tasks;
+            this.proceedingTasks = tasks;
             return this;
         }
         
-        /**
-         * {@inheritDoc}
-         */
-        public final Builder copy(ImmutableValidatablePrecedenceConstraint constraint) {
-            this.precedingTasks = new HashSet<Task>(constraint.getPrecedingTasks());
-            this.procedingTasks = new HashSet<Task>(constraint.getProcedingTasks());
+        @Override
+        public final Builder copy(PrecedenceConstraint constraint) {
+        	precedingTasks = new HashSet<Task>(constraint.getPrecedingTasks());
+            proceedingTasks = new HashSet<Task>(constraint.getProcedingTasks());
             return this;
         }
 
-        /**
-         * {@inheritDoc}
-         */
-        public final Builder replace(Task oldTask, Set<Task> newTasks) {
-            if (this.precedingTasks.contains(oldTask)) {
-                this.precedingTasks.remove(oldTask);
-                this.precedingTasks.addAll(newTasks);
-            }
-            if (this.procedingTasks.contains(oldTask)) {
-                this.procedingTasks.remove(oldTask);
-                this.procedingTasks.addAll(newTasks);
-            }
-            return this;
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public final Builder replace(Task oldTask, Task newTask) {
-            if (this.precedingTasks.contains(oldTask)) {
-                this.precedingTasks.remove(oldTask);
-                this.precedingTasks.add(newTask);
-            }
-            if (this.procedingTasks.contains(oldTask)) {
-                this.procedingTasks.remove(oldTask);
-                this.procedingTasks.add(newTask);
-            }
-            return this;
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
+        @Override
         public final Builder apply(Map<Term, Term> substitution) {
-            // Do nothing; precedence constraints do not have conditions
-            return this;
-        }  
+        	for (Task oldTask : precedingTasks) {
+        		Task newTask = oldTask.applyToCopy(substitution);
+        		if (!oldTask.equals(newTask)) {
+        			precedingTasks.remove(oldTask);
+        			precedingTasks.add(newTask);
+        		}
+        	}
+        	for (Task oldTask : proceedingTasks) {
+        		Task newTask = oldTask.applyToCopy(substitution);
+        		if (!oldTask.equals(newTask)) {
+        			proceedingTasks.remove(oldTask);
+        			proceedingTasks.add(newTask);
+        		}
+        	}
+        	return this;
+        }      
         
-        /**
-         * @return the task
-         */
-        protected final Set<Task> getPrecedingTasks() {
-            return precedingTasks;
-        }
-
-        /**
-         * @return the task
-         */
-        protected final Set<Task> getProcedingTasks() {
-            return procedingTasks;
+        @Override
+        public final Builder replace(Multimap<Task, Task> taskMap) {
+        	for (Task task : taskMap.keySet()) {
+	            if (precedingTasks.contains(task)) {
+	            	precedingTasks.remove(task);
+	            	precedingTasks.addAll(taskMap.get(task));
+	            }
+	            if (proceedingTasks.contains(task)) {
+	            	proceedingTasks.remove(task);
+	            	proceedingTasks.addAll(taskMap.get(task));
+	            }
+	        }
+            return this;
         }
         
         /**
          * Build the constraint.
          * @return the finished constraint
          */
-        public final ImmutableValidatablePrecedenceConstraint build() {
+        public final PrecedenceConstraint build() {
             return new SimplePrecedenceConstraint(this);
         }
     }

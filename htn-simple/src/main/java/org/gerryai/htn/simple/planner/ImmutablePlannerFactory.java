@@ -17,11 +17,7 @@
  */
 package org.gerryai.htn.simple.planner;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.ImmutableDomain;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.problem.ImmutableState;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  * Interface for a planner factory that creates planners that generate immutable plans.
@@ -29,10 +25,6 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  */
 public interface ImmutablePlannerFactory extends PlannerFactory<
         ImmutableState,
-        ImmutablePlanner,
-        ImmutableDomain,
-        ImmutableMethod,
-		ImmutableTaskNetwork,
-		ImmutableConstraint<?>> {
+        ImmutablePlanner> {
 
 }

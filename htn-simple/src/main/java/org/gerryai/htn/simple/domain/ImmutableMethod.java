@@ -18,15 +18,11 @@
 package org.gerryai.htn.simple.domain;
 
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  * Extension of the method interface that uses immutable classes.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableMethod extends Method<
-        ImmutableTaskNetwork,
-        ImmutableConstraint<?>> {
+public interface ImmutableMethod extends Method {
 
 }

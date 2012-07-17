@@ -17,25 +17,25 @@
  */
 package org.gerryai.htn.simple.constraint.impl;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.gerryai.htn.constraint.BeforeConstraint;
 import org.gerryai.htn.domain.Condition;
 import org.gerryai.htn.simple.constraint.ImmutableConstraintBuilder;
-import org.gerryai.htn.simple.constraint.ImmutableValidatableBeforeConstraint;
-import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Multimap;
 
 /**
+ * Simple implementation of a before constraint.
  * @author David Edwards <david@more.fool.me.uk>
- * 
  */
-public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstraint {
+public class SimpleBeforeConstraint implements BeforeConstraint {
 
     /**
      * The set of tasks that this constraint must hold for.
@@ -52,42 +52,34 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
      * @param builder the builder to build from
      */
     protected SimpleBeforeConstraint(Builder builder) {
-        tasks = builder.getTasks();
-        condition = builder.getCondition();
+        tasks = builder.tasks;
+        condition = builder.condition;
     }
 
-    /**
-     * Get the set of tasks that this constraint must hold for.
-     * 
-     * @return the tasks
-     */
+    @Override
     public final Set<Task> getTasks() {
-        return tasks;
+        return Collections.unmodifiableSet(tasks);
     }
 
-    /**
-     * Get the condition that must be true directly before the first of these
-     * tasks.
-     * 
-     * @return the condition
-     */
+    @Override
     public final Condition getCondition() {
         return condition;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public final boolean validate(ConstraintValidator validator) {
-        return validator.validate(this);
+    
+    @Override
+    public final BeforeConstraint apply(Map<Term, Term> substitution) {
+        return new Builder()
+            .copy(this)
+            .apply(substitution)
+            .build();
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public final void add(ConstraintValidator validator)
-            throws InvalidConstraint {
-        validator.add(this);
+    
+    @Override
+    public final BeforeConstraint replace(Multimap<Task, Task> taskMap) {
+        return new Builder()
+        .copy(this)
+        .replace(taskMap)
+        .build();    	
     }
 
     @Override
@@ -110,7 +102,7 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
      * Builder class for SimpleBeforeConstraint.
      * @author David Edwards <david@more.fool.me.uk>
      */
-    public static class Builder implements ImmutableConstraintBuilder<ImmutableValidatableBeforeConstraint> {
+    public static class Builder implements ImmutableConstraintBuilder<BeforeConstraint> {
         
         /**
          * The set of tasks that this constraint must hold for.
@@ -147,74 +139,44 @@ public class SimpleBeforeConstraint implements ImmutableValidatableBeforeConstra
             return this;
         }
 
-        /**
-         * @return the tasks
-         */
-        protected final Set<Task> getTasks() {
-            return tasks;
-        }
-        
-        /**
-         * @return the condition
-         */
-        protected final Condition getCondition() {
-            return condition;
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public final Builder copy(ImmutableValidatableBeforeConstraint constraint) {
-            this.tasks = new HashSet<Task>(constraint.getTasks());
-            this.condition = constraint.getCondition();
+        @Override
+        public final Builder copy(BeforeConstraint constraint) {
+            tasks = new HashSet<Task>(constraint.getTasks());
+            condition = constraint.getCondition();
             return this;
         }
 
-        /**
-         * {@inheritDoc}
-         */
-        public final Builder replace(Task oldTask, Set<Task> newTasks) {
-            if (this.tasks.contains(oldTask)) {
-                this.tasks.remove(oldTask);
-                this.tasks.addAll(newTasks);
-            }
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public final Builder replace(Task oldTask, Task newTask) {
-            if (this.tasks.contains(oldTask)) {
-                this.tasks.remove(oldTask);
-                this.tasks.add(newTask);
-            }
-            return this;
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
+        @Override
         public final Builder apply(Map<Term, Term> substitution) {
-        	Condition newCondition = this.condition.applyToCopy(substitution);
-            this.condition = newCondition;
+        	condition = condition.applyToCopy(substitution);
+        	for (Task oldTask : tasks) {
+        		Task newTask = oldTask.applyToCopy(substitution);
+        		if (!oldTask.equals(newTask)) {
+        			tasks.remove(oldTask);
+        			tasks.add(newTask);
+        		}
+        	}
             return this;
-        }  
+        }      
+        
+        @Override
+        public final Builder replace(Multimap<Task, Task> taskMap) {
+        	for (Task task : taskMap.keySet()) {
+	            if (tasks.contains(task)) {
+	                tasks.remove(task);
+	                tasks.addAll(taskMap.get(task));
+	            }
+        	}
+            return this;
+        }
         
         /**
          * Build the constraint.
          * @return the finished constraint
          */
-        public final ImmutableValidatableBeforeConstraint build() {
+        public final BeforeConstraint build() {
             return new SimpleBeforeConstraint(this);
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public final ImmutableConstraintBuilder<ImmutableValidatableBeforeConstraint> createCopyBuilder() {
-        return new Builder()
-            .copy(this);
-    }
 }

@@ -17,36 +17,28 @@
  */
 package org.gerryai.htn.simple.planner;
 
-import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.problem.State;
 import org.gerryai.htn.simple.planner.impl.NonPrimitiveTaskNotFound;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Interface for a helper class to support a planner.
  * @param <S> type of state this helper handles
- * @param <M> type of method the planner helper works with
- * @param <N> type of task network this planner works with
- * @param <C> type of constraint this planner works with
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface PlannerHelper<
-        S extends State,
-		M extends Method<N, C>,
-		N extends TaskNetwork<C>,
-		C extends Constraint> {
+public interface PlannerHelper<S extends State> {
 	
 	/**
 	 * Check for obvious reasons why the given task network is unsolvable.
 	 * @param taskNetwork task network to check
 	 * @return whether the task network is unsolvable
 	 */
-	boolean isUnsolvable(N taskNetwork);
+	boolean isUnsolvable(TaskNetwork taskNetwork);
 	
 	/**
 	 * Try to find a plan for a primitive task network by converting the tasks into 
@@ -56,7 +48,7 @@ public interface PlannerHelper<
 	 * @return the plan
 	 * @throws PlanNotFound if no plan exists
 	 */
-	Plan findPlanForPrimitive(S state, N taskNetwork) throws PlanNotFound;
+	Plan findPlanForPrimitive(S state, TaskNetwork taskNetwork) throws PlanNotFound;
 	
 	/**
 	 * Try to get a non-primitive task from a given network.
@@ -64,7 +56,7 @@ public interface PlannerHelper<
 	 * @return a non-primitive task
 	 * @throws NonPrimitiveTaskNotFound if no non-primitive tasks are present in the task network
 	 */
-	Task getNonPrimitiveTask(N taskNetwork) throws NonPrimitiveTaskNotFound;
+	Task getNonPrimitiveTask(TaskNetwork taskNetwork) throws NonPrimitiveTaskNotFound;
 	
 	/**
 	 * Try to decompose the given task within a task network using the given method.
@@ -73,7 +65,8 @@ public interface PlannerHelper<
 	 * @param method the method to use to decompose the task
 	 * @return the decomposed task network
 	 * @throws DecompositionNotFound if the method could not be used to decompose the given task
-     * @throws InvalidConstraint if the decomposition restulted in an invalid constraint
+     * @throws InvalidConstraint if the decomposition resulted in an invalid constraint
 	 */
-	N decompose(N taskNetwork, Task task, M method) throws DecompositionNotFound, InvalidConstraint;
+	TaskNetwork decompose(TaskNetwork taskNetwork, Task task, Method method)
+			throws DecompositionNotFound, InvalidConstraint;
 }

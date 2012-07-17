@@ -21,9 +21,7 @@ import java.util.Map;
 
 import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.decomposition.UnificationService;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Term;
 
@@ -31,12 +29,9 @@ import aima.core.logic.fol.parsing.ast.Predicate;
 
 /**
  * Unification service that use an AIMA unifier underneath.
- * @param <M> the type of method this service works with
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class AIMAUnificationService<
-		M extends Method<ImmutableTaskNetwork, ImmutableConstraint<?>>>
-				implements UnificationService<M, ImmutableTaskNetwork, ImmutableConstraint<?>> {
+public class AIMAUnificationService	implements UnificationService {
 
 	/**
 	 * AIMA Unifier object to do the underlying expression unification.
@@ -62,7 +57,7 @@ public class AIMAUnificationService<
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Map<Term, Term> findUnifier(Task task, M method) {
+	public final Map<Term, Term> findUnifier(Task task, Method method) {
 
 		Predicate taskPredicate = converter.convert(task);
 		Predicate methodTaskPredicate = converter.convert(method.getTask());

@@ -17,11 +17,11 @@
  */
 package org.gerryai.htn.simple.integration;
 
+import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.planner.ImmutablePlanningFactory;
 import org.gerryai.htn.simple.planner.impl.SimplePlanningFactory;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.InvalidConstraint;
 import org.gerryai.logic.builder.SentenceBuilder;
 import org.junit.Before;
 
@@ -39,7 +39,7 @@ public abstract class BaseIT {
 	/**
      * Domain being used by the test.
      */
-    private ImmutableDomain domain;
+    private Domain domain;
     
     /**
      * Get the planning factory being used in this test.
@@ -53,7 +53,7 @@ public abstract class BaseIT {
      * Get the domain being used by this test.
      * @return the domain
      */
-	public final ImmutableDomain getDomain() {
+	public final Domain getDomain() {
 		return domain;
 	}
 
@@ -82,5 +82,5 @@ public abstract class BaseIT {
      * @throws PlanNotFound only if test is broken
      * @throws InvalidConstraint only if test is broken
      */
-	abstract ImmutableDomain createDomain() throws PlanNotFound, InvalidConstraint;
+	abstract Domain createDomain() throws PlanNotFound, InvalidConstraint;
 }

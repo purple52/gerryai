@@ -20,14 +20,10 @@ package org.gerryai.htn.simple.planner.impl;
 import org.gerryai.htn.aima.AIMAConverter;
 import org.gerryai.htn.aima.impl.AIMAConverterImpl;
 import org.gerryai.htn.aima.unification.AIMAUnificationService;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
-import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
+import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
 import org.gerryai.htn.simple.decomposition.impl.SimpleDecompositionService;
-import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainHelper;
 import org.gerryai.htn.simple.plan.ActionFactory;
 import org.gerryai.htn.simple.plan.ActionFactoryHelper;
@@ -39,7 +35,6 @@ import org.gerryai.htn.simple.planner.ImmutablePlannerFactory;
 import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.simple.planner.sort.impl.SimpleSortService;
 import org.gerryai.htn.simple.problem.ImmutableStateService;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  * Simple factory for creating planners that generate imutable plans.
@@ -63,7 +58,7 @@ public class SimplePlannerFactory implements ImmutablePlannerFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutablePlanner create(ImmutableDomain domain) {
+	public final ImmutablePlanner create(Domain domain) {
 		
 	    ImmutableDomainHelper domainHelper = new SimpleDomainHelper(domain);
 		
@@ -73,17 +68,12 @@ public class SimplePlannerFactory implements ImmutablePlannerFactory {
 		
 		aima.core.logic.fol.Unifier unifier = new aima.core.logic.fol.Unifier();
 		AIMAConverter converter = new AIMAConverterImpl();
-		ConstraintValidatorFactory constraintValidatorFactory
-				= new GenericConstraintValidatorFactory();
-		AIMAUnificationService<ImmutableMethod> unificationService =
-		        new AIMAUnificationService<ImmutableMethod>(unifier, converter);
+		AIMAUnificationService unificationService =
+		        new AIMAUnificationService(unifier, converter);
 		
-		DecompositionService<ImmutableMethod, ImmutableTaskNetwork,
-		        ImmutableConstraint<?>> decompositionService =
-				new SimpleDecompositionService(constraintValidatorFactory);
+		DecompositionService decompositionService =	new SimpleDecompositionService();
 		
-		SortService<ImmutableConstraint<?>> sortService =
-		        new SimpleSortService();
+		SortService sortService = new SimpleSortService();
 
 		SimplePlannerHelper plannerHelper = new SimplePlannerHelper(actionFactory,
 		        planFactory, decompositionService, unificationService, sortService,

@@ -25,10 +25,10 @@ import static org.mockito.Mockito.when;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gerryai.htn.domain.Domain;
+import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.domain.OperatorNotFound;
-import org.gerryai.htn.simple.domain.ImmutableDomain;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.tasknetwork.Task;
 import org.junit.Test;
 
@@ -44,7 +44,7 @@ public class SimpleDomainHelperTest {
 	@Test
 	public final void testGetDomain() {
 		
-		ImmutableDomain	mockDomain = mock(ImmutableDomain.class);
+		Domain	mockDomain = mock(Domain.class);
 		
 		// Create the domain helper under test
 		SimpleDomainHelper domainHelper = new SimpleDomainHelper(mockDomain);
@@ -60,7 +60,7 @@ public class SimpleDomainHelperTest {
 	@Test(expected = OperatorNotFound.class)
 	public final void testGetOperatorByNameEmptyList() throws OperatorNotFound {
 		
-		ImmutableDomain	mockDomain = mock(ImmutableDomain.class);
+		Domain	mockDomain = mock(Domain.class);
 		when(mockDomain.getOperators()).thenReturn(new HashSet<Operator>());
 
 		// Create the domain helper under test
@@ -77,7 +77,7 @@ public class SimpleDomainHelperTest {
 	@Test(expected = OperatorNotFound.class)
 	public final void testGetOperatorByNameNotFound() throws OperatorNotFound {
 
-		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
+		Domain mockDomain = mock(Domain.class);
 		Operator mockOperatorA = mock(Operator.class);
 		when(mockOperatorA.getName()).thenReturn("operatorA");
 		Operator mockOperatorB = mock(Operator.class);
@@ -101,7 +101,7 @@ public class SimpleDomainHelperTest {
 	@Test
 	public final void testGetOperatorByNameFound() throws OperatorNotFound {
 
-		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
+		Domain mockDomain = mock(Domain.class);
 		Operator mockOperatorA = mock(Operator.class);
 		when(mockOperatorA.getName()).thenReturn("operatorA");
 		Operator mockOperatorB = mock(Operator.class);
@@ -125,8 +125,8 @@ public class SimpleDomainHelperTest {
 	@Test
 	public final void testGetMethodByTaskEmptyList() {
 
-		ImmutableDomain	mockDomain = mock(ImmutableDomain.class);
-		when(mockDomain.getMethods()).thenReturn(new HashSet<ImmutableMethod>());
+		Domain mockDomain = mock(Domain.class);
+		when(mockDomain.getMethods()).thenReturn(new HashSet<Method>());
 
 		Task mockTask = mock(Task.class);
 		
@@ -143,7 +143,7 @@ public class SimpleDomainHelperTest {
 	@Test
 	public final void testGetMethodByTaskNotFound() {
 
-		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
+		Domain mockDomain = mock(Domain.class);
 		
 		Task mockTaskA = mock(Task.class);
 		when(mockTaskA.getName()).thenReturn("taskA");
@@ -152,12 +152,12 @@ public class SimpleDomainHelperTest {
 		Task mockTaskC = mock(Task.class);
 		when(mockTaskC.getName()).thenReturn("taskC");
 		
-		ImmutableMethod mockMethodA = mock(ImmutableMethod.class);
+		Method mockMethodA = mock(Method.class);
 		when(mockMethodA.getTask()).thenReturn(mockTaskA);
-		ImmutableMethod mockMethodB = mock(ImmutableMethod.class);
+		Method mockMethodB = mock(Method.class);
 		when(mockMethodB.getTask()).thenReturn(mockTaskB);
 		
-		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
+		Set<Method> methods = new HashSet<Method>();
 		methods.add(mockMethodA);
 		methods.add(mockMethodB);
 		when(mockDomain.getMethods()).thenReturn(methods);
@@ -175,19 +175,19 @@ public class SimpleDomainHelperTest {
 	@Test
 	public final void testGetMethodByTaskOneFound() {
 
-		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
+		Domain mockDomain = mock(Domain.class);
 		
 		Task mockTaskA = mock(Task.class);
 		when(mockTaskA.getName()).thenReturn("taskA");
 		Task mockTaskB = mock(Task.class);
 		when(mockTaskB.getName()).thenReturn("taskB");
 		
-		ImmutableMethod mockMethodA = mock(ImmutableMethod.class);
+		Method mockMethodA = mock(Method.class);
 		when(mockMethodA.getTask()).thenReturn(mockTaskA);
-		ImmutableMethod mockMethodB = mock(ImmutableMethod.class);
+		Method mockMethodB = mock(Method.class);
 		when(mockMethodB.getTask()).thenReturn(mockTaskB);
 		
-		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
+		Set<Method> methods = new HashSet<Method>();
 		methods.add(mockMethodA);
 		methods.add(mockMethodB);
 		when(mockDomain.getMethods()).thenReturn(methods);
@@ -208,21 +208,21 @@ public class SimpleDomainHelperTest {
 	@Test
 	public final void testGetMethodByTaskTwoFound() {
 
-		ImmutableDomain mockDomain = mock(ImmutableDomain.class);
+		Domain mockDomain = mock(Domain.class);
 		
 		Task mockTaskA = mock(Task.class);
 		when(mockTaskA.getName()).thenReturn("taskA");
 		Task mockTaskB = mock(Task.class);
 		when(mockTaskB.getName()).thenReturn("taskB");
 		
-		ImmutableMethod mockMethodA = mock(ImmutableMethod.class);
+		Method mockMethodA = mock(Method.class);
 		when(mockMethodA.getTask()).thenReturn(mockTaskA);
-		ImmutableMethod mockMethodB = mock(ImmutableMethod.class);
+		Method mockMethodB = mock(Method.class);
 		when(mockMethodB.getTask()).thenReturn(mockTaskB);
-		ImmutableMethod mockMethodC = mock(ImmutableMethod.class);
+		Method mockMethodC = mock(Method.class);
 		when(mockMethodC.getTask()).thenReturn(mockTaskB);
 		
-		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
+		Set<Method> methods = new HashSet<Method>();
 		methods.add(mockMethodA);
 		methods.add(mockMethodB);
 		methods.add(mockMethodC);

@@ -17,9 +17,10 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraintFactory;
+import org.gerryai.htn.simple.constraint.ConstraintFactory;
 import org.gerryai.htn.simple.constraint.impl.SimpleConstraintFactory;
-import org.gerryai.htn.simple.constraint.validation.impl.GenericConstraintValidatorFactory;
+import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
+import org.gerryai.htn.simple.constraint.validation.impl.SimpleConstraintValidatorFactory;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilderFactory;
 import org.gerryai.htn.simple.domain.impl.SimpleDomainBuilderFactory;
 import org.gerryai.htn.simple.logic.LogicFactory;
@@ -63,7 +64,12 @@ public class SimplePlanningFactory implements ImmutablePlanningFactory {
     /**
      * The constraint factory to use.
      */
-    private ImmutableConstraintFactory constraintFactory;
+    private ConstraintFactory constraintFactory;
+
+    /**
+     * The constraint validator factory to use.
+     */
+    private ConstraintValidatorFactory constraintValidatorFactory;
     
     /**
      * The planner factory to use.
@@ -88,9 +94,8 @@ public class SimplePlanningFactory implements ImmutablePlanningFactory {
         domainBuilderFactory = new SimpleDomainBuilderFactory();
         problemBuilderFactory = new SimpleProblemBuilderFactory();
         
-        GenericConstraintValidatorFactory constraintValidatorFactory
-            = new GenericConstraintValidatorFactory();
-        taskNetworkFactory = new SimpleTaskNetworkFactory(constraintValidatorFactory, logicFactory);
+        constraintValidatorFactory = new SimpleConstraintValidatorFactory();
+        taskNetworkFactory = new SimpleTaskNetworkFactory(logicFactory, constraintValidatorFactory);
 
         constraintFactory = new SimpleConstraintFactory();
         stateService = new SimpleStateService();
@@ -129,7 +134,7 @@ public class SimplePlanningFactory implements ImmutablePlanningFactory {
     /**
      * {@inheritDoc}
      */
-    public final ImmutableConstraintFactory getConstraintFactory() {
+    public final ConstraintFactory getConstraintFactory() {
         return constraintFactory;
     }
 

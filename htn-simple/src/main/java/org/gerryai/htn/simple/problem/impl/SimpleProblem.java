@@ -1,10 +1,10 @@
 package org.gerryai.htn.simple.problem.impl;
 
-import org.gerryai.htn.simple.domain.ImmutableDomain;
+import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.simple.problem.ImmutableProblem;
 import org.gerryai.htn.simple.problem.ImmutableProblemBuilder;
 import org.gerryai.htn.simple.problem.ImmutableState;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  *  Gerry AI - Open framework for automated planning algorithms
@@ -38,12 +38,12 @@ public class SimpleProblem implements ImmutableProblem {
 	/**
 	 * The task network to achieve.
 	 */
-	private ImmutableTaskNetwork taskNetwork;
+	private TaskNetwork taskNetwork;
 	
 	/**
 	 * The domain to operate in.
 	 */
-	private ImmutableDomain domain;
+	private Domain domain;
 	
 	/**
 	 * Constructor called only by builder class.
@@ -65,14 +65,14 @@ public class SimpleProblem implements ImmutableProblem {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableTaskNetwork getTaskNetwork() {
+	public final TaskNetwork getTaskNetwork() {
 		return taskNetwork;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableDomain getDomain() {
+	public final Domain getDomain() {
 		return domain;
 	}
 
@@ -90,12 +90,12 @@ public class SimpleProblem implements ImmutableProblem {
 	    /**
 	     * The task network to achieve.
 	     */
-	    private ImmutableTaskNetwork taskNetwork;
+	    private TaskNetwork taskNetwork;
 	    
 	    /**
 	     * The domain to operate in.
 	     */
-	    private ImmutableDomain domain;
+	    private Domain domain;
 	    
 	    /**
 	     * Set the initial state.
@@ -112,7 +112,7 @@ public class SimpleProblem implements ImmutableProblem {
 	     * @param taskNetwork the task network
          * @return an updated builder object
   	     */
-	    public final Builder setTaskNetwork(ImmutableTaskNetwork taskNetwork) {
+	    public final Builder setTaskNetwork(TaskNetwork taskNetwork) {
 	        this.taskNetwork = taskNetwork;
 	        return this;
 	    }
@@ -122,7 +122,7 @@ public class SimpleProblem implements ImmutableProblem {
     	 * @param domain the domain
     	 * @return an updated builder object
     	 */
-    	public final Builder setDomain(ImmutableDomain domain) {
+    	public final Builder setDomain(Domain domain) {
     		this.domain = domain;
     		return this;
     	}

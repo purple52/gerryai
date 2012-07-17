@@ -17,17 +17,17 @@
  */
 package org.gerryai.htn.simple.planner.impl;
 
+import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.planner.DecompositionNotFound;
 import org.gerryai.htn.simple.planner.ImmutablePlanner;
 import org.gerryai.htn.simple.planner.ImmutablePlannerHelper;
 import org.gerryai.htn.simple.problem.ImmutableState;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Implementation of a planner.
@@ -59,7 +59,7 @@ public class SimplePlanner implements ImmutablePlanner {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Plan findPlan(ImmutableState state, ImmutableTaskNetwork taskNetwork)
+	public final Plan findPlan(ImmutableState state, TaskNetwork taskNetwork)
 	        throws PlanNotFound {
 		
 		if (plannerHelper.isUnsolvable(taskNetwork)) {
@@ -75,9 +75,9 @@ public class SimplePlanner implements ImmutablePlanner {
 				// 3. Task network is non-primitive
 				// TODO: Confirm implementation
 				// TODO: Handle state changes (and correct backtracking?)			
-				for (ImmutableMethod method : domainHelper.getMethodsByTask(task)) {
+				for (Method method : domainHelper.getMethodsByTask(task)) {
 					try {
-						ImmutableTaskNetwork decomposedNetwork = plannerHelper.decompose(taskNetwork, task, method);
+						TaskNetwork decomposedNetwork = plannerHelper.decompose(taskNetwork, task, method);
 						// Try recursing to further process the decomposed network
 						return findPlan(state, decomposedNetwork);
 					} catch (InvalidConstraint e) {

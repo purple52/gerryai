@@ -19,56 +19,32 @@ package org.gerryai.htn.simple.decomposition.impl;
 
 import java.util.Map;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
+import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.simple.decomposition.DecompositionService;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
 
 /**
  * Simple implementation of a decomposition service, for decomposing a task
  * within a network using a specified method and unifier.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class SimpleDecompositionService implements
-		DecompositionService<ImmutableMethod, ImmutableTaskNetwork,
-		ImmutableConstraint<?>> {
-
-    /**
-     * Constraint validator factory.
-     */
-    private ConstraintValidatorFactory constraintValidatorFactory;
-	
-	/**
-	 * Set the unification service.
-	 * @param constraintValidatorFactory the constraint validator factory to use
-	 */
-	public SimpleDecompositionService(ConstraintValidatorFactory constraintValidatorFactory) {
-		this.constraintValidatorFactory = constraintValidatorFactory;
-	}
+public class SimpleDecompositionService implements DecompositionService {
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableTaskNetwork decompose(Map<Term, Term> substitution,
-			ImmutableTaskNetwork taskNetwork, Task task, ImmutableMethod method) throws InvalidConstraint {
+	public final TaskNetwork decompose(Map<Term, Term> substitution,
+			TaskNetwork taskNetwork, Task task, Method method) throws InvalidConstraint {
 	    
 		// Apply unifier where relevant
-		ImmutableTaskNetwork unifiedMethodSubTasks = method.getTaskNetwork()
-		        .createCopyBuilder(constraintValidatorFactory.create())
-		        .apply(substitution)
-		        .build();
+		TaskNetwork unifiedMethodSubTasks = method.getTaskNetwork().apply(substitution);
 		
 		// TODO: Confirm if unifier really needs to be applied to the rest of the task network
-		ImmutableTaskNetwork updatedTaskNetwork = taskNetwork
-		        .createCopyBuilder(constraintValidatorFactory.create())
-		        .apply(substitution)
-		        .replace(task, unifiedMethodSubTasks)
-		        .build();
+		TaskNetwork updatedTaskNetwork = taskNetwork.apply(substitution)
+		        .replace(task, unifiedMethodSubTasks);
 		
 		return updatedTaskNetwork;
 	}

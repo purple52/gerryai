@@ -19,20 +19,21 @@ package org.gerryai.htn.simple.integration;
 
 import static org.junit.Assert.assertEquals;
 
+import org.gerryai.htn.constraint.BeforeConstraint;
+import org.gerryai.htn.constraint.PrecedenceConstraint;
 import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Effect;
+import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilder;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.problem.ImmutableProblem;
 import org.gerryai.htn.simple.problem.ImmutableState;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Variable;
 import org.junit.Test;
@@ -60,7 +61,7 @@ public class BasicIT extends BaseIT {
 				.addArgument(constantBanjo)
 				.setIsPrimitive(false)
 				.build();
-		ImmutableTaskNetwork taskNetwork = getPlanningFactory().getTaskNetworkFactory().createTaskNetworkBuilder()
+		TaskNetwork taskNetwork = getPlanningFactory().getTaskNetworkFactory().createTaskNetworkBuilder()
 				.addTask(task)
 				.build();
 		
@@ -114,7 +115,7 @@ public class BasicIT extends BaseIT {
                 .addArgument(constantKiwi)
                 .setIsPrimitive(false)
                 .build();
-        ImmutableTaskNetwork taskNetwork = getPlanningFactory().getTaskNetworkFactory().createTaskNetworkBuilder()
+        TaskNetwork taskNetwork = getPlanningFactory().getTaskNetworkFactory().createTaskNetworkBuilder()
                 .addTask(task)
                 .build();
         
@@ -152,7 +153,7 @@ public class BasicIT extends BaseIT {
     }
     
     @Override
-	final ImmutableDomain createDomain() throws PlanNotFound, InvalidConstraint {
+	final Domain createDomain() throws PlanNotFound, InvalidConstraint {
 	    
         Variable variableX = getPlanningFactory().getLogicFactory().createVariable("x");
         Variable variableY = getPlanningFactory().getLogicFactory().createVariable("y");
@@ -188,19 +189,19 @@ public class BasicIT extends BaseIT {
                             .addTerm(variableY)
                             .build()))
                 .build();
-        ImmutableConstraint<?> beforeConstraintHaveX = getPlanningFactory().getConstraintFactory()
+        BeforeConstraint beforeConstraintHaveX = getPlanningFactory().getConstraintFactory()
                 .createBeforeConstraint(methodASubTask1, beforeConditionHaveX);
-        ImmutableConstraint<?> beforeConstraintNotHaveY = getPlanningFactory().getConstraintFactory()
+        BeforeConstraint beforeConstraintNotHaveY = getPlanningFactory().getConstraintFactory()
                 .createBeforeConstraint(methodASubTask1, beforeConditionNotHaveY);
-        ImmutableConstraint<?> precedenceConstraintA = getPlanningFactory().getConstraintFactory()
+        PrecedenceConstraint precedenceConstraintA = getPlanningFactory().getConstraintFactory()
                 .createPrecedenceConstraint(methodASubTask1, methodASubTask2);
-        ImmutableTaskNetwork methodATaskNetwork = getPlanningFactory().getTaskNetworkFactory()
+        TaskNetwork methodATaskNetwork = getPlanningFactory().getTaskNetworkFactory()
         		.createTaskNetworkBuilder()
                 .addTask(methodASubTask1)
                 .addTask(methodASubTask2)
-                .addConstraint(precedenceConstraintA)
-                .addConstraint(beforeConstraintHaveX)
-                .addConstraint(beforeConstraintNotHaveY)
+                .addPrecedenceConstraint(precedenceConstraintA)
+                .addBeforeConstraint(beforeConstraintHaveX)
+                .addBeforeConstraint(beforeConstraintNotHaveY)
                 .build();
         
         Task methodBTask  = getPlanningFactory().getTaskNetworkFactory().createTaskBuilder()
@@ -234,27 +235,27 @@ public class BasicIT extends BaseIT {
                         .addTerm(variableY)
                         .build())
                 .build();
-        ImmutableConstraint<?> beforeConstraintNotHaveX = getPlanningFactory().getConstraintFactory()
+        BeforeConstraint beforeConstraintNotHaveX = getPlanningFactory().getConstraintFactory()
                 .createBeforeConstraint(methodBSubTask1, beforeConditionNotHaveX);
-        ImmutableConstraint<?> beforeConstraintHaveY = getPlanningFactory().getConstraintFactory()
+        BeforeConstraint beforeConstraintHaveY = getPlanningFactory().getConstraintFactory()
                 .createBeforeConstraint(methodBSubTask1, beforeConditionHaveY);
-        ImmutableConstraint<?> precedenceConstraintB = getPlanningFactory().getConstraintFactory()
+        PrecedenceConstraint precedenceConstraintB = getPlanningFactory().getConstraintFactory()
                 .createPrecedenceConstraint(methodBSubTask1, methodBSubTask2);
-        ImmutableTaskNetwork methodBTaskNetwork = getPlanningFactory()
+        TaskNetwork methodBTaskNetwork = getPlanningFactory()
         		.getTaskNetworkFactory().createTaskNetworkBuilder()
                 .addTask(methodBSubTask1)
                 .addTask(methodBSubTask2)
-                .addConstraint(precedenceConstraintB)
-                .addConstraint(beforeConstraintNotHaveX)
-                .addConstraint(beforeConstraintHaveY)
+                .addPrecedenceConstraint(precedenceConstraintB)
+                .addBeforeConstraint(beforeConstraintNotHaveX)
+                .addBeforeConstraint(beforeConstraintHaveY)
                 .build();
         
-        ImmutableMethod methodA = getPlanningFactory().getDomainBuilderFactory().createMethodBuilder()
+        Method methodA = getPlanningFactory().getDomainBuilderFactory().createMethodBuilder()
                 .setName("swap")
                 .setTask(methodATask)
                 .setTaskNetwork(methodATaskNetwork)
                 .build();
-        ImmutableMethod methodB = getPlanningFactory().getDomainBuilderFactory().createMethodBuilder()
+        Method methodB = getPlanningFactory().getDomainBuilderFactory().createMethodBuilder()
                 .setName("swap")
                 .setTask(methodBTask)
                 .setTaskNetwork(methodBTaskNetwork)

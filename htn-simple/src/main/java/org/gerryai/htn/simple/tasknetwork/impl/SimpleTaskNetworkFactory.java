@@ -19,17 +19,15 @@ package org.gerryai.htn.simple.tasknetwork.impl;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 import org.gerryai.htn.simple.logic.LogicFactory;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
 import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkFactory;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.simple.tasknetwork.TaskBuilder;
+import org.gerryai.htn.simple.tasknetwork.TaskNetworkBuilder;
+import org.gerryai.htn.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
 
 /**
@@ -42,62 +40,58 @@ public class SimpleTaskNetworkFactory implements ImmutableTaskNetworkFactory {
      * Factory used for creating and copying logical terms.
      */
     private LogicFactory logicFactory;
+	
+    /**
+     * Constraint validator factory.
+     */
+    private ConstraintValidatorFactory constraintValidatorFactory;
     
 	/**
-	 * Factory for creating constraint validators, as used by the task network builders.
-	 */
-	private ConstraintValidatorFactory constraintValidatorFactory;
-	
-	/**
 	 * Constructor, requiring a factory for creating constraint validators.
-	 * @param constraintValidatorFactory the constraint validator factory
 	 * @param logicFactory the logic factory
+	 * @param constraintValidatorFactory the constraint validator factory
 	 */
-	public SimpleTaskNetworkFactory(
-			ConstraintValidatorFactory constraintValidatorFactory,
-			LogicFactory logicFactory) {
-		this.constraintValidatorFactory = constraintValidatorFactory;
+	public SimpleTaskNetworkFactory(LogicFactory logicFactory,
+			                        ConstraintValidatorFactory constraintValidatorFactory) {
 		this.logicFactory = logicFactory;
+		this.constraintValidatorFactory = constraintValidatorFactory;
 	}
 	
     /**
      * {@inheritDoc}
-     */
+     *
 	public final ImmutableTaskNetwork createTaskNetwork(Set<Task> tasks,
 	        Set<ImmutableConstraint<?>> constraints) throws InvalidConstraint {
 	    return new SimpleTaskNetwork.Builder(constraintValidatorFactory.create())
 	        .addTasks(tasks)
 	        .addConstraints(constraints)
 	        .build();
-	}
+	}*/
     
     /**
      * {@inheritDoc}
      */
-	public final ImmutableTaskNetwork copyApply(ImmutableTaskNetwork taskNetwork,
+	public final TaskNetwork copyApply(TaskNetwork taskNetwork,
 	        Map<Term, Term> substitution) throws InvalidConstraint {
-	    return taskNetwork.createCopyBuilder(constraintValidatorFactory.create())
-	        .apply(substitution)
-	        .build();
+	    return taskNetwork.apply(substitution);
 	}
     
     /**
      * {@inheritDoc}
      */
-	public final ImmutableTaskNetwork copy(ImmutableTaskNetwork taskNetwork,
+	public final TaskNetwork copy(TaskNetwork taskNetwork,
 	        Map<Term, Term> substitution,
-	        Task oldTask, ImmutableTaskNetwork replacementNetwork) throws InvalidConstraint {
-	    //TODO: Replace!
-        return taskNetwork.createCopyBuilder(constraintValidatorFactory.create())
+	        Task oldTask, TaskNetwork replacementNetwork) throws InvalidConstraint {
+        return taskNetwork
                 .apply(substitution)
-                .build();	    
+                .replace(oldTask, replacementNetwork);
 	}
     
     /**
      * {@inheritDoc}
      */
-    public final ImmutableTaskNetworkBuilder createTaskNetworkBuilder() {
-        return new SimpleTaskNetwork.Builder(constraintValidatorFactory.create());
+    public final TaskNetworkBuilder createTaskNetworkBuilder() {
+        return new SimpleTaskNetwork.Builder(constraintValidatorFactory);
     }
     
     /**

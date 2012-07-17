@@ -26,7 +26,7 @@ import org.gerryai.htn.tasknetwork.Task;
  * Interface for a constraint that dictates the state immediately before this task.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface BeforeConstraint extends Constraint {
+public interface BeforeConstraint extends Constraint<BeforeConstraint> {
 
 	/**
 	 * The set of tasks for which this constraint must hold.

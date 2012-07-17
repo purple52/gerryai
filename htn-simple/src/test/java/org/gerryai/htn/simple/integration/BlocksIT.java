@@ -17,10 +17,10 @@
  */
 package org.gerryai.htn.simple.integration;
 
+import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilder;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.tasknetwork.InvalidConstraint;
 
 /**
  * End-to-end integration test of simple implementation using the JSHOP blocks example.
@@ -29,7 +29,7 @@ import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
 public class BlocksIT extends BaseIT {
 
 	@Override
-	final ImmutableDomain createDomain() throws PlanNotFound, InvalidConstraint {
+	final Domain createDomain() throws PlanNotFound, InvalidConstraint {
 		
 		ImmutableDomainBuilder domainBuilder = getPlanningFactory().getDomainBuilderFactory().createDomainBuilder();
 		domainBuilder = addOperators(domainBuilder);

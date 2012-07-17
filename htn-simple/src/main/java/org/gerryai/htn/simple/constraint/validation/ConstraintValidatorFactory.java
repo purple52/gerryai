@@ -17,11 +17,9 @@
  */
 package org.gerryai.htn.simple.constraint.validation;
 
-
 /**
  * Interface for factories that create constraint validators.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public interface ConstraintValidatorFactory {
 

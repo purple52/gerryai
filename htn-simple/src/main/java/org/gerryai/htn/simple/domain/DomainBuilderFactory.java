@@ -17,24 +17,11 @@
  */
 package org.gerryai.htn.simple.domain;
 
-import org.gerryai.htn.constraint.Constraint;
-import org.gerryai.htn.domain.Domain;
-import org.gerryai.htn.domain.Method;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
-
 /**
  * Interface for a factory that creates domain and operator builders.
- * @param <D> the class of domain that the builder will handle
- * @param <M> the class of method the builder will handle
- * @param <N> the class of task network the builders will handle
- * @param <C> the class of constraint the builder will handle
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface DomainBuilderFactory<
-		D extends Domain<M, N, C>,
-		M extends Method<N, C>,
-		N extends TaskNetwork<C>,
-		C extends Constraint> {
+public interface DomainBuilderFactory {
 
 	/**
 	 * Create a domain builder of the required type.
@@ -52,7 +39,7 @@ public interface DomainBuilderFactory<
 	 * Create a method builder of the required type.
 	 * @return the method builder
 	 */
-	MethodBuilder<N, C, M> createMethodBuilder();
+	MethodBuilder createMethodBuilder();
 	
 	/**
 	 * Create an effect builder of the required type.

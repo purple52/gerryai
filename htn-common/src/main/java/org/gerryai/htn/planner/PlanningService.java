@@ -17,32 +17,20 @@
  */
 package org.gerryai.htn.planner;
 
-import org.gerryai.htn.constraint.Constraint;
-import org.gerryai.htn.domain.Domain;
-import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.plan.Plan;
 import org.gerryai.htn.problem.Problem;
 import org.gerryai.htn.problem.State;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Interface for a service that can solve problems.
  * @param <S> type of state this service works with
  * @param <P> type of problem this service handles
- * @param <D> type of domain this service works with
- * @param <M> type of method this service works with
- * @param <N> type of task network this service works with
- * @param <C> type of constraint this service works with
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
 public interface PlanningService<
         S extends State,
-        P extends Problem<S, D, M, N, C>,
-        D extends Domain<M, N, C>,
-		M extends Method<N, C>,
-		N extends TaskNetwork<C>,
-		C extends Constraint> {
+        P extends Problem<S>> {
 	
 	/**
 	 * Find a plan that solve the given problem.

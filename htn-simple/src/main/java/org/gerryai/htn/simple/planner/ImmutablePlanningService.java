@@ -18,12 +18,8 @@
 package org.gerryai.htn.simple.planner;
 
 import org.gerryai.htn.planner.PlanningService;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.ImmutableDomain;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.simple.problem.ImmutableProblem;
 import org.gerryai.htn.simple.problem.ImmutableState;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  * Interface for an immutable domain planning service.
@@ -31,10 +27,6 @@ import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
  */
 public interface ImmutablePlanningService extends PlanningService<
         ImmutableState,
-        ImmutableProblem,
-        ImmutableDomain,
-		ImmutableMethod,
-		ImmutableTaskNetwork,
-		ImmutableConstraint<?>> {
+        ImmutableProblem> {
 
 }

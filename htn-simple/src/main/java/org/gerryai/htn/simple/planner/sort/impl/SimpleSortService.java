@@ -18,13 +18,11 @@
 package org.gerryai.htn.simple.planner.sort.impl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.gerryai.htn.constraint.PrecedenceConstraint;
 import org.gerryai.htn.planner.PlanNotFound;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
 import org.gerryai.htn.simple.planner.sort.SortService;
 import org.gerryai.htn.tasknetwork.Task;
 import org.jgrapht.graph.DefaultEdge;
@@ -35,29 +33,20 @@ import org.jgrapht.traverse.TopologicalOrderIterator;
  * Simple implementation of the SortService interface.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public class SimpleSortService implements SortService<ImmutableConstraint<?>> {
+public class SimpleSortService implements SortService {
 
     /**
      * {@inheritDoc}
      */
 	public final List<Task> sortByConstaints(Set<Task> tasks,
-            Set<ImmutableConstraint<?>> constraints) throws PlanNotFound {
-        
-        // TODO: Inject this list rather than compute it unsafely at runtime
-        Set<PrecedenceConstraint> precedenceConstraints =
-                new HashSet<PrecedenceConstraint>();
-        for (ImmutableConstraint<?> constraint : constraints) {
-            if (constraint instanceof PrecedenceConstraint) {
-                precedenceConstraints.add((PrecedenceConstraint) constraint);
-            }
-        }
+            Set<PrecedenceConstraint> constraints) throws PlanNotFound {
 
         SimpleDirectedGraph<Task, DefaultEdge> taskGraph =
                 new SimpleDirectedGraph<Task, DefaultEdge>(DefaultEdge.class);
         for (Task task : tasks) {
             taskGraph.addVertex(task);
         }
-        for (PrecedenceConstraint constraint : precedenceConstraints) {
+        for (PrecedenceConstraint constraint : constraints) {
             for (Task precedingTask : constraint.getPrecedingTasks()) {
                 for (Task procedingTask : constraint.getProcedingTasks()) {
                     taskGraph.addEdge(precedingTask, procedingTask);                

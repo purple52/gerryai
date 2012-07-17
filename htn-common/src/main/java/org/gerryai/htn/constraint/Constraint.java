@@ -17,10 +17,31 @@
  */
 package org.gerryai.htn.constraint;
 
+import java.util.Map;
+
+import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.logic.Term;
+
+import com.google.common.collect.Multimap;
+
 /**
  * Interface that constraints must implement.
+ * @param <C> type of constraint being implemented
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Constraint {
+public interface Constraint<C extends Constraint<C>> {
 
+    /**
+     * Copy this constraint and apply the provided substituter to the copy.
+     * @param substitution the substitution to apply
+     * @return a copy of the original constraint with the substitution applied
+     */
+	C apply(Map<Term, Term> substitution);
+	
+	/**
+	 * Copy this constraint, with the given tasks replaced by the sets of tasks provided.
+	 * @param taskMap a map of tasks to sets of tasks
+	 * @return a copy of the original constraint with the replacement applied
+	 */
+	C replace(Multimap<Task, Task> taskMap);
 }

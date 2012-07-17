@@ -17,12 +17,17 @@
  */
 package org.gerryai.htn.simple.constraint.validation;
 
-import org.gerryai.htn.simple.constraint.ValidatableAfterConstraint;
-import org.gerryai.htn.simple.constraint.ValidatableBeforeConstraint;
-import org.gerryai.htn.simple.constraint.ValidatableBetweenConstraint;
-import org.gerryai.htn.simple.constraint.ValidatablePrecedenceConstraint;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import java.util.Map;
+import java.util.Set;
+
+import org.gerryai.htn.constraint.AfterConstraint;
+import org.gerryai.htn.constraint.BeforeConstraint;
+import org.gerryai.htn.constraint.BetweenConstraint;
+import org.gerryai.htn.constraint.PrecedenceConstraint;
+import org.gerryai.htn.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
+import org.gerryai.logic.Term;
 
 /**
  * Implementation of a validator for simple constraints.
@@ -31,64 +36,81 @@ import org.gerryai.htn.tasknetwork.Task;
 public interface ConstraintValidator {
 
 	/**
-	 * Validation check for simple before constraints, but does not add the constraint.
-	 * @param constraint the constraint to validate
-	 * @return true if the constraint passes validation
+	 * Get the tasks that make up this network.
+	 * @return the tasks
 	 */
-	boolean validate(ValidatableBeforeConstraint constraint);
+	Set<Task> getTasks();
 
 	/**
-	 * Validation check for simple after constraints, but does not add the constraint.
-	 * @param constraint the constraint to validate
-	 * @return true if the constraint passes validation
+	 * Get all the before constraints for this network.
+	 * @return the before constraints
 	 */
-	boolean validate(ValidatableAfterConstraint constraint);
+	Set<BeforeConstraint> getBeforeConstraints();
 
 	/**
-	 * Validation check for simple between constraints, but does not add the constraint.
-	 * @param constraint the constraint to validate
-	 * @return true if the constraint passes validation
+	 * Get all the before constraints for this network.
+	 * @return the before constraints
 	 */
-	boolean validate(ValidatableBetweenConstraint constraint);
+	Set<AfterConstraint> getAfterConstraints();
 
 	/**
-	 * Validation check for simple precedence constraints, but does not add the constraint.
-	 * @param constraint the constraint to validate
-	 * @return true if the constraint passes validation
+	 * Get all the between constraints for this network.
+	 * @return the between constraints
 	 */
-	boolean validate(ValidatablePrecedenceConstraint constraint);
+	Set<BetweenConstraint> getBetweenConstraints();
 
 	/**
-	 * Validates and adds the given constraint to the validator.
-	 * @param constraint the constraint to add
-	 * @throws InvalidConstraint if the constraint cannot be added
+	 * Get all the between constraints for this network.
+	 * @return the between constraints
 	 */
-	void add(ValidatableBeforeConstraint constraint) throws InvalidConstraint;
+	Set<PrecedenceConstraint> getPrecedenceConstraints();
 
 	/**
 	 * Validates and adds the given constraint to the validator.
 	 * @param constraint the constraint to add
 	 * @throws InvalidConstraint if the constraint cannot be added
 	 */
-	void add(ValidatableAfterConstraint constraint) throws InvalidConstraint;
+	void add(BeforeConstraint constraint) throws InvalidConstraint;
 
 	/**
 	 * Validates and adds the given constraint to the validator.
 	 * @param constraint the constraint to add
 	 * @throws InvalidConstraint if the constraint cannot be added
 	 */
-	void add(ValidatableBetweenConstraint constraint) throws InvalidConstraint;
+	void add(AfterConstraint constraint) throws InvalidConstraint;
 
 	/**
 	 * Validates and adds the given constraint to the validator.
 	 * @param constraint the constraint to add
 	 * @throws InvalidConstraint if the constraint cannot be added
 	 */
-	void add(ValidatablePrecedenceConstraint constraint) throws InvalidConstraint;
+	void add(BetweenConstraint constraint) throws InvalidConstraint;
+
+	/**
+	 * Validates and adds the given constraint to the validator.
+	 * @param constraint the constraint to add
+	 * @throws InvalidConstraint if the constraint cannot be added
+	 */
+	void add(PrecedenceConstraint constraint) throws InvalidConstraint;
 
 	/**
 	 * Add the given task to the validator.
 	 * @param task the task to add
 	 */
 	void add(Task task);
+	
+    /**
+     * Apply the provided substitution to the tasks and constraints in this validator.
+     * @param substitution the substitution to apply
+     * @throws InvalidConstraint if an invalid constraint was encountered
+     */
+	void apply(Map<Term, Term> substitution) throws InvalidConstraint;
+	
+	/**
+	 * Copy this task network, with the given task replaced by the set of tasks provided.
+	 * @param task the task to replace
+	 * @param taskNetwork the task network to replace with
+	 * @throws InvalidConstraint if an invalid constraint was encountered
+	 */
+	void replace(Task task, TaskNetwork taskNetwork) throws InvalidConstraint;
 }

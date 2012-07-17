@@ -23,40 +23,40 @@ import java.util.Map;
 import java.util.Set;
 
 import org.gerryai.htn.domain.Condition;
+import org.gerryai.htn.domain.Domain;
 import org.gerryai.htn.domain.Effect;
+import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.domain.Operator;
 import org.gerryai.htn.domain.OperatorNotFound;
-import org.gerryai.htn.simple.domain.ImmutableDomain;
 import org.gerryai.htn.simple.domain.ImmutableDomainHelper;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.logic.Constant;
 import org.gerryai.logic.Term;
 import org.gerryai.logic.Variable;
 
 /**
+ * Simple helper class for dealing with domains.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
 public class SimpleDomainHelper implements ImmutableDomainHelper {
 
 	/**
 	 * Domain this helper is working on.
 	 */
-	private ImmutableDomain domain;
+	private Domain domain;
 	
 	/**
 	 * Constructor taking a domain to work on.
 	 * @param domain the domain to work on
 	 */
-	public SimpleDomainHelper(ImmutableDomain domain) {
+	public SimpleDomainHelper(Domain domain) {
 		this.domain = domain;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final ImmutableDomain getDomain() {
+	public final Domain getDomain() {
 		return domain;
 	}
 
@@ -76,10 +76,10 @@ public class SimpleDomainHelper implements ImmutableDomainHelper {
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Set<ImmutableMethod> getMethodsByTask(Task task) {
+	public final Set<Method> getMethodsByTask(Task task) {
 		// TODO Check task arguments match
-		Set<ImmutableMethod> methods = new HashSet<ImmutableMethod>();
-		for (ImmutableMethod method : domain.getMethods()) {
+		Set<Method> methods = new HashSet<Method>();
+		for (Method method : domain.getMethods()) {
 			if (method.getTask().getName().equals(task.getName())) {
 				methods.add(method);
 			}

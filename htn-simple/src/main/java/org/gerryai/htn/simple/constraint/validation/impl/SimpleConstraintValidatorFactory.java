@@ -20,17 +20,14 @@ package org.gerryai.htn.simple.constraint.validation.impl;
 import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
 
 /**
- * Generic constraint validator factory.
+ * Simple constraint validator factory.
  * @author David Edwards <david@more.fool.me.uk>
- *
  */
-public class GenericConstraintValidatorFactory implements ConstraintValidatorFactory {
+public class SimpleConstraintValidatorFactory implements ConstraintValidatorFactory {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public final GenericConstraintValidator create() {
-		return new GenericConstraintValidator();
+	@Override
+	public final SimpleConstraintValidator create() {
+		return new SimpleConstraintValidator();
 	}
 
 }

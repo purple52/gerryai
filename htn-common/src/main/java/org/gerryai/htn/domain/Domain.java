@@ -19,20 +19,11 @@ package org.gerryai.htn.domain;
 
 import java.util.Set;
 
-import org.gerryai.htn.constraint.Constraint;
-import org.gerryai.htn.tasknetwork.TaskNetwork;
-
 /**
  * Interface that a domain must implement.
- * @param <M> type of operator this domain uses
- * @param <N> type of task network this domain uses
- * @param <C> type of constraint this domain uses
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Domain<
-        M extends Method<N, C>,
-		N extends TaskNetwork<C>,
-		C extends Constraint> {
+public interface Domain {
 
 	/**
 	 * Get the full set of available operators for this domain.
@@ -44,6 +35,6 @@ public interface Domain<
 	 * Get the set of methods available for this domain.
 	 * @return the methods
 	 */
-	Set<M> getMethods();
+	Set<Method> getMethods();
 
 }

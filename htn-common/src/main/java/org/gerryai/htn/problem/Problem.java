@@ -17,27 +17,16 @@
  */
 package org.gerryai.htn.problem;
 
-import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.domain.Domain;
-import org.gerryai.htn.domain.Method;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Interface that a problem must implement.
  * @param <S> type of state this problem uses
- * @param <D> type of domain this problem uses
- * @param <M> type of method this problem uses
- * @param <N> the type of task network this problem uses
- * @param <C> the type of constraint this problem uses
  * @author David Edwards <david@more.fool.me.uk>
  *
  */
-public interface Problem<
-        S extends State,
-        D extends Domain<M, N, C>,
-		M extends Method<N, C>,
-		N extends TaskNetwork<C>,
-		C extends Constraint> {
+public interface Problem<S extends State> {
 	
 	/**
 	 * Get the state of the problem.
@@ -49,12 +38,12 @@ public interface Problem<
 	 * Get the task network for this problem.
 	 * @return the task network
 	 */
-	N getTaskNetwork();
+	TaskNetwork getTaskNetwork();
 	
 	/**
 	 * Get the domain for this problem.
 	 * @return the domain
 	 */
-	D getDomain();
+	Domain getDomain();
 
 }

@@ -19,32 +19,18 @@ package org.gerryai.htn.simple.tasknetwork;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.gerryai.htn.constraint.Constraint;
+import org.gerryai.htn.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
 
 /**
  * Interface for a factory that creates task network builders.
- * @param <N> type of task network this factory uses
- * @param <C> the class of constraint the builder will handle
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface TaskNetworkFactory<
-		N extends TaskNetwork<C>,
-		C extends Constraint> {
+public interface TaskNetworkFactory {
 
-	/**
-	 * Create a task network using the tasks and constraints provided.
-	 * @param tasks the tasks
-	 * @param constraints the constraints
-	 * @return the task network builder
-	 * @throws InvalidConstraint if any of the supplied constraints are invalid
-	 */
-	N createTaskNetwork(Set<Task> tasks, Set<C> constraints) throws InvalidConstraint;
-	
 	/**
 	 * Copy the given task network and apply a substitution.
 	 * @param taskNetwork the network to copy
@@ -52,7 +38,7 @@ public interface TaskNetworkFactory<
 	 * @return the new task network
 	 * @throws InvalidConstraint if any of constraints involved end up being invalid
 	 */
-	N copyApply(N taskNetwork, Map<Term, Term> substitution) throws InvalidConstraint;
+	TaskNetwork copyApply(TaskNetwork taskNetwork, Map<Term, Term> substitution) throws InvalidConstraint;
 	
 	/**
 	 * Copy the given task network, apply a substitution and replace a task with a network.
@@ -63,7 +49,8 @@ public interface TaskNetworkFactory<
 	 * @return the new task network
 	 * @throws InvalidConstraint if any of constraints involved end up being invalid
 	 */
-	N copy(N taskNetwork, Map<Term, Term> substitution, Task oldTask, N replacementNetwork) throws InvalidConstraint;
+	TaskNetwork copy(TaskNetwork taskNetwork, Map<Term, Term> substitution,
+			Task oldTask, TaskNetwork replacementNetwork) throws InvalidConstraint;
 	
 	/**
 	 * Create a task using the name and arguments provided.

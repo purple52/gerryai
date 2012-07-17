@@ -20,88 +20,96 @@ package org.gerryai.htn.simple.tasknetwork;
 import java.util.Map;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
+import org.gerryai.htn.constraint.AfterConstraint;
+import org.gerryai.htn.constraint.BeforeConstraint;
+import org.gerryai.htn.constraint.BetweenConstraint;
+import org.gerryai.htn.constraint.PrecedenceConstraint;
+import org.gerryai.htn.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
 
 /**
- * Interface for a builder that creates immutable task networks.
+ * Interface for a builder that creates task networks.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableTaskNetworkBuilder {
+public interface TaskNetworkBuilder {
 
 	/**
 	 * Add a task.
 	 * @param task the task
 	 * @return the updated builder
 	 */
-	ImmutableTaskNetworkBuilder addTask(Task task);
+	TaskNetworkBuilder addTask(Task task);
 
 	/**
 	 * Add a set of tasks.
 	 * @param tasks the tasks
 	 * @return the updated builder
 	 */
-	ImmutableTaskNetworkBuilder addTasks(Set<Task> tasks);
+	TaskNetworkBuilder addTasks(Set<Task> tasks);
 	
 	/**
-	 * Add a constraint.
-	 * Checks if the constraint is valid for this network:
-	 * 1. Makes sure the tasks referenced in the constraint all exist in the network
-	 * 2. Makes sure that there are no cyclical precedence constraints
+	 * Add a before constraint, checking it is valid for this network.
 	 * @param constraint the constraint
 	 * @return the updated builder
 	 * @throws InvalidConstraint if the constraint could not be added
 	 */
-	ImmutableTaskNetworkBuilder addConstraint(ImmutableConstraint<?> constraint) throws InvalidConstraint;
+	TaskNetworkBuilder addBeforeConstraint(BeforeConstraint constraint) throws InvalidConstraint;
+
+	/**
+	 * Add an after constraint, checking it is valid for this network.
+	 * @param constraint the constraint
+	 * @return the updated builder
+	 * @throws InvalidConstraint if the constraint could not be added
+	 */
+	TaskNetworkBuilder addAfterConstraint(AfterConstraint constraint) throws InvalidConstraint;
 	
 	/**
-	 * Add a set of constraints.
-	 * Checks if the constraints are valid for this network as per setConstraint.
-	 * @param constraints the constraints
+	 * Add a between constraint, checking it is valid for this network.
+	 * @param constraint the constraint
 	 * @return the updated builder
-	 * @throws InvalidConstraint if any of the constraints could not be added
+	 * @throws InvalidConstraint if the constraint could not be added
 	 */
-	ImmutableTaskNetworkBuilder addConstraints(Set<ImmutableConstraint<?>> constraints) throws InvalidConstraint;
+	TaskNetworkBuilder addBetweenConstraint(BetweenConstraint constraint) throws InvalidConstraint;
+
+	/**
+	 * Add a precedence constraint, checking it is valid for this network.
+	 * @param constraint the constraint
+	 * @return the updated builder
+	 * @throws InvalidConstraint if the constraint could not be added
+	 */
+	TaskNetworkBuilder addPrecedenceConstraint(PrecedenceConstraint constraint) throws InvalidConstraint;
 	
 	/**
 	 * Adds all the tasks and constraints from the given network, replacing any existing.
 	 * @param taskNetwork the network to copy from
 	 * @return the updated builder
 	 * @throws InvalidConstraint if any of the network's constraints could not be added
-	 */
-	ImmutableTaskNetworkBuilder copy(ImmutableTaskNetwork taskNetwork)  throws InvalidConstraint;
+	 *
+	TaskNetworkBuilder copy(TaskNetwork taskNetwork)  throws InvalidConstraint;
+	*/
 	
     /**
      * Apply the provided substituter to the arguments provided so far.
      * @param substitution the substitution to apply
      * @return the updated builder
+     * @throws InvalidConstraint if an invalid constrain was detected
      */
-	ImmutableTaskNetworkBuilder apply(Map<Term, Term> substitution);
+	TaskNetworkBuilder apply(Map<Term, Term> substitution) throws InvalidConstraint;
 	
 	/**
 	 * Replace the given task with the network of tasks and constraints provided.
 	 * @param oldTask the task to replace
 	 * @param taskNetwork the network to replace with
 	 * @return the updated builder
+	 * @throws InvalidConstraint  if an invalid constraint was detected
 	 */
-	ImmutableTaskNetworkBuilder replace(Task oldTask, ImmutableTaskNetwork taskNetwork);
-	
-	/**
-	 * Get the set of tasks for the task network to be built.
-	 * @return the tasks
-	 */
-	Set<Task> getTasks();
-	
-	/**
-	 * Get the set of constraints for the task network to be built.
-	 * @return the constraints
-	 */
-	Set<ImmutableConstraint<?>> getConstraints();
+	TaskNetworkBuilder replace(Task oldTask, TaskNetwork taskNetwork) throws InvalidConstraint;
 	
 	/**
 	 * Build the task network.
 	 * @return the task network
 	 */
-	ImmutableTaskNetwork build();
+	TaskNetwork build();
 }

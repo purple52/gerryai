@@ -17,16 +17,12 @@
  */
 package org.gerryai.htn.simple.domain;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-
 /**
  * Interface for a method builder that builds immutable methods.
  * @author David Edwards <david@more.fool.me.uk>
  */
 public interface ImmutableMethodBuilder
         extends
-        MethodBuilder<ImmutableTaskNetwork, 
-        ImmutableConstraint<?>, ImmutableMethod> {
+        MethodBuilder {
 
 }

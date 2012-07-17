@@ -17,19 +17,14 @@
  */
 package org.gerryai.htn.domain;
 
-import org.gerryai.htn.constraint.Constraint;
 import org.gerryai.htn.tasknetwork.Task;
 import org.gerryai.htn.tasknetwork.TaskNetwork;
 
 /**
  * Interface that a method must implement.
- * @param <N> the type of task network this method works with
- * @param <C> the type of constraint this method works with
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface Method<
-		N extends TaskNetwork<C>,
-		C extends Constraint> {
+public interface Method {
 
 	/**
 	 * Get the name of this method.
@@ -47,6 +42,6 @@ public interface Method<
 	 * Get the task network for this method.
 	 * @return the task network
 	 */
-	N getTaskNetwork();
+	TaskNetwork getTaskNetwork();
 	
 }

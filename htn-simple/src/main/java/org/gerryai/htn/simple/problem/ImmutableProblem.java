@@ -18,20 +18,11 @@
 package org.gerryai.htn.simple.problem;
 
 import org.gerryai.htn.problem.Problem;
-import org.gerryai.htn.simple.constraint.ImmutableConstraint;
-import org.gerryai.htn.simple.domain.ImmutableDomain;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
 
 /**
  * Interface for an immutable problem.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface ImmutableProblem extends Problem<
-        ImmutableState,
-        ImmutableDomain,
-        ImmutableMethod,
-		ImmutableTaskNetwork,
-		ImmutableConstraint<?>> {
+public interface ImmutableProblem extends Problem<ImmutableState> {
 
 }

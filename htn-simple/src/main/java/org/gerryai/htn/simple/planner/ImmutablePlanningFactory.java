@@ -17,7 +17,7 @@
  */
 package org.gerryai.htn.simple.planner;
 
-import org.gerryai.htn.simple.constraint.ImmutableConstraintFactory;
+import org.gerryai.htn.simple.constraint.ConstraintFactory;
 import org.gerryai.htn.simple.domain.ImmutableDomainBuilderFactory;
 import org.gerryai.htn.simple.logic.LogicFactory;
 import org.gerryai.htn.simple.problem.ImmutableProblemBuilderFactory;
@@ -64,7 +64,7 @@ public interface ImmutablePlanningFactory {
      * Get a factory for generating constraints.
      * @return the factory
      */
-    ImmutableConstraintFactory getConstraintFactory();
+    ConstraintFactory getConstraintFactory();
     
     /**
      * Get a planning service.

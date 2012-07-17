@@ -26,7 +26,7 @@ import org.gerryai.htn.tasknetwork.Task;
  * Interface for a constraint that dictates the state immediately after this task.
  * @author David Edwards <david@more.fool.me.uk>
  */
-public interface AfterConstraint extends Constraint {
+public interface AfterConstraint extends Constraint<AfterConstraint> {
 
 	/**
 	 * The set of tasks for which this constraint must hold.

@@ -20,7 +20,6 @@ package org.gerryai.htn.simple.decomposition.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -28,13 +27,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.gerryai.htn.simple.constraint.validation.ConstraintValidator;
-import org.gerryai.htn.simple.constraint.validation.ConstraintValidatorFactory;
-import org.gerryai.htn.simple.domain.ImmutableMethod;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetwork;
-import org.gerryai.htn.simple.tasknetwork.ImmutableTaskNetworkBuilder;
-import org.gerryai.htn.simple.tasknetwork.InvalidConstraint;
+import org.gerryai.htn.domain.Method;
+import org.gerryai.htn.tasknetwork.InvalidConstraint;
 import org.gerryai.htn.tasknetwork.Task;
+import org.gerryai.htn.tasknetwork.TaskNetwork;
 import org.gerryai.logic.Term;
 import org.junit.Test;
 
@@ -51,12 +47,8 @@ public class SimpleDecompositionServiceTest {
     @Test
     @SuppressWarnings("unchecked")
     public final void testDecompose() throws InvalidConstraint {
-    	
-    	ConstraintValidatorFactory mockConstraintValidatorFactory
-    			= mock(ConstraintValidatorFactory.class);
 
-    	SimpleDecompositionService decompositionService
-    			= new SimpleDecompositionService(mockConstraintValidatorFactory);
+    	SimpleDecompositionService decompositionService = new SimpleDecompositionService();
     	
     	// TaskA will be decomposed into TaskB and TaskC
     	Task mockTaskA = mock(Task.class);
@@ -68,45 +60,37 @@ public class SimpleDecompositionServiceTest {
     	Set<Task> methodSubTasks = new HashSet<Task>();
     	methodSubTasks.add(mockTaskB);
     	methodSubTasks.add(mockTaskC);
-    	
-    	ImmutableTaskNetworkBuilder mockTaskNetworkBuilderA = mock(ImmutableTaskNetworkBuilder.class);
-    	ImmutableTaskNetworkBuilder mockTaskNetworkBuilderB = mock(ImmutableTaskNetworkBuilder.class);
-    	ImmutableTaskNetworkBuilder mockTaskNetworkBuilderC = mock(ImmutableTaskNetworkBuilder.class);
-    	ImmutableTaskNetworkBuilder mockTaskNetworkBuilderD = mock(ImmutableTaskNetworkBuilder.class);
-    	ImmutableTaskNetworkBuilder mockTaskNetworkBuilderE = mock(ImmutableTaskNetworkBuilder.class);
         
     	// Original task network and unified version - unification makes no change
-    	ImmutableTaskNetwork mockTaskNetwork = mock(ImmutableTaskNetwork.class);
+    	TaskNetwork mockTaskNetwork = mock(TaskNetwork.class);
     	when(mockTaskNetwork.getTasks()).thenReturn(taskNetworkTasks);
-    	ImmutableTaskNetwork mockUnifiedTaskNetwork = mock(ImmutableTaskNetwork.class);
+    	TaskNetwork mockUnifiedTaskNetwork = mock(TaskNetwork.class);
     	when(mockUnifiedTaskNetwork.getTasks()).thenReturn(taskNetworkTasks);
     	
     	// Original method sub tasks and unified version - unification makes no change
-    	ImmutableTaskNetwork mockMethodSubTasks = mock(ImmutableTaskNetwork.class);
+    	TaskNetwork mockMethodSubTasks = mock(TaskNetwork.class);
     	when(mockMethodSubTasks.getTasks()).thenReturn(methodSubTasks);
     	
-    	ImmutableTaskNetwork mockUnifiedMethodSubTasks = mock(ImmutableTaskNetwork.class);
+    	TaskNetwork mockUnifiedMethodSubTasks = mock(TaskNetwork.class);
     	when(mockUnifiedMethodSubTasks.getTasks()).thenReturn(methodSubTasks);
     	
     	// Mock method converts TaskA into TaskB and TaskC
-    	ImmutableMethod mockMethod = mock(ImmutableMethod.class);
+    	Method mockMethod = mock(Method.class);
     	when(mockMethod.getTask()).thenReturn(mockTaskA);
     	when(mockMethod.getTaskNetwork()).thenReturn(mockMethodSubTasks);
     	
     	// Mock unifier to make no changes
     	Map<Term, Term> mockSubstitution = mock(Map.class);
-        
-    	when(mockMethodSubTasks.createCopyBuilder(any(ConstraintValidator.class))).thenReturn(mockTaskNetworkBuilderA);
-        when(mockTaskNetworkBuilderA.apply(mockSubstitution)).thenReturn(mockTaskNetworkBuilderB);
-        when(mockTaskNetworkBuilderB.build()).thenReturn(mockUnifiedMethodSubTasks);
+    	TaskNetwork mockInterimTaskNetwork = mock(TaskNetwork.class);
+    	
+    	when(mockMethodSubTasks.apply(mockSubstitution)).thenReturn(mockUnifiedMethodSubTasks);
 
-        when(mockTaskNetwork.createCopyBuilder(any(ConstraintValidator.class))).thenReturn(mockTaskNetworkBuilderC);
-        when(mockTaskNetworkBuilderC.apply(mockSubstitution)).thenReturn(mockTaskNetworkBuilderD);
-        when(mockTaskNetworkBuilderD.replace(mockTaskA, mockUnifiedMethodSubTasks)).thenReturn(mockTaskNetworkBuilderB);
-        when(mockTaskNetworkBuilderE.build()).thenReturn(mockUnifiedMethodSubTasks);
+        when(mockTaskNetwork.apply(mockSubstitution)).thenReturn(mockInterimTaskNetwork);
+        when(mockInterimTaskNetwork.replace(mockTaskA, mockUnifiedMethodSubTasks))
+        		.thenReturn(mockUnifiedMethodSubTasks);
 
     	//Make the decompose call
-    	ImmutableTaskNetwork decomposedTaskNetwork
+    	TaskNetwork decomposedTaskNetwork
     			= decompositionService.decompose(mockSubstitution, mockTaskNetwork, mockTaskA, mockMethod);
 
     	// Verify that the original task network and the method's sub tasks got the unifier applied
@@ -118,7 +102,5 @@ public class SimpleDecompositionServiceTest {
     	assertFalse(decomposedTaskNetwork.getTasks().contains(mockTaskA));
     	assertTrue(decomposedTaskNetwork.getTasks().contains(mockTaskB));
     	assertTrue(decomposedTaskNetwork.getTasks().contains(mockTaskC));
-    	
-    	
     }
 }
